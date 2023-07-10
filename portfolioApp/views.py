@@ -8,3 +8,9 @@ def indexPageView(request):
     context = {}
 
     return render(request, 'portfolioApp/index.html', context)
+
+def analystPageView(request):
+    
+    context = {}
+
+    return render(request, 'portfolioApp/analyst.html', context)
