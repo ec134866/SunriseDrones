@@ -3,5 +3,5 @@ from .views import indexPageView, analystPageView
 
 urlpatterns = [
     path('', indexPageView, name = "index"),
-    path('/businessanalyst', analystPageView, name = "analyst"),
+    path('businessanalyst/', analystPageView, name = "analyst"),
 ]
