@@ -1,0 +1,80 @@
+{% extends 'base.html'%}
+        {% block title %}
+          <title> Evan Carter </title>
+        {% endblock %}
+        
+        {% block search %}
+        <h1> Welcome </h1>
+        {% endblock %}
+        
+        
+{% block content %}
+
+    <main role="main">
+
+      <section class="jumbotron text-center">
+        <div class="container">
+          <div class= "card"> 
+            <div class= align-middle>
+              <img class="card-img-top" src= "https://lh3.googleusercontent.com/drive-viewer/AFGJ81qb6nZAO62F_mDnOMABk5EoQNUIVkoFJImXOLic3NgZSSrCXS7_EqIrXacCtqLIWeoUFdiPWtyUe9gxl-MyutrCD4tQWw=s1600">
+              <div class= "card-img-overlay card-inverse">
+                <h1 class="jumbotron-heading text-white" style= "font-size:4vw"> Evan Carter </h1> 
+              </div>
+            </div>  
+          </div>   
+            <p class="lead text-muted" style="font-size:2vw;" > Business Analyst & Acrobatic Dunker </p>
+        </div>
+      </section>
+
+      <div class="album py-5 bg-light">
+        <div class="container">
+          <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                  <a href= " { % url 'index' %} ">
+                    <img class="h-100 img-responsive"  style="height: 125px; width: 100%; display: block;" src= "https://lh3.googleusercontent.com/drive-viewer/AFGJ81qSoFl7-DbVcMruBAOiPuMCDz6z-Et5pth-DyZfZzod4A_mTuM2L55Pjr-XTs-aYJJXeNLnhrEHWqBFTVazJ3OI1dI5=s1600" alt="Really cool image" >
+                    <div class="position-absolute top-50 start-50 translate-middle link-light">
+                      <h1>Link1</h1>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-md-4">
+                  <a href= " { % url 'index' %} ">
+                    <img class="h-50 img-responsive"  style="height: 125px; width: 100%; display: block;" src= "https://byu.box.com/shared/static/xcb2m0j5e6tlvob0nuffjg5gmvk2topc.jpg">
+                    <div class="position-absolute top-0 start-50 text-dark translate-middle-x link-dark">
+                      <h1>Link2</h1>
+                    </div>
+                  </a>
+                  <a href= " { % url 'index' %} ">
+                    <img class="h-50 img-responsive"  style="height: 125px; width: 100%; display: block;" src= "https://lh3.googleusercontent.com/drive-viewer/AFGJ81qIwG1AA0hBuq-yN-Es8ibMh-PXFGzmxnGjyG6fYN6vue3z3OH385yRBXcOnD9bh_celshBaPZ6edUClZEeR4bc6pcXew=s1600">
+                    <div class="position-absolute bottom-0 start-50 text-dark translate-middle-x link-dark">
+                      <h1>Link3</h1>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-md-4">
+                  <a href= " { % url 'index' %} ">
+                    <img class="h-100 img-responsive"  style="height: 125px; width: 100%; display: block;" src= "https://lh3.googleusercontent.com/drive-viewer/AFGJ81q65VIlhPNE1De3H1aqGKi9ikKd1eheGqUnoDZU5gORxTDBqSQt9ciJ7lu_61Nelq9M_keZ3A207xU0icekuA26J8AonQ=s1600"  >
+                    <div class="position-absolute top-50 start-50  translate-middle link-light">
+                    <h1>Link4</h1>
+                  </div>
+                </a>
+                </div>
+            </div>
+          </div>
+        </div>    
+      </div>
+          
+    </main>
+    
+
+    <footer class="text-muted">
+      <div class="container">
+
+      </div>
+    </footer>
+
+{% endblock %}
+
+
+

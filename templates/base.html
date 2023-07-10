@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    {% block title %}
+    {% endblock %}
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.1087.0" data-gr-ext-installed="">
+  <header>
+    <div class="bg-dark collapse" id="navbarHeader" style="">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4 offset-md-1 py-4">
+            <ul class="list-unstyled">
+              <h5><a href=" { % url 'index' %} " class="text-white text-decoration-none">Link1</a></h5>
+              <h5><a href=" { % url 'index' %} "  class="text-white text-decoration-none">Link2</a></h5>
+              <h5><a href=" { % url 'index' %} " class="text-white text-decoration-none">Link3</a></h5>
+              <h5><a href=" { % url 'index' %} " class="text-white text-decoration-none">Link4</a></h5>
+            </ul>
+          </div>
+          <div class= "col-md-12 text-right">
+            <a class="btn text-white" href={% url 'index'%}admin role="button">login</a>
+          </div>  
+        </div>
+      </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+      <div class="container d-flex justify-content-between">
+        <a href={% url 'index'%} class="navbar-brand d-flex align-items-center">
+          <svg xmlns="https://byu.box.com/shared/static/gmqpfh3su28u9qjoiugpumrjs2s6i6aj.svg" width="20" height="20" class="mr-2"></svg>
+          <strong>Evan Carter</strong>
+        </a>
+        {% block search %}
+        {% endblock %}
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+    {% block content %}
+    {% endblock %}
+
+
+</html>
