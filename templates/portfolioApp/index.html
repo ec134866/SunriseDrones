@@ -6,25 +6,37 @@
         {% block search %}
         {% endblock %}
         
-        
-{% block content %}
-<body>
+        {% block content %}
+
+      <h1>Evan Carter</h1>
+      <p class="subtitle">Promoting Change One Presentation At A Time</p>
+      <div class="container2">
+        <div class="box">
+          <span>Acrobatic Dunker</span>
+          <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-zfvbFelyDwFRtvpWe3rO6hac5Zgt35IVMVc_ORifadufOJ3_BBBosVj0gqq1X23eSGTFTyHBEw-FmuD0zbiwopA9DB=s1600">
+        </div>
+        <div class="box" onclick="location.href='{% url 'analyst' %}'" style="cursor: pointer;">
+          <span>Business Analyst</span>  
+          <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-wXLJypYU-Qe419z4ozkSjHlUgy7GDTUbs-5T3ePkN5se_ZM5jRPlZNSkh8AocURmZaB4wtMxw0SD9LkIuLjT3kh5lu=s1600">
+        </div>
+      </div>
+  
+        {% endblock %}
+{% comment %} {% block content %}
   <div class="container1">
     <h1>Evan Carter</h1>
     <p class="subtitle">Promoting Change One Presentation At A Time</p>
     <div class="container2">
-        <div class="box">
-            <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-z4qPZlYuZ2s_bpg-nV-EqzXgwt5C2u4Gtzv5Owdy-b7M3EgVNbWtKe3eM2ItN7QVvWt0hxS0hCgoV4Xwh9GGdU3O2OKw=s1600">
-            <span>Business Analyst</span>
-        </div>
-        <div class="box">
-            <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-zD-qb67p9TUy91NrEWhuRuCHjV_sNZO_I__-EnPstKxYperTxVYU1BjW3nl1lDtBVUjPuwGRrJc5mY-7N2gLtbp56hSA=s1600">
-            <span>Acrobatic Dunker</span>
-        </div>
+      <div class="box">
+        <span> Acrobatic Dunker </span>
+        <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-zfvbFelyDwFRtvpWe3rO6hac5Zgt35IVMVc_ORifadufOJ3_BBBosVj0gqq1X23eSGTFTyHBEw-FmuD0zbiwopA9DB=s1600">
+      </div>
+      <div class="box" onclick=location.href={% url 'analyst' %} style="cursor: pointer;">
+        <span> Business Analyst </span>  
+        <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-wXLJypYU-Qe419z4ozkSjHlUgy7GDTUbs-5T3ePkN5se_ZM5jRPlZNSkh8AocURmZaB4wtMxw0SD9LkIuLjT3kh5lu=s1600">
+      </div>
     </div>
   </div>
 </body>
-{% endblock %}
-
-
+{% endblock %} {% endcomment %}
 
