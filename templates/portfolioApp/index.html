@@ -11,7 +11,7 @@
       <h1>Evan Carter</h1>
       <p class="subtitle">Promoting Change One Presentation At A Time</p>
       <div class="container2">
-        <div class="box">
+        <div class="box" onclick="location.href='{% url 'dunker' %}'" style="cursor: pointer;">
           <span>Acrobatic Dunker</span>
           <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-zfvbFelyDwFRtvpWe3rO6hac5Zgt35IVMVc_ORifadufOJ3_BBBosVj0gqq1X23eSGTFTyHBEw-FmuD0zbiwopA9DB=s1600">
         </div>
@@ -20,5 +20,11 @@
           <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-wXLJypYU-Qe419z4ozkSjHlUgy7GDTUbs-5T3ePkN5se_ZM5jRPlZNSkh8AocURmZaB4wtMxw0SD9LkIuLjT3kh5lu=s1600">
         </div>
       </div>
+
+
+      {% comment %} add language swap ability and affect entire app {% endcomment %}
+      {% comment %} make acrobatic dunker page: timeline, embeded presentations {% endcomment %}
+      {% comment %} make about page: phone number, whatsapp, linkedin {% endcomment %}
+      {% comment %} update business analyst page: grid of reflecting projects (tableau CES Fin, tableau Value add, adaptive screenshots), Certificates visible {% endcomment %}
   
         {% endblock %}

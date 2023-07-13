@@ -14,3 +14,11 @@ def analystPageView(request):
     context = {}
 
     return render(request, 'portfolioApp/analyst.html', context)
+
+def dunkerPageView(request):
+    
+    context = {}
+
+    return render(request, 'portfolioApp/dunker.html', context)
+
+
