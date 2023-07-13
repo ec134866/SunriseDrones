@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,11 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'portfolioApp.apps.PortfolioappConfig',
+    'rosetta',
 ]
+# pip install django-rosetta
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -104,20 +108,35 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
+# https://testdriven.io/blog/multiple-languages-in-django/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+LANGUAGES = (
+    ('en', _('English')),
+    ('pt', _('Portuguese')),
+)
+# add to settings: from django.utils.translation import gettext_lazy as _
+LOCALE_PATHS = [
+    BASE_DIR / 'locale/',
+]
+# make locale folder in root.
+# django-admin makemessages --all --ignore=env
+# django-admin compilemessages --ignore=env
 
 TIME_ZONE = 'UTC'
-
+# 'UTC' is the default TIME_ZONE.
 USE_I18N = True
-
+USE_L10N = True
+# Since USE_L10N is set to True, Django will display numbers and dates using the format of the current locale.
 USE_TZ = True
-
+# Finally, when USE_TZ is True, datetimes will be timezone-aware.
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "/static/"
+# STATICFILE_DIRS = [os.path.join(BASE_DIR, "static"),]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

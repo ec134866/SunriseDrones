@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -1234,10 +1235,10 @@
 <body>
   <header>
     <div class="ul">
-      <div class="li"><a class="a" href="{% url 'index' %}">home</a></div>
-      <div class="li"><a class="a" href="{% url 'analyst' %}">work</a></div>
-      <div class="li"><a class="a" href="{% url 'index' %}">about</a></div>
-      <div class="li"><a class="a" href="{% url 'index' %}">languages</a></div>
+      <div class="li"><a class="a" href="{% url 'index' %}">{% trans "home" %}</a></div>
+      <div class="li"><a class="a" href="{% url 'analyst' %}">{% trans "work" %}</a></div>
+      <div class="li"><a class="a" href="{% url 'index' %}">{% trans "about" %}</a></div>
+      <div class="li"><a class="a" href="{% url 'index' %}">{% trans "languages" %}</a></div>
     </div>    
     <div class="container1">
       
