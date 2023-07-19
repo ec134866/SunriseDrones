@@ -1200,6 +1200,7 @@
             text-transform: uppercase;
             transition: 0.5s;
             cursor: pointer;
+            line-height: 10px;
       
             &::after {
               position: absolute;
@@ -1225,10 +1226,101 @@
           }
         }
       }
+      .language-options {
+        display: none;
+      }
+      
+      .language-option {
+        padding: 3px 6px;
+      }
+      
+      .language-options.show {
+        display: block;
+      }
+
+      .work-options {
+        display: none;
+      }
+      
+      .work-option {
+        padding: 3px 6px;
+      }
+      
+      .work-options.show {
+        display: block;
+      }
+
+
+      .flag-icon {
+        display: inline-block;
+        width: 15px;
+        height: 10px;
+        background-size: cover;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        vertical-align: middle;
+        margin-right: 5px;
+      }
+      
+      .flag-icon-us {
+        /* Use the 'us' flag from the flag-icon-css library */
+        /* For example: */
+        background-image: url("https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/us.svg");
+      }
+      
+      .flag-icon-br {
+        /* Use the 'br' flag from the flag-icon-css library */
+        /* For example: */
+        background-image: url("https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/br.svg");
+      }
+      
+      
       
 
       
       </style>
+
+      <script>
+        function toggleLanguageOptions(event) {
+          event.preventDefault();
+          const languageOptions = document.getElementById("languageOptions");
+          languageOptions.classList.toggle("show");
+        }
+      
+        function toggleWorkOptions(event) {
+          event.preventDefault();
+          const workOptions = document.getElementById("workOptions");
+          workOptions.classList.toggle("show");
+        }
+      
+        function changeLanguage(event, languageCode) {
+          event.preventDefault();
+          const currentLanguage = "{{ request.LANGUAGE_CODE }}"; // Get the current language code from Django template
+          const currentPath = window.location.pathname;
+          const newPath = currentPath.replace("/" + currentLanguage + "/", "/" + languageCode + "/");
+          window.location.href = newPath;
+        }
+      
+        // Add event listener to handle language toggle
+        const languageDropdown = document.querySelector(".language-dropdown");
+        languageDropdown.addEventListener("click", toggleLanguageOptions);
+      
+        // Add event listener to handle work dropdown toggle
+        const workDropdown = document.querySelector(".work-dropdown");
+        workDropdown.addEventListener("click", toggleWorkOptions);
+      
+        // Close the language and work dropdowns when clicking outside of them
+        document.addEventListener("click", function (event) {
+          const languageOptions = document.getElementById("languageOptions");
+          const workOptions = document.getElementById("workOptions");
+          if (!languageOptions.contains(event.target) && !event.target.classList.contains('language-btn')) {
+            languageOptions.classList.remove("show");
+          }
+          if (!workOptions.contains(event.target) && !event.target.classList.contains('work-dropdown')) {
+            workOptions.classList.remove("show");
+          }
+        });
+       </script>
     
   </head>
 
@@ -1236,9 +1328,47 @@
   <header>
     <div class="ul">
       <div class="li"><a class="a" href="{% url 'index' %}">{% trans "home" %}</a></div>
-      <div class="li"><a class="a" href="{% url 'analyst' %}">{% trans "work" %}</a></div>
+      <div class="li work-dropdown">
+        <a class="a" href="#" onclick="toggleWorkOptions(event)">
+          {% trans "work" %}
+        </a>
+        <div id="workOptions" class="work-options">
+          <div class="li">
+            <a class="a language-btn" href="{% url 'analyst' %}">
+              {% trans "analyst" %}
+            </a>
+          </div>
+          <div class="li">
+            <a class="a language-btn" href="{% url 'dunker' %}">
+              {% trans "dunker" %}
+            </a>
+          </div>
+        </div>
+      </div>
       <div class="li"><a class="a" href="{% url 'index' %}">{% trans "about" %}</a></div>
-      <div class="li"><a class="a" href="{% url 'index' %}">{% trans "languages" %}</a></div>
+      <div class="li">
+        <a class="a" href="#" onclick="toggleLanguageOptions(event)">
+          {% trans "languages" %}
+        </a>
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        <div id="languageOptions" class="language-options">
+          {% for lang in languages %}
+          <div class="li">
+            <a class="a language-btn" href="#" onclick="changeLanguage(event, '{{ lang.code }}')" title="{{ lang.name_local }}">
+              {% if lang.code == 'en' %}
+              <span class="flag-icon flag-icon-us"></span>EN
+              {% elif lang.code == 'pt' %}
+              <span class="flag-icon flag-icon-br"></span>PT
+              {% else %}
+              {{ lang.name_local }}
+              {% endif %}
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
     </div>    
     <div class="container1">
       

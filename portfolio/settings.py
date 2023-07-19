@@ -109,6 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 # https://testdriven.io/blog/multiple-languages-in-django/
+# https://docs.djangoproject.com/en/dev/topics/i18n/translation/
 
 LANGUAGE_CODE = 'en'
 LANGUAGES = (
