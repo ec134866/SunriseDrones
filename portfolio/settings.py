@@ -30,7 +30,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
-ALLOWED_HOSTS = ['127.0.0.1', 'evancarter.pythonanywhere.com', '52.87.236.41']
+ALLOWED_HOSTS = ['127.0.0.1', 'evancarter.pythonanywhere.com']
 
 
 # Application definition
