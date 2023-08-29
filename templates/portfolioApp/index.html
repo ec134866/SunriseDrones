@@ -14,18 +14,114 @@
       <div class="container2">
         <div class="box" onclick="location.href='{% url 'dunker' %}'" style="cursor: pointer;">
           <span>{% trans "Acrobatic Dunker" %}</span>
-          <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-zfvbFelyDwFRtvpWe3rO6hac5Zgt35IVMVc_ORifadufOJ3_BBBosVj0gqq1X23eSGTFTyHBEw-FmuD0zbiwopA9DB=s1600">
+          <img src="https://drive.google.com/uc?id=1gVRtHc0g8n4L8tdPN4VjNWuIJeTr2R0P&export=download">
         </div>
         <div class="box" onclick="location.href='{% url 'analyst' %}'" style="cursor: pointer;">
           <span>{% trans "Business Analyst" %}</span>  
-          <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-wXLJypYU-Qe419z4ozkSjHlUgy7GDTUbs-5T3ePkN5se_ZM5jRPlZNSkh8AocURmZaB4wtMxw0SD9LkIuLjT3kh5lu=s1600">
+          <img src="https://drive.google.com/uc?id=1LbNZP8QCWfbEiIm1DMkb517gjCboT0v-&export=download">
         </div>
       </div>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <div class="page-break"></div>
 
+      <section id="about" class="about-section">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              <div>
+                <img src="https://drive.google.com/uc?id=1528ml1qWtTsavG9skpZhaX1yu6qHQFkJ&export=download" style="width: 12vw; height: auto; border-radius: 60%;">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="about-content">
+                <h2>Evan Carter</h2>
+                <p style="text-align: left;">
+                  From Colorado Springs and loves the outdoors: anything from camping to just going on walks with my wife.
+                </p>
+                <p style="text-align: left;">
+                  I learn so that I can perform to the best of my ability. 
+                </p> <br>
+                <p style="text-align: center;">
+                  "If you can't explain it simply, you don't understand it well enough." -A. Einstein
+                </p>
+              </div>
+            </div>
+          </div>
+          <br><br>
+        <div class="row justify-content-center">
+          {% if 'en' in request.path %}
+          <div class='tableauPlaceholder' id='viz1692234293139' style='position: relative'>
+            <noscript>
+                <a href='#'>
+                    <img alt='About Timeline en ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ab&#47;AboutTimelineen&#47;AboutTimelineen&#47;1_rss.png' style='border: none' />
+                </a>
+            </noscript>
+            <object class='tableauViz'  style='display:none;'>
+                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                <param name='embed_code_version' value='3' />
+                <param name='site_root' value='' />
+                <param name='name' value='AboutTimelineen&#47;AboutTimelineen' />
+                <param name='tabs' value='no' />
+                <param name='toolbar' value='yes' />
+                <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ab&#47;AboutTimelineen&#47;AboutTimelineen&#47;1.png' />
+                <param name='animate_transition' value='yes' />
+                <param name='display_static_image' value='yes' />
+                <param name='display_spinner' value='yes' />
+                <param name='display_overlay' value='yes' />
+                <param name='display_count' value='yes' />
+                <param name='language' value='en-US' />
+                <param name='filter' value='publish=yes' />
+            </object>
+          </div>
+            <script type='text/javascript'>
+              var divElement = document.getElementById('viz1692234293139');
+              var vizElement = divElement.getElementsByTagName('object')[0];
+              vizElement.style.width='1000px';
+              vizElement.style.height='365px';
+              var scriptElement = document.createElement('script');
+              scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+              vizElement.parentNode.insertBefore(scriptElement, vizElement);
+            </script>
+        
+          {% elif 'pt' in request.path %}
+            <div class='tableauPlaceholder' id='viz1691516897586' style='position: relative'>
+              <noscript>
+                <a href='#'>
+                  <img alt='About Timeline pt ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ab&#47;AboutTimelinept&#47;AboutTimelinept&#47;1_rss.png' style='border: none' />
+                </a>
+              </noscript>
+              <object class='tableauViz' style='display:none;'>
+                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                <param name='embed_code_version' value='3' />
+                <param name='path' value='views&#47;AboutTimelinept&#47;AboutTimelinept?:language=en-US&amp;:embed=true&amp;publish=yes' />
+                <param name='toolbar' value='yes' />
+                <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ab&#47;AboutTimelinept&#47;AboutTimelinept&#47;1.png' />
+                <param name='animate_transition' value='yes' />
+                <param name='display_static_image' value='yes' />
+                <param name='display_spinner' value='yes' />
+                <param name='display_overlay' value='yes' />
+                <param name='display_count' value='yes' />
+                <param name='language' value='pt-BR' />
+                <param name='filter' value='publish=yes' />
+              </object>
+            </div>
+            <script type='text/javascript'>
+              var divElement = document.getElementById('viz1691516897586');
+              var vizElement = divElement.getElementsByTagName('object')[0];
+              vizElement.style.width='1000px';
+              vizElement.style.height='365px';
+              var scriptElement = document.createElement('script');
+              scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+              vizElement.parentNode.insertBefore(scriptElement, vizElement);
+            </script>          
+          {% endif %}
+        </div>
+      </section>
 
-      {% comment %} add language swap ability and affect entire app {% endcomment %}
+  
       {% comment %} make acrobatic dunker page: timeline, embeded presentations {% endcomment %}
-      {% comment %} make about page: phone number, whatsapp, linkedin {% endcomment %}
       {% comment %} update business analyst page: grid of reflecting projects (tableau CES Fin, tableau Value add, adaptive screenshots), Certificates visible {% endcomment %}
   
         {% endblock %}
+
+
