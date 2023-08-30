@@ -20,5 +20,3 @@ def dunkerPageView(request):
     context = {}
 
     return render(request, 'portfolioApp/dunker.html', context)
-
-
