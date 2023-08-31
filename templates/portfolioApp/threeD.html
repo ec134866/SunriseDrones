@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+{% load i18n %}
+        {% block title %}
+          <title> {% trans "Evan Carter" %} </title>
+        {% endblock %}
+        
+        {% block search %}
+        {% endblock %}
+        
+        {% block content %}
+
+      <br><br><br><br>
+      <div class="container justify-content-center">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-sm-4 col-12">
+              <embed
+                    src="https://drive.google.com/file/d/19147-9Ed4Qr55WTkUFCdoIUbFbRyxrQM/preview?&mute=1&rel=0"
+                    wmode="transparent"
+                    type="video/mp4"
+                    width="580" height="400"
+                    allow="autoplay; encrypted-media; picture-in-picture"
+                    allowfullscreen
+                    title="Sunrise Property"
+                  >
+            <h3> {% trans "Sunrise Property" %} </h3>
+          </div>
+        </div>    
+      </div>  
+      
+        {% endblock %}
+
+

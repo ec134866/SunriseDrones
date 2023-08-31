@@ -20,3 +20,15 @@ def dunkerPageView(request):
     context = {}
 
     return render(request, 'portfolioApp/dunker.html', context)
+
+def sideprojectPageView(request):
+    
+    context = {}
+
+    return render(request, 'portfolioApp/sideprojects.html', context)
+
+def threeDPageView(request):
+    
+    context = {}
+
+    return render(request, 'portfolioApp/threeD.html', context)
