@@ -1,0 +1,30 @@
+{% extends 'base.html'%}
+{% load i18n %}
+        {% block title %}
+          <title> {% trans "Evan Carter" %} </title>
+        {% endblock %}
+        
+        {% block search %}
+        {% endblock %}
+        
+        {% block content %}
+
+      <br><br><br><br><br><br>
+
+
+        <form method="post">
+            {% csrf_token %}
+            <label for="username" style="font-size: 2vw;">Username:</label>
+            <input type="text" id="username" name="username" required style="font-size: 1vw;"><br>
+            <label for="password" style="font-size: 2vw;">Password:</label>
+            <input type="password" id="password" name="password" required style="font-size: 1vw;"><br>
+            <button type="submit" style="font-size: 1.5vw;">Login</button>
+        </form>
+        <br>
+        {% if error_message %}
+        <p style="color: red; font-weight: bold; font-size: 2vw;">{{ error_message }}</p>
+        {% endif %}
+
+
+
+        {% endblock %}
