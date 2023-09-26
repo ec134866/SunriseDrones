@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-13 16:56+0000\n"
-"PO-Revision-Date: 2023-07-13 16:45+0000\n"
+"POT-Creation-Date: 2023-09-18 17:15+0000\n"
+"PO-Revision-Date: 2023-09-18 17:47+0000\n"
 "Last-Translator:   <admin@email.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,27 +19,39 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.9.9\n"
 
-#: portfolio/settings.py:115
+#: portfolio/settings.py:119
 msgid "English"
 msgstr "Inglês"
 
-#: portfolio/settings.py:116
+#: portfolio/settings.py:120
 msgid "Portuguese"
 msgstr "Português"
 
-#: templates/base.html:1240
+#: templates/base.html:490
 msgid "home"
 msgstr ""
 
-#: templates/base.html:1241
+#: templates/base.html:493
 msgid "work"
 msgstr "trabalho"
 
-#: templates/base.html:1242
+#: templates/base.html:498
+msgid "analyst"
+msgstr ""
+
+#: templates/base.html:503
+msgid "dunker"
+msgstr ""
+
+#: templates/base.html:508
+msgid "side projects"
+msgstr ""
+
+#: templates/base.html:513
 msgid "about"
 msgstr "sobre"
 
-#: templates/base.html:1243
+#: templates/base.html:516
 msgid "languages"
 msgstr "idiomas"
 
@@ -47,8 +59,108 @@ msgstr "idiomas"
 msgid "Business Analyst"
 msgstr "Analisador de Empregos"
 
+#: templates/portfolioApp/analyst.html:15
+msgid "*All data provided has been changed in accordance with"
+msgstr "*Todos os dados foram alterados de acordo com as"
+
 #: templates/portfolioApp/analyst.html:16
-msgid "Tableau Dashboard"
+msgid "data privacy practices of Brigham Young University*"
+msgstr "práticas de privacidade da Universidade Brigham Young."
+
+#: templates/portfolioApp/analyst.html:41
+msgid "Commissioner's Office Dashboard"
+msgstr "O Dashboard do Escritório do Comissário"
+
+#: templates/portfolioApp/analyst.html:44
+msgid ""
+"Project Background: I was asked to bring each of these charts together into "
+"one cohesive dashboard allowing CIO's to have easier access and clearer "
+"workflows."
+msgstr ""
+"Pano do Fundo do Projeto: Fui pedido para juntar cada um desses gráficos em "
+"um dashboard coeso, permitindo que os Diretores de TI tivessem acesso mais "
+"direito e fluxo de trabalho mais claros."
+
+#: templates/portfolioApp/analyst.html:45
+msgid ""
+"Audience: Commissioner's office who work with the Board of Trustees to "
+"direct funds."
+msgstr ""
+"Público: o escritório do Comissário que trabalho com o conselho de "
+"administradores para dirigir os fundos. "
+
+#: templates/portfolioApp/analyst.html:46
+msgid ""
+"User: CIO's in their annual presentation to show correct use of funds in "
+"years past in order to prove an open process of checks and balances."
+msgstr ""
+"Usuário: Diretores de TI nas apresentações anuaís para demonstrar o uso "
+"correto dos fundos."
+
+#: templates/portfolioApp/analyst.html:95
+msgid "Annual Needs Review"
+msgstr "Revisão Anual das Necessidades"
+
+#: templates/portfolioApp/analyst.html:98
+msgid ""
+"Project Background: I was asked to translate Excel files with specific data "
+"from five subsidiary companies into one interactive dashboard that provides "
+"the same insights from any view desired."
+msgstr ""
+"Pano do Fundo do Projeto: Fui pedido de transpor vários arquivos de Excel "
+"com dados de cinco empresas em um Dashboard único com os mesmos insights."
+
+#: templates/portfolioApp/analyst.html:99
+msgid ""
+"Audience: Board of Directors who delegate funds to subsidiary universities."
+msgstr ""
+"Público: Conselho de Administradores que dirigem os fundos para as "
+"universidades."
+
+#: templates/portfolioApp/analyst.html:100
+msgid ""
+"User: CIO's in their annual presentation to request funds for specific IT "
+"needs."
+msgstr ""
+"Usuário: Diretores de TI nas apresentações anuaís para pedir fundos pelas "
+"necessidades de TI. "
+
+#: templates/portfolioApp/analyst.html:101
+msgid ""
+"Issue Solved: Presentations in years past were manually constructed in Excel"
+" and printed out by each university. Data had to be cleaned and manipulated "
+"every year in order to fulfill presentation needs."
+msgstr ""
+"Problema Resolvido: Apresentações nos anos passados foram construídos "
+"manualmente em Excel e depois imprimido. Dados tiveram que ser limpados e "
+"manipulados a cada ano para cumprir as necessidades das apresentações. "
+
+#: templates/portfolioApp/analyst.html:110
+msgid "Footsteps of the Apostles"
+msgstr "Passos dos Apóstolos"
+
+#: templates/portfolioApp/analyst.html:112
+msgid ""
+"To better understand the life of the apostles in the New Testament, I wanted"
+" to visualize their footsteps."
+msgstr ""
+"Para compreender melhor as vidas dos Apóstolos no Novo Testamento, queria "
+"visualizar os passos deles. "
+
+#: templates/portfolioApp/analyst.html:113
+msgid ""
+"Below you can follow an estimated timeline that pairs with the location and "
+"description of what happened there."
+msgstr ""
+"Abaixo possa seguir uma linha de tempo estimado com o localização e um "
+"descrição do que aconteceu. "
+
+#: templates/portfolioApp/analyst.html:159
+msgid "BI & Data Analytics Certficates"
+msgstr "Certificados de BI e Data Analytics"
+
+#: templates/portfolioApp/character.html:4
+msgid "Mascot Portfolio"
 msgstr ""
 
 #: templates/portfolioApp/dunker.html:4 templates/portfolioApp/index.html:16
@@ -56,12 +168,49 @@ msgid "Acrobatic Dunker"
 msgstr "Enterrador Acrobático"
 
 #: templates/portfolioApp/index.html:4 templates/portfolioApp/index.html:12
+#: templates/portfolioApp/login.html:4
+#: templates/portfolioApp/sideprojects.html:4
+#: templates/portfolioApp/threeD.html:4
 msgid "Evan Carter"
 msgstr ""
 
 #: templates/portfolioApp/index.html:13
 msgid "Promoting Change One Presentation At A Time"
 msgstr "Divulgando Mudança Com A Cada Apresentação"
+
+#: templates/portfolioApp/index.html:38
+msgid ""
+"From Colorado Springs and loves the outdoors: anything from camping to just "
+"going on walks with my wife."
+msgstr ""
+"Sou de Colorado Springs e adoro de ficar fora de casa: seja por acampar ou "
+"apenas passear com minha esposa."
+
+#: templates/portfolioApp/index.html:41
+msgid "I learn so that I can perform to the best of my ability."
+msgstr ""
+
+#: templates/portfolioApp/index.html:44
+msgid ""
+"If you can't explain it simply, you don't understand it well enough. -A. "
+"Einstein"
+msgstr ""
+
+#: templates/portfolioApp/sideprojects.html:12
+msgid "Side Projects"
+msgstr ""
+
+#: templates/portfolioApp/sideprojects.html:18
+msgid "Full-Stack Development"
+msgstr ""
+
+#: templates/portfolioApp/sideprojects.html:22
+msgid "Drone Photogrammetry"
+msgstr ""
+
+#: templates/portfolioApp/threeD.html:25
+msgid "Sunrise Property"
+msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/contrib/messages/apps.py:15
 msgid "Messages"
@@ -122,8 +271,8 @@ msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/core/validators.py:267
 msgid ""
-"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
-"hyphens."
+"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or"
+" hyphens."
 msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/core/validators.py:279
@@ -323,15 +472,15 @@ msgstr ""
 #: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1489
 #, python-format
 msgid ""
-"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
-"uuuuuu]][TZ] format."
+"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD "
+"HH:MM[:ss[.uuuuuu]][TZ] format."
 msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1497
 #, python-format
 msgid ""
-"“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
-"[TZ]) but it is an invalid date/time."
+"“%(value)s” value has the correct format (YYYY-MM-DD "
+"HH:MM[:ss[.uuuuuu]][TZ]) but it is an invalid date/time."
 msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1502
@@ -350,8 +499,8 @@ msgstr ""
 #: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1789
 #, python-format
 msgid ""
-"“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
-"uuuuuu] format."
+"“%(value)s” value has an invalid format. It must be in [DD] "
+"[[HH:]MM:]ss[.uuuuuu] format."
 msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1793
@@ -510,7 +659,8 @@ msgid "Many-to-many relationship"
 msgstr ""
 
 #. Translators: If found as last label character, these punctuation
-#. characters will prevent the default label_suffix to be appended to the label
+#. characters will prevent the default label_suffix to be appended to the
+#. label
 #: venv/lib/python3.11/site-packages/django/forms/boundfield.py:184
 msgid ":?.!"
 msgstr ""
@@ -560,7 +710,8 @@ msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/forms/fields.py:625
 #, python-format
-msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid ""
+"Ensure this filename has at most %(max)d character (it has %(length)d)."
 msgid_plural ""
 "Ensure this filename has at most %(max)d characters (it has %(length)d)."
 msgstr[0] ""
@@ -668,7 +819,8 @@ msgid "The inline value did not match the parent instance."
 msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/forms/models.py:1429
-msgid "Select a valid choice. That choice is not one of the available choices."
+msgid ""
+"Select a valid choice. That choice is not one of the available choices."
 msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/forms/models.py:1568
@@ -1128,11 +1280,11 @@ msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/views/csrf.py:127
 msgid ""
-"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
-"including the “Referrer-Policy: no-referrer” header, please remove them. The "
-"CSRF protection requires the “Referer” header to do strict referer checking. "
-"If you’re concerned about privacy, use alternatives like <a rel=\"noreferrer"
-"\" …> for links to third-party sites."
+"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or"
+" including the “Referrer-Policy: no-referrer” header, please remove them. "
+"The CSRF protection requires the “Referer” header to do strict referer "
+"checking. If you’re concerned about privacy, use alternatives like <a "
+"rel=\"noreferrer\" …> for links to third-party sites."
 msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/views/csrf.py:136
@@ -1183,8 +1335,8 @@ msgstr ""
 #: venv/lib/python3.11/site-packages/django/views/generic/dates.py:652
 #, python-format
 msgid ""
-"Future %(verbose_name_plural)s not available because %(class_name)s."
-"allow_future is False."
+"Future %(verbose_name_plural)s not available because "
+"%(class_name)s.allow_future is False."
 msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/views/generic/dates.py:692
@@ -1240,10 +1392,10 @@ msgstr ""
 #: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:221
 #, python-format
 msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
-"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
-"\">DEBUG=True</a> is in your settings file and you have not configured any "
-"URLs."
+"You are seeing this page because <a "
+"href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" "
+"target=\"_blank\" rel=\"noopener\">DEBUG=True</a> is in your settings file "
+"and you have not configured any URLs."
 msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:229
