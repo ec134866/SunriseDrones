@@ -411,6 +411,69 @@
       grid-column: span 2;
     }
     {% comment %} end of dunker images {% endcomment %}
+    {% comment %} start of character styles {% endcomment %}
+    
+    .containerExp {
+      display: flex;
+      justify-content: center;
+    }
+    
+    .cardExp {
+      margin: 1rem;
+      width: 20vw;
+      height: 75%;
+      padding: 0.5rem 1rem;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 12px 32px 4px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: 0.2s;
+    }
+    .cardExp:hover {
+      transform: translateY(-25px);
+    }
+    .cardExp .titleExp {
+      color: white;
+      margin: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      transition: 0.2s;
+      cursor: default;
+    }
+    .cardExp .titleExp--legendaryExp {
+      background-color: #f4d03f;
+    }
+    .cardExp .titleExp--legendaryExp:hover {
+      box-shadow: 0 0 12px rgba(244, 208, 63, 0.8);
+    }
+    .cardExp .titleExp--epicExp {
+      background-color: #8c14fc;
+    }
+    .cardExp .titleExp--epicExp:hover {
+      box-shadow: 0 0 12px rgba(140, 20, 252, 0.8);
+    }
+    .cardExp .titleExp--commonExp {
+      background-color: #2ecc71;
+    }
+    .cardExp .titleExp--commonExp:hover {
+      box-shadow: 0 0 12px rgba(46, 204, 113, 0.8);
+    }
+    .cardExp .descExp {
+      text-align: center;
+    }
+    .cardExp .actionsExp {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    
+    
+
+    {% comment %} end of character styles {% endcomment %}
     
       
       </style>
