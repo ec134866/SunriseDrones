@@ -36,6 +36,13 @@ def threeDPageView(request):
 
     return render(request, 'portfolioApp/threeD.html', context)
 
+
+def translationPageView(request):
+    
+    context = {}
+
+    return render(request, 'portfolioApp/translation.html', context)
+
 def loginPageView(request):
     error_message = None
 

@@ -1,0 +1,33 @@
+{% extends 'base.html'%}
+{% load i18n %}
+        {% block title %}
+          <title> {% trans "Translator" %} </title>
+        {% endblock %}
+        
+        {% block search %}
+        {% endblock %}
+        
+        {% block content %}
+
+      <br><br><br><br>
+      <div class="container">
+        <div class="row" style="justify-content:center; align-items:center;">
+          <div class="col-sm-6">
+              
+            <h3> {% trans "Translation & Localization" %} </h3>
+            <h4> {% trans "Trados Cloud" %} </h4>
+            <h4> {% trans "Trados Studio" %} </h4>
+            <h4> {% trans "Web Localization" %} </h4>
+          </div>
+          <div class="col-sm-6">
+              
+            <h3> {% trans "Interpretation" %} </h3>
+            <h4> {% trans "MBJP" %} </h4>
+            <h4> {% trans "NBA House" %} </h4>
+          </div>
+        </div>    
+      </div>  
+      
+        {% endblock %}
+
+

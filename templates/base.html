@@ -564,7 +564,7 @@
           </div>
           <div class="li">
             <a class="a language-btn" href="{% url 'sideprojects' %}"style="font-size:0.75vw; padding: 0px 0px;">
-              {% trans "side projects" %}
+              {% trans "side interests" %}
             </a>
           </div>
         </div>
@@ -582,9 +582,9 @@
           <div class="li">
             <a class="a language-btn" href="#" onclick="changeLanguage(event, '{{ lang.code }}')" title="{{ lang.name_local }}"style="font-size:0.75vw; padding: 0px 0px;">
               {% if lang.code == 'en' %}
-              <span class="flag-icon flag-icon-us"></span>EN
+              <span class="flag-icon flag-icon-us"></span>En-US
               {% elif lang.code == 'pt' %}
-              <span class="flag-icon flag-icon-br"></span>PT
+              <span class="flag-icon flag-icon-br"></span>Pt-BR
               {% else %}
               {{ lang.name_local }}
               {% endif %}
