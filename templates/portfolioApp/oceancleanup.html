@@ -41,18 +41,18 @@
 
                     const title = document.createElement("h5");
                     title.className = "card-title";
-                    title.innerText = row[1]; 
+                    title.innerText = `Project: ${row[1]}`; 
                     cardBody.appendChild(title);
 
                     const subtitle = document.createElement("h6");
                     subtitle.className = "card-subtitle mb-2 text-muted";
-                    subtitle.innerText = row[2]; 
+                    subtitle.innerText = `Name: ${row[2]}`; 
                     cardBody.appendChild(subtitle);
                     {% comment %} 3 is description {% endcomment %}
 
                     const subtitletwo = document.createElement("h6");
                     subtitletwo.className = "card-subtitle mb-2 text-muted";
-                    subtitletwo.innerText = row[7]; 
+                    subtitletwo.innerText = `Trash Removed: ${row[7]}`;
                     cardBody.appendChild(subtitletwo);
 
                     // add more columns here
