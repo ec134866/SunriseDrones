@@ -24,21 +24,21 @@
                 const container = document.getElementById("data-container");
                 container.innerHTML = ""; // Clear previous content
 
-                for (const project of response) {
+                for (const row of response) {
                     // Create a Bootstrap card for each project
                     const card = document.createElement("div");
                     card.className = "card";
                     card.style.width = "18rem";
                     
                     // Extract image URL from the data
-                    const imageUrl = project.url;
+                    const imageUrl = row.url;
 
                     // Create an image element
                     if (imageUrl) {
                         const img = document.createElement("img");
                         img.src = imageUrl;
                         img.className = "card-img-top";
-                        img.alt = project.projectName; // Set alt attribute to project name
+                        img.alt = row.projectName; // Set alt attribute to project name
                         card.appendChild(img);
                     }
 
@@ -48,13 +48,13 @@
                     // Add project name as card title
                     const title = document.createElement("h5");
                     title.className = "card-title";
-                    title.innerText = project.projectName;
+                    title.innerText = row.projectName;
                     cardBody.appendChild(title);
 
                     // Add trash removed as card text
                     const text = document.createElement("p");
                     text.className = "card-text";
-                    text.innerText = `Trash Removed: ${project.trashRemoved_kg} kg`;
+                    text.innerText = `Trash Removed: ${row.trashRemoved_kg} kg`;
                     cardBody.appendChild(text);
 
                     // You can add more information here as needed
