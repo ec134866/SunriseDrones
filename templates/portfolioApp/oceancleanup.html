@@ -28,7 +28,7 @@
                 const container = document.getElementById("data-container");
                 container.innerHTML = ""; // Clear previous content
 
-                for (const project of response) {
+                for (const row of response) {
                     // Create a Bootstrap card for each project
                     const card = document.createElement("div");
                     card.className = "card";
@@ -38,19 +38,17 @@
                     const cardBody = document.createElement("div");
                     cardBody.className = "card-body";
 
-                    // Add project name as card title
                     const title = document.createElement("h5");
                     title.className = "card-title";
-                    title.innerText = project.projectName;
+                    title.innerText = row[0]; // Assuming the first column is the title
                     cardBody.appendChild(title);
 
-                    // Add trash removed as card text
-                    const text = document.createElement("p");
-                    text.className = "card-text";
-                    text.innerText = `Trash Removed: ${project.trashRemoved_kg} kg`;
-                    cardBody.appendChild(text);
+                    const subtitle = document.createElement("h6");
+                    subtitle.className = "card-subtitle mb-2 text-muted";
+                    subtitle.innerText = row[1]; // Assuming the second column is the subtitle
+                    cardBody.appendChild(subtitle);
 
-                    // You can add more information here as needed
+                    // add more columns here
 
                     card.appendChild(cardBody);
                     container.appendChild(card);
@@ -95,7 +93,7 @@
                     <div>This is an example of getting data from airtable through Google Apps Script</div>
                     {% comment %} <div id="data-table">Loading data ...</div> {% endcomment %}
                     <div class="row" id="data-container">
-                        
+
                     </div>
                 </body>                
             </div>
