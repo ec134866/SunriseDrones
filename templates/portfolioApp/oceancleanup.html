@@ -1,0 +1,59 @@
+{% extends 'base.html'%}
+{% load i18n %}
+        {% block title %}
+          <title> {% trans "The Ocean Cleanup" %} </title>
+        {% endblock %}
+        
+        {% block search %}
+        {% endblock %}
+        
+        {% block content %}
+
+      <br><br><br><br>
+        <script>
+            async function get_data(){
+                const gas_end_point="https://script.google.com/macros/s/AKfycbwrdamlHaEE3WE_zXlsTHZQiYUBLDCEBBQWQhOyvgaWm9G6EXyFAHodwdRvjPv4ZQ-Urw/exec"
+                const data_set = "cleanupProjects"
+
+                
+                const reply = await fetch(gas_end_point + "?data_set=" + data_set)
+                //The request is made of Google App Script and the response is set to "response"
+                const response = await reply.json()
+                console.log("in get data", response) 
+                const html=["<table border=1>"]
+
+                // add the Heading
+                html.push("<tr>")
+                    for(col of response.shift()){
+                        html.push("<th>")
+                        html.push(col)
+                        html.push("</th>")
+                    }
+                    html.push("</tr>")
+
+
+                for(const row of response){
+                    html.push("<tr>")
+                    for(col of row){
+                        html.push("<td>")
+                        html.push(col)
+                        html.push("</td>")
+                    }
+                    html.push("</tr>")
+                }
+                html.push("</table>")
+                document.getElementById("data-table").innerHTML=html.join("")
+            }
+
+        </script>
+        <div class="container">
+            <div class="row">
+                <section onload="get_data()">
+                    <div>This is an example of getting data from airtable through Google Apps Script</div>
+                    <div id="data-table">Loading data ...</div>
+                    
+                </section>
+            </div>
+        </div>
+
+        {% endblock %}

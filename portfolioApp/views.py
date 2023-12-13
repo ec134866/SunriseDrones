@@ -43,6 +43,12 @@ def translationPageView(request):
 
     return render(request, 'portfolioApp/translation.html', context)
 
+def oceanCleanupPageView(request):
+    
+    context = {}
+
+    return render(request, 'portfolioApp/oceancleanup.html', context)
+
 def loginPageView(request):
     error_message = None
 
