@@ -21,26 +21,19 @@
                 const response = await reply.json()
                 console.log("in get data", response) 
 
+
+
+
+
                 const container = document.getElementById("data-container");
                 container.innerHTML = ""; // Clear previous content
 
-                for (const row of response) {
+                for (const project of response) {
                     // Create a Bootstrap card for each project
                     const card = document.createElement("div");
                     card.className = "card";
                     card.style.width = "18rem";
-                    
-                    // Extract image URL from the data
-                    const imageUrl = row.url;
-
-                    // Create an image element
-                    if (imageUrl) {
-                        const img = document.createElement("img");
-                        img.src = imageUrl;
-                        img.className = "card-img-top";
-                        img.alt = row.projectName; // Set alt attribute to project name
-                        card.appendChild(img);
-                    }
+                    card.style.margin = "10px"; // Add margin for spacing
 
                     const cardBody = document.createElement("div");
                     cardBody.className = "card-body";
@@ -48,20 +41,20 @@
                     // Add project name as card title
                     const title = document.createElement("h5");
                     title.className = "card-title";
-                    title.innerText = row.projectName;
+                    title.innerText = project.projectName;
                     cardBody.appendChild(title);
 
                     // Add trash removed as card text
                     const text = document.createElement("p");
                     text.className = "card-text";
-                    text.innerText = `Trash Removed: ${row.trashRemoved_kg} kg`;
+                    text.innerText = `Trash Removed: ${project.trashRemoved_kg} kg`;
                     cardBody.appendChild(text);
 
                     // You can add more information here as needed
 
                     card.appendChild(cardBody);
                     container.appendChild(card);
-                    }
+                }
             }
                 
                 {% comment %} 
@@ -101,7 +94,9 @@
                 <body onload="get_data()">
                     <div>This is an example of getting data from airtable through Google Apps Script</div>
                     {% comment %} <div id="data-table">Loading data ...</div> {% endcomment %}
-                    <div id="data-container"></div>
+                    <div class="row" id="data-container">
+                        
+                    </div>
                 </body>                
             </div>
         </div>
