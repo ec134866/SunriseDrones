@@ -28,24 +28,25 @@
                 const container = document.getElementById("data-container");
                 container.innerHTML = ""; // Clear previous content
 
-                for (const row of response) {
-                    // Create a Bootstrap card for each project
+                for (let i = 1; i < response.length; i++) {
+                    const row = response[i];
+                    
                     const card = document.createElement("div");
                     card.className = "card";
                     card.style.width = "18rem";
-                    card.style.margin = "10px"; // Add margin for spacing
+                    card.style.margin = "10px"; // spacing
 
                     const cardBody = document.createElement("div");
                     cardBody.className = "card-body";
 
                     const title = document.createElement("h5");
                     title.className = "card-title";
-                    title.innerText = row[0]; // Assuming the first column is the title
+                    title.innerText = row[1]; 
                     cardBody.appendChild(title);
 
                     const subtitle = document.createElement("h6");
                     subtitle.className = "card-subtitle mb-2 text-muted";
-                    subtitle.innerText = row[1]; // Assuming the second column is the subtitle
+                    subtitle.innerText = row[3]; 
                     cardBody.appendChild(subtitle);
 
                     // add more columns here
