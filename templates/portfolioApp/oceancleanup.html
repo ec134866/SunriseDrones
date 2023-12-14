@@ -68,8 +68,8 @@
                     cardBody.appendChild(document.createElement("br"));
                     cardBody.appendChild(document.createElement("br"));
 
-                    const subtitletwo = document.createElement("h6");
-                    subtitletwo.className = "card-subtitle mb-2 text-muted";
+                    const subtitletwo = document.createElement("h4");
+                    subtitletwo.className = "card-subtitle";
                     subtitletwo.innerText = `Trash Removed: ${row[7]} kg`;
                     cardBody.appendChild(subtitletwo);
 
@@ -112,10 +112,24 @@
         </script>
         <div class="container">
             <div class="row">
-                <a href="https://airtable.com/apptoGvHgTQOzemhf/shrULBhIWdHT997J7" target="_blank" style="text-decoration: none; color: black;">
-                    <h5>{% trans "The Airtable DB can be reached here" %}</h5>
-                </a>
-                <br><br><br><br>
+                <div class="col-sm-4 col-12">
+                    <a href="https://airtable.com/apptoGvHgTQOzemhf/shrULBhIWdHT997J7" target="_blank" style="text-decoration: none; color: black;"><img src="https://drive.google.com/uc?id=1kQH6XlHH_RqzQ4eQJ6iN4R7ND1IGOezu&export=download" style="width:24vw; height:auto; border-radius:2vw;" alt="Project View">
+                        <h5>{% trans "Airtable: Project View" %}</h5>
+                    </a>
+                </div>
+                <div class="col-sm-4 col-12">
+                    <a href="https://airtable.com/apptoGvHgTQOzemhf/shrHrCzd0dU2nNSU5" target="_blank" style="text-decoration: none; color: black;"><img src="https://drive.google.com/uc?id=1lEH2N8mRkskzl_MHo5yoyEVGzHKHF2j6&export=download" style="width:24vw; height:auto; border-radius:2vw;" alt="Project View">
+                        <h5>{% trans "Airtable: Status View" %}</h5>
+                    </a>
+                </div>
+                <div class="col-sm-4 col-12">
+                    <a href="https://airtable.com/apptoGvHgTQOzemhf/shrGngw2umq1aeVtu" target="_blank" style="text-decoration: none; color: black;"><img src="https://drive.google.com/uc?id=1B7Dna2cfM6BzkexAT0qkz4KsvvZN6Lqn&export=download" style="width:24vw; height:auto; border-radius:2vw;" alt="Project View">
+                        <h5>{% trans "Airtable: Partner Type Breakdown" %}</h5>
+                    </a>
+                </div>
+                
+                
+                <br><br><br>
                 <body onload="get_data()">
                     <div>This is an example of getting data from airtable through Google Apps Script</div>
                     {% comment %} <div id="data-table">Loading data ...</div> {% endcomment %}
