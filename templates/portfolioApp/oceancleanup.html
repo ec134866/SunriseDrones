@@ -10,27 +10,28 @@
         {% block content %}
 
       <br><br><br><br>
+      <div class="container">
+        <div class="row mt-5 mb-5">
+            <div class="col-12">
+                <div>The data below is pulling from Airtable through Google Apps Script</div>
+            </div>
+        </div>
+
         <script>
-            async function get_data(){
-                const gas_end_point="https://script.google.com/macros/s/AKfycbyOV3un7yMrCWOLINUcguxnr7tMZt0YTjE82pEfmSEXJMHVkPsyPd85GmPJgBklUB5ZBA/exec"
+            async function get_data() {
+                const gas_end_point = "https://script.google.com/macros/s/AKfycbyOV3un7yMrCWOLINUcguxnr7tMZt0YTjE82pEfmSEXJMHVkPsyPd85GmPJgBklUB5ZBA/exec"
                 const data_set = "cleanupProjects"
 
-                
                 const reply = await fetch(gas_end_point + "?data_set=" + data_set)
-                //The request is made of Google App Script and the response is set to "response"
                 const response = await reply.json()
-                console.log("in get data", response) 
-
-
-
-
+                console.log("in get data", response)
 
                 const container = document.getElementById("data-container");
                 container.innerHTML = ""; // Clear previous content
 
                 for (let i = 1; i < response.length; i++) {
                     const row = response[i];
-                    
+
                     const card = document.createElement("div");
                     card.className = "card";
                     card.style.width = "17vw";
@@ -42,16 +43,15 @@
 
                     const title = document.createElement("h4");
                     title.className = "card-title";
-                    title.innerText = row[1]; 
+                    title.innerText = row[1];
                     cardBody.appendChild(title);
-                    
+
                     cardBody.appendChild(document.createElement("br"));
 
                     const subtitle = document.createElement("h5");
                     subtitle.className = "card-subtitle text-muted";
-                    subtitle.innerText = row[2]; 
+                    subtitle.innerText = row[2];
                     cardBody.appendChild(subtitle);
-                    {% comment %} 3 is description {% endcomment %}
 
                     const imageUrl = row[8];
                     if (imageUrl) {
@@ -73,71 +73,48 @@
                     subtitletwo.innerText = `Trash Removed: ${row[7]} kg`;
                     cardBody.appendChild(subtitletwo);
 
-                    
-
                     // add more columns here
 
                     card.appendChild(cardBody);
                     container.appendChild(card);
                 }
             }
-                
-                {% comment %} 
-                const html=["<table border=1>"]
-
-                // add the Heading
-                html.push("<tr>")
-                    for(col of response.shift()){
-                        html.push("<th>")
-                        html.push(col)
-                        html.push("</th>")
-                    }
-                    html.push("</tr>")
-
-
-                for(const row of response){
-                    html.push("<tr>")
-                    for(col of row){
-                        html.push("<td>")
-                        html.push(col)
-                        html.push("</td>")
-                    }
-                    html.push("</tr>")
-                }
-                html.push("</table>")
-                document.getElementById("data-table").innerHTML=html.join("") 
-            } 
-            {% endcomment %}
-
         </script>
-        <div class="container">
-            <div class="row">
-                
-                <br><br><br><br>
-                <body onload="get_data()">
-                    <div>The data below is pulling from Airtable through Google Apps Script</div>
-                    {% comment %} <div id="data-table">Loading data ...</div> {% endcomment %}
-                    <div class="row" id="data-container"> Loading data ... </div>
-                </body>  
-                <br><br><br><br>   
+
+        <div class="row mt-5 mb-5" id="data-container"> Loading data ... </div>
+
+        <div class="row mt-5">
+            <div class="col-sm-4 col-12">
+                <a href="https://airtable.com/apptoGvHgTQOzemhf/shrULBhIWdHT997J7" target="_blank"
+                    style="text-decoration: none; color: black;">
+                    <img src="https://drive.google.com/uc?id=1kQH6XlHH_RqzQ4eQJ6iN4R7ND1IGOezu&export=download"
+                        style="width:24vw; height:auto; border-radius:2vw;" alt="Project View">
+                    <h5>{% trans "Airtable: Project View" %}</h5>
+                </a>
             </div>
-            <div class="row">
-                <div class="col-sm-4 col-12">
-                    <a href="https://airtable.com/apptoGvHgTQOzemhf/shrULBhIWdHT997J7" target="_blank" style="text-decoration: none; color: black;"><img src="https://drive.google.com/uc?id=1kQH6XlHH_RqzQ4eQJ6iN4R7ND1IGOezu&export=download" style="width:24vw; height:auto; border-radius:2vw;" alt="Project View">
-                        <h5>{% trans "Airtable: Project View" %}</h5>
-                    </a>
-                </div>
-                <div class="col-sm-4 col-12">
-                    <a href="https://airtable.com/apptoGvHgTQOzemhf/shrHrCzd0dU2nNSU5" target="_blank" style="text-decoration: none; color: black;"><img src="https://drive.google.com/uc?id=1lEH2N8mRkskzl_MHo5yoyEVGzHKHF2j6&export=download" style="width:24vw; height:auto; border-radius:2vw;" alt="Project View">
-                        <h5>{% trans "Airtable: Status View" %}</h5>
-                    </a>
-                </div>
-                <div class="col-sm-4 col-12">
-                    <a href="https://airtable.com/apptoGvHgTQOzemhf/shrGngw2umq1aeVtu" target="_blank" style="text-decoration: none; color: black;"><img src="https://drive.google.com/uc?id=1B7Dna2cfM6BzkexAT0qkz4KsvvZN6Lqn&export=download" style="width:24vw; height:auto; border-radius:2vw;" alt="Project View">
-                        <h5>{% trans "Airtable: Partner Type Breakdown" %}</h5>
-                    </a>
-                </div>
+            <div class="col-sm-4 col-12">
+                <a href="https://airtable.com/apptoGvHgTQOzemhf/shrHrCzd0dU2nNSU5" target="_blank"
+                    style="text-decoration: none; color: black;">
+                    <img src="https://drive.google.com/uc?id=1lEH2N8mRkskzl_MHo5yoyEVGzHKHF2j6&export=download"
+                        style="width:24vw; height:auto; border-radius:2vw;" alt="Project View">
+                    <h5>{% trans "Airtable: Status View" %}</h5>
+                </a>
+            </div>
+            <div class="col-sm-4 col-12">
+                <a href="https://airtable.com/apptoGvHgTQOzemhf/shrGngw2umq1aeVtu" target="_blank"
+                    style="text-decoration: none; color: black;">
+                    <img src="https://drive.google.com/uc?id=1B7Dna2cfM6BzkexAT0qkz4KsvvZN6Lqn&export=download"
+                        style="width:24vw; height:auto; border-radius:2vw;" alt="Project View">
+                    <h5>{% trans "Airtable: Partner Type Breakdown" %}</h5>
+                </a>
             </div>
         </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            get_data();
+        };
+    </script>
 
         {% endblock %}
