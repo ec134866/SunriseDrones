@@ -124,7 +124,7 @@ LOCALE_PATHS = [
     BASE_DIR / 'locale/',
 ]
 # make locale folder in root.
-# django-admin makemessages --all --ignore=env
+# when add new text * django-admin makemessages --all --ignore=env 
 # django-admin compilemessages --ignore=env
 ROSETTA_SHOW_AT_ADMIN_PANEL = True
 
