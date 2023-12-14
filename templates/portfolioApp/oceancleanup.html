@@ -33,8 +33,8 @@
                     
                     const card = document.createElement("div");
                     card.className = "card";
-                    card.style.width = "14vw";
-                    card.style.height = "20vw";
+                    card.style.width = "17vw";
+                    card.style.height = "16vw";
                     card.style.margin = "10px"; // spacing
 
                     const cardBody = document.createElement("div");
@@ -44,9 +44,11 @@
                     title.className = "card-title";
                     title.innerText = row[1]; 
                     cardBody.appendChild(title);
+                    
+                    cardBody.appendChild(document.createElement("br"));
 
                     const subtitle = document.createElement("h5");
-                    subtitle.className = "card-subtitle mb-2";
+                    subtitle.className = "card-subtitle text-muted";
                     subtitle.innerText = row[2]; 
                     cardBody.appendChild(subtitle);
                     {% comment %} 3 is description {% endcomment %}
@@ -55,7 +57,7 @@
                     if (imageUrl) {
                         const image = document.createElement("img");
                         image.src = imageUrl;
-                        image.style.width = "10vw";
+                        image.style.width = "14vw";
                         image.style.height = "auto";
                         image.style.borderRadius = "2vw";
                         image.style.justifyContent = "center";
