@@ -39,14 +39,14 @@
                     const cardBody = document.createElement("div");
                     cardBody.className = "card-body";
 
-                    const title = document.createElement("h5");
+                    const title = document.createElement("h54");
                     title.className = "card-title";
-                    title.innerText = `Project: ${row[1]}`; 
+                    title.innerText = row[1]; 
                     cardBody.appendChild(title);
 
-                    const subtitle = document.createElement("h6");
-                    subtitle.className = "card-subtitle mb-2 text-muted";
-                    subtitle.innerText = `Name: ${row[2]}`; 
+                    const subtitle = document.createElement("h5");
+                    subtitle.className = "card-subtitle mb-2";
+                    subtitle.innerText = row[2]; 
                     cardBody.appendChild(subtitle);
                     {% comment %} 3 is description {% endcomment %}
 
@@ -54,6 +54,11 @@
                     subtitletwo.className = "card-subtitle mb-2 text-muted";
                     subtitletwo.innerText = `Trash Removed: ${row[7]} kg`;
                     cardBody.appendChild(subtitletwo);
+
+                    const url = document.createElement("h6");
+                    url.className = "card-url";
+                    url.innerText = row[8];
+                    cardBody.appendChild(url);
 
                     // add more columns here
 
