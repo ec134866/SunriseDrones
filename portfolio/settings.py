@@ -126,6 +126,7 @@ LOCALE_PATHS = [
 # make locale folder in root.
 # django-admin makemessages --all --ignore=env
 # django-admin compilemessages --ignore=env
+ROSETTA_SHOW_AT_ADMIN_PANEL = True
 
 TIME_ZONE = 'UTC'
 # 'UTC' is the default TIME_ZONE.
