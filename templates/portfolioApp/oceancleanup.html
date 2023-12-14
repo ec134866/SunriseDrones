@@ -50,15 +50,23 @@
                     cardBody.appendChild(subtitle);
                     {% comment %} 3 is description {% endcomment %}
 
+                    const imageUrl = row[8];
+                    if (imageUrl) {
+                        const image = document.createElement("img");
+                        image.src = imageUrl;
+                        image.style.width = "10vw";
+                        image.style.height = "auto";
+                        image.style.borderRadius = "2vw";
+                        image.alt = `${row[1]} ${row[2]}`;
+                        cardBody.appendChild(image);
+                    }
+
                     const subtitletwo = document.createElement("h6");
                     subtitletwo.className = "card-subtitle mb-2 text-muted";
                     subtitletwo.innerText = `Trash Removed: ${row[7]} kg`;
                     cardBody.appendChild(subtitletwo);
 
-                    const url = document.createElement("h6");
-                    url.className = "card-url";
-                    url.innerText = row[8];
-                    cardBody.appendChild(url);
+                    
 
                     // add more columns here
 
