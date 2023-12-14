@@ -33,13 +33,13 @@
                     
                     const card = document.createElement("div");
                     card.className = "card";
-                    card.style.width = "18rem";
+                    card.style.width = "12vw";
                     card.style.margin = "10px"; // spacing
 
                     const cardBody = document.createElement("div");
                     cardBody.className = "card-body";
 
-                    const title = document.createElement("h54");
+                    const title = document.createElement("h4");
                     title.className = "card-title";
                     title.innerText = row[1]; 
                     cardBody.appendChild(title);
@@ -57,6 +57,7 @@
                         image.style.width = "10vw";
                         image.style.height = "auto";
                         image.style.borderRadius = "2vw";
+                        image.style.justifyContent = "center";
                         image.alt = `${row[1]} ${row[2]}`;
                         cardBody.appendChild(image);
                     }
