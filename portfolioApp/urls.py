@@ -6,9 +6,9 @@ urlpatterns = [
     path('analyst/', analystPageView, name = "analyst"),
     path('dunker/', dunkerPageView, name = "dunker"),
     path('sideprojects/', sideprojectPageView, name = "sideprojects"),
-    path('3D/', threeDPageView, name = "threeD"),
-    path('translation/', translationPageView, name = "translation"),
-    path('theOceanCleanup/', oceanCleanupPageView, name = "oceanCleanup"),
+    path('sideprojects/3D/', threeDPageView, name = "threeD"),
+    path('sideprojects/translation/', translationPageView, name = "translation"),
+    path('sideprojects/theOceanCleanup/', oceanCleanupPageView, name = "oceanCleanup"),
     path('login/', loginPageView, name='login'),
     path('character/', characterView, name='character'),
 
