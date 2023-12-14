@@ -8,7 +8,7 @@ urlpatterns = [
     path('sideprojects/', sideprojectPageView, name = "sideprojects"),
     path('3D/', threeDPageView, name = "threeD"),
     path('translation/', translationPageView, name = "translation"),
-    path('oceanCleanup/', oceanCleanupPageView, name = "oceanCleanup"),
+    path('theOceanCleanup/', oceanCleanupPageView, name = "oceanCleanup"),
     path('login/', loginPageView, name='login'),
     path('character/', characterView, name='character'),
 
