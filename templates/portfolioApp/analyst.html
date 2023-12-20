@@ -20,23 +20,54 @@
 <div class="container1">
   <div class="row" style="justify-content:center;">
     <div class="col-sm-2 col-2" style="margin: 1vw;">
-      <img src="https://drive.google.com/uc?id=1HZoOf7nMIqW_Ta3mV54Jbu3gfdE_67dY&export=download" style="width: 17vw; height: auto; cursor: pointer; outline:0;" onclick="changeDashboard('dashboard1')">
+      <img src="https://drive.google.com/uc?id=1lvN05tgY23RRtt1G07_djhsjfrFGz9FN&export=download" style="width: 17vw; height: auto; cursor: pointer; outline:0;" onclick="changeFolder('folder1')">
     </div>
     <div class="col-sm-2 col-2" style="margin: 1vw;">
-      <img src="https://drive.google.com/uc?id=1Bv0A3pOxfbGY1len3CeZaMyiIiQAPvJf&export=download"style="width: 17vw; height: auto; cursor: pointer; outline:0;" onclick="changeDashboard('dashboard2')">
-    </div>
-     <div class="col-sm-2 col-2" style="margin: 1vw;">
-      <img src="https://drive.google.com/uc?id=1d0fk7CUhO7TrmMq-ncNc1WF-YHW6sMKo&export=download"style="width: 17vw; height: auto; cursor: pointer; outline:0;" onclick="changeDashboard('dashboard3')">
-    </div>
-     <div class="col-sm-2 col-2" style="margin: 1vw;">
-      <img src="https://drive.google.com/uc?id=1J5B590R6zIJyav8z9qKOrSTRNcYmLdJO&export=download"style="width: 17vw; height: auto; cursor: pointer; outline:0;" onclick="changeDashboard('dashboard4')">
+      <img src="https://drive.google.com/uc?id=1JWHxhfMklSboEF6A4rWuQrC7In6y-sS9&export=download" style="width: 17vw; height: auto; cursor: pointer; outline:0;" onclick="changeFolder('folder2')">
     </div>
     <div class="col-sm-2 col-2" style="margin: 1vw;">
-      <img src="https://drive.google.com/uc?id=1XXz1cYfpUkoDJVmrkHB5Mwj_FF3VlcuB&export=download"style="width: 17vw; height: auto; cursor: pointer; outline:0;" onclick="changeDashboard('dashboard5')">
+      <img src="https://drive.google.com/uc?id=14zziky6qhCMXaauXmEAYPHgU6ZdsYbo3&export=download" style="width: 17vw; height: auto; cursor: pointer; outline:0;" onclick="changeFolder('folder3')">
     </div>
   </div>    
 </div>  
 <br><br>
+
+<div id= "folder1">
+  <div class="container1">
+    <div class="row" style="justify-content:center;">
+        <div class="col-sm-2 col-2" style="margin: 1vw;">
+          <img src="https://drive.google.com/uc?id=1HZoOf7nMIqW_Ta3mV54Jbu3gfdE_67dY&export=download" style="width: 17vw; height: auto; cursor: pointer; outline:0;" onclick="changeDashboard('dashboard1')">
+        </div>
+        <div class="col-sm-2 col-2" style="margin: 1vw;">
+          <img src="https://drive.google.com/uc?id=1Bv0A3pOxfbGY1len3CeZaMyiIiQAPvJf&export=download"style="width: 17vw; height: auto; cursor: pointer; outline:0;" onclick="changeDashboard('dashboard2')">
+        </div>
+    </div>    
+  </div>  
+</div>
+<div id= "folder2">
+  <div class="container1">
+    <div class="row" style="justify-content:center;">
+        <div class="col-sm-2 col-2" style="margin: 1vw;">
+          <img src="https://drive.google.com/uc?id=1d0fk7CUhO7TrmMq-ncNc1WF-YHW6sMKo&export=download"style="width: 17vw; height: auto; cursor: pointer; outline:0;" onclick="changeDashboard('dashboard3')">
+        </div>
+        <div class="col-sm-2 col-2" style="margin: 1vw;">
+          <img src="https://drive.google.com/uc?id=1J5B590R6zIJyav8z9qKOrSTRNcYmLdJO&export=download"style="width: 17vw; height: auto; cursor: pointer; outline:0;" onclick="changeDashboard('dashboard4')">
+        </div>
+    </div>    
+  </div>  
+</div>
+<div id= "folder3">
+  <div class="container1">
+    <div class="row" style="justify-content:center;">
+        <div class="col-sm-2 col-2" style="margin: 1vw;">
+          <img src="https://drive.google.com/uc?id=1XXz1cYfpUkoDJVmrkHB5Mwj_FF3VlcuB&export=download"style="width: 17vw; height: auto; cursor: pointer; outline:0;" onclick="changeDashboard('dashboard5')">
+        </div>
+    </div>    
+  </div>  
+</div>
+
+  
+  
 
 <div id="dashboard1">
   <br>
@@ -230,6 +261,31 @@
 
 <script>
   var highlightedImage = null; // To store the currently highlighted image
+  var highlightedFolderImage = null;
+
+  function changeFolder(folderId) {
+    var folderDivs = document.querySelectorAll('[id^="folder"]');
+    for (var i = 0; i < folderDivs.length; i++) {
+      folderDivs[i].style.display = 'none';
+    }
+
+    var selectedfolder = document.getElementById(folderId);
+    selectedfolder.style.display = 'block';
+
+    if (highlightedFolderImage) {
+      highlightedFolderImage.style.outline = '0';
+    }
+
+    var clickedFolderImage = document.querySelector('[onclick="changeFolder(\'' + folderId + '\')"]');
+    if (clickedFolderImage) {
+      clickedFolderImage.style.outline = '3px solid white';
+      highlightedFolderImage = clickedFolderImage;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    changeFolder('folder1');
+  });
 
   function changeDashboard(dashboardId) {
     // Hide all dashboard divs
