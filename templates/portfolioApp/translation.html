@@ -30,7 +30,6 @@
             <div style="position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%); color: black; font-size: 1vw; cursor: pointer;" onclick="changeFolder('folder3')">
                 Interpretation
             </div>
-            {% comment %} white outline not moving {% endcomment %}
           </div>
         </div>    
       </div>  
@@ -44,10 +43,13 @@
                 <h3> {% trans "MTPE: Naturalization Certificate" %} </h3>
                 <img src="https://drive.google.com/uc?id=1YGxtIF2MgiMKXMGwEZN4fzU8suYcfxU5&export=download" style="width:auto; height:10vw; border-radius:2vw;" alt="Naturalization Certificate">
               </div>
-              <div class="col-sm-2 col-2" style="justify-content:center; margin: 0vw;">
+              <div class="col-sm-2 col-2" style="display: flex; flex-direction: column; justify-content:center; margin: 0vw;">
+                <h4> {% trans "Experience with:" %} </h4>
+                <h5> {% trans "SDL Trados Studio" %} </h5>
+                <h5> {% trans "LingoTek TMS" %} </h5>
+                <h5> {% trans "MemoQ" %} </h5>
               </div>
               <div class="col-sm-4 col-4" style="justify-content:center; margin: 1vw;">
-                {% comment %} make go to blank page {% endcomment %}
                 <h3> {% trans "MTPE: Federal Legislation Document" %} </h3>
                 <a href="https://drive.google.com/file/d/1JbnppvVu5Y8cissVGO8Yl7GjPSAOBEKA/view?usp=drive_link" target="_blank"> <img src="https://drive.google.com/uc?id=1Oz_-Dq7MQCjsTVjYxWqEvxScQmB-ovVM&export=download" style="width:20vw; height:auto; border-radius:2vw;" alt="Federal Legislation"></a>
               </div>
@@ -75,7 +77,10 @@
                 <img src="https://drive.google.com/uc?id=1gAtDyYl57pKDkcGXthPqduaimO341QO3&export=download" style="width:15vw; height:auto; border-radius:2vw;" alt="MBJP"></a>
                 <h5 style="text-align:center; width:20vw;"> {% trans "Live interpreted more than 20 conferences from PT-BR to EN-US" %} </h5>
             </div>
-            <div class="col-md-2">
+            <div class="col-sm-2 col-2" style="display: flex; flex-direction: column; justify-content:center; margin: 0vw;">
+              <h4> {% trans "Experience with:" %} </h4>
+              <h5> {% trans "Simultaneous Interpretation" %} </h5>
+              <h5> {% trans "Consecutive Interpretation" %} </h5>
             </div>
             <div class="col-md-3"style="display: flex; flex-direction: column; justify-content:center; align-items:center;">
                 <h2> {% trans "NBA House" %} </h2>  
