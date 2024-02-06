@@ -64,6 +64,7 @@ def loginPageView(request):
 
     return render(request, 'portfolioApp/login.html', {'error_message': error_message})
 
-@login_required
+# @login_required
+
 def characterView(request):
     return render(request, 'portfolioApp/character.html')

@@ -10,6 +10,6 @@ urlpatterns = [
     path('sideprojects/translation/', translationPageView, name = "translation"),
     path('theOceanCleanup/', oceanCleanupPageView, name = "oceanCleanup"),
     path('login/', loginPageView, name='login'),
-    path('character/', characterView, name='character'),
+    path('mascot/', characterView, name='character'),
 
 ]
