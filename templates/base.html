@@ -64,8 +64,6 @@
       }
   
       @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
-      @import url("https://fonts.googleapis.com/css?family=Fira+Code&display=swap")
-
  
       .container1 {
           display: flex;
@@ -556,18 +554,17 @@
         </a>
         <div id="workOptions" class="work-options">
           <div class="li">
-            <a class="a language-btn" href="{% url 'analyst' %}">
-              {% comment %}  style="font-size:0.75vw; padding: 0px 0px;" {% endcomment %}
+            <a class="a language-btn" href="{% url 'analyst' %}" style="font-size:0.75vw; padding: 0px 0px;">
               {% trans "analyst" %}
             </a>
           </div>
           <div class="li">
-            <a class="a language-btn" href="{% url 'dunker' %}">
+            <a class="a language-btn" href="{% url 'dunker' %}"style="font-size:0.75vw; padding: 0px 0px;">
               {% trans "dunker" %}
             </a>
           </div>
           <div class="li">
-            <a class="a language-btn" href="{% url 'sideprojects' %}">
+            <a class="a language-btn" href="{% url 'sideprojects' %}"style="font-size:0.75vw; padding: 0px 0px;">
               {% trans "side interests" %}
             </a>
           </div>
