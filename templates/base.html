@@ -64,6 +64,8 @@
       }
   
       @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+      @import url("href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap"")
+
  
       .container1 {
           display: flex;
@@ -141,7 +143,7 @@
         justify-content: center;
         align-items: center;
         text-align: center;
-        font-size: 1vw;
+        font-size: 2.5vw;
       
         .li {
           position: relative;
@@ -159,7 +161,7 @@
             text-transform: uppercase;
             transition: 0.5s;
             cursor: pointer;
-            line-height: 10px;
+            line-height: 2vh;
       
             &::after {
               position: absolute;
@@ -554,17 +556,18 @@
         </a>
         <div id="workOptions" class="work-options">
           <div class="li">
-            <a class="a language-btn" href="{% url 'analyst' %}" style="font-size:0.75vw; padding: 0px 0px;">
+            <a class="a language-btn" href="{% url 'analyst' %}">
+              {% comment %}  style="font-size:0.75vw; padding: 0px 0px;" {% endcomment %}
               {% trans "analyst" %}
             </a>
           </div>
           <div class="li">
-            <a class="a language-btn" href="{% url 'dunker' %}"style="font-size:0.75vw; padding: 0px 0px;">
+            <a class="a language-btn" href="{% url 'dunker' %}">
               {% trans "dunker" %}
             </a>
           </div>
           <div class="li">
-            <a class="a language-btn" href="{% url 'sideprojects' %}"style="font-size:0.75vw; padding: 0px 0px;">
+            <a class="a language-btn" href="{% url 'sideprojects' %}">
               {% trans "side interests" %}
             </a>
           </div>
