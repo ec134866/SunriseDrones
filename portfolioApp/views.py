@@ -49,6 +49,12 @@ def oceanCleanupPageView(request):
 
     return render(request, 'portfolioApp/oceancleanup.html', context)
 
+def sunrisePageView(request):
+    
+    context = {}
+
+    return render(request, 'portfolioApp/sunrise.html', context)
+
 def loginPageView(request):
     error_message = None
 

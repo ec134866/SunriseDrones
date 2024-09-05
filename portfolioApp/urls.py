@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import indexPageView, analystPageView, dunkerPageView, sideprojectPageView, threeDPageView, loginPageView, characterView, translationPageView, oceanCleanupPageView
+from .views import indexPageView, analystPageView, dunkerPageView, sideprojectPageView, threeDPageView, loginPageView, characterView, translationPageView, oceanCleanupPageView, sunrisePageView
 
 urlpatterns = [
     path('', indexPageView, name = "index"),
@@ -11,5 +11,6 @@ urlpatterns = [
     path('theOceanCleanup/', oceanCleanupPageView, name = "oceanCleanup"),
     path('login/', loginPageView, name='login'),
     path('mascot/', characterView, name='character'),
+    path('sunrise/', sunrisePageView, name='sunrise-model')
 
 ]
