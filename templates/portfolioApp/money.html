@@ -14,46 +14,11 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-4">
-            <h1>Connect Your Bank Account</h1>
-                <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
           </div>
           <div class="col-sm-4">
             <h2> {% trans "Budgeting" %} </h2>
-            <h1>Your Account Balances</h1>
-            <h3>
-                {% for account in accounts %}
-                <li>{{ account.name }}: {{ account.balances.current }}</li>
-                {% endfor %}
-            </h3>
           </div>
           <div class="col-sm-4">
-            <script>
-                document.getElementById('link-button').onclick = function() {
-                    fetch('/get_link_token/')
-                        .then(response => response.json())
-                        .then(data => {
-                            const handler = Plaid.create({
-                                token: data.link_token,
-                                onSuccess: function(public_token, metadata) {
-                                    fetch('/exchange_public_token/', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/x-www-form-urlencoded',
-                                            'X-CSRFToken': '{{ csrf_token }}',
-                                        },
-                                        body: 'public_token=' + public_token
-                                    }).then(() => {
-                                        window.location.href = '/balances/';
-                                    });
-                                },
-                                onExit: function(err, metadata) {
-                                    // Handle the case where the user exits Link
-                                }
-                            });
-                            handler.open();
-                        });
-                };
-            </script>   
           </div>
         </div>
       

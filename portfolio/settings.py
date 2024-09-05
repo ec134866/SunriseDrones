@@ -128,11 +128,6 @@ LOCALE_PATHS = [
 # django-admin compilemessages --ignore=env
 ROSETTA_SHOW_AT_ADMIN_PANEL = True
 
-PLAID_CLIENT_ID = '665a77962f9075001b50a168'
-PLAID_SECRET = '44cf0207cb1c838ab795a34c11bf5d'
-PLAID_ENV = 'sandbox'
-
-
 TIME_ZONE = 'UTC'
 # 'UTC' is the default TIME_ZONE.
 USE_I18N = True
