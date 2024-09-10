@@ -37,8 +37,7 @@ class property(models.Model):
    
      
     def __str__(self):
-        return str(self.flight_id)
-
+        return self.property_name
 
     class Meta:
         db_table = "properties"
