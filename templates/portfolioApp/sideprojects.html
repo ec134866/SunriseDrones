@@ -14,12 +14,9 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-4 col-12">
-            <a href="{% url 'translation' %}"><img src="https://i.imgur.com/8HSUB5f.jpg" style="width:24vw; height:auto; border-radius:2vw;" alt="Translation & Interpretation"></a>
-            <br><br><br>
-            <h2> {% trans "Translation & Interpretation" %} </h2>
           </div>
           <div class="col-sm-4 col-12">
-            <a href="{% url 'threeD' %}"><img src="https://i.imgur.com/hrJyXYb.jpg" style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Photogrammetry"></a>
+            <a href="{% url 'sunrise-model' %}"><img src="https://i.imgur.com/hrJyXYb.jpg" style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Photogrammetry"></a>
             <br><br><br>
             <h2> {% trans "Drone Photogrammetry" %} </h2>
           </div>
@@ -29,24 +26,7 @@
             <h2> {% trans "Experience Design" %} </h2>
           </div>
         </div>
-        <br><br><br><br>
-        <div class="row">
-          <div class="col-sm-4 col-12">
-            <a href="https://dunktionary.pythonanywhere.com/" target="_blank"><img src="https://i.imgur.com/JmVIF0r.jpg" style="width:24vw; height:auto; border-radius:2vw;" alt="The Dunktionary"></a>
-            <br><br><br>
-            <h2> {% trans "Full-Stack Development" %} </h2>
-            <style>
-              .col-12:hover {
-                transform: translateY(-15px);
-              }
-            </style>
-          </div>
-          <div class="col-sm-4 col-12">
-            <a href="{% url 'oceanCleanup' %}"><img src="https://i.imgur.com/1HsCAQx.jpg" style="width:24vw; height:auto; border-radius:2vw;" alt="The Ocean Cleanup"></a>
-            <br><br><br>
-            <h2> {% trans "The Ocean Cleanup Airtable DB" %} </h2>
-          </div>
-        </div>
+        <br><br>
       </div>  
       
         {% endblock %}

@@ -548,28 +548,6 @@
   <header style="width: 100vw;">
     <div class="ul">
       <div class="li"><a class="a" href="{% url 'index' %}">{% trans "home" %}</a></div>
-      <div class="li work-dropdown">
-        <a class="a" href="#" onclick="toggleWorkOptions(event)">
-          {% trans "work" %}
-        </a>
-        <div id="workOptions" class="work-options">
-          <div class="li">
-            <a class="a language-btn" href="{% url 'analyst' %}" style="font-size:0.75vw; padding: 0px 0px;">
-              {% trans "analyst" %}
-            </a>
-          </div>
-          <div class="li">
-            <a class="a language-btn" href="{% url 'dunker' %}"style="font-size:0.75vw; padding: 0px 0px;">
-              {% trans "dunker" %}
-            </a>
-          </div>
-          <div class="li">
-            <a class="a language-btn" href="{% url 'sideprojects' %}"style="font-size:0.75vw; padding: 0px 0px;">
-              {% trans "side interests" %}
-            </a>
-          </div>
-        </div>
-      </div>
       <div class="li"><a class="a" href="{% url 'index' %}#about">{% trans "about" %}</a></div>
       <div class="li">
         <a class="a" href="#" onclick="toggleLanguageOptions(event)">
