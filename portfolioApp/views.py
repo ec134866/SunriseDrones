@@ -24,6 +24,27 @@ def propertyPageView(request):
 
     return render(request, 'portfolioApp/property.html', context)
 
+
+def overflightPageView(request):
+    
+    context = {}
+
+    return render(request, 'portfolioApp/overflight.html', context)
+
+
+def threeDexteriorPageView(request):
+    
+    context = {}
+
+    return render(request, 'portfolioApp/threeDexterior.html', context)
+
+
+def threeDinteriorPageView(request):
+    
+    context = {}
+
+    return render(request, 'portfolioApp/threeDinterior.html', context)
+
 def sideprojectPageView(request):
     
     context = {}
