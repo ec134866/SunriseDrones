@@ -36,14 +36,14 @@ def threeDexteriorPageView(request):
     
     context = {}
 
-    return render(request, 'portfolioApp/threeDexterior.html', context)
+    return render(request, 'portfolioApp/exterior.html', context)
 
 
 def threeDinteriorPageView(request):
     
     context = {}
 
-    return render(request, 'portfolioApp/threeDinterior.html', context)
+    return render(request, 'portfolioApp/interior.html', context)
 
 def sideprojectPageView(request):
     
