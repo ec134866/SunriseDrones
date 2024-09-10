@@ -9,8 +9,8 @@
         
         {% block content %}
 
-      <h1>{% trans "Evan Carter" %}</h1>
-      <p class="subtitle">{% trans "Promoting Change One Presentation At A Time" %}</p>
+      <h1>{% trans "Sunrise Drones" %}</h1>
+      {% comment %} <p class="subtitle">{% trans "Promoting Change One Presentation At A Time" %}</p> {% endcomment %}
       <div class="container2">
       </div>
       <br><br><br><br><br>
@@ -27,99 +27,13 @@
             <div class="col-md-6">
               <div class="about-content">
                 <p style="text-align: left;">
-                  {% trans "From Colorado Springs and love the outdoors: anything from camping to just going on walks with my wife."%}
-                </p>
-                <p style="text-align: left;">
-                  {% trans "I learn so that I can perform to the best of my ability." %}
-                </p> <br>
-                <p style="text-align: center;">
-                  {% trans "If you can't explain it simply, you don't understand it well enough. -A. Einstein" %}
+                  {% trans "Evan Carter"%}
                 </p>
               </div>
             </div>
           </div>
           <br><br>
-        <div class="row justify-content-center">
-          {% if 'en' in request.path %}
-          <div class='tableauPlaceholder' id='viz1692234293139' style='position: relative'>
-            <noscript>
-                <a href='#'>
-                    <img alt='About Timeline en ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ab&#47;AboutTimelineen&#47;AboutTimelineen&#47;1_rss.png' style='border: none' />
-                </a>
-            </noscript>
-            <object class='tableauViz'  style='display:none;'>
-                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-                <param name='embed_code_version' value='3' />
-                <param name='site_root' value='' />
-                <param name='name' value='AboutTimelineen&#47;AboutTimelineen' />
-                <param name='tabs' value='no' />
-                <param name='toolbar' value='yes' />
-                <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ab&#47;AboutTimelineen&#47;AboutTimelineen&#47;1.png' />
-                <param name='animate_transition' value='yes' />
-                <param name='display_static_image' value='yes' />
-                <param name='display_spinner' value='yes' />
-                <param name='display_overlay' value='yes' />
-                <param name='display_count' value='yes' />
-                <param name='language' value='en-US' />
-                <param name='filter' value='publish=yes' />
-            </object>
-          </div>
-            <script type='text/javascript'>
-              var divElement = document.getElementById('viz1692234293139');
-              var vizElement = divElement.getElementsByTagName('object')[0];
-              if (divElement.offsetWidth > 800) {
-                vizElement.style.width='1000px';
-                vizElement.style.height='365px';
-              } else if (divElement.offsetWidth > 500) {
-                vizElement.style.width='100%';
-                vizElement.style.height='365px';
-              } else {
-                vizElement.style.width='100%';
-                vizElement.style.height='365px';
-              }
-              var scriptElement = document.createElement('script');
-              scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-              vizElement.parentNode.insertBefore(scriptElement, vizElement);
-            </script>
-        
-          {% elif 'pt' in request.path %}
-            <div class='tableauPlaceholder' id='viz1691516897586' style='position: relative'>
-              <noscript>
-                <a href='#'>
-                  <img alt='About Timeline pt ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ab&#47;AboutTimelinept&#47;AboutTimelinept&#47;1_rss.png' style='border: none' />
-                </a>
-              </noscript>
-              <object class='tableauViz' style='display:none;'>
-                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-                <param name='embed_code_version' value='3' />
-                <param name='path' value='views&#47;AboutTimelinept&#47;AboutTimelinept?:language=en-US&amp;:embed=true&amp;publish=yes' />
-                <param name='toolbar' value='yes' />
-                <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ab&#47;AboutTimelinept&#47;AboutTimelinept&#47;1.png' />
-                <param name='animate_transition' value='yes' />
-                <param name='display_static_image' value='yes' />
-                <param name='display_spinner' value='yes' />
-                <param name='display_overlay' value='yes' />
-                <param name='display_count' value='yes' />
-                <param name='language' value='pt-BR' />
-                <param name='filter' value='publish=yes' />
-              </object>
-            </div>
-            <script type='text/javascript'>
-              var divElement = document.getElementById('viz1691516897586');
-              var vizElement = divElement.getElementsByTagName('object')[0];
-              vizElement.style.width='1000px';
-              vizElement.style.height='365px';
-              var scriptElement = document.createElement('script');
-              scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-              vizElement.parentNode.insertBefore(scriptElement, vizElement);
-            </script>          
-          {% endif %}
-        </div>
       </section>
-
-  
-      {% comment %} why are tableau dashboards having issues {% endcomment %}
-      {% comment %} finish dunk gifs & pics {% endcomment %}
   
         {% endblock %}
 
