@@ -12,42 +12,11 @@ def indexPageView(request):
 
     return render(request, 'portfolioApp/index.html', context)
 
-def analystPageView(request):
-    
-    context = {}
-
-    return render(request, 'portfolioApp/analyst.html', context)
-
-def dunkerPageView(request):
-    
-    context = {}
-
-    return render(request, 'portfolioApp/dunker.html', context)
-
 def sideprojectPageView(request):
     
     context = {}
 
     return render(request, 'portfolioApp/sideprojects.html', context)
-
-def threeDPageView(request):
-    
-    context = {}
-
-    return render(request, 'portfolioApp/threeD.html', context)
-
-
-def translationPageView(request):
-    
-    context = {}
-
-    return render(request, 'portfolioApp/translation.html', context)
-
-def oceanCleanupPageView(request):
-    
-    context = {}
-
-    return render(request, 'portfolioApp/oceancleanup.html', context)
 
 def sunrisePageView(request):
     
@@ -71,6 +40,3 @@ def loginPageView(request):
     return render(request, 'portfolioApp/login.html', {'error_message': error_message})
 
 # @login_required
-
-def characterView(request):
-    return render(request, 'portfolioApp/character.html')
