@@ -9,16 +9,17 @@ class property(models.Model):
     property_name = models.CharField(max_length=255)
     owner = models.CharField(max_length=255)
 
-    owner_poc_name = models.CharField(max_length=255, blank=True, null=True)
+    owner_poc_name = models.CharField(max_length=150, blank=True, null=True)
     owner_poc_phone_number = models.CharField(max_length=20, blank=True, null=True)
     owner_poc_email = models.EmailField(max_length=255, blank=True, null=True)
     
-    loc_city = models.CharField(max_length=255, blank=True, null=True)
-    loc_country = models.CharField(max_length=255, blank=True, null=True)
+    loc_city = models.CharField(max_length=100, blank=True, null=True)
+    loc_state = models.CharField(max_length=100, blank=True, null=True)
+    loc_country = models.CharField(max_length=150, blank=True, null=True)
     loc_lat = models.CharField(max_length=255, blank=True, null=True)
     loc_long = models.CharField(max_length=255, blank=True, null=True)
 
-    loc_poc_name = models.CharField(max_length=255, blank=True, null=True)
+    loc_poc_name = models.CharField(max_length=150, blank=True, null=True)
     loc_poc_phone_number = models.CharField(max_length=20, blank=True, null=True)
     loc_poc_email = models.EmailField(max_length=255, blank=True, null=True)
     
