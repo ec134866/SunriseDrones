@@ -12,6 +12,18 @@ def indexPageView(request):
 
     return render(request, 'portfolioApp/index.html', context)
 
+def ownerPageView(request):
+    
+    context = {}
+
+    return render(request, 'portfolioApp/owner.html', context)
+
+def propertyPageView(request):
+    
+    context = {}
+
+    return render(request, 'portfolioApp/property.html', context)
+
 def sideprojectPageView(request):
     
     context = {}
