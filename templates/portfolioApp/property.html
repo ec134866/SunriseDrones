@@ -15,9 +15,12 @@
             {% comment %} [] date variable {% endcomment %}
           </button>
           <ul class="dropdown-menu">
-            {% for property in properties %}
+            <li><a class="dropdown-item" href="#">Jul 22, 2023</a></li>
+            <li><a class="dropdown-item" href="#">Jan 1, 2001 </a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            {% comment %} {% for property in properties %}
               <li><a class="dropdown-item" href="#">{{property.flight_date}}</a></li>
-            {% end for%}
+            {% end for%} {% endcomment %}
           </ul>
         </div>
         <br><br><br><br><br><br>
