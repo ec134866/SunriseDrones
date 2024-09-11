@@ -16,7 +16,7 @@
             <ul class="dropdown-menu">
               {% for flight in flights %}
                 <li>
-                  <a class="dropdown-item" href="javascript:void(0);" onclick="selectDate('{{ flight.date }}')">
+                  <a class="dropdown-item" onclick="selectDate('{{ flight.date }}')">
                     {{ flight.date }}
                   </a>
                 </li>
