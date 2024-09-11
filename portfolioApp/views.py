@@ -35,13 +35,20 @@ def propertyPageView(request, person_uuid, property_name):
     
     property = get_object_or_404(Property, name=property_name, person=person)
     
-    flights = Flight.objects.filter(property=property).order_by('-date')
-    
+    selected_date = request.GET.get('date')
+
+    # If a date is selected, filter the flights by that date
+    if selected_date:
+        flights = Flight.objects.filter(property=property, date=selected_date).order_by('-date')
+    else:
+        flights = Flight.objects.filter(property=property).order_by('-date')
+
     context = {
         'person': person,
         'property': property,
         'flights': flights,
-        'latest_flight': flights.last()
+        'latest_flight': flights.first(),
+        'selected_date': selected_date,
     }
 
     return render(request, 'portfolioApp/property.html', context)
