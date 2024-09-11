@@ -35,7 +35,7 @@ def propertyPageView(request, person_uuid, property_name):
     
     property = get_object_or_404(Property, name=property_name, person=person)
     
-    flight = Flight.objects.filter(property=property).first()
+    flight = Flight.objects.filter(property=property).order_by('-date')
     
     context = {
         'person': person,
