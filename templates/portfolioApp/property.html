@@ -85,7 +85,7 @@
 
           const assetURLs = {
               'Master': 'https://dl.dropboxusercontent.com/1/view/tyj325ko2a2x41e/Master.fbx',
-              'resized': {{flight.overflight_link}}
+              'resized': '{{flight.overflight_link}}'
           };
 
 
@@ -157,27 +157,23 @@
               renderer.render(scene, camera);
           }
 
+          let modelLoaded = false;
+
+          function showContent(contentId) {
+              document.querySelectorAll('.content-section').forEach(section => {
+                  section.classList.remove('show');
+              });
+              const selectedContent = document.getElementById(contentId);
+              selectedContent.classList.add('show');
+
+              if (contentId === 'modelContent' && !modelLoaded) {
+                  initialize3DModel();
+                  modelLoaded = true;
+              }
+          }
+
+          window.addEventListener('load', initialize3DModel);
 
       </script>
-      <script>
-        let modelLoaded = false;
-
-        function showContent(contentId) {
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('show');
-            });
-            const selectedContent = document.getElementById(contentId);
-            selectedContent.classList.add('show');
-
-            if (contentId === 'modelContent' && !modelLoaded) {
-                initialize3DModel();
-                modelLoaded = true;
-            }
-        }
-        
-        window.addEventListener('load', initialize3DModel);
-      </script>
-
-
 
         {% endblock %}
