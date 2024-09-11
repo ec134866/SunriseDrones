@@ -14,7 +14,7 @@ class Person(models.Model):
 
     def __str__(self):
         return self.name
-
+    
 
 
 # Owner Model
@@ -24,7 +24,7 @@ class Owner(models.Model):
 
     def __str__(self):
         return self.name
-
+    
 
 
 # Property Model
@@ -41,7 +41,8 @@ class Property(models.Model):
 
     def __str__(self):
         return self.name
-
+    class Meta:
+        db_table = "properties"
 
 # Flight Model
 class Flight(models.Model):
@@ -61,3 +62,6 @@ class Flight(models.Model):
     def __str__(self):
         return self.id
     
+
+    
+# reset db
