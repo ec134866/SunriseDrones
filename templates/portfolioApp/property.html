@@ -50,28 +50,27 @@
         </div>
 
         <div id="contentArea" class="container-fluid">
-          <div id="overflightContent" class="content-section">
-            <video controls width="580" height="350">
-                <source src="https://i.imgur.com/t1Tvutd.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-              {% comment %} <embed
-              src="https://i.imgur.com/t1Tvutd.mp4"
-              wmode="transparent"
-              type="video/mp4"
-              width="580" height="350"
-              allow="autoplay; encrypted-media; picture-in-picture"
-              allowfullscreen
-              title="Sunrise Property"
-              > {% endcomment %}
+          <div class="d-flex justify-content-center">
+              <div id="overflightContent" class="content-section">
+                  <video controls width="580" height="350">
+                      <source src="https://i.imgur.com/t1Tvutd.mp4" type="video/mp4">
+                      Your browser does not support the video tag.
+                  </video>
+              </div>
           </div>
-          <div id="exteriorModelContent" class="content-section">
-            <div id="exteriorModelContainer"></div>
+          <div class="d-flex justify-content-center"></div>
+              <div id="exteriorModelContent" class="content-section">
+                  <div id="exteriorModelContainer" class="d-flex justify-content-center"></div>
+              </div>
           </div>
-          <div id="interiorModelContent" class="content-section">
-              <div id="interiorModelContainer"></div>
+          <div class="d-flex justify-content-center"></div>
+              <div id="interiorModelContent" class="content-section">
+                  <div id="interiorModelContainer" class="d-flex justify-content-center"></div>
+              </div>
           </div>
-      </div>
+        </div>
+
+        <br><br><br><br><br><br>
 
 
       <script>
@@ -113,7 +112,7 @@
             const container = document.getElementById('exteriorModelContainer');
             container.innerHTML = '';  // Clear previous content
 
-            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.8) / window.innerHeight, 1, 200000);
+            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, 200000);
             camera.position.set(-7500, 10000, 5000);
 
             scene = new THREE.Scene();
@@ -127,7 +126,7 @@
 
             renderer = new THREE.WebGLRenderer();
             renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize((window.innerWidth * 0.8), window.innerHeight);
+            renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
             container.appendChild(renderer.domElement);
 
             const controls = new OrbitControls(camera, renderer.domElement);
@@ -146,9 +145,9 @@
             controls.update();
 
             window.addEventListener('resize', () => {
-                camera.aspect = (window.innerWidth * 0.8) / window.innerHeight;
+                camera.aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.8);
                 camera.updateProjectionMatrix();
-                renderer.setSize((window.innerWidth * 0.8), window.innerHeight);
+                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
             });
 
             animate();
@@ -158,7 +157,7 @@
             const container = document.getElementById('interiorModelContainer');
             container.innerHTML = '';  // Clear previous content
 
-            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 200000);
+            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, 200000);
             camera.position.set(-7500, 10000, 5000);
 
             scene = new THREE.Scene();
@@ -172,7 +171,7 @@
 
             renderer = new THREE.WebGLRenderer();
             renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
             container.appendChild(renderer.domElement);
 
             const controls = new OrbitControls(camera, renderer.domElement);
@@ -191,9 +190,9 @@
             controls.update();
 
             window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.8);
                 camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
             });
 
             animate();
