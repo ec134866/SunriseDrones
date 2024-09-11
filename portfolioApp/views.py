@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
+from django.utils.dateparse import parse_date
 from .models import Person, Owner, Property, Flight
 
 # Create your views here.
@@ -37,9 +38,15 @@ def propertyPageView(request, person_uuid, property_name):
     
     selected_date = request.GET.get('date')
 
-    # If a date is selected, filter the flights by that date
     if selected_date:
-        flights = Flight.objects.filter(property=property, date=selected_date).order_by('-date')
+        try:
+            parsed_date = parse_date(selected_date)
+            if parsed_date:
+                flights = Flight.objects.filter(property=property, date=parsed_date).order_by('-date')
+            else:
+                flights = Flight.objects.filter(property=property).order_by('-date')
+        except ValueError:
+            flights = Flight.objects.filter(property=property).order_by('-date')
     else:
         flights = Flight.objects.filter(property=property).order_by('-date')
 
