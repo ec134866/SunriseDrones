@@ -1,9 +1,11 @@
 from django.contrib import admin
-from .models import property
+from .models import Person, Owner, Property, Flight
 
 
-# class property(admin.ModelAdmin):
-#     list_display = ("name", "image", "video", "dunker", "prereq")
-#     list_filter = ("dunker",)
+class PersonID(admin.ModelAdmin):
+    readonly_fields = ('uuid',)
 
-admin.site.register(property)
+admin.site.register(Person, PersonID)
+admin.site.register(Owner)
+admin.site.register(Property)
+admin.site.register(Flight)
