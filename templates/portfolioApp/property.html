@@ -16,7 +16,7 @@
             <ul class="dropdown-menu">
               {% for flight in flights %}
                 <li>
-                  <a class="dropdown-item" onclick="selectDate('{{ flight.date }}')">
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="selectDate('{{ flight.date|date:'Y-m-d' }}')">
                     {{ flight.date }}
                   </a>
                 </li>
@@ -84,7 +84,6 @@
       <script>
           function selectDate(date) {
             document.getElementById('selectedDate').value = date;
-            
             document.getElementById('dateForm').submit();
           }
       </script>
