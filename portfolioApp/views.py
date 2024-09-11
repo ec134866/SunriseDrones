@@ -37,10 +37,18 @@ def propertyPageView(request, person_uuid, property_name):
     
     flights = Flight.objects.filter(property=property).order_by('-date')
     
+    selected_date = request.GET.get('date')
+    if not selected_date:
+        selected_date = flights.last().date 
+
+    selected_flight = Flight.objects.filter(property=property, date=selected_date).first()
+
+
     context = {
         'person': person,
         'property': property,
         'flights': flights,
+        'selected_flight': selected_flight,
         'latest_flight': flights.last()
     }
 

@@ -9,35 +9,38 @@
         {% block body %}
         <br><br><br>
         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {{latest_flight.date}}
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="flightDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ selected_flight.date }}
           </button>
           <ul class="dropdown-menu">
             {% for flight in flights %}
-              <li><a class="dropdown-item" href="#">{{flight.date}}</a></li>
-            {% endfor%} 
+              <li>
+                <a class="dropdown-item" href="#" onclick="loadFlightData('{{ flight.date }}')">{{ flight.date }}</a>
+              </li>
+            {% endfor %}
           </ul>
         </div>
         <br><br><br><br><br><br>
+
         <div class="container mt-4">
             <div class="row">
                 <div class="col-md-4 mb-3">
                   <button class="btn btn-link p-0" onclick="showContent('overflightContent')">
-                      <img src={{flight.overflight_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                      <img src={{selected_flight.overflight_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
                   </button>
                   <br><br><br>
                   <h2>Overflight</h2>
                 </div>
                 <div class="col-md-4 mb-3">
                   <button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
-                      <img src={{flight.exterior_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                      <img src={{selected_flight.exterior_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
                   </button>
                   <br><br><br>
                   <h2>3D Exterior Model</h2>
                 </div>
                 <div class="col-md-4 mb-3">
                   <button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
-                      <img src={{flight.interior_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                      <img src={{selected_flight.interior_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
                   </button>
                   <br><br><br>
                   <h2>3D Interior Model</h2>
@@ -49,7 +52,7 @@
           <div class="d-flex justify-content-center">
               <div id="overflightContent" class="content-section">
                   <video controls width="580" height="350">
-                      <source src="https://i.imgur.com/t1Tvutd.mp4" type="video/mp4">
+                      <source src="{{selected_flight.interior_thumbnail_link}}" type="video/mp4">
                       Your browser does not support the video tag.
                   </video>
               </div>
@@ -118,7 +121,7 @@
             scene.add(light);
 
             const loader = new FBXLoader();
-            loader.load('{{ flight.exterior_link }}', (object) => {
+            loader.load('{{ selected_flight.exterior_link }}', (object) => {
                 scene.add(object);
             });
 
@@ -163,7 +166,7 @@
             scene.add(light);
 
             const loader = new FBXLoader();
-            loader.load('{{ flight.interior_link }}', (object) => {
+            loader.load('{{ selected_flight.interior_link }}', (object) => {
                 scene.add(object);
             });
 
