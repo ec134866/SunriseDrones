@@ -1,13 +1,12 @@
 {% extends 'base.html'%}
-{% load i18n %}
         {% block title %}
-          <title> Property View </title>
+          <title> {{property.name}} Property </title>
         {% endblock %}
         
         {% block search %}
         {% endblock %}
         
-        {% block content %}
+        {% block body %}
         <br><br><br>
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -27,21 +26,21 @@
         <div class="container mt-4">
             <div class="row">
                 <div class="col-md-4 mb-3">
-                  <button class="btn btn-link p-0" onclick="showContent('imageContent')">
+                  <button class="btn btn-link p-0" onclick="showContent('overflightContent')">
                       <img src={{flight.overflight_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
                   </button>
                   <br><br><br>
                   <h2>{% trans "Overflight" %}</h2>
                 </div>
                 <div class="col-md-4 mb-3">
-                  <button class="btn btn-link p-0" onclick="showContent('imageContent')">
+                  <button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
                       <img src={{flight.exterior_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
                   </button>
                   <br><br><br>
                   <h2>{% trans "3D Exterior Model" %}</h2>
                 </div>
                 <div class="col-md-4 mb-3">
-                  <button class="btn btn-link p-0" onclick="showContent('imageContent')">
+                  <button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
                       <img src={{flight.interior_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
                   </button>
                   <br><br><br>
@@ -51,16 +50,22 @@
         </div>
 
         <div id="contentArea" class="container-fluid">
-          <div id="imageContent" class="content-section">
-              <img src={{flight.top_image_link_1}} class="img-fluid" alt="Full Image">
+          <div id="overflightContent" class="content-section">
+              <embed
+              src="https://i.imgur.com/t1Tvutd.mp4"
+              wmode="transparent"
+              type="video/mp4"
+              width="580" height="350"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen
+              title="Sunrise Property"
+            >
           </div>
-          <div id="videoContent" class="content-section">
-              <video controls class="w-100">
-                  <source src="video1.mp4" type="video/mp4">
-              </video>
+          <div id="exteriorModelContent" class="content-section">
+            <div id="exteriorModelContainer"></div>
           </div>
-          <div id="modelContent" class="content-section">
-              <div id="modelContainer"></div>
+          <div id="interiorModelContent" class="content-section">
+              <div id="interiorModelContainer"></div>
           </div>
       </div>
 
@@ -93,7 +98,7 @@
           init();
 
           function init() {
-              const container = document.getElementById('modelContainer');
+              const container = document.getElementById('exteriorModelContainer');
 
               camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 200000);
               camera.position.set(-7500, 10000, 5000);
@@ -157,7 +162,12 @@
               renderer.render(scene, camera);
           }
 
-          let modelLoaded = false;
+
+      </script>
+
+      <script>
+
+        let modelLoaded = false;
 
           function showContent(contentId) {
               document.querySelectorAll('.content-section').forEach(section => {
@@ -173,7 +183,7 @@
           }
 
           window.addEventListener('load', initialize3DModel);
-
+          
       </script>
 
         {% endblock %}
