@@ -211,16 +211,16 @@
 
           if (contentId === 'exteriorModelContent' && !exteriorModelLoaded) {
             exteriorModelLoaded = true;
-            import('/path/to/exteriorModelScript.js').then(module => {
-              module.initExteriorModel();
-            });
+            if (typeof initExteriorModel === 'function') {
+              initExteriorModel();
+            }
           }
-
+      
           if (contentId === 'interiorModelContent' && !interiorModelLoaded) {
             interiorModelLoaded = true;
-            import('/path/to/interiorModelScript.js').then(module => {
-              module.initInteriorModel();
-            });
+            if (typeof initInteriorModel === 'function') {
+              initInteriorModel();
+            }
           }
         }
       </script>
