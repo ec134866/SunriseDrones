@@ -10,16 +10,12 @@
         <br><br><br>
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Jul 22, 2023
-            {% comment %} [] date variable {% endcomment %}
+            {{flight.date}}
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Jul 22, 2023</a></li>
-            <li><a class="dropdown-item" href="#">Jan 1, 2001 </a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-            {% comment %} {% for property in properties %}
-              <li><a class="dropdown-item" href="#">{{property.flight_date}}</a></li>
-            {% end for%} {% endcomment %}
+            {% for flight in flights %}
+              <li><a class="dropdown-item" href="#">{{flight.date}}</a></li>
+            {% end for%} 
           </ul>
         </div>
         <br><br><br><br><br><br>
