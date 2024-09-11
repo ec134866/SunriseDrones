@@ -27,17 +27,18 @@
         <div class="container">
             <div class="row">
               <div class="col-sm-4 col-12">
-                <a href="{% url 'overflight' %}"><img src="https://i.imgur.com/6r2EYtn.jpg" style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover"></a>
+                <a href="{% url 'overflight' %}"><img src={{flight.overflight_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover"></a>
                 <br><br><br>
                 <h2> {% trans "Overflight" %} </h2>
+                <h2> {{flight.overflight_thumbnail_link}} </h2>
               </div>
               <div class="col-sm-4 col-12">
-                <a href="{% url 'exterior' %}"><img src="https://i.imgur.com/hrJyXYb.jpg" style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Photogrammetry"></a>
+                <a href="{% url 'exterior' %}"><img src={{flight.exterior_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Photogrammetry"></a>
                 <br><br><br>
                 <h2> {% trans "3D Exterior Model" %} </h2>
               </div>
               <div class="col-sm-4 col-12">
-                <a href="{% url 'interior' %}"><img src="https://i.imgur.com/FfuHwsJ.jpg" style="width:24vw; height:auto; border-radius:2vw;" alt="model room image"></a>
+                <a href="{% url 'interior' %}"><img src={{flight.interior_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="model room image"></a>
                 <br><br><br>
                 <h2> {% trans "3D Interior Model" %} </h2>
               </div>

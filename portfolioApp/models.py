@@ -62,6 +62,3 @@ class Flight(models.Model):
     def __str__(self):
         return self.id
     
-
-    
-# reset db
