@@ -113,7 +113,7 @@
             const container = document.getElementById('exteriorModelContainer');
             container.innerHTML = '';  // Clear previous content
 
-            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 200000);
+            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.8) / window.innerHeight, 1, 200000);
             camera.position.set(-7500, 10000, 5000);
 
             scene = new THREE.Scene();
@@ -127,7 +127,7 @@
 
             renderer = new THREE.WebGLRenderer();
             renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize((window.innerWidth * 0.8), window.innerHeight);
             container.appendChild(renderer.domElement);
 
             const controls = new OrbitControls(camera, renderer.domElement);
@@ -146,9 +146,9 @@
             controls.update();
 
             window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.aspect = (window.innerWidth * 0.8) / window.innerHeight;
                 camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setSize((window.innerWidth * 0.8), window.innerHeight);
             });
 
             animate();
