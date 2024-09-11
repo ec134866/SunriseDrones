@@ -41,7 +41,7 @@ def propertyPageView(request, person_uuid, property_name):
         'person': person,
         'property': property,
         'flights': flights,
-        'latest_flight': flights.first()
+        'latest_flight': flights.last()
     }
 
     return render(request, 'portfolioApp/property.html', context)
