@@ -78,139 +78,104 @@
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
         let camera, scene, renderer, loader;
-
-        function initExteriorModel() {
-          const container = document.getElementById('exteriorModelContainer');
-          container.innerHTML = ''; // Clear previous content
-
-          camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 200000);
-          camera.position.set(-7500, 10000, 5000);
-
-          scene = new THREE.Scene();
-
-          const light = new THREE.AmbientLight(0x404040, 80);
-          scene.add(light);
-
-          loader = new FBXLoader();
-          loadAsset('{{ flight.exterior_link }}');
-
-          renderer = new THREE.WebGLRenderer();
-          renderer.setPixelRatio(window.devicePixelRatio);
-          renderer.setSize(window.innerWidth, window.innerHeight);
-          container.appendChild(renderer.domElement);
-
-          const controls = new OrbitControls(camera, renderer.domElement);
-          controls.listenToKeyEvents(window);
-          const distance = camera.position.distanceTo(controls.target);
-          controls.keyPanSpeed = Math.max(10000 * (500 / distance));
-          controls.zoomSpeed = 10;
-          controls.zoomToCursor = true;
-          controls.enablePan = true;
-          controls.minDistance = 0;
-          controls.maxDistance = 50000;
-          controls.minPolarAngle = 0.25;
-          controls.maxPolarAngle = 1.8;
-          controls.autoRotate = false;
-          controls.target = new THREE.Vector3(0, 1, 0);
-          controls.update();
-
-          window.addEventListener('resize', onWindowResize);
-
-          function loadAsset(asset) {
-            loader.load(asset, (object) => {
-              scene.add(object);
-            });
-          }
-
-          function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-          }
-
-          function animate() {
-            renderer.render(scene, camera);
-          }
-
-        }
-      </script>
-
-      {% comment %} interior model {% endcomment %}
-      <script type="module">
-        import * as THREE from 'three';
-        import WebGL from 'three/addons/capabilities/WebGL.js';
-        import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-        let camera, scene, renderer, loader;
-
-        function initInteriorModel() {
-          const container = document.getElementById('interiorModelContainer');
-          container.innerHTML = ''; // Clear previous content
-
-          camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 200000);
-          camera.position.set(-7500, 10000, 5000);
-
-          scene = new THREE.Scene();
-
-          const light = new THREE.AmbientLight(0x404040, 80);
-          scene.add(light);
-
-          loader = new FBXLoader();
-          loadAsset('{{ flight.interior_link }}');
-
-          renderer = new THREE.WebGLRenderer();
-          renderer.setPixelRatio(window.devicePixelRatio);
-          renderer.setSize(window.innerWidth, window.innerHeight);
-          container.appendChild(renderer.domElement);
-
-          const controls = new OrbitControls(camera, renderer.domElement);
-          controls.listenToKeyEvents(window);
-          const distance = camera.position.distanceTo(controls.target);
-          controls.keyPanSpeed = Math.max(10000 * (500 / distance));
-          controls.zoomSpeed = 10;
-          controls.zoomToCursor = true;
-          controls.enablePan = true;
-          controls.minDistance = 0;
-          controls.maxDistance = 50000;
-          controls.minPolarAngle = 0.25;
-          controls.maxPolarAngle = 1.8;
-          controls.autoRotate = false;
-          controls.target = new THREE.Vector3(0, 1, 0);
-          controls.update();
-
-          window.addEventListener('resize', onWindowResize);
-
-          function loadAsset(asset) {
-            loader.load(asset, (object) => {
-              scene.add(object);
-            });
-          }
-
-          function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-          }
-
-          function animate() {
-            renderer.render(scene, camera);
-          }
-
-        }
-      </script>
-
-      <script>
         let exteriorModelLoaded = false;
         let interiorModelLoaded = false;
 
-        function showContent(contentId) {
-          document.querySelectorAll('.content-section').forEach(section => {
-            section.classList.remove('show');
-          });
-          const selectedContent = document.getElementById(contentId);
-          selectedContent.classList.add('show');
-        }
-      </script>
+        function initExteriorModel() {
+            const container = document.getElementById('exteriorModelContainer');
+            container.innerHTML = '';  // Clear previous content
+        
+            let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 200000);
+            camera.position.set(-7500, 10000, 5000);
+        
+            let scene = new THREE.Scene();
+            let light = new THREE.AmbientLight(0x404040, 80);
+            scene.add(light);
+        
+            let loader = new FBXLoader();
+            loader.load('{{ flight.exterior_link }}', (object) => {
+              scene.add(object);
+            });
+        
+            let renderer = new THREE.WebGLRenderer();
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+        
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.target.set(0, 1, 0);
+            controls.update();
+        
+            window.addEventListener('resize', () => {
+              camera.aspect = window.innerWidth / window.innerHeight;
+              camera.updateProjectionMatrix();
+              renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        
+            function animate() {
+              requestAnimationFrame(animate);
+              renderer.render(scene, camera);
+            }
+        
+            animate();  // Start the animation loop
+          }
+        
+          function initInteriorModel() {
+            const container = document.getElementById('interiorModelContainer');
+            container.innerHTML = '';  // Clear previous content
+        
+            let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 200000);
+            camera.position.set(-7500, 10000, 5000);
+        
+            let scene = new THREE.Scene();
+            let light = new THREE.AmbientLight(0x404040, 80);
+            scene.add(light);
+        
+            let loader = new FBXLoader();
+            loader.load('{{ flight.interior_link }}', (object) => {
+              scene.add(object);
+            });
+        
+            let renderer = new THREE.WebGLRenderer();
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+        
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.target.set(0, 1, 0);
+            controls.update();
+        
+            window.addEventListener('resize', () => {
+              camera.aspect = window.innerWidth / window.innerHeight;
+              camera.updateProjectionMatrix();
+              renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        
+            function animate() {
+              requestAnimationFrame(animate);
+              renderer.render(scene, camera);
+            }
+        
+            animate();  // Start the animation loop
+          }
+        
+          function showContent(contentId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+              section.classList.remove('show');
+            });
+        
+            const selectedContent = document.getElementById(contentId);
+            selectedContent.classList.add('show');
+        
+            // Load the correct model based on the content
+            if (contentId === 'exteriorModelContent' && !exteriorModelLoaded) {
+              initExteriorModel();  // Call the function to initialize exterior model
+              exteriorModelLoaded = true;  // Set flag to avoid reloading the model
+            } else if (contentId === 'interiorModelContent' && !interiorModelLoaded) {
+              initInteriorModel();  // Call the function to initialize interior model
+              interiorModelLoaded = true;  // Set flag to avoid reloading the model
+            }
+          }
+        </script>
 
       {% endblock %}
