@@ -208,20 +208,6 @@
           });
           const selectedContent = document.getElementById(contentId);
           selectedContent.classList.add('show');
-
-          if (contentId === 'exteriorModelContent' && !exteriorModelLoaded) {
-            exteriorModelLoaded = true;
-            if (typeof initExteriorModel === 'function') {
-              initExteriorModel();
-            }
-          }
-      
-          if (contentId === 'interiorModelContent' && !interiorModelLoaded) {
-            interiorModelLoaded = true;
-            if (typeof initInteriorModel === 'function') {
-              initInteriorModel();
-            }
-          }
         }
       </script>
 
