@@ -451,7 +451,19 @@
       grid-template-columns: repeat(2, 1fr);
     }
     
-    
+    .content-section {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+  }
+    .content-section.show {
+        display: block;
+        opacity: 1;
+    }
+    #modelContainer {
+        width: 100%;
+        height: 100vh; /* Adjust height as needed */
+    }
     
 
     {% comment %} end of character styles {% endcomment %}
@@ -519,8 +531,17 @@
               }
             });
           });
-        
+
        </script>
+
+       <script type="importmap">
+        {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@v0.168.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.168.0/examples/jsm/"
+            }
+        }
+      </script>
     
   </head>
 
