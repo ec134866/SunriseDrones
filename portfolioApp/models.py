@@ -56,7 +56,7 @@ class Flight(models.Model):
     interior_thumbnail_link = models.CharField(max_length=500, blank=True, null=True)
     top_image_link_1 = models.CharField(max_length=500, blank=True, null=True)
     top_image_link_2 = models.CharField(max_length=500, blank=True, null=True)
-    property = models.OneToOneField(Property, on_delete=models.CASCADE, related_name='flight')
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='flight')
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='flights')
 
     def __str__(self):
