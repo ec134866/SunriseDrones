@@ -9,44 +9,35 @@
         {% block body %}
         <br><br><br>
         <div class="dropdown">
-          <form id="dateForm" method="get">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{ selected_date|default:latest_flight.date }}
-            </button>
-            <ul class="dropdown-menu">
-              {% for flight in flights %}
-                <li>
-                  <a class="dropdown-item" href="javascript:void(0);" onclick="selectDate('{{ flight.date|date:'Y-m-d' }}')">
-                    {{ flight.date }}
-                  </a>
-                </li>
-              {% endfor %}
-            </ul>
-        
-            <input type="hidden" name="date" id="selectedDate">
-          </form>
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{latest_flight.date}}
+          </button>
+          <ul class="dropdown-menu">
+            {% for flight in flights %}
+              <li><a class="dropdown-item" href="#">{{flight.date}}</a></li>
+            {% endfor%} 
+          </ul>
         </div>
         <br><br><br><br><br><br>
-
         <div class="container mt-4">
             <div class="row">
                 <div class="col-md-4 mb-3">
                   <button class="btn btn-link p-0" onclick="showContent('overflightContent')">
-                      <img src="{{flight.last.overflight_thumbnail_link}}" style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                      <img src={{flight.overflight_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
                   </button>
                   <br><br><br>
                   <h2>Overflight</h2>
                 </div>
                 <div class="col-md-4 mb-3">
                   <button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
-                      <img src="{{flight.last.exterior_thumbnail_link}}" style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                      <img src={{flight.exterior_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
                   </button>
                   <br><br><br>
                   <h2>3D Exterior Model</h2>
                 </div>
                 <div class="col-md-4 mb-3">
                   <button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
-                      <img src="{{flight.last.interior_thumbnail_link}}" style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                      <img src={{flight.interior_thumbnail_link}} style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
                   </button>
                   <br><br><br>
                   <h2>3D Interior Model</h2>
@@ -79,14 +70,6 @@
 
         <br><br><br><br><br><br>
 
-
-
-      <script>
-          function selectDate(date) {
-            document.getElementById('selectedDate').value = date;
-            document.getElementById('dateForm').submit();
-          }
-      </script>
 
       <script>
         function showContent(contentId) {
@@ -125,7 +108,7 @@
 
         window.initExteriorModel = function() {
             const container = document.getElementById('exteriorModelContainer');
-            container.innerHTML = ''; 
+            container.innerHTML = '';  // Clear previous content
 
             camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, 200000);
             camera.position.set(-7500, 10000, 5000);
@@ -135,7 +118,7 @@
             scene.add(light);
 
             const loader = new FBXLoader();
-            loader.load('{{ flight.last.exterior_link }}', (object) => {
+            loader.load('{{ flight.exterior_link }}', (object) => {
                 scene.add(object);
             });
 
@@ -170,7 +153,7 @@
         
         window.initInteriorModel = function() {
             const container = document.getElementById('interiorModelContainer');
-            container.innerHTML = ''; 
+            container.innerHTML = '';  // Clear previous content
 
             camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, 200000);
             camera.position.set(-7500, 10000, 5000);
@@ -180,7 +163,7 @@
             scene.add(light);
 
             const loader = new FBXLoader();
-            loader.load('{{ flight.last.interior_link }}', (object) => {
+            loader.load('{{ flight.interior_link }}', (object) => {
                 scene.add(object);
             });
 
