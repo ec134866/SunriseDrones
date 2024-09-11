@@ -32,21 +32,21 @@
             <div class="row">
                 <div class="col-md-4 mb-3">
                   <button class="btn btn-link p-0" onclick="showContent('overflightContent')">
-                      <img src="{{flight.overflight_thumbnail_link}}" style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                      <img src="{{flight.last.overflight_thumbnail_link}}" style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
                   </button>
                   <br><br><br>
                   <h2>Overflight</h2>
                 </div>
                 <div class="col-md-4 mb-3">
                   <button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
-                      <img src="{{flight.exterior_thumbnail_link}}" style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                      <img src="{{flight.last.exterior_thumbnail_link}}" style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
                   </button>
                   <br><br><br>
                   <h2>3D Exterior Model</h2>
                 </div>
                 <div class="col-md-4 mb-3">
                   <button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
-                      <img src="{{flight.interior_thumbnail_link}}" style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                      <img src="{{flight.last.interior_thumbnail_link}}" style="width:24vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
                   </button>
                   <br><br><br>
                   <h2>3D Interior Model</h2>
@@ -125,7 +125,7 @@
 
         window.initExteriorModel = function() {
             const container = document.getElementById('exteriorModelContainer');
-            container.innerHTML = '';  // Clear previous content
+            container.innerHTML = ''; 
 
             camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, 200000);
             camera.position.set(-7500, 10000, 5000);
@@ -135,7 +135,7 @@
             scene.add(light);
 
             const loader = new FBXLoader();
-            loader.load('{{ flight.exterior_link }}', (object) => {
+            loader.load('{{ flight.last.exterior_link }}', (object) => {
                 scene.add(object);
             });
 
@@ -170,7 +170,7 @@
         
         window.initInteriorModel = function() {
             const container = document.getElementById('interiorModelContainer');
-            container.innerHTML = '';  // Clear previous content
+            container.innerHTML = ''; 
 
             camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, 200000);
             camera.position.set(-7500, 10000, 5000);
@@ -180,7 +180,7 @@
             scene.add(light);
 
             const loader = new FBXLoader();
-            loader.load('{{ flight.interior_link }}', (object) => {
+            loader.load('{{ flight.last.interior_link }}', (object) => {
                 scene.add(object);
             });
 
