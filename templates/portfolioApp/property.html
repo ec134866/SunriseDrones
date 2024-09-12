@@ -30,17 +30,26 @@
         </script>
         <br><br><br>
         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {{ selected_flight.date }}
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            Select a date
           </button>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {% for flight in flights %}
-              <li>
-                <a class="dropdown-item">{{ flight.date }}</a>
-              </li>
+              <li><a class="dropdown-item" href="#" onclick="selectDate('{{ flight.date }}')">{{ flight.date }}</a></li>
             {% endfor %}
           </ul>
         </div>
+        <p> The value selected is
+          <span class="output"></span>
+        </p>
+        
+        <script type="text/javascript">
+          function selectDate(date) {
+            document.getElementById('dropdownMenuButton').textContent = date;
+            
+            document.querySelector('.output').textContent = date;
+          }
+        </script>
         <br><br><br><br><br><br>
 
         <div class="container mt-4">
