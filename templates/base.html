@@ -11240,7 +11240,7 @@
               <li class="sidebar-brand"><a href="{% url 'index' %}">Sunrise Drones</a></li>
               <li class="sidebar-nav-item">
                 {% if person %}
-                  <a href="{% url 'owner' person.uuid %}">Properties</a>
+                  <a href="{% url 'owner' person.uuid %}">{{owner.name}} Properties</a>
                 {% else %}
                   <a href="{% url 'index' %}"><em>Logged Out</em> - Properties</a>
                 {% endif %}

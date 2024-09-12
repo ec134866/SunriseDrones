@@ -13,10 +13,12 @@ def basePageView(request):
     if person_uuid:
         person = get_object_or_404(Person, uuid=person_uuid)
 
+    owner = Owner.objects.filter(person=person)
     
     
     context = {
-        'person': person
+        'person': person,
+         'owner': owner
     }
 
     return render(request, 'portfolioApp/index.html', context)
@@ -30,7 +32,7 @@ def indexPageView(request):
 def ownerPageView(request, person_uuid):
     
     person = get_object_or_404(Person, uuid=person_uuid)
-    owners = Owner.objects.filter(person=person)
+    owner = Owner.objects.filter(person=person)
     properties = Property.objects.filter(person=person)
 
     for prop in properties:
@@ -39,7 +41,7 @@ def ownerPageView(request, person_uuid):
 
     context = {
         'person': person,
-        'owners': owners,
+        'owner': owner,
         'properties': properties
     }
 
@@ -48,7 +50,7 @@ def ownerPageView(request, person_uuid):
 def propertyPageView(request, person_uuid, property_name):
    
     person = get_object_or_404(Person, uuid=person_uuid)
-    owners = Owner.objects.filter(person=person)
+    owner = Owner.objects.filter(person=person)
     property = get_object_or_404(Property, name=property_name, person=person)
     flights = Flight.objects.filter(property=property).order_by('-date')
     
@@ -61,7 +63,7 @@ def propertyPageView(request, person_uuid, property_name):
 
     context = {
         'person': person,
-        'owners': owners,
+        'owner': owner,
         'property': property,
         'flights': flights,
         'selected_flight': selected_flight
