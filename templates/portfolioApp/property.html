@@ -9,7 +9,7 @@
         {% block body %}
         <br><br><br>
         <p>
-          <select id = "date_selected">
+          <select id="select1">
             {% for flight in flights %}
               <option value = {{ flight.date }}> {{ flight.date }} </option>
             {% endfor %}
@@ -18,12 +18,12 @@
         <p> The value selected is
           <span class="output"></span>
         </p>
-        <button onclick="getSelection()"> Check Selection </button>
+        <button onclick="getOption()"> Check option </button>
 
         <script type="text/javascript">
-            function getSelection() {
+            function getOption() {
                 selectElement = 
-                      document.querySelector('#date_selected');
+                      document.querySelector('#select1');
                 output = selectElement.value;
                 document.querySelector('.output').textContent = output;
             }
