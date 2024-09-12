@@ -7,7 +7,7 @@ from .models import Person, Owner, Property, Flight
 
 # Create your views here.
 
-def basePageView(request):
+def basePageView(request, person_uuid):
     person_uuid = request.session.get('person_uuid', None)
     person = None
     if person_uuid:
