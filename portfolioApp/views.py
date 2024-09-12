@@ -7,9 +7,7 @@ from .models import Person, Owner, Property, Flight
 
 # Create your views here.
 
-
-
-def indexPageView(request):
+def basePageView(request):
     person_uuid = request.session.get('person_uuid', None)
     person = None
     if person_uuid:
@@ -18,6 +16,12 @@ def indexPageView(request):
     context = {
         'person': person
     }
+
+    return render(request, 'portfolioApp/index.html', context)
+
+def indexPageView(request):
+   
+    context = {}
 
     return render(request, 'portfolioApp/index.html', context)
 
