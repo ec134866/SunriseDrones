@@ -78,10 +78,19 @@ def propertyPageView(request, person_uuid, property_name):
 
     selected_flight = Flight.objects.filter(property=property, date=selected_date).first()
 
+    if owner.exists():
+        if owner.count() > 1:
+            owner_name = "Owner View"
+        else:
+            owner_name = owner.first().name
+    else:
+        owner_name = "Owner View"
+
 
     context = {
         'person': person,
         'owner': owner,
+        'owner_name': owner_name,
         'property': property,
         'flights': flights,
         'selected_flight': selected_flight
