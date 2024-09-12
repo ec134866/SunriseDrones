@@ -13,9 +13,22 @@ def basePageView(request):
     if person_uuid:
         person = get_object_or_404(Person, uuid=person_uuid)
 
+
+    owner = Owner.objects.filter(person=person)
+
+    if owner.exists():
+        if owner.count() > 1:
+            owner_name = "Owner View"
+        else:
+            owner_name = owner.first().name
+    else:
+        owner_name = "Owner View"
+
     
     context = {
         'person': person,
+        'owner_name': owner_name,
+        'owner' : owner
     }
 
     return render(request, 'portfolioApp/index.html', context)
@@ -35,10 +48,18 @@ def ownerPageView(request, person_uuid):
     for prop in properties:
         prop.latest_flight = Flight.objects.filter(property=prop).order_by('-date').first()
 
+    if owner.exists():
+        if owner.count() > 1:
+            owner_name = "Owner View"
+        else:
+            owner_name = owner.first().name
+    else:
+        owner_name = "Owner View"
 
     context = {
         'person': person,
         'owner': owner,
+        'owner_name': owner_name,
         'properties': properties
     }
 
