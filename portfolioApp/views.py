@@ -31,12 +31,16 @@ def ownerPageView(request, person_uuid):
     
     person = get_object_or_404(Person, uuid=person_uuid)
     owners = Owner.objects.filter(person=person)
-    property = Property.objects.filter(person=person)
+    properties = Property.objects.filter(person=person)
+
+    for prop in properties:
+        prop.latest_flight = Flight.objects.filter(property=prop).order_by('-date').first()
+
 
     context = {
         'person': person,
         'owners': owners,
-        'property': property
+        'properties': properties
     }
 
     return render(request, 'portfolioApp/owner.html', context)
