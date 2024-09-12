@@ -50,7 +50,7 @@ def propertyPageView(request, person_uuid, property_name):
     
     selected_date = request.GET.get('date')
     if not selected_date:
-        selected_date = flights.last().date 
+        selected_date = flights.first().date 
 
     selected_flight = Flight.objects.filter(property=property, date=selected_date).first()
 
@@ -60,8 +60,7 @@ def propertyPageView(request, person_uuid, property_name):
         'owners': owners,
         'property': property,
         'flights': flights,
-        'selected_flight': selected_flight,
-        'latest_flight': flights.last()
+        'selected_flight': selected_flight
     }
 
     return render(request, 'portfolioApp/property.html', context)
