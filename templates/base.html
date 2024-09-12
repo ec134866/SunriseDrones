@@ -11240,9 +11240,9 @@
               <li class="sidebar-brand"><a href="{% url 'index' %}">Sunrise Drones</a></li>
               <li class="sidebar-nav-item">
                 {% if person %}
-                  <a href="{% url 'owner' person.uuid %}">Owner View</a>
+                  <a href="{% url 'owner' person.uuid %}">{{owner.name}} View</a>
                 {% else %}
-                  <a href="{% url 'index' %}"><em>Logged Out</em> - Services Page</a>
+                  <a href="{% url 'index' %}"><em>Logged Out</em> - Owner View</a>
                 {% endif %}
               </li>
               {% comment %} potentially have for loop of all properties? {% endcomment %}
