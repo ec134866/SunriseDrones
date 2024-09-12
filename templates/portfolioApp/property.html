@@ -8,14 +8,35 @@
         
         {% block body %}
         <br><br><br>
+        <p>
+          <select id = "date_selected">
+            {% for flight in flights %}
+              <option value = {{ flight.date }}> {{ flight.date }} </option>
+            {% endfor %}
+          </select>
+        </p>
+        <p> The value selected is
+          <span class="output"></span>
+        </p>
+        <button onclick="getSelection()"> Check Selection </button>
+
+        <script type="text/javascript">
+            function getSelection() {
+                selectElement = 
+                      document.querySelector('#date_selected');
+                output = selectElement.value;
+                document.querySelector('.output').textContent = output;
+            }
+        </script>
+        <br><br><br>
         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="flightDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             {{ selected_flight.date }}
           </button>
           <ul class="dropdown-menu">
             {% for flight in flights %}
               <li>
-                <a class="dropdown-item" href="#" onclick="loadFlightData('{{ flight.date }}')">{{ flight.date }}</a>
+                <a class="dropdown-item">{{ flight.date }}</a>
               </li>
             {% endfor %}
           </ul>
