@@ -11,7 +11,7 @@
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
             {% if selected_flight %}
-              {{ selected_flight.date }}
+              {{ selected_flight.date|date:"F j, Y" }}
             {% else %}
               Select a date
             {% endif %}
@@ -19,7 +19,9 @@
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {% for flight in flights %}
               <li>
-                <a class="dropdown-item" href="?date={{ flight.date }}">{{ flight.date }}</a>
+                <a class="dropdown-item" href="?date={{ flight.date|date:'Y-m-d' }}">
+                  {{ flight.date|date:"F j, Y" }}
+                </a>
               </li>
             {% endfor %}
           </ul>
@@ -29,6 +31,13 @@
           <span class="output">
             {% if selected_flight %}
               {{ selected_flight.date }}
+            {% endif %}
+          </span>
+        </p>
+        <p> The pretty value selected is
+          <span class="output">
+            {% if selected_flight %}
+              {{ selected_flight.date|date:"F j, Y" }}
             {% endif %}
           </span>
         </p>
