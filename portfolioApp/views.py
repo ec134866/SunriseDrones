@@ -13,12 +13,9 @@ def basePageView(request):
     if person_uuid:
         person = get_object_or_404(Person, uuid=person_uuid)
 
-    owner = Owner.objects.filter(person=person)
-    
     
     context = {
         'person': person,
-         'owner': owner
     }
 
     return render(request, 'portfolioApp/index.html', context)
