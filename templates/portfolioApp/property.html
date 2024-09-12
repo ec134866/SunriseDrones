@@ -8,8 +8,12 @@
         
         {% block body %}
         <br><br><br>
-        <h1 class="mb-1">{{owner_name}} Properties</h1>
-        <h2 class="mb-2">{{property.name}} Property</h2>
+        <header class="masthead d-flex align-items-center">
+          <div class="container px-4 px-lg-5 text-center">
+            <h1 class="mb-1">{{owner_name}} Properties</h1>
+            <h2 class="mb-2">{{property.name}} Property</h2>
+          </div>
+        </header>
         <br><br>
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
