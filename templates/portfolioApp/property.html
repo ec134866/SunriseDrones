@@ -9,9 +9,9 @@
         {% block body %}
         <br><br><br>
         <p>
-          <select id="select1">
+          <select id="date_selected">
             {% for flight in flights %}
-              <option value = {{ flight.date }}> {{ flight.date }} </option>
+              <option value = "{{ flight.date }}"> {{ flight.date }} </option>
             {% endfor %}
           </select>
         </p>
@@ -23,7 +23,7 @@
         <script type="text/javascript">
             function getOption() {
                 selectElement = 
-                      document.querySelector('#select1');
+                      document.querySelector('#date_selected');
                 output = selectElement.value;
                 document.querySelector('.output').textContent = output;
             }
