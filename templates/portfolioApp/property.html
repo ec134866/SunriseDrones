@@ -8,14 +8,14 @@
         
         {% block body %}
         
-        <header class="d-flex align-items-center bg-primary">
+        <header class="d-flex align-items-center" style="padding-top: 5vh; padding-bottom: 5vh; bs-bg-opacity: 1; background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;">
           <div class="container px-4 px-lg-5 text-center">
             <h1 class="mb-1" style="font-size: 5.5rem;">{{owner_name}} Properties</h1>
             <h2 class="mb-1" style="font-size: 3.5rem;">{{property.name}}</h2>
           </div>
         </header>
         
-        <div class="dropdown">
+        <div class="dropdown" style="padding-top: 2vh; padding-bottom: 2vh">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
             {% if selected_flight %}
               {{ selected_flight.date}}
