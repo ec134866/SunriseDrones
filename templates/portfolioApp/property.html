@@ -63,7 +63,7 @@
 
         <div id="contentArea" class="container-fluid">
           <div class="d-flex justify-content-center">
-              <div id="overflightContent" class="model-content-section">
+              <div id="overflightContent" class="content-section">
                   <video controls width="580" height="350">
                       <source src="{{selected_flight.interior_thumbnail_link}}" type="video/mp4">
                       Your browser does not support the video tag.
@@ -71,13 +71,13 @@
               </div>
           </div>
           <div class="d-flex justify-content-center">
-              <div id="exteriorModelContent" class="model-content-section">
+              <div id="exteriorModelContent" class="content-section">
                   <div id="exteriorModelContainer" class="d-flex justify-content-center">
                   </div>
               </div>
           </div>
           <div class="d-flex justify-content-center">
-              <div id="interiorModelContent" class="model-content-section">
+              <div id="interiorModelContent" class="content-section">
                   <div id="interiorModelContainer" class="d-flex justify-content-center">
                   </div>
               </div>
@@ -89,7 +89,7 @@
 
       <script>
         function showContent(contentId) {
-          document.querySelectorAll('.model-content-section').forEach(section => {
+          document.querySelectorAll('.content-section').forEach(section => {
             section.classList.remove('show');
           });
       
