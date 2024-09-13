@@ -20,6 +20,9 @@ class Person(models.Model):
 # Owner Model
 class Owner(models.Model):
     name = models.CharField(max_length=255)
+    palette1 = models.CharField(max_length=50)
+    palette2 = models.CharField(max_length=50)
+    palette3 = models.CharField(max_length=50)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='owners')
 
     def __str__(self):
