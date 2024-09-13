@@ -100,28 +100,30 @@
   </head>
 
 <body>
+  <div style="display: flex; flex-direction: column; min-height: 100vh;"> 
+  
+  <a class="menu-toggle rounded" href="#"><i class="fas fa-bars"></i></a>
+        <nav id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand"><a href="{% url 'index' %}">Sunrise Drones</a></li>
+                <li class="sidebar-nav-item">
+                  {% if person %}
+                    <a href="{% url 'owner' person.uuid %}">{{owner_name}} Properties</a>
+                  {% else %}
+                    <a href="{% url 'index' %}"><em>Logged Out</em> - Properties</a>
+                  {% endif %}
+                </li>
+                {% comment %} potentially have for loop of all properties? {% endcomment %}
+                <li class="sidebar-nav-item"><a href="#about">  Properties:</a></li>
+            </ul>
+        </nav>
+        
+  {% block body %}
+  {% endblock %}
 
-<a class="menu-toggle rounded" href="#"><i class="fas fa-bars"></i></a>
-      <nav id="sidebar-wrapper">
-          <ul class="sidebar-nav">
-              <li class="sidebar-brand"><a href="{% url 'index' %}">Sunrise Drones</a></li>
-              <li class="sidebar-nav-item">
-                {% if person %}
-                  <a href="{% url 'owner' person.uuid %}">{{owner_name}} Properties</a>
-                {% else %}
-                  <a href="{% url 'index' %}"><em>Logged Out</em> - Properties</a>
-                {% endif %}
-              </li>
-              {% comment %} potentially have for loop of all properties? {% endcomment %}
-              <li class="sidebar-nav-item"><a href="#about">  Properties:</a></li>
-          </ul>
-      </nav>
-      
-{% block body %}
-{% endblock %}
-
-  <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+  </div>
 </body>
 
 
