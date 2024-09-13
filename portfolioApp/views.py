@@ -81,16 +81,20 @@ def propertyPageView(request, person_uuid, property_name):
     if owner.exists():
         if owner.count() > 1:
             owner_name = "Owner View"
+            owner_palette1 = "(179, 9, 56, 1)"
         else:
             owner_name = owner.first().name
+            owner_palette1 = owner.first().palette1
     else:
         owner_name = "Owner View"
+        owner_palette1 = "(179, 9, 56, 1)"
 
 
     context = {
         'person': person,
         'owner': owner,
         'owner_name': owner_name,
+        'owner_palette1': owner_palette1,
         'property': property,
         'flights': flights,
         'selected_flight': selected_flight
