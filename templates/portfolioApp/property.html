@@ -66,7 +66,7 @@
         {% comment %} content area {% endcomment %}
         <div id="contentArea" class="container-fluid" style="padding-top: 2vh; padding-bottom: 8vh; background-color: rgba(84,88,90,1)">
           <div class="d-flex justify-content-center">
-              <div id="overflightContent" class="content-section" style="width: 100%; height: 100%;">
+              <div id="overflightContent" class="content-section d-flex justify-content-center" style="width: 100%; height: 100%;">
                   <video controls autoplay style="width: 75%; height: 100%;" id="overflightVideoElement">
                       <source src="{{selected_flight.overflight_link}}" type="video/mp4">
                       Your browser does not support the video tag.
@@ -99,7 +99,12 @@
 
       <script>
 
-        document.getElementById('overflightVideoElement').playbackRate = 2.0;
+
+        document.addEventListener('DOMContentLoaded', function() {
+          var video = document.getElementById('overflightVideoElement');
+          video.play();  
+          video.playbackRate = 2.0; 
+        });
 
         function showContent(contentId) {
           document.querySelectorAll('.content-section').forEach(section => {
