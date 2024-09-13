@@ -15,8 +15,8 @@
           </div>
         </header>
         
-        <div class="dropdown" style="padding-top: 2vh; padding-bottom: 2vh">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="dropdown" style="padding-left: 1vw; padding-top: 2vh; padding-bottom: 2vh">
+          <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
             {% if selected_flight %}
               {{ selected_flight.date}}
             {% else %}
@@ -33,33 +33,35 @@
             {% endfor %}
           </ul>
         </div>
-        <div style="margin-left: 2vw; margin-right: 2vw; padding-top: 2vh; padding-bottom: 2vh;">
-            <div class="row">
-                <div class="col-md-4 mb-3 d-flex justify-content-center">
-                  <button class="btn btn-link p-0" onclick="showContent('overflightContent')">
-                      <img src={{selected_flight.overflight_thumbnail_link}} style="width:34vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-                      <br><br>
-                      <h2 class="text-decoration-none" style="color: #333;">Overflight</h2>
-                  </button>
-                </div>
-                <div class="col-md-4 mb-3 d-flex justify-content-center">
-                  <button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
-                      <img src={{selected_flight.exterior_thumbnail_link}} style="width:34vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-                      <br><br>
-                      <h2 class="text-decoration-none" style="color: #333;">3D Exterior Model</h2>
-                  </button>
-                </div>
-                <div class="col-md-4 mb-3 d-flex justify-content-center">
-                  <button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
-                      <img src={{selected_flight.interior_thumbnail_link}} style="width:34vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-                      <br><br>
-                      <h2 class="text-decoration-none" style="color: #333;">3D Interior Model</h2>
-                  </button>
-                </div>
-            </div>
+        <div class="bg-light">
+          <div style="padding-left: 2vw; padding-right: 2vw; padding-top: 2vh; padding-bottom: 2vh;">
+              <div class="row">
+                  <div class="col-md-4 mb-3 d-flex justify-content-center">
+                    <button class="btn btn-link p-0" onclick="showContent('overflightContent')">
+                        <img src={{selected_flight.overflight_thumbnail_link}} style="width:34vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                        <br><br>
+                        <h2 class="text-decoration-none" style="color: #333;">Overflight</h2>
+                    </button>
+                  </div>
+                  <div class="col-md-4 mb-3 d-flex justify-content-center">
+                    <button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
+                        <img src={{selected_flight.exterior_thumbnail_link}} style="width:34vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                        <br><br>
+                        <h2 class="text-decoration-none" style="color: #333;">3D Exterior Model</h2>
+                    </button>
+                  </div>
+                  <div class="col-md-4 mb-3 d-flex justify-content-center">
+                    <button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
+                        <img src={{selected_flight.interior_thumbnail_link}} style="width:34vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                        <br><br>
+                        <h2 class="text-decoration-none" style="color: #333;">3D Interior Model</h2>
+                    </button>
+                  </div>
+              </div>
+          </div>
         </div>
 
-        <div id="contentArea" class="container-fluid">
+        <div id="contentArea" class="container-fluid" style="padding-top: 4vh; padding-bottom: 8vh;">
           <div class="d-flex justify-content-center">
               <div id="overflightContent" class="content-section">
                   <video controls width="580" height="350">
@@ -82,7 +84,6 @@
           </div>
         </div>
 
-        <br><br><br><br><br><br>
 
 
       <script>

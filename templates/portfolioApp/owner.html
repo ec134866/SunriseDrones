@@ -7,32 +7,33 @@
         {% endblock %}
         
         {% block body %}
-        <br><br><br>
-        <header class="d-flex align-items-center">
+        <header class="d-flex align-items-center" style="padding-top: 3vh; padding-bottom: 3vh; background-color: rgba{{owner_palette1}} !important;">
           <div class="container px-4 px-lg-5 text-center">
             <h1 class="mb-1" style="font-size: 5.5rem;">{{owner_name}} Properties</h1>
           </div>
         </header>
-        <br><br>
-        <div class="container mt-4">
-          <div class="row">
-            {% for property in properties %}
-              <div class="col-md-4 mb-3 d-flex justify-content-center">
-                <a href="{% url 'property' person.uuid property.name %}" class="text-decoration-none">
-                  <div class="d-flex justify-content-center">
-                    {% if property.latest_flight %}
-                      <img src="{{ property.latest_flight.top_image_link_1 }}" class="img-fluid" style="width:24vw; height:24vh; border-radius:2vw;" alt="{{ property.name }}">
-                    {% else %}
-                      <img src="default_image_url" class="img-fluid" style="width:34vw; height:24vh; border-radius:2vw;" alt="{{ property.name }}">
-                    {% endif %}
-                  </div>
-                  <br>
-                  <div class="text-center">
-                    <h2>{{ property.name }}</h2>
-                  </div>
-                </a>
-              </div>
-            {% endfor %}
+        <div class="bg-light">
+          <div style="padding-left: 2vw; padding-right: 2vw; padding-top: 2vh; padding-bottom: 2vh;">
+            <div class="row">
+              {% for property in properties %}
+                <div class="col-md-4 mb-3 d-flex justify-content-center">
+                  <a href="{% url 'property' person.uuid property.name %}" class="text-decoration-none">
+                    <div class="d-flex justify-content-center">
+                      {% if property.latest_flight %}
+                        <img src="{{ property.latest_flight.top_image_link_1 }}" class="img-fluid" style="width:24vw; height:24vh; border-radius:2vw;" alt="{{ property.name }}">
+                      {% else %}
+                        <img src="default_image_url" class="img-fluid" style="width:34vw; height:24vh; border-radius:2vw;" alt="{{ property.name }}">
+                      {% endif %}
+                    </div>
+                    <br>
+                    <div class="text-center">
+                      <h2>{{ property.name }}</h2>
+                    </div>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
           </div>
         </div>
+
         {% endblock %}
