@@ -23,7 +23,7 @@ class Owner(models.Model):
     palette1 = models.CharField(max_length=50)
     palette2 = models.CharField(max_length=50)
     palette3 = models.CharField(max_length=50)
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='owners')
+    person = models.ManyToManyField(Person, related_name='owners')
 
     def __str__(self):
         return self.name
@@ -38,7 +38,7 @@ class Property(models.Model):
     loc_country = models.CharField(max_length=255, blank=True, null=True)
     loc_lat = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
     loc_long = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='properties')
+    person = models.ManyToManyField(Person, related_name='properties')
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='properties')  # Updated
 
 
@@ -60,7 +60,7 @@ class Flight(models.Model):
     top_image_link_1 = models.CharField(max_length=500, blank=True, null=True)
     top_image_link_2 = models.CharField(max_length=500, blank=True, null=True)
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='flight')
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='flights')
+    person = models.ManyToManyField(Person, related_name='flights')
 
     def __str__(self):
         return self.id
