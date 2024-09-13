@@ -13,7 +13,7 @@
           </div>
         </header>
         <div>
-          <div style="padding-left: 2vw; padding-right: 2vw; padding-top: 2vh; padding-bottom: 2vh;">
+          <div style="padding-left: 2vw; padding-right: 2vw; padding-top: 2vh; padding-bottom: 20vh;">
             <div class="row">
               {% for property in properties %}
                 <div class="col-md-4 mb-3 d-flex justify-content-center">
@@ -35,5 +35,11 @@
             </div>
           </div>
         </div>
+        <footer class="footer text-center bg-light">
+          <div class="container px-4 px-lg-5">
+              <p class="text-muted small mb-0">No models above should be relied upon for safety. These are not official surveys and should be used strictly for planning purposes and estimates.</p>
+              {% comment %} <p class="text-muted small mb-0">Copyright &copy; SunriseDrones 2024</p> {% endcomment %}
+          </div>
+      </footer>
 
         {% endblock %}
