@@ -19,7 +19,7 @@
               <h1>{{ owners.name }}</h1> 
               {% for property in properties %}
                 <div class="col-md-4 mb-3 d-flex justify-content-center">
-                  <a href="{% url 'property' person.uuid property.name %}" class="text-decoration-none">
+                  <a href="{% url 'property' person.uuid owner.name property.name %}" class="text-decoration-none">
                     <div class="d-flex justify-content-center">
                       {% if property.latest_flight %}
                         <img src="{{ property.latest_flight.top_image_link_1 }}" class="img-fluid" style="width:24vw; height:auto; border-radius:2vw;" alt="{{ property.name }}">
