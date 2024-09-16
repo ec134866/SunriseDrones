@@ -14,7 +14,7 @@
         </header>
         <div>
           <div style="padding-left: 2vw; padding-right: 2vw; padding-top: 2vh; padding-bottom: 20vh;">
-            {% for owners, properties in owner_properties %}
+            {% for owners, properties in properties_by_owner %}
             <div class="row">
               <h1>{{ owners.name }}</h1> 
               {% for property in properties %}

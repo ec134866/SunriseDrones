@@ -57,8 +57,8 @@ def ownerPageView(request, person_uuid):
             owner_name = "Owner View"
             owner_palette1 = "(179, 9, 56, 1)"
         else:
-            owner_name = owner.first().name + " Properties"
-            owner_palette1 = owner.first().palette1
+            owner_name = owners.first().name + " Properties"
+            owner_palette1 = owners.first().palette1
     else:
         owner_name = "Owner View"
         owner_palette1 = "(179, 9, 56, 1)"
@@ -68,7 +68,7 @@ def ownerPageView(request, person_uuid):
         'owners': owners,
         'owner_name': owner_name,
         'owner_palette1': owner_palette1,
-        'properties_by_owner': properties
+        'properties_by_owner': properties_by_owner
     }
 
     return render(request, 'portfolioApp/owner.html', context)
