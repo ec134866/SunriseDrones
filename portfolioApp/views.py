@@ -43,10 +43,14 @@ def ownerPageView(request, person_uuid):
     
     person = get_object_or_404(Person, uuid=person_uuid)
     owner = Owner.objects.filter(person=person)
-    properties = Property.objects.filter(person=person, owner=owner)
+    
+    properties_by_owner = []
+    for owner in owner:
+        properties = Property.objects.filter(owner=owner, person=person)
 
-    for prop in properties:
-        prop.latest_flight = Flight.objects.filter(property=prop).order_by('-date').first()
+        for prop in properties:
+            prop.latest_flight = Flight.objects.filter(property=prop).order_by('-date').first()
+        properties_by_owner.append((owner, properties))
 
     if owner.exists():
         if owner.count() > 1:
@@ -64,7 +68,7 @@ def ownerPageView(request, person_uuid):
         'owner': owner,
         'owner_name': owner_name,
         'owner_palette1': owner_palette1,
-        'properties': properties
+        'properties_by_owner': properties
     }
 
     return render(request, 'portfolioApp/owner.html', context)
