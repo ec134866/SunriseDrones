@@ -14,9 +14,9 @@
         </header>
         <div>
           <div style="padding-left: 2vw; padding-right: 2vw; padding-top: 2vh; padding-bottom: 20vh;">
-            {% for owner, properties in owner_properties %}
+            {% for owners, properties in owner_properties %}
             <div class="row">
-              <h1>{{ owner.name }}</h1> 
+              <h1>{{ owners.name }}</h1> 
               {% for property in properties %}
                 <div class="col-md-4 mb-3 d-flex justify-content-center">
                   <a href="{% url 'property' person.uuid property.name %}" class="text-decoration-none">

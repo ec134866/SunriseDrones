@@ -42,18 +42,18 @@ def indexPageView(request):
 def ownerPageView(request, person_uuid):
     
     person = get_object_or_404(Person, uuid=person_uuid)
-    owner = Owner.objects.filter(person=person)
+    owners = Owner.objects.filter(person=person)
     
     properties_by_owner = []
-    for owner in owner:
+    for owner in owners:
         properties = Property.objects.filter(owner=owner, person=person)
 
         for prop in properties:
             prop.latest_flight = Flight.objects.filter(property=prop).order_by('-date').first()
         properties_by_owner.append((owner, properties))
 
-    if owner.exists():
-        if owner.count() > 1:
+    if owners.exists():
+        if owners.count() > 1:
             owner_name = "Owner View"
             owner_palette1 = "(179, 9, 56, 1)"
         else:
@@ -65,7 +65,7 @@ def ownerPageView(request, person_uuid):
 
     context = {
         'person': person,
-        'owner': owner,
+        'owners': owners,
         'owner_name': owner_name,
         'owner_palette1': owner_palette1,
         'properties_by_owner': properties
