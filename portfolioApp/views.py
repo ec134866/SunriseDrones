@@ -15,19 +15,9 @@ def basePageView(request):
 
 
     owner = Owner.objects.filter(person=person)
-
-    if owner.exists():
-        if owner.count() > 1:
-            owner_name = "Owner View"
-        else:
-            owner_name = owner.first().name
-    else:
-        owner_name = "Owner View"
-
     
     context = {
         'person': person,
-        'owner_name': owner_name,
         'owner' : owner
     }
 
