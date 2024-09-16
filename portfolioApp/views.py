@@ -53,7 +53,7 @@ def ownerPageView(request, person_uuid):
             owner_name = "Owner View"
             owner_palette1 = "(179, 9, 56, 1)"
         else:
-            owner_name = owner.first().name
+            owner_name = owner.first().name + " Properties"
             owner_palette1 = owner.first().palette1
     else:
         owner_name = "Owner View"

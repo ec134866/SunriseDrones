@@ -1,6 +1,6 @@
 {% extends 'base.html'%}
         {% block title %}
-          <title> {{owner_name}} Properties </title>
+          <title> {{owner_name}} </title>
         {% endblock %}
         
         {% block search %}
@@ -9,13 +9,15 @@
         {% block body %}
         <header class="d-flex align-items-center" style="padding-top: 3vh; padding-bottom: 3vh; background-color: rgba{{owner_palette1}} !important;">
           <div class="container px-4 px-lg-5 text-center">
-            <h1 class="mb-1" style="font-size: 5.5rem;">{{owner_name}} Properties</h1>
+            <h1 class="mb-1" style="font-size: 5.5rem;">{{owner_name}}</h1>
           </div>
         </header>
         <div>
           <div style="padding-left: 2vw; padding-right: 2vw; padding-top: 2vh; padding-bottom: 20vh;">
+            {% for owner in owners %}
             <div class="row">
               {% for property in properties %}
+                <h1>{{ owner.name }}</h1>
                 <div class="col-md-4 mb-3 d-flex justify-content-center">
                   <a href="{% url 'property' person.uuid property.name %}" class="text-decoration-none">
                     <div class="d-flex justify-content-center">
@@ -33,6 +35,7 @@
                 </div>
               {% endfor %}
             </div>
+            {% endfor %}
           </div>
         </div>
         <footer class="footer text-center bg-light" style="margin-top: auto;">
