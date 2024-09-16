@@ -43,7 +43,7 @@ def ownerPageView(request, person_uuid):
     
     person = get_object_or_404(Person, uuid=person_uuid)
     owner = Owner.objects.filter(person=person)
-    properties = Property.objects.filter(person=person)
+    properties = Property.objects.filter(person=person, owner=owner)
 
     for prop in properties:
         prop.latest_flight = Flight.objects.filter(property=prop).order_by('-date').first()
