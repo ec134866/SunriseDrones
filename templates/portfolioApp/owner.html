@@ -7,13 +7,13 @@
         {% endblock %}
         
         {% block body %}
-        <header class="d-flex align-items-center" style="padding-top: 3vh; padding-bottom: 3vh; background-color: rgba{{owner_palette1}} !important;">
+        <header class="d-flex align-items-center" style="padding-top: 3vh; padding-bottom: 3vh; background-color: rgba{{owner_palette1}}">
           <div class="container px-4 px-lg-5 text-center">
             <h1 class="mb-1" style="font-size: 5.5rem;">{{owner_name}}</h1>
           </div>
         </header>
         <div>
-          <div style="padding-left: 2vw; padding-right: 2vw; padding-top: 2vh; padding-bottom: 20vh;">
+          <div style="padding-left: 2vw; padding-right: 2vw; padding-top: 4vh; padding-bottom: 2vh;">
             {% for owners, properties in properties_by_owner %}
             <div class="row">
               <h1>{{ owners.name }}</h1> 
