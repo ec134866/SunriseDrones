@@ -71,5 +71,3 @@ class Flight(models.Model):
     def __str__(self):
         return self.id
     
-
-# added logo, contract info to flight
