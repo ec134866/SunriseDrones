@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Q
 from django.contrib.postgres.search import SearchVector, SearchQuery
 import uuid
+from django.utils import timezone
 
 
 # Person Model
@@ -60,10 +61,10 @@ class Flight(models.Model):
     interior_thumbnail_link = models.CharField(max_length=500, blank=True, null=True, default='https://i.imgur.com/nS0QSnM.png')
     top_image_link_1 = models.CharField(max_length=500, blank=True, null=True)
     top_image_link_2 = models.CharField(max_length=500, blank=True, null=True)
-    contractSigned = models.DateField()
-    contractFlightDate = models.DateField()
-    contractProcessingDate = models.DateField()
-    contractPublishDate = models.DateField()
+    contractSigned = models.DateField(default=timezone.now)
+    contractFlightDate = models.DateField(default=timezone.now)
+    contractProcessingDate = models.DateField(default=timezone.now)
+    contractPublishDate = models.DateField(default=timezone.now)
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='flight')
     person = models.ManyToManyField(Person, related_name='flights')
 
