@@ -23,6 +23,7 @@ class Owner(models.Model):
     palette1 = models.CharField(max_length=50)
     palette2 = models.CharField(max_length=50)
     palette3 = models.CharField(max_length=50)
+    logo = models.CharField(max_length=255)
     person = models.ManyToManyField(Person, related_name='owners')
 
     def __str__(self):
@@ -59,9 +60,15 @@ class Flight(models.Model):
     interior_thumbnail_link = models.CharField(max_length=500, blank=True, null=True, default='https://i.imgur.com/nS0QSnM.png')
     top_image_link_1 = models.CharField(max_length=500, blank=True, null=True)
     top_image_link_2 = models.CharField(max_length=500, blank=True, null=True)
+    contractSigned = models.CharField(max_length=500, blank=True, null=True)
+    contractFlightDate = models.CharField(max_length=500, blank=True, null=True)
+    contractProcessingDate = models.CharField(max_length=500, blank=True, null=True)
+    contractPublishDate = models.CharField(max_length=500, blank=True, null=True)
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='flight')
     person = models.ManyToManyField(Person, related_name='flights')
 
     def __str__(self):
         return self.id
     
+
+# added logo, contract info to flight
