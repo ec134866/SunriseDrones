@@ -7,10 +7,10 @@ class PersonID(admin.ModelAdmin):
 
 class FilterFlight(admin.ModelAdmin):
     list_display = ("id", "date", "property", "get_owner_name", "get_person_names")
-    list_filter = ("date", "property__name", "owner__name", "person__name")
+    list_filter = ("date", "property__name", "property__owner__name", "person__name")
     
     def get_owner_name(self, obj):
-        return obj.owner.name
+        return obj.property.owner.name
     get_owner_name.short_description = 'Owner'
     
     def get_person_names(self, obj):
