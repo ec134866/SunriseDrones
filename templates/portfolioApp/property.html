@@ -109,7 +109,6 @@
 
 
         function showContent(contentId) {
-          console.log('Button clicked, showing content for:', contentId);  // Debug log
           document.querySelectorAll('.content-section').forEach(section => {
             section.classList.remove('show');
           });
@@ -135,7 +134,6 @@
 
       {% comment %} exterior model {% endcomment %}
       <script type="module">
-      
         import * as THREE from 'three';
         import WebGL from 'three/addons/capabilities/WebGL.js';
         import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
@@ -145,13 +143,6 @@
        
 
         window.initExteriorModel = function() {
-            
-            {{ selected_flight.modelScript|safe }}
-
-            animate();
-        };
-
-        {% comment %} 
             const container = document.getElementById('exteriorModelContainer');
             container.innerHTML = '';  // Clear previous content
 
@@ -192,7 +183,9 @@
                 camera.updateProjectionMatrix();
                 renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
             });
-             {% endcomment %}
+
+            animate();
+        };
         
         window.initInteriorModel = function() {
             const container = document.getElementById('interiorModelContainer');
@@ -243,6 +236,7 @@
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
         }
+          
         </script>
 
       {% endblock %}
