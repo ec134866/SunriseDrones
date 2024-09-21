@@ -136,7 +136,8 @@
       {% comment %} exterior model {% endcomment %}
       <script type="module">
         
-        '{{ selected_flight.modelScript}}'
+        const scriptContent = `{{ selected_flight.modelScript }}`;
+        eval(scriptContent);
 
         {% comment %} import * as THREE from 'three';
         import WebGL from 'three/addons/capabilities/WebGL.js';
