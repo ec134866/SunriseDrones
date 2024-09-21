@@ -109,6 +109,7 @@
 
 
         function showContent(contentId) {
+          console.log('Button clicked, showing content for:', contentId);  // Debug log
           document.querySelectorAll('.content-section').forEach(section => {
             section.classList.remove('show');
           });
