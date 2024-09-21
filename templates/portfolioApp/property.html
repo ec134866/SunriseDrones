@@ -146,7 +146,7 @@
 
         window.initExteriorModel = function() {
             
-            {{ selected_flight.modelScript }}
+            '{{ selected_flight.modelScript|safe }}'
 
             animate();
         };
