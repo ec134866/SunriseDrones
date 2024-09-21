@@ -24,7 +24,7 @@ class Owner(models.Model):
     palette1 = models.CharField(max_length=50)
     palette2 = models.CharField(max_length=50)
     palette3 = models.CharField(max_length=50)
-    logo = models.CharField(max_length=255)
+    logo = models.CharField(max_length=255, blank=True, null=True)
     person = models.ManyToManyField(Person, related_name='owners')
 
     def __str__(self):
