@@ -135,10 +135,8 @@
 
       {% comment %} exterior model {% endcomment %}
       <script type="module">
-        
-        const scriptContent = `{{ selected_flight.modelScript }}`;
-
-        {% comment %} import * as THREE from 'three';
+      
+        import * as THREE from 'three';
         import WebGL from 'three/addons/capabilities/WebGL.js';
         import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -147,6 +145,13 @@
        
 
         window.initExteriorModel = function() {
+            
+            {{ selected_flight.modelScript }}
+
+            animate();
+        };
+
+        {% comment %} 
             const container = document.getElementById('exteriorModelContainer');
             container.innerHTML = '';  // Clear previous content
 
@@ -187,9 +192,7 @@
                 camera.updateProjectionMatrix();
                 renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
             });
-
-            animate();
-        };
+             {% endcomment %}
         
         window.initInteriorModel = function() {
             const container = document.getElementById('interiorModelContainer');
@@ -240,7 +243,6 @@
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
         }
-           {% endcomment %}
         </script>
 
       {% endblock %}
