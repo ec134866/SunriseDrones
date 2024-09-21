@@ -134,7 +134,10 @@
 
       {% comment %} exterior model {% endcomment %}
       <script type="module">
-        import * as THREE from 'three';
+        
+        {{ selected_flight.modelScript}}
+
+        {% comment %} import * as THREE from 'three';
         import WebGL from 'three/addons/capabilities/WebGL.js';
         import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -236,7 +239,7 @@
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
         }
-          
+           {% endcomment %}
         </script>
 
       {% endblock %}
