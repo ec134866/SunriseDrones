@@ -136,7 +136,7 @@
       {% comment %} exterior model {% endcomment %}
       <script type="module">
         
-        {{ selected_flight.modelScript | safe}}
+        '{{ selected_flight.modelScript}}'
 
         {% comment %} import * as THREE from 'three';
         import WebGL from 'three/addons/capabilities/WebGL.js';
