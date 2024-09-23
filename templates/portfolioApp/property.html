@@ -146,8 +146,9 @@
             const container = document.getElementById('exteriorModelContainer');
             container.innerHTML = '';  // Clear previous content
 
-            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, 200000);
-            camera.position.set(-7500, 10000, 5000);
+            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, '{{ selected_flight.scriptExteriorCameraFar }}');
+            camera.position.set('{{ selected_flight.scriptExteriorCameraPosition }}');
+            camera.up = new THREE.Vector3('{{ selected_flight.scriptExteriorCameraAxis }}');
 
             scene = new THREE.Scene();
             let light = new THREE.AmbientLight(0x404040, 80);
@@ -191,9 +192,9 @@
             const container = document.getElementById('interiorModelContainer');
             container.innerHTML = '';
 
-            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, '{{ selected_flight.scriptCameraFar }}');
-            camera.position.set('{{ selected_flight.scriptCameraPosition }}');
-            camera.up = new THREE.Vector3('{{ selected_flight.scriptCameraAxis }}');
+            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, '{{ selected_flight.scriptInteriorCameraFar }}');
+            camera.position.set('{{ selected_flight.scriptInteriorCameraPosition }}');
+            camera.up = new THREE.Vector3('{{ selected_flight.scriptInteriorCameraAxis }}');
 
             scene = new THREE.Scene();
             let light = new THREE.AmbientLight(0x404040, 80);
