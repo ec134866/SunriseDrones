@@ -189,10 +189,11 @@
         
         window.initInteriorModel = function() {
             const container = document.getElementById('interiorModelContainer');
-            container.innerHTML = '';  // Clear previous content
+            container.innerHTML = '';
 
             camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, 200000);
             camera.position.set(-7500, 10000, 5000);
+            camera.up = new THREE.Vector3( 0, 1, 0 );
 
             scene = new THREE.Scene();
             let light = new THREE.AmbientLight(0x404040, 80);
