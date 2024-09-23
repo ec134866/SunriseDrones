@@ -155,7 +155,7 @@
             scene.add(light);
 
             const loader = new FBXLoader();
-            loader.load('{{ selected_flight.exterior_link }}', (object) => {
+            loader.load('{{ selected_flight.exterior_link|safe }}', (object) => {
                 scene.add(object);
             });
 
