@@ -65,7 +65,7 @@ class Flight(models.Model):
     contractFlightDate = models.DateField(default=timezone.now)
     contractProcessingDate = models.DateField(default=timezone.now)
     contractPublishDate = models.DateField(default=timezone.now)
-    scriptCameraFar = models.CharField(max_length=20, blank=True, null=True)
+    scriptCameraFar = models.CharField(max_length=20, blank=True, null=True, default="50000")
     scriptCameraPosition = models.CharField(max_length=20, blank=True, null=True, default="1,3000,-1500")
     scriptCameraAxis = models.CharField(max_length=20, blank=True, null=True, default="0, 1, 0")
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='flight')
