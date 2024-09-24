@@ -67,14 +67,9 @@
         <div id="contentArea" class="container-fluid" style="padding-top: 6vh; padding-bottom: 6vh; background-color: rgba{{owner.palette2}}">
           <div class="d-flex justify-content-center">
               <div id="overflightContent" class="content-section" style="width: 90%; height: 75vh;">
-                <div class="d-flex justify-content-center">
-                  <iframe width= "100%" height= "100%" id="overflightVideoElement"
-                    src="{{selected_flight.overflight_link}}" frameborder="0">
+                <div style="width:100%; height:100%;">
+                  <iframe id="overflightVideoElement" src="https://www.youtube.com/embed/{{selected_flight.overflight_link}}?autoplay=1&rel=0" frameborder="0">
                   </iframe>
-                  {% comment %} <video controls style="width: 75%; height: 100%;" id="overflightVideoElement">
-                      <source src="{{selected_flight.overflight_link}}" type="video/mp4">
-                      Your browser does not support the video tag.
-                  </video> {% endcomment %}
                 </div>
               </div>
           </div>
