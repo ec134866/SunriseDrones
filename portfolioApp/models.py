@@ -64,6 +64,7 @@ class Flight(models.Model):
     contractSigned = models.DateField(default=timezone.now)
     contractFlightDate = models.DateField(default=timezone.now)
     contractProcessingDate = models.DateField(default=timezone.now)
+    contractFinalTouches = models.DateField(default=timezone.now)
     contractPublishDate = models.DateField(default=timezone.now)
     scriptExteriorCameraFar = models.CharField(max_length=20, blank=True, null=True, default="50000")
     scriptExteriorCameraPosition = models.CharField(max_length=20, blank=True, null=True, default="1,3000,-1500")

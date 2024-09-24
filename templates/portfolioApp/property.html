@@ -35,6 +35,15 @@
               {% endfor %}
             </ul>
           </div>
+
+
+          <div class="track" style="padding-top: 10vh;padding-right: 15vh;padding-bottom: 10vh;padding-left: 15vh;">
+              <div class="step"> <span class="icon"> <i class="fa fa-file-signature"></i> </span> <span class="text">Contract Signed</span> </div>
+              <div class="step"> <span class="icon"> <i class="fa fa-helicopter"></i> </span> <span class="text"> Drone Capture </span> </div>
+              <div class="step"> <span class="icon"> <i class="fa fa-image"></i> </span> <span class="text"> Image Processing </span> </div>
+              <div class="step"> <span class="icon"> <i class="fa fa-tasks"></i> </span> <span class="text">Final Preparations</span> </div>
+              <div class="step"> <span class="icon"> <i class="fa fa-upload"></i> </span> <span class="text">Published</span> </div>
+          </div>
           {% comment %} main section {% endcomment %}
           <div style="padding-left: 2vw; padding-right: 2vw; padding-top: 2vh; padding-bottom: 2vh;">
               <div class="row">
@@ -99,6 +108,24 @@
         document.getElementById('overflightVideoElement').playbackRate = 1.5;
 
       </script> 
+
+      <script>
+        const today = new Date().toISOString().split('T')[0];
+
+        const steps = [
+                { element: document.querySelector('.step:nth-child(1)'), date: "{{ selected_flight.contractSigned }}" },
+                { element: document.querySelector('.step:nth-child(2)'), date: "{{ selected_flight.contractFlightDate }}" },
+                { element: document.querySelector('.step:nth-child(3)'), date: "{{ selected_flight.contractProcessingDate }}" },
+                { element: document.querySelector('.step:nth-child(4)'), date: "{{ selected_flight.contractFinalTouches }}" },
+                { element: document.querySelector('.step:nth-child(5)'), date: "{{ selected_flight.contractPublishDate }}" }
+            ];
+
+        steps.forEach(step => {
+            if (today >= step.date) {
+                step.element.classList.add('active');
+            }
+        });
+      </script>
 
 
       <script>
