@@ -17,7 +17,7 @@
         
         <div style="padding-top: 4vh; padding-bottom: 1vh">
           {% comment %} dropdown section {% endcomment %}
-          <div class="dropdown" style="padding-left: 1vw; padding-top: 1vh padding-bottom: 1vh">
+          <div class="dropdown" style="padding-left: 1vw; padding-top: 1vh; padding-bottom: 1vh;">
             <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
               {% if selected_flight %}
                 {{ selected_flight.date}}
@@ -105,7 +105,9 @@
 
       <script>
 
-        document.getElementById('overflightVideoElement').playbackRate = 1.5;
+          document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('overflightVideoElement').playbackRate = 1.5;
+        });
 
       </script> 
 
@@ -113,11 +115,11 @@
         const today = new Date().toISOString().split('T')[0];
 
         const steps = [
-                { element: document.querySelector('.step:nth-child(1)'), date: "{{ selected_flight.contractSigned }}" },
-                { element: document.querySelector('.step:nth-child(2)'), date: "{{ selected_flight.contractFlightDate }}" },
-                { element: document.querySelector('.step:nth-child(3)'), date: "{{ selected_flight.contractProcessingDate }}" },
-                { element: document.querySelector('.step:nth-child(4)'), date: "{{ selected_flight.contractFinalTouches }}" },
-                { element: document.querySelector('.step:nth-child(5)'), date: "{{ selected_flight.contractPublishDate }}" }
+                { element: document.querySelector('.step:nth-child(1)'), date: "{{ selected_flight.contractSigned |date:'Y-m-d' }}" },
+                { element: document.querySelector('.step:nth-child(2)'), date: "{{ selected_flight.contractFlightDate |date:'Y-m-d'  }}" },
+                { element: document.querySelector('.step:nth-child(3)'), date: "{{ selected_flight.contractProcessingDate |date:'Y-m-d'  }}" },
+                { element: document.querySelector('.step:nth-child(4)'), date: "{{ selected_flight.contractFinalTouches |date:'Y-m-d'  }}" },
+                { element: document.querySelector('.step:nth-child(5)'), date: "{{ selected_flight.contractPublishDate |date:'Y-m-d'  }}" }
             ];
 
         steps.forEach(step => {
