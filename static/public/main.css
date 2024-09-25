@@ -11142,7 +11142,7 @@ transition: opacity 0.5s ease-in-out;
   -ms-flex-positive: 1;
   flex-grow: 1;
   width: 25%;
-  margin-top: -18px;
+  margin-top: -11px;
   text-align: center;
   position: relative
 }
@@ -11152,12 +11152,12 @@ transition: opacity 0.5s ease-in-out;
 }
 
 .track .step::before {
-  height: 7px;
+  height: 1vmin;
   position: absolute;
   content: "";
   width: 100%;
   left: 0;
-  top: 18px
+  top: 2vmin
 }
 
 .track .step.active .icon {
@@ -11167,9 +11167,10 @@ transition: opacity 0.5s ease-in-out;
 
 .track .icon {
   display: inline-block;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
+  width: 5vmin;
+  height: 5vmin;
+  font-size:2vmin;
+  line-height: 5vmin;
   position: relative;
   border-radius: 100%;
   background: #ddd
@@ -11182,5 +11183,6 @@ transition: opacity 0.5s ease-in-out;
 
 .track .text {
   display: block;
-  margin-top: 7px
+  margin-top: 7px;
+  font-size: 1.5vmin;
 }

@@ -17,33 +17,58 @@
         
         <div style="padding-top: 4vh; padding-bottom: 1vh">
           {% comment %} dropdown section {% endcomment %}
-          <div class="dropdown" style="padding-left: 1vw; padding-top: 1vh; padding-bottom: 1vh;">
-            <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-              {% if selected_flight %}
-                {{ selected_flight.date}}
-              {% else %}
-                Select a date
-              {% endif %}
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              {% for flight in flights %}
-                <li>
-                  <a class="dropdown-item" href="?date={{ flight.date|date:'Y-m-d' }}">
-                    {{ flight.date}}
-                  </a>
-                </li>
-              {% endfor %}
-            </ul>
+          <div class="row" style="align-items:center; padding-top: 1vh; padding-right: 1vw; padding-bottom: 1vh; padding-left: 1vw;">
+            <div class="col-auto">
+              <div class="dropdown" style="padding-left: 1vw; padding-top: 1vh; padding-bottom: 1vh;">
+                <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                  {% if selected_flight %}
+                    {{ selected_flight.date}}
+                  {% else %}
+                    Select a date
+                  {% endif %}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  {% for flight in flights %}
+                    <li>
+                      <a class="dropdown-item" href="?date={{ flight.date|date:'Y-m-d' }}">
+                        {{ flight.date}}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+            <div class="col">
+              <div class="track d-flex" style="padding-right: 3vw; padding-left: 3vw;">
+                  <div class="step"> 
+                    <span class="icon"> <i class="fa fa-file-signature"></i> </span> 
+                    <span class="text">Contract Signed</span> 
+                    <span class="text" style="margin-top: -2px;"> {{selected_flight.contractSigned}}</span> 
+                  </div>
+                  <div class="step"> 
+                    <span class="icon"> <i class="fa fa-helicopter"></i> </span> 
+                    <span class="text"> Drone Capture </span> 
+                    <span class="text" style="margin-top: -2px;"> {{selected_flight.contractFlightDate}}</span> 
+                  </div>
+                  <div class="step"> 
+                    <span class="icon"> <i class="fa fa-image"></i> </span> 
+                    <span class="text"> Image Processing </span> 
+                    <span class="text" style="margin-top: -2px;"> {{selected_flight.contractProcessingDate}}</span> 
+                  </div>
+                  <div class="step"> 
+                    <span class="icon"> <i class="fa fa-tasks"></i> </span> 
+                    <span class="text">Final Preparations</span> 
+                    <span class="text" style="margin-top: -2px;"> {{selected_flight.contractFinalTouches}}</span> 
+                  </div>
+                  <div class="step"> 
+                    <span class="icon"> <i class="fa fa-upload"></i> </span> 
+                    <span class="text">Published</span> 
+                    <span class="text" style="margin-top: -2px;"> {{selected_flight.contractPublishDate}}</span> 
+                  </div>
+              </div>
+            </div>
           </div>
-
-
-          <div class="track" style="padding-top: 10vh;padding-right: 15vh;padding-bottom: 10vh;padding-left: 15vh;">
-              <div class="step"> <span class="icon"> <i class="fa fa-file-signature"></i> </span> <span class="text">Contract Signed</span> </div>
-              <div class="step"> <span class="icon"> <i class="fa fa-helicopter"></i> </span> <span class="text"> Drone Capture </span> </div>
-              <div class="step"> <span class="icon"> <i class="fa fa-image"></i> </span> <span class="text"> Image Processing </span> </div>
-              <div class="step"> <span class="icon"> <i class="fa fa-tasks"></i> </span> <span class="text">Final Preparations</span> </div>
-              <div class="step"> <span class="icon"> <i class="fa fa-upload"></i> </span> <span class="text">Published</span> </div>
-          </div>
+          
           {% comment %} main section {% endcomment %}
           <div style="padding-left: 2vw; padding-right: 2vw; padding-top: 2vh; padding-bottom: 2vh;">
               <div class="row">
@@ -115,11 +140,11 @@
         const today = new Date().toISOString().split('T')[0];
 
         const steps = [
-                { element: document.querySelector('.step:nth-child(1)'), date: "{{ selected_flight.contractSigned |date:'Y-m-d' }}" },
-                { element: document.querySelector('.step:nth-child(2)'), date: "{{ selected_flight.contractFlightDate |date:'Y-m-d'  }}" },
-                { element: document.querySelector('.step:nth-child(3)'), date: "{{ selected_flight.contractProcessingDate |date:'Y-m-d'  }}" },
-                { element: document.querySelector('.step:nth-child(4)'), date: "{{ selected_flight.contractFinalTouches |date:'Y-m-d'  }}" },
-                { element: document.querySelector('.step:nth-child(5)'), date: "{{ selected_flight.contractPublishDate |date:'Y-m-d'  }}" }
+                { element: document.querySelector('.step:nth-child(1)'), date: "{{ selected_flight.contractSigned | date:'Y-m-d' }}" },
+                { element: document.querySelector('.step:nth-child(2)'), date: "{{ selected_flight.contractFlightDate | date:'Y-m-d'  }}" },
+                { element: document.querySelector('.step:nth-child(3)'), date: "{{ selected_flight.contractProcessingDate | date:'Y-m-d'  }}" },
+                { element: document.querySelector('.step:nth-child(4)'), date: "{{ selected_flight.contractFinalTouches | date:'Y-m-d'  }}" },
+                { element: document.querySelector('.step:nth-child(5)'), date: "{{ selected_flight.contractPublishDate | date:'Y-m-d'  }}" }
             ];
 
         steps.forEach(step => {
