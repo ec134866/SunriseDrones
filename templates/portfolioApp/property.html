@@ -218,7 +218,7 @@
             controls = new OrbitControls(camera, renderer.domElement);
             controls.listenToKeyEvents( window );
             const distance = camera.position.distanceTo(controls.target)
-            controls.keyPanSpeed = Math.max(10000 * (500 / distance));
+            controls.keyPanSpeed = Math.max(1000 * (500 / distance));
             controls.zoomSpeed = 10;
             controls.zoomToCursor = true;
             controls.enablePan = true;
@@ -232,7 +232,7 @@
             modelGroup = new THREE.Group();
             scene.add(modelGroup);
 
-            tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link|safe }}');
+            tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
             tilesRenderer.setCamera(camera);
             tilesRenderer.setResolutionFromRenderer(camera, renderer);
             tilesRenderer.addEventListener('load-tile-set', () => {
