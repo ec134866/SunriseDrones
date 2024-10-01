@@ -265,13 +265,13 @@
             modelGroup.add(tilesRenderer.group);
             
 
-            window.addEventListener('resize', () => {
-                camera.aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.8);
-                camera.updateProjectionMatrix();
-                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
-            });
+            // window.addEventListener('resize', () => {
+                // camera.aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.8);
+                // camera.updateProjectionMatrix();
+                // renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
+            // });
 
-            animate();
+            renderLoop();
         };
         
         window.initInteriorModel = function() {
@@ -317,16 +317,17 @@
                 renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
             });
 
-            animate();
+            renderLoop();
         };
 
-        function animate() {
-            requestAnimationFrame(animate);
-            
+        function renderLoop() {
+            requestAnimationFrame(renderLoop);
+
             controls.update();
             tilesRenderer.update();
-            camera.updateMatrixWorld();
 
+            camera.updateMatrixWorld();
+            
             renderer.render(scene, camera);
         }
           
