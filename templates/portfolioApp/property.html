@@ -332,7 +332,7 @@
             controls.update();
     
             const currentTime = performance.now();
-            if (currentTime - lastUpdateTime > 100) {  // Throttle updates to every 100ms
+            if (currentTime - lastUpdateTime > 10000) {  // Throttle updates to every 100ms
                 tilesRenderer.update();
                 lastUpdateTime = currentTime;
             }
