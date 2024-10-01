@@ -280,7 +280,7 @@
             const controls = new OrbitControls(camera, renderer.domElement);
             controls.listenToKeyEvents( window );
             const distance = camera.position.distanceTo(controls.target)
-            controls.keyPanSpeed = Math.max(10000 * (500 / distance));
+            controls.keyPanSpeed = Math.max(1000 * (500 / distance));
             controls.zoomSpeed = 10;
             controls.zoomToCursor = true;
             controls.enablePan = true;
