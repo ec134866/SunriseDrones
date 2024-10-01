@@ -249,6 +249,14 @@
                 modelGroup.rotation.x = Math.PI / -4; 
             });
 
+            tilesRenderer.addEventListener('load', (event) => {
+                console.log('Tile loaded:', event.url);
+            });
+            
+            tilesRenderer.addEventListener('error', (event) => {
+                console.error('Tile loading error:', event.url, event.error);
+            });
+
              // -- freewalk
             // const rig = new CameraRig(camera, scene)
             // controls = new FreeMovementControls(rig, {
