@@ -191,6 +191,7 @@
         import { CameraRig, FreeMovementControls } from 'three-story-controls';
 
         let camera, scene, renderer, tilesRenderer, controls, modelGroup;
+        let lastUpdateTime = 0;
        
 
         window.initExteriorModel = function() {
@@ -327,12 +328,16 @@
 
         function renderLoop() {
             requestAnimationFrame(renderLoop);
-
+    
             controls.update();
-            tilesRenderer.update();
-
+    
+            const currentTime = performance.now();
+            if (currentTime - lastUpdateTime > 100) {  // Throttle updates to every 100ms
+                tilesRenderer.update();
+                lastUpdateTime = currentTime;
+            }
+    
             camera.updateMatrixWorld();
-            
             renderer.render(scene, camera);
         }
           
