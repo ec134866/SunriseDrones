@@ -243,6 +243,25 @@
                 modelGroup.rotation.x = Math.PI / -4; 
             });
 
+             // -- freewalk
+            // const rig = new CameraRig(camera, scene)
+            // controls = new FreeMovementControls(rig, {
+            //     domElement: container,
+            //     pointerScaleFactor: 15,
+            // })
+            // controls.enable()
+
+            // -- helpful grid
+            const grid = new GridHelper(750, 20)
+            grid.rotation.x = Math.PI / 20;
+            grid.rotation.z = Math.PI / 1.0001;
+            grid.position.set(0, -30, 0)
+            scene.add(grid)
+
+            // -- helpful axes X (red), Y (green), Z (blue) 
+            const axesHelper = new THREE.AxesHelper(25);  
+            scene.add(axesHelper);
+
             modelGroup.add(tilesRenderer.group);
             
 
