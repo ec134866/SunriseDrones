@@ -235,20 +235,6 @@
             tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
             tilesRenderer.setCamera(camera);
             tilesRenderer.setResolutionFromRenderer(camera, renderer);
-            tilesRenderer.addEventListener('error', (event) => {
-                console.error('Error loading tile:', event);
-            });
-            tilesRenderer.addEventListener('load-tile-set', () => {
-                console.log('Tile set loaded');
-            });
-
-            tilesRenderer.addEventListener('load-tile', (tile) => {
-                console.log('Tile loaded:', tile);
-            });
-
-            tilesRenderer.addEventListener('unload-tile', (tile) => {
-                console.log('Tile unloaded:', tile);
-            });
             // tilesRenderer.errorTarget = 6;
             // tilesRenderer.errorThreshold = Infinity;
             // -- 3. Keep tiles active even if they are out of view (optional)
