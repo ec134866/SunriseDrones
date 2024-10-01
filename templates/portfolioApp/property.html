@@ -235,6 +235,12 @@
             tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
             tilesRenderer.setCamera(camera);
             tilesRenderer.setResolutionFromRenderer(camera, renderer);
+            tilesRenderer.errorTarget = 6;
+            tilesRenderer.errorThreshold = Infinity;
+            // 3. Keep tiles active even if they are out of view (optional)
+            tilesRenderer.displayActiveTiles = true;
+            // 4. Ensure that the renderer's culling is disabled (so the tiles remain in the view)
+            tilesRenderer.autoDisableRendererCulling = true;
             tilesRenderer.addEventListener('load-tile-set', () => {
                 const sphere = new THREE.Sphere();
                 tilesRenderer.getBoundingSphere(sphere);
