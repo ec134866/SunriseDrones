@@ -187,7 +187,7 @@
         import * as THREE from 'three';
         import { Scene, PerspectiveCamera, WebGLRenderer, GridHelper } from 'three'
         import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-        import { TilesRenderer, DebugTilesPlugin } from '3d-tiles-renderer';
+        import { TilesRenderer, DebugTilesPlugin, PriorityQueue } from '3d-tiles-renderer';
         import { CameraRig, FreeMovementControls } from 'three-story-controls';
 
         let camera, scene, renderer, tilesRenderer, controls, modelGroup;
@@ -234,14 +234,14 @@
             scene.add(modelGroup);
 
             tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
-            tilesRenderer.setCamera(camera);
-            tilesRenderer.setResolutionFromRenderer(camera, renderer);
-            tilesRenderer.displayActiveTiles = true;
-            tilesRenderer.maxDepth = Infinity ;
+            tilesRenderer.registerPlugin(debugPlugin);
+            tilesRenderer.fetchOptions.mode = 'cors';
+            tilesRenderer.lruCache.minSize = 900;
+            tilesRenderer.lruCache.maxSize = 1300;
+            tilesRenderer.errorTarget = 12;
+
 
             const debugPlugin = new DebugTilesPlugin();
-            tilesRenderer.registerPlugin(debugPlugin);
-
             // Set debugging options (optional)
             // debugPlugin.colorMode = 'RANDOM_COLOR'; 
             debugPlugin.displayBoxBounds = true;   
@@ -339,11 +339,16 @@
 
         function renderLoop() {
             requestAnimationFrame(renderLoop);
+
+            camera.updateMatrixWorld();
     
             controls.update();
+
+            tilesRenderer.setCamera(camera);
+            tilesRenderer.setResolutionFromRenderer(camera, renderer);
             tilesRenderer.update();
     
-            camera.updateMatrixWorld();
+            
 
             renderer.render(scene, camera);
         }
