@@ -194,6 +194,28 @@
         let lastUpdateTime = 0;
        
 
+        function fetchWithTimeout(url, options = {}, timeout = 10000) {
+          return new Promise((resolve, reject) => {
+              const timer = setTimeout(() => {
+                  reject(new Error('Fetch timed out'));
+              }, timeout);
+              
+              fetch(url, options)
+                  .then(response => {
+                      clearTimeout(timer);
+                      if (!response.ok) {
+                          reject(new Error(`HTTP error! status: ${response.status}`));
+                      }
+                      return response.json();
+                  })
+                  .then(data => resolve(data))
+                  .catch(error => {
+                      clearTimeout(timer);
+                      reject(error);
+                  });
+          });
+      }
+
         window.initExteriorModel = function() {
             const container = document.getElementById('exteriorModelContainer');
             container.innerHTML = '';  // Clear previous content
@@ -236,12 +258,32 @@
             tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
             tilesRenderer.setCamera(camera);
             tilesRenderer.setResolutionFromRenderer(camera, renderer);
-            // tilesRenderer.errorTarget = 6;
-            // tilesRenderer.errorThreshold = Infinity;
-            // -- 3. Keep tiles active even if they are out of view (optional)
-            // tilesRenderer.displayActiveTiles = true;
-            // -- 4. Ensure that the renderer's culling is disabled (so the tiles remain in the view)
-            // tilesRenderer.autoDisableRendererCulling = true;
+            tilesRenderer.fetchOptions.fetch = (url) => {
+                // Use the custom fetchWithTimeout function
+                return fetchWithTimeout(url, {}, 10000);
+            };
+
+            // Handle errors and retries for failed tiles
+            tilesRenderer.addEventListener('error', (event) => {
+                console.error('Error loading tile:', event);
+                // Retry failed tiles
+                tilesRenderer.resetFailedTiles();
+            });
+
+            tilesRenderer.addEventListener('load-tile-set', () => {
+                console.log('Tile set loaded');
+            });
+
+            tilesRenderer.addEventListener('load-tile', (tile) => {
+                console.log('Tile loaded:', tile);
+            });
+
+            tilesRenderer.addEventListener('unload-tile', (tile) => {
+                console.log('Tile unloaded:', tile);
+            });
+
+
+
             tilesRenderer.addEventListener('load-tile-set', () => {
                 const sphere = new THREE.Sphere();
                 tilesRenderer.getBoundingSphere(sphere);
