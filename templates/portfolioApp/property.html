@@ -238,7 +238,7 @@
 
             tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
             tilesRenderer.registerPlugin(debugPlugin);
-            tilesRenderer.lruCache.maxSize = 0;
+            tilesRenderer.lruCache.minSize = 0;
             tilesRenderer.errorTarget = 4;
             tilesRenderer.errorThreshold = Infinity;
             tilesRenderer.maxDepth = Infinity;
