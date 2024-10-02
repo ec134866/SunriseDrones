@@ -232,6 +232,9 @@
 
             modelGroup = new THREE.Group();
             scene.add(modelGroup);
+            
+            
+            const debugPlugin = new DebugTilesPlugin();
 
             tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
             tilesRenderer.registerPlugin(debugPlugin);
@@ -241,7 +244,7 @@
             tilesRenderer.errorTarget = 12;
 
 
-            const debugPlugin = new DebugTilesPlugin();
+
             // Set debugging options (optional)
             // debugPlugin.colorMode = 'RANDOM_COLOR'; 
             debugPlugin.displayBoxBounds = true;   
