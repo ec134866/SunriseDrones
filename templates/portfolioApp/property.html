@@ -251,31 +251,18 @@
             debugPlugin.maxDebugError = - 1;
             debugPlugin.maxDebugDistance = - 1;
 
-            const intersects = raycaster.intersectObject( scene, true );
-            if ( intersects.length ) {
 
-              const { face, object } = intersects[ 0 ];
-              const batchidAttr = object.geometry.getAttribute( '_batchid' );
 
-              if ( batchidAttr ) {
 
-                // Traverse the parents to find the batch table.
-                let batchTableObject = object;
-                while ( ! batchTableObject.batchTable ) {
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2();
 
-                  batchTableObject = batchTableObject.parent;
 
-                }
+            window.addEventListener('mousemove', (event) => {
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            });
 
-                // Log the batch data
-                const batchTable = batchTableObject.batchTable;
-                const hoveredBatchid = batchidAttr.getX( face.a );
-                const batchData = batchTable.getDataFromId( hoveredBatchid );
-                console.log( batchData );
-
-              }
-
-            }
 
 
             // tilesRenderer.downloadQueue = new PriorityQueue();
@@ -375,6 +362,28 @@
 
         function renderLoop() {
             requestAnimationFrame(renderLoop);
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObject(modelGroup, true); // Use modelGroup or tilesRenderer.group as appropriate
+
+            if (intersects.length) {
+                const { face, object } = intersects[0];
+                const batchidAttr = object.geometry.getAttribute('_batchid');
+
+                if (batchidAttr) {
+                    // Traverse the parents to find the batch table
+                    let batchTableObject = object;
+                    while (!batchTableObject.batchTable) {
+                        batchTableObject = batchTableObject.parent;
+                    }
+
+                    // Log the batch data
+                    const batchTable = batchTableObject.batchTable;
+                    const hoveredBatchid = batchidAttr.getX(face.a);
+                    const batchData = batchTable.getDataFromId(hoveredBatchid);
+                    console.log(batchData);
+                }
+            }
     
             controls.update();
     
