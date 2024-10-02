@@ -236,6 +236,8 @@
             tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
             tilesRenderer.setCamera(camera);
             tilesRenderer.setResolutionFromRenderer(camera, renderer);
+            tilesRenderer.displayActiveTiles = true;
+            tilesRenderer.maxDepth = Infinity ;
 
             const debugPlugin = new DebugTilesPlugin();
             tilesRenderer.registerPlugin(debugPlugin);
@@ -342,7 +344,7 @@
             tilesRenderer.update();
     
             camera.updateMatrixWorld();
-            
+
             renderer.render(scene, camera);
         }
           
