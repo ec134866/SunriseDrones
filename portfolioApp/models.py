@@ -80,6 +80,8 @@ class Flight(models.Model):
     scriptInteriorModelRotationX = models.CharField(max_length=20, blank=True, null=True, default="-50")
     scriptInteriorModelRotationY = models.CharField(max_length=20, blank=True, null=True, default="22")
     scriptInteriorModelRotationZ = models.CharField(max_length=20, blank=True, null=True, default="0")
+    scriptExteriorModelMaxCameraZoom = models.CharField(max_length=20, blank=True, null=True, default="100")
+    scriptInteriorModelMaxCameraZoom = models.CharField(max_length=20, blank=True, null=True, default="100")
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='flight')
     person = models.ManyToManyField(Person, related_name='flights')
 
