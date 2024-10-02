@@ -239,12 +239,13 @@
             tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
             tilesRenderer.registerPlugin(debugPlugin);
             // tilesRenderer.fetchOptions.mode = 'cors';
+            tilesRenderer.lruCache.reset();
             // tilesRenderer.lruCache.minSize = 900;
             // tilesRenderer.lruCache.maxSize = 1300;
             tilesRenderer.errorTarget = 4;
             tilesRenderer.errorThreshold = Infinity;
             tilesRenderer.maxDepth = Infinity;
-            tilesRenderer.autoDisableRendererCulling = false;
+            tilesRenderer.autoDisableRendererCulling = true;
             tilesRenderer.displayActiveTiles = true;
 
 
