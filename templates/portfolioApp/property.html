@@ -191,34 +191,12 @@
         import { CameraRig, FreeMovementControls } from 'three-story-controls';
 
         let camera, scene, renderer, tilesRenderer, controls, modelGroup;
-        let lastUpdateTime = 0;
        
 
-        function fetchWithTimeout(url, options = {}, timeout = 10000) {
-          return new Promise((resolve, reject) => {
-              const timer = setTimeout(() => {
-                  reject(new Error('Fetch timed out'));
-              }, timeout);
-              
-              fetch(url, options)
-                  .then(response => {
-                      clearTimeout(timer);
-                      if (!response.ok) {
-                          reject(new Error(`HTTP error! status: ${response.status}`));
-                      }
-                      return response.json();
-                  })
-                  .then(data => resolve(data))
-                  .catch(error => {
-                      clearTimeout(timer);
-                      reject(error);
-                  });
-          });
-      }
 
         window.initExteriorModel = function() {
             const container = document.getElementById('exteriorModelContainer');
-            container.innerHTML = '';  // Clear previous content
+            container.innerHTML = ''; 
 
             camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, {{ selected_flight.scriptExteriorCameraFar }});
             camera.position.set({{ selected_flight.scriptExteriorCameraPosition }});
@@ -258,31 +236,21 @@
             tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
             tilesRenderer.setCamera(camera);
             tilesRenderer.setResolutionFromRenderer(camera, renderer);
-            tilesRenderer.fetchOptions.fetch = (url) => {
-                // Use the custom fetchWithTimeout function
-                return fetchWithTimeout(url, {}, 10000);
+
+            tilesRenderer.fetchOptions = {
+                cache: 'no-store', //  disables any caching for these requests
+                headers: {
+                    'Cache-Control': 'no-cache',  // prevent caching at the server level
+                    'Pragma': 'no-cache',         // HTTP 1.0 fallback for proxies
+                    'Expires': '0'                // Expire immediately
+                }
             };
 
-            // Handle errors and retries for failed tiles
-            tilesRenderer.addEventListener('error', (event) => {
-                console.error('Error loading tile:', event);
-                // Retry failed tiles
-                tilesRenderer.resetFailedTiles();
-            });
-
-            tilesRenderer.addEventListener('load-tile-set', () => {
-                console.log('Tile set loaded');
-            });
-
-            tilesRenderer.addEventListener('load-tile', (tile) => {
-                console.log('Tile loaded:', tile);
-            });
-
-            tilesRenderer.addEventListener('unload-tile', (tile) => {
-                console.log('Tile unloaded:', tile);
-            });
-
-
+            tilesRenderer.preprocessURL = function(uri) {
+                const url = new URL(uri);
+                url.searchParams.append('cb', Date.now());
+                return url.toString();
+            };
 
             tilesRenderer.addEventListener('load-tile-set', () => {
                 const sphere = new THREE.Sphere();
@@ -372,12 +340,6 @@
             requestAnimationFrame(renderLoop);
     
             controls.update();
-    
-            const currentTime = performance.now();
-            if (currentTime - lastUpdateTime > 1000) {  // Throttle updates to every 100ms
-                tilesRenderer.update();
-                lastUpdateTime = currentTime;
-            }
     
             camera.updateMatrixWorld();
             renderer.render(scene, camera);
