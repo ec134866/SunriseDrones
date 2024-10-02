@@ -185,11 +185,13 @@
       {% comment %} exterior model {% endcomment %}
       <script type="module">
         import * as THREE from 'three';
-        import { Scene, PerspectiveCamera, WebGLRenderer, GridHelper } from 'three'
+        import { Scene, PerspectiveCamera, WebGLRenderer, GridHelper } from 'three';
         import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
         import { TilesRenderer } from '3d-tiles-renderer';
         import { PriorityQueue } from '3d-tiles-renderer';
         import { CameraRig, FreeMovementControls } from 'three-story-controls';
+        import { DebugTilesPlugin } from '3d-tiles-renderer'
+
 
         let camera, scene, renderer, tilesRenderer, controls, modelGroup;
        
@@ -238,27 +240,49 @@
             tilesRenderer.setCamera(camera);
             tilesRenderer.setResolutionFromRenderer(camera, renderer);
 
-            tilesRenderer.fetchOptions = {
-                cache: 'no-store', //  disables any caching for these requests
-                headers: {
-                    'Cache-Control': 'no-cache',  // prevent caching at the server level
-                    'Pragma': 'no-cache',         // HTTP 1.0 fallback for proxies
-                    'Expires': '0'                // Expire immediately
+            const debugPlugin = new DebugTilesPlugin();
+            tilesRenderer.registerPlugin(debugPlugin);
+
+            // Set debugging options (optional)
+            debugPlugin.colorMode = 'RANDOM_COLOR'; // Example: Render tiles with random colors
+            debugPlugin.displayBoxBounds = true;    // Show bounding box for each tile
+            debugPlugin.displayRegionBounds = true;
+            debugPlugin.maxDebugDepth = - 1;
+            debugPlugin.maxDebugError = - 1;
+            debugPlugin.maxDebugDistance = - 1;
+
+            const intersects = raycaster.intersectObject( scene, true );
+            if ( intersects.length ) {
+
+              const { face, object } = intersects[ 0 ];
+              const batchidAttr = object.geometry.getAttribute( '_batchid' );
+
+              if ( batchidAttr ) {
+
+                // Traverse the parents to find the batch table.
+                let batchTableObject = object;
+                while ( ! batchTableObject.batchTable ) {
+
+                  batchTableObject = batchTableObject.parent;
+
                 }
-            };
 
-            // -- need plugin
-            // tilesRenderer.preprocessURL = function(uri) {
-            //     const url = new URL(uri);
-            //     url.searchParams.append('cb', Date.now());
-            //     return url.toString();
-            // };
+                // Log the batch data
+                const batchTable = batchTableObject.batchTable;
+                const hoveredBatchid = batchidAttr.getX( face.a );
+                const batchData = batchTable.getDataFromId( hoveredBatchid );
+                console.log( batchData );
 
-            tilesRenderer.downloadQueue = new PriorityQueue();
-            tilesRenderer.downloadQueue.maxJobs = 6;
+              }
+
+            }
+
+
+            // tilesRenderer.downloadQueue = new PriorityQueue();
+            // tilesRenderer.downloadQueue.maxJobs = 6;
     
-            tilesRenderer.parseQueue = new PriorityQueue();
-            tilesRenderer.parseQueue.maxJobs = 6;
+            // tilesRenderer.parseQueue = new PriorityQueue();
+            // tilesRenderer.parseQueue.maxJobs = 6;
 
             tilesRenderer.addEventListener('load-tile-set', () => {
                 const sphere = new THREE.Sphere();
