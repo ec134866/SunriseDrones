@@ -260,7 +260,10 @@
               tilesRenderer.getBoundingSphere(sphere);
               tilesRenderer.group.position.copy(sphere.center).multiplyScalar(-1);
 
-              modelGroup.rotation.x = Math.PI / -4; 
+              modelGroup.position.set({{selected_flight.scriptExteriorModelPosition}});
+              modelGroup.rotation.x = THREE.MathUtils.degToRad({{selected_flight.scriptExteriorModelRotationX}});
+              modelGroup.rotation.z = THREE.MathUtils.degToRad({{selected_flight.scriptExteriorModelRotationY}});
+              modelGroup.rotation.y = THREE.MathUtils.degToRad({{selected_flight.scriptExteriorModelRotationZ}});
           });
   
              // -- freewalk
