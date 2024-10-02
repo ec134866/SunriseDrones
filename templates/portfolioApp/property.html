@@ -247,11 +247,12 @@
                 }
             };
 
-            tilesRenderer.preprocessURL = function(uri) {
-                const url = new URL(uri);
-                url.searchParams.append('cb', Date.now());
-                return url.toString();
-            };
+            // -- need plugin
+            // tilesRenderer.preprocessURL = function(uri) {
+            //     const url = new URL(uri);
+            //     url.searchParams.append('cb', Date.now());
+            //     return url.toString();
+            // };
 
             tilesRenderer.downloadQueue = new PriorityQueue();
             tilesRenderer.downloadQueue.maxJobs = 6;
