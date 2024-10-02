@@ -238,7 +238,7 @@
 
             tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
             tilesRenderer.registerPlugin(debugPlugin);
-            tilesRenderer.fetchOptions.mode = 'cors';
+            // tilesRenderer.fetchOptions.mode = 'cors';
             // tilesRenderer.lruCache.minSize = 900;
             // tilesRenderer.lruCache.maxSize = 1300;
             tilesRenderer.errorTarget = 4;
@@ -250,7 +250,7 @@
 
 
             // Set debugging options (optional)
-            // debugPlugin.colorMode = 'RANDOM_COLOR'; 
+            debugPlugin.colorMode = 'SCREEN_ERROR'; 
             debugPlugin.displayBoxBounds = true;   
             debugPlugin.displayRegionBounds = true;
             debugPlugin.maxDebugDepth = - 1;
