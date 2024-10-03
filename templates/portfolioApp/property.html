@@ -180,55 +180,61 @@
 
         {% comment %} script for contract tracker and download section {% endcomment %}
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const today = new Date().toISOString().split('T')[0];
-                const publishDate = '{{selected_flight.contractPublishDate | date:'Y-m-d' }}'; 
-                const contractTracker = document.getElementById('contractTracker');
-                const contractTrackerBtn = document.getElementById('contractTrackerBtn');
-        
-                // Show contract tracker if the publish date is today or in the future
-                if (publishDate >= today) {
-                    contractTracker.classList.add('show');
-                    contractTrackerBtn.classList.replace('btn-light', 'btn-dark');
-                }
-            });
-        
-            function toggleSection(button) {
-                const isDownloadSection = button.id === 'downloadSectionBtn';
-                const targetSection = document.querySelector(button.getAttribute('data-bs-target'));
-                
-                // Reset both sections and button states
-                document.getElementById('contractTracker').classList.remove('show');
-                document.getElementById('downloadSection').classList.remove('show');
-                document.getElementById('contractTrackerBtn').classList.replace('btn-dark', 'btn-light');
-                document.getElementById('downloadSectionBtn').classList.replace('btn-dark', 'btn-light');
-        
-                // If the target section is not already active, show it
-                if (!targetSection.classList.contains('show')) {
-                    targetSection.classList.add('show');
-                    button.classList.replace('btn-light', 'btn-dark');
-                }
-        
-                // Show filter icons only for the Download section
-                document.getElementById("filterIcons").style.display = isDownloadSection ? "block" : "none";
-            }
-        </script>
-        
+          document.addEventListener('DOMContentLoaded', function () {
+              const today = new Date().toISOString().split('T')[0];
+              const publishDate = '{{selected_flight.contractPublishDate | date:'Y-m-d' }}'; 
+              const contractTracker = document.getElementById('contractTracker');
+              const contractTrackerBtn = document.getElementById('contractTrackerBtn');
+      
+              // Show contract tracker if the publish date is today or in the future
+              if (publishDate >= today) {
+                  contractTracker.classList.add('show');
+                  contractTrackerBtn.classList.replace('btn-light', 'btn-dark');
+              }
+          });
+      
+          function toggleSection(button) {
+              const isDownloadSection = button.id === 'downloadSectionBtn';
+              const targetSection = document.querySelector(button.getAttribute('data-bs-target'));
+              const isAlreadyActive = targetSection.classList.contains('show'); // Check if the section is already active
+      
+              // Reset both sections and button states
+              document.getElementById('contractTracker').classList.remove('show');
+              document.getElementById('downloadSection').classList.remove('show');
+              document.getElementById('contractTrackerBtn').classList.replace('btn-dark', 'btn-light');
+              document.getElementById('downloadSectionBtn').classList.replace('btn-dark', 'btn-light');
+      
+              // If the section was already active, we don't reactivate it (deselect)
+              if (!isAlreadyActive) {
+                  targetSection.classList.add('show');
+                  button.classList.replace('btn-light', 'btn-dark');
+              }
+      
+              // Show filter icons only for the Download section if it's being activated
+              document.getElementById("filterIcons").style.display = (isDownloadSection && !isAlreadyActive) ? "block" : "none";
+          }
+      </script>
+
+
         {% comment %} script for filtering files {% endcomment %}
         <script>
-            function filterFiles(type) {
-                const files = document.querySelectorAll('.file');
-                
-                files.forEach(file => {
-                    file.style.display = file.getAttribute('data-file-type') === type ? 'flex' : 'none';
-                });
-            }
-        
-            function showAllFiles() {
-                filterFiles('all');
-            }
-        </script>
 
+          function filterFiles(type) {
+            const files = document.querySelectorAll('.file');
+            
+            files.forEach(file => {
+              if (file.getAttribute('data-file-type') === type) {
+                file.style.display = 'flex'; // Show file
+              } else {
+                file.style.display = 'none'; // Hide file
+              }
+            });
+          }
+
+          function showAllFiles() {
+            filterFiles('all');
+          }
+        </script>
 
 
       <script>
