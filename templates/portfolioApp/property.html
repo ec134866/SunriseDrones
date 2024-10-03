@@ -38,6 +38,7 @@
                 </ul>
               </div>
             </div>
+            {% comment %} buttons {% endcomment %}
             <div class="col-auto" style="align-items:center; align-content:center; max-height:17vh;">
                 <div class="row">
                     <button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
@@ -46,7 +47,8 @@
                     <button id="downloadSectionBtn" class="btn btn-light" type="button" data-bs-target="#downloadSection" onclick="toggleSection(this)" style="margin-top: 0.5vh">Download My Files</button>
                 </div>
             </div>
-            <div class="col-auto">
+            {% comment %} filters {% endcomment %}
+            <div class="col-auto collapse" id="filterIcons" style="display: none;"> 
               <div class="row" style="align-items:center; align-content:center; padding:.5vh;">
                 <i class="fa-regular fa-image" onclick="filterFiles('Image')" style=" height:2vh; cursor: pointer;"></i>
               </div>
@@ -57,6 +59,7 @@
                 <i class="fa-solid fa-cube" onclick="filterFiles('3D Model')" style="height:2vh; cursor: pointer;"></i>
               </div>
             </div>
+            {% comment %} tracker or downloads {% endcomment %}
             <div class="col" style="max-height:17vh; padding-right: 3vh; padding-left: 3vh; min-width:70%;">
               <div class="collapse" id="contractTracker">
                 <div class="track d-flex">
