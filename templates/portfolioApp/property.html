@@ -81,7 +81,7 @@
                   <div class="collapse" id="downloadSection">
                     <div>
                       {% for file in files %}
-                          <div style="display: flex; flex-direction: column; align-items: center; margin: 0.5vw;">
+                          <div style="align-items: center; margin: 0.5vw;">
                               <img src="{{ selected_flight.file.link }}" alt="{{ selected_flight.file.name }}" style="width: 2vw; height: 2vh;">
                               <div style="margin: 0.5vw;">{{ selected_flight.file.name }}</div>
                               <div style="margin: 0.5vw;">{{ selected_flight.file.size_in_mb }} MB</div>
