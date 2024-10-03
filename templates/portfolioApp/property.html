@@ -79,20 +79,21 @@
                     </div>
                   </div>
                   <div class="collapse" id="downloadSection">
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-start align-items-center">
-                            <i class="fa-regular fa-image me-2"></i>
-                            Image
-                        </li>
-                        <li class="list-group-item d-flex justify-content-start align-items-center">
-                            <i class="fa-solid fa-clapperboard me-2"></i>
-                            Video
-                        </li>
-                        <li class="list-group-item d-flex justify-content-start align-items-center">
-                            <i class="fa-solid fa-cube me-2"></i>
-                            3D Models
-                        </li>
-                    </ul>
+                    <div>
+                      {% for file in files %}
+                          <div style="display: flex; flex-direction: column; align-items: center; margin: 0.5vw;">
+                              <img src="{{ selected_flight.file.link }}" alt="{{ selected_flight.file.name }}" style="width: 2vw; height: 2vh;">
+                              <div style="margin: 0.5vw;">{{ selected_flight.file.name }}</div>
+                              <div style="margin: 0.5vw;">{{ selected_flight.file.size_in_mb }} MB</div>
+                              <a href="{{ selected_flight.file.direct_download_link }}" style="text-decoration: none; color: black; margin: 5px;">
+                                  <button style="border: none; background-color: #007BFF; color: white; padding: 5px 10px; border-radius: 5px;">
+                                      <i class="fa-solid fa-download"></i> Download
+                                  </button>
+                              </a>
+                          </div>
+                      {% empty %}
+                          <div>No files available.</div>
+                      {% endfor %}
                   </div>
                 </div>
               </div>

@@ -104,3 +104,15 @@ class Flight(models.Model):
 
     def __str__(self):
         return self.id
+    
+
+class File(models.Model):
+    name = models.CharField(max_length=255)
+    link = models.URLField()
+    direct_download_link = models.URLField()
+    size_in_mb = models.DecimalField(max_digits=10, decimal_places=2)
+    file_type = models.CharField(max_length=10)
+    flight = models.ForeignKey(Flight, on_delete=models.CASCADE, related_name='files')
+
+    def __str__(self):
+        return self.name
