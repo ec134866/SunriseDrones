@@ -48,7 +48,7 @@
                 </div>
             </div>
             {% comment %} filters {% endcomment %}
-            <div class="col-auto collapse" id="filterIcons" style="display: none;"> 
+            <div class="col-auto" id="filterIcons" style="display:none;"> 
               <div class="row" style="align-items:center; align-content:center; padding:.5vh;">
                 <i class="fa-regular fa-image" onclick="filterFiles('Image')" style=" height:2vh; cursor: pointer;"></i>
               </div>
@@ -215,6 +215,16 @@
 
         {% comment %} script for filtering files {% endcomment %}
         <script>
+
+          function toggleSection() {
+            const filterIcons = document.getElementById("filterIcons");
+            if (filterIcons.style.display === "none" || filterIcons.style.display === "") {
+                filterIcons.style.display = "block"; // Show the filter icons
+            } else {
+                filterIcons.style.display = "none"; // Hide the filter icons
+            }
+        }
+        
           function filterFiles(type) {
             const files = document.querySelectorAll('.file');
             
