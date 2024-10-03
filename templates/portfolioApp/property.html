@@ -38,35 +38,63 @@
                 </ul>
               </div>
             </div>
-            <div class="col">
-              <div class="track d-flex" style="padding-right: 3vw; padding-left: 3vw;">
-                  <div class="step"> 
-                    <span class="icon"> <i class="fa fa-file-signature"></i> </span> 
-                    <span class="text">Contract Signed</span> 
-                    <span class="text" style="margin-top: -2px;"> {{selected_flight.contractSigned}}</span> 
+            <div class="col" style="margin-left:1vw;">
+              <div class="row" style="align-items:center; min-height: 15vh;">
+                  <div class="col-auto">
+                      <div class="row">
+                          <button id="contractTrackerBtn" class="btn btn-light btn-sm" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
+                      </div>
+                      <div class="row">
+                          <button id="downloadSectionBtn" class="btn btn-light btn-sm" type="button" data-bs-target="#downloadSection" onclick="toggleSection(this)" style="margin-top: 0.5vh">Download My Files</button>
+                      </div>
                   </div>
-                  <div class="step"> 
-                    <span class="icon"> <i class="fa fa-helicopter"></i> </span> 
-                    <span class="text"> Drone Capture </span> 
-                    <span class="text" style="margin-top: -2px;"> {{selected_flight.contractFlightDate}}</span> 
+              <div class="col">
+                <div class="collapse" id="contractTracker">
+                  <div class="track d-flex">
+                      <div class="step"> 
+                        <span class="icon"> <i class="fa fa-file-signature"></i> </span> 
+                        <span class="text">Contract Signed</span> 
+                        <span class="text" style="margin-top: -2px;"> {{selected_flight.contractSigned}}</span> 
+                      </div>
+                      <div class="step"> 
+                        <span class="icon"> <i class="fa fa-helicopter"></i> </span> 
+                        <span class="text"> Drone Capture </span> 
+                        <span class="text" style="margin-top: -2px;"> {{selected_flight.contractFlightDate}}</span> 
+                      </div>
+                      <div class="step"> 
+                        <span class="icon"> <i class="fa fa-image"></i> </span> 
+                        <span class="text"> Image Processing </span> 
+                        <span class="text" style="margin-top: -2px;"> {{selected_flight.contractProcessingDate}}</span> 
+                      </div>
+                      <div class="step"> 
+                        <span class="icon"> <i class="fa fa-tasks"></i> </span> 
+                        <span class="text">Final Preparations</span> 
+                        <span class="text" style="margin-top: -2px;"> {{selected_flight.contractFinalTouches}}</span> 
+                      </div>
+                      <div class="step"> 
+                        <span class="icon"> <i class="fa fa-upload"></i> </span> 
+                        <span class="text">Published</span> 
+                        <span class="text" style="margin-top: -2px;"> {{selected_flight.contractPublishDate}}</span> 
+                      </div>
                   </div>
-                  <div class="step"> 
-                    <span class="icon"> <i class="fa fa-image"></i> </span> 
-                    <span class="text"> Image Processing </span> 
-                    <span class="text" style="margin-top: -2px;"> {{selected_flight.contractProcessingDate}}</span> 
-                  </div>
-                  <div class="step"> 
-                    <span class="icon"> <i class="fa fa-tasks"></i> </span> 
-                    <span class="text">Final Preparations</span> 
-                    <span class="text" style="margin-top: -2px;"> {{selected_flight.contractFinalTouches}}</span> 
-                  </div>
-                  <div class="step"> 
-                    <span class="icon"> <i class="fa fa-upload"></i> </span> 
-                    <span class="text">Published</span> 
-                    <span class="text" style="margin-top: -2px;"> {{selected_flight.contractPublishDate}}</span> 
-                  </div>
+                </div>
+                <div class="collapse" id="downloadSection">
+                  <ul class="list-group">
+                      <li class="list-group-item d-flex justify-content-start align-items-center">
+                          <i class="fa-regular fa-image me-2"></i>
+                          Image
+                      </li>
+                      <li class="list-group-item d-flex justify-content-start align-items-center">
+                          <i class="fa-solid fa-clapperboard me-2"></i>
+                          Video
+                      </li>
+                      <li class="list-group-item d-flex justify-content-start align-items-center">
+                          <i class="fa-solid fa-cube me-2"></i>
+                          3D Models
+                      </li>
+                  </ul>
+                </div>
               </div>
-            </div>
           </div>
           
           {% comment %} main section {% endcomment %}
@@ -126,6 +154,43 @@
                 {% comment %} <p class="text-muted small mb-0">Copyright &copy; SunriseDrones 2024</p> {% endcomment %}
             </div>
         </footer>
+
+
+
+
+        {% comment %} script for contract tracker and download section {% endcomment %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const today = new Date().toISOString().split('T')[0];
+                const publishDate = '{{selected_flight.contractPublishDate}}'; 
+                const contractTracker = document.getElementById('contractTracker');
+                const contractTrackerBtn = document.getElementById('contractTrackerBtn');
+
+                if (publishDate >= today) {
+                    contractTracker.classList.add('show');
+                    contractTrackerBtn.classList.replace('btn-light', 'btn-dark');
+                }
+            });
+
+            function toggleSection(button) {
+                const targetSection = document.querySelector(button.getAttribute('data-bs-target'));
+                const isActive = targetSection.classList.contains('show'); // show means it's active
+
+                if (button.id === 'contractTrackerBtn' || button.id === 'downloadSectionBtn') {
+                    // reset sections
+                    document.getElementById('contractTracker').classList.remove('show');
+                    document.getElementById('downloadSection').classList.remove('show');
+                    document.getElementById('contractTrackerBtn').classList.replace('btn-dark', 'btn-light');
+                    document.getElementById('downloadSectionBtn').classList.replace('btn-dark', 'btn-light');
+
+                    if (!isActive) {
+                        targetSection.classList.add('show');
+                        button.classList.replace('btn-light', 'btn-dark');
+                    }
+                }
+            }
+
+        </script>
 
 
       <script>
