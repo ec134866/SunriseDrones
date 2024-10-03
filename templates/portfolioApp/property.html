@@ -249,12 +249,6 @@
               '3D Model': document.getElementById('model-icon')
             };
         
-            // Reset all icons to unchecked (fa-regular fa-square)
-            Object.keys(icons).forEach(key => {
-              icons[key].classList.remove('fa-square-check');
-              icons[key].classList.add('fa-square');
-            });
-        
             if (selectedType === type) {
               // If the same type is clicked again, show all files and reset selection
               selectedType = null;
