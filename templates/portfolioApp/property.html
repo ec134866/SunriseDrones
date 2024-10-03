@@ -164,11 +164,11 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const today = new Date().toISOString().split('T')[0];
-                const publishDate = '{{selected_flight.contractPublishDate}}'; 
+                const publishDate = '{{selected_flight.contractPublishDate | date:'Y-m-d' }}'; 
                 const contractTracker = document.getElementById('contractTracker');
                 const contractTrackerBtn = document.getElementById('contractTrackerBtn');
 
-                if (publishDate <= today) {
+                if (publishDate >= today) {
                     contractTracker.classList.add('show');
                     contractTrackerBtn.classList.replace('btn-light', 'btn-dark');
                 }
