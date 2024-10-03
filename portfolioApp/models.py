@@ -41,7 +41,7 @@ class Property(models.Model):
     loc_lat = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
     loc_long = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
     person = models.ManyToManyField(Person, related_name='properties')
-    owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='properties')  # Updated
+    owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='properties') 
 
 
     def __str__(self):
