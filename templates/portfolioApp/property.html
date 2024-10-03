@@ -38,72 +38,68 @@
                 </ul>
               </div>
             </div>
-            <div class="col" style="margin-left:1vw; align-content: center; max-height: 17vh;">
-              <div class="row" style="align-items:center; height: 100%;">
-                <div class="col-auto">
-                    <div class="row">
-                        <button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
-                    </div>
-                    <div class="row">
-                        <button id="downloadSectionBtn" class="btn btn-light" type="button" data-bs-target="#downloadSection" onclick="toggleSection(this)" style="margin-top: 0.5vh">Download My Files</button>
-                    </div>
+            <div class="col-auto" style="align-items:center; align-content:center; margin-left:1vw; max-height:17vh">
+                <div class="row">
+                    <button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
                 </div>
-                <div class="col" style="padding-left: 2vw; padding-right: 2vw;">
-                  <div class="collapse" id="contractTracker">
-                    <div class="track d-flex" style="min-width:70%;">
-                        <div class="step"> 
-                          <span class="icon"> <i class="fa fa-file-signature"></i> </span> 
-                          <span class="text">Contract Signed</span> 
-                          <span class="text" style="margin-top: -2px;"> {{selected_flight.contractSigned}}</span> 
-                        </div>
-                        <div class="step"> 
-                          <span class="icon"> <i class="fa fa-helicopter"></i> </span> 
-                          <span class="text"> Drone Capture </span> 
-                          <span class="text" style="margin-top: -2px;"> {{selected_flight.contractFlightDate}}</span> 
-                        </div>
-                        <div class="step"> 
-                          <span class="icon"> <i class="fa fa-image"></i> </span> 
-                          <span class="text"> Image Processing </span> 
-                          <span class="text" style="margin-top: -2px;"> {{selected_flight.contractProcessingDate}}</span> 
-                        </div>
-                        <div class="step"> 
-                          <span class="icon"> <i class="fa fa-tasks"></i> </span> 
-                          <span class="text">Final Preparations</span> 
-                          <span class="text" style="margin-top: -2px;"> {{selected_flight.contractFinalTouches}}</span> 
-                        </div>
-                        <div class="step"> 
-                          <span class="icon"> <i class="fa fa-upload"></i> </span> 
-                          <span class="text">Published</span> 
-                          <span class="text" style="margin-top: -2px;"> {{selected_flight.contractPublishDate}}</span> 
-                        </div>
+                <div class="row">
+                    <button id="downloadSectionBtn" class="btn btn-light" type="button" data-bs-target="#downloadSection" onclick="toggleSection(this)" style="margin-top: 0.5vh">Download My Files</button>
+                </div>
+            </div>
+            <div class="col" style="padding-left: 2vw; padding-right: 2vw;">
+              <div class="collapse" id="contractTracker">
+                <div class="track d-flex" style="min-width:70%;">
+                    <div class="step"> 
+                      <span class="icon"> <i class="fa fa-file-signature"></i> </span> 
+                      <span class="text">Contract Signed</span> 
+                      <span class="text" style="margin-top: -2px;"> {{selected_flight.contractSigned}}</span> 
                     </div>
-                  </div>
-                  <div class="collapse" id="downloadSection">
-                    <div class="row overflow-scroll" style="min-width:70%; padding: 1vh; max-height: 17vh; background-color: lightgray;">
-                      {% for file in files %}
-                        <div class="col-auto" style="width: auto; height: 80%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
-                          <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 14vh;">
-                          <div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
-                            <div class="col" style="display: flex; align-items: center;">
-                                <div>{{ file.name }}</div>
-                            </div>
-                            <div class="col-auto" style="display: flex; align-items: center; justify-content: flex-end;">
-                                <div>{{ file.size_in_mb }} MB</div>
-                                <a href="{{ file.direct_download_link }}" target="_blank" style="margin-left: 0.5vh;">
-                                  <span class="icon">
-                                      <i class="fa-solid fa-download"></i>
-                                  </span>
-                                </a>
-                            </div>
-                          </div>
-                        </div>
-                      {% empty %}
-                        <div>No files available.</div>
-                      {% endfor %}
+                    <div class="step"> 
+                      <span class="icon"> <i class="fa fa-helicopter"></i> </span> 
+                      <span class="text"> Drone Capture </span> 
+                      <span class="text" style="margin-top: -2px;"> {{selected_flight.contractFlightDate}}</span> 
                     </div>
-                  </div>     
+                    <div class="step"> 
+                      <span class="icon"> <i class="fa fa-image"></i> </span> 
+                      <span class="text"> Image Processing </span> 
+                      <span class="text" style="margin-top: -2px;"> {{selected_flight.contractProcessingDate}}</span> 
+                    </div>
+                    <div class="step"> 
+                      <span class="icon"> <i class="fa fa-tasks"></i> </span> 
+                      <span class="text">Final Preparations</span> 
+                      <span class="text" style="margin-top: -2px;"> {{selected_flight.contractFinalTouches}}</span> 
+                    </div>
+                    <div class="step"> 
+                      <span class="icon"> <i class="fa fa-upload"></i> </span> 
+                      <span class="text">Published</span> 
+                      <span class="text" style="margin-top: -2px;"> {{selected_flight.contractPublishDate}}</span> 
+                    </div>
                 </div>
               </div>
+              <div class="collapse" id="downloadSection">
+                <div class="row overflow-scroll" style="min-width:70%; padding: 1vh; max-height: 17vh; background-color: lightgray;">
+                  {% for file in files %}
+                    <div class="col-auto" style="width: auto; height: 80%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
+                      <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 14vh;">
+                      <div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
+                        <div class="col" style="display: flex; align-items: center;">
+                            <div>{{ file.name }}</div>
+                        </div>
+                        <div class="col-auto" style="display: flex; align-items: center; justify-content: flex-end;">
+                            <div>{{ file.size_in_mb }} MB</div>
+                            <a href="{{ file.direct_download_link }}" target="_blank" style="margin-left: 0.5vh;">
+                              <span class="icon">
+                                  <i class="fa-solid fa-download"></i>
+                              </span>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                  {% empty %}
+                    <div>No files available.</div>
+                  {% endfor %}
+                </div>
+              </div>     
             </div>
           </div>
           
