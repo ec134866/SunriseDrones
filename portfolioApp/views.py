@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
-from .models import Person, Owner, Property, Flight
+from .models import Person, Owner, Property, Flight, ScriptExterior, ScriptInterior
 
 # Create your views here.
 
@@ -76,6 +76,8 @@ def propertyPageView(request, person_uuid, owner_name, property_name):
 
     selected_flight = Flight.objects.filter(property=property, date=selected_date).first()
 
+    script_exterior = selected_flight.script_exterior if selected_flight else None
+    script_interior = selected_flight.script_interior if selected_flight else None
 
     context = {
         'person': person,
@@ -83,7 +85,9 @@ def propertyPageView(request, person_uuid, owner_name, property_name):
         'owner_name': owner_name,
         'property': property,
         'flights': flights,
-        'selected_flight': selected_flight
+        'selected_flight': selected_flight,
+        'script_exterior': script_exterior,
+        'script_interior': script_interior,
     }
 
     return render(request, 'portfolioApp/property.html', context)
