@@ -81,7 +81,7 @@
                   <div class="collapse" id="downloadSection">
                     <div>
                       {% for file in files %}
-                          <div style="display: flex; flex-direction: column; align-items: center; margin: 0.5vw; width: 6vw; height: 6vh; border: 1px solid #ccc; padding: 0.5vh;">
+                          <div class="col" style="margin: 0.5vw; width: 6vw; height: 6vh; border: 1px solid #ccc; padding: 0.5vh;">
                               <img src="{{ file.link }}" alt="{{ file.name }}" style="width: 4vw; height: 4vh;">
                               <div style="font-size: 1vh; margin: 0.2vh;">{{ file.name }}</div>
                               <div style="font-size: 1vh; margin: 0.2vh;">{{ file.size_in_mb }} MB</div>
