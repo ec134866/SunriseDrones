@@ -40,7 +40,7 @@
             </div>
             <div class="col" style="margin-left:1vw; align-content: center; max-height: 17vh;">
               <div class="row" style="align-items:center; height: 100%;">
-                <div class="col">
+                <div class="col-auto">
                     <div class="row">
                         <button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
                     </div>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col" style="padding-left: 2vw; padding-right: 2vw;">
                   <div class="collapse" id="contractTracker">
-                    <div class="track d-flex">
+                    <div class="track d-flex" style="min-width:70%;">
                         <div class="step"> 
                           <span class="icon"> <i class="fa fa-file-signature"></i> </span> 
                           <span class="text">Contract Signed</span> 
@@ -79,7 +79,7 @@
                     </div>
                   </div>
                   <div class="collapse" id="downloadSection">
-                    <div class="row overflow-scroll" style="padding: 1vh; max-height: 17vh; background-color: lightgray;">
+                    <div class="row overflow-scroll" style="min-width:70%; padding: 1vh; max-height: 17vh; background-color: lightgray;">
                       {% for file in files %}
                         <div class="col-auto" style="width: auto; height: 80%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
                           <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 14vh;">
