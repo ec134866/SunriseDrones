@@ -249,6 +249,12 @@
               '3D Model': document.getElementById('model-icon')
             };
         
+            // Reset all icons to unchecked (fa-regular fa-square)
+            Object.keys(icons).forEach(key => {
+              icons[key].classList.remove('fa-regular', 'fa-square-check');
+              icons[key].classList.add('fa-regular', 'fa-square');
+            });
+        
             if (selectedType === type) {
               // If the same type is clicked again, show all files and reset selection
               selectedType = null;
@@ -266,8 +272,8 @@
         
               // Update the selected icon to checked (fa-regular fa-square-check)
               if (icons[type]) {
-                icons[type].classList.remove('fa-regular fa-square');
-                icons[type].classList.add('fa-regular fa-square-check');
+                icons[type].classList.remove('fa-regular', 'fa-square');
+                icons[type].classList.add('fa-regular', 'fa-square-check');
               }
             }
           }
