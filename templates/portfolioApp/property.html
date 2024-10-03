@@ -206,6 +206,10 @@
                     if (!isActive) {
                         targetSection.classList.add('show');
                         button.classList.replace('btn-light', 'btn-dark');
+
+                        if (button.id === 'downloadSectionBtn') {
+                          toggleSection2();
+                      }
                     }
                 }
             }
