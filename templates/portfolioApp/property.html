@@ -18,7 +18,7 @@
         <div style="padding-top: 2vh; padding-bottom: 2vh">
           {% comment %} dropdown section {% endcomment %}
           <div class="row" style="align-items:center; min-height:17vh; max-height: 17vh;">
-            <div class="col-auto" style="padding-left: 2vw; align-content: center;">
+            <div class="col-auto" style="padding-left: 2vw; padding-right: 1vw; align-content: center;">
               <div class="dropdown">
                 <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                   {% if selected_flight %}
@@ -38,7 +38,7 @@
                 </ul>
               </div>
             </div>
-            <div class="col-auto" style="align-items:center; align-content:center; margin-left:1vw; max-height:17vh">
+            <div class="col-auto" style="align-items:center; align-content:center; max-height:17vh;">
                 <div class="row">
                     <button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
                 </div>
@@ -46,9 +46,9 @@
                     <button id="downloadSectionBtn" class="btn btn-light" type="button" data-bs-target="#downloadSection" onclick="toggleSection(this)" style="margin-top: 0.5vh">Download My Files</button>
                 </div>
             </div>
-            <div class="col" style="padding-left: 2vw; padding-right: 2vw;">
+            <div class="col" style="max-height:17vh; padding: 1vh; min-width:70%;">
               <div class="collapse" id="contractTracker">
-                <div class="track d-flex" style="min-width:70%;">
+                <div class="track d-flex">
                     <div class="step"> 
                       <span class="icon"> <i class="fa fa-file-signature"></i> </span> 
                       <span class="text">Contract Signed</span> 
@@ -77,7 +77,7 @@
                 </div>
               </div>
               <div class="collapse" id="downloadSection">
-                <div class="row overflow-scroll" style="min-width:70%; padding: 1vh; max-height: 17vh; background-color: lightgray;">
+                <div class="row overflow-scroll" style="background-color: lightgray;">
                   {% for file in files %}
                     <div class="col-auto" style="width: auto; height: 80%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
                       <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 14vh;">
