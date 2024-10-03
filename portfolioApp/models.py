@@ -49,6 +49,37 @@ class Property(models.Model):
     class Meta:
         db_table = "properties"
 
+
+# ScriptExterior Model
+class ScriptExterior(models.Model):
+    camera_far = models.CharField(max_length=20, blank=True, null=True, default="50000")
+    camera_position = models.CharField(max_length=20, blank=True, null=True, default="1,3000,-1500")
+    camera_axis = models.CharField(max_length=20, blank=True, null=True, default="0, 1, 0")
+    model_position = models.CharField(max_length=20, blank=True, null=True, default="1,1,1")
+    model_rotation_x = models.CharField(max_length=20, blank=True, null=True, default="-50")
+    model_rotation_y = models.CharField(max_length=20, blank=True, null=True, default="22")
+    model_rotation_z = models.CharField(max_length=20, blank=True, null=True, default="0")
+    max_camera_zoom = models.CharField(max_length=20, blank=True, null=True, default="100")
+
+    def __str__(self):
+        return f"Exterior Script {self.id}"
+
+
+# ScriptInterior Model
+class ScriptInterior(models.Model):
+    camera_far = models.CharField(max_length=20, blank=True, null=True)
+    camera_position = models.CharField(max_length=20, blank=True, null=True)
+    camera_axis = models.CharField(max_length=20, blank=True, null=True)
+    model_position = models.CharField(max_length=20, blank=True, null=True, default="1,1,1")
+    model_rotation_x = models.CharField(max_length=20, blank=True, null=True, default="-50")
+    model_rotation_y = models.CharField(max_length=20, blank=True, null=True, default="22")
+    model_rotation_z = models.CharField(max_length=20, blank=True, null=True, default="0")
+    max_camera_zoom = models.CharField(max_length=20, blank=True, null=True, default="100")
+
+    def __str__(self):
+        return f"Interior Script {self.id}"
+
+
 # Flight Model
 class Flight(models.Model):
     id = models.CharField(primary_key=True, max_length=7)  # format AA0001-ZZ9999
@@ -66,28 +97,10 @@ class Flight(models.Model):
     contractProcessingDate = models.DateField(default=timezone.now)
     contractFinalTouches = models.DateField(default=timezone.now)
     contractPublishDate = models.DateField(default=timezone.now)
-    scriptExteriorCameraFar = models.CharField(max_length=20, blank=True, null=True, default="50000")
-    scriptExteriorCameraPosition = models.CharField(max_length=20, blank=True, null=True, default="1,3000,-1500")
-    scriptExteriorCameraAxis = models.CharField(max_length=20, blank=True, null=True, default="0, 1, 0")
-    scriptInteriorCameraFar = models.CharField(max_length=20, blank=True, null=True)
-    scriptInteriorCameraPosition = models.CharField(max_length=20, blank=True, null=True)
-    scriptInteriorCameraAxis = models.CharField(max_length=20, blank=True, null=True)
-    scriptExteriorModelPosition = models.CharField(max_length=20, blank=True, null=True, default="1,1,1")
-    scriptExteriorModelRotationX = models.CharField(max_length=20, blank=True, null=True, default="-50")
-    scriptExteriorModelRotationY = models.CharField(max_length=20, blank=True, null=True, default="22")
-    scriptExteriorModelRotationZ = models.CharField(max_length=20, blank=True, null=True, default="0")
-    scriptInteriorModelPosition = models.CharField(max_length=20, blank=True, null=True, default="1,1,1")
-    scriptInteriorModelRotationX = models.CharField(max_length=20, blank=True, null=True, default="-50")
-    scriptInteriorModelRotationY = models.CharField(max_length=20, blank=True, null=True, default="22")
-    scriptInteriorModelRotationZ = models.CharField(max_length=20, blank=True, null=True, default="0")
-    scriptExteriorModelMaxCameraZoom = models.CharField(max_length=20, blank=True, null=True, default="100")
-    scriptInteriorModelMaxCameraZoom = models.CharField(max_length=20, blank=True, null=True, default="100")
-    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='flight')
+    script_exterior = models.ForeignKey(ScriptExterior, on_delete=models.CASCADE, related_name='flights', blank=True, null=True)
+    script_interior = models.ForeignKey(ScriptInterior, on_delete=models.CASCADE, related_name='flights', blank=True, null=True)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='flights')
     person = models.ManyToManyField(Person, related_name='flights')
 
     def __str__(self):
         return self.id
-    
-
-    # maybe fix? 
-    
