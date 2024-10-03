@@ -116,4 +116,4 @@ class File(models.Model):
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE, related_name='files')
 
     def __str__(self):
-        return self.name
+        return f"File {self.id}"
