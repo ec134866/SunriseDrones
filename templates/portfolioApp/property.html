@@ -48,18 +48,27 @@
                 </div>
             </div>
             {% comment %} filters {% endcomment %}
-            <div class="col-auto" id="filterIcons" style="display:none;"> 
+            <div class="col-auto" id="filterIcons" style="display:none;">
               <div class="row" style="justify-content: center; padding-left:.5vh; padding-right:.5vh; padding-top:.5vh;">
-                  <span style="font-size: 1vh;">Filter:</span>
+                <span style="font-size: 1vh;">Filter:</span>
               </div>
+            
+              <!-- Image Filter -->
               <div class="row" style="justify-content: center; padding-left:.5vh; padding-right:.5vh; padding-bottom:.5vh;">
-                  <i class="fa-regular fa-image" onclick="filterFiles('Image')" style="height:2vh; cursor: pointer;"></i>
+                <i class="fa-regular fa-image" onclick="filterFiles('Image')" style="height:2vh; cursor: pointer;"></i>
+                <i class="fa-regular fa-square" id="image-icon" style="margin-left: 5px; height:2vh;"></i>
               </div>
+            
+              <!-- Video Filter -->
               <div class="row" style="justify-content: center; padding:.5vh;">
-                  <i class="fa-solid fa-clapperboard" onclick="filterFiles('Video')" style="height:2vh; cursor: pointer;"></i>
+                <i class="fa-solid fa-clapperboard" onclick="filterFiles('Video')" style="height:2vh; cursor: pointer;"></i>
+                <i class="fa-regular fa-square" id="video-icon" style="margin-left: 5px; height:2vh;"></i>
               </div>
+            
+              <!-- 3D Model Filter -->
               <div class="row" style="justify-content: center; padding:.5vh;">
-                  <i class="fa-solid fa-cube" onclick="filterFiles('3D Model')" style="height:2vh; cursor: pointer;"></i>
+                <i class="fa-solid fa-cube" onclick="filterFiles('3D Model')" style="height:2vh; cursor: pointer;"></i>
+                <i class="fa-regular fa-square" id="model-icon" style="margin-left: 5px; height:2vh;"></i>
               </div>
             </div>
             {% comment %} tracker or downloads {% endcomment %}
@@ -221,21 +230,43 @@
 
         {% comment %} script for filtering files {% endcomment %}
         <script>
-
+          let selectedType = null; // Track the selected file type
+        
           function filterFiles(type) {
             const files = document.querySelectorAll('.file');
-            
-            files.forEach(file => {
-              if (file.getAttribute('data-file-type') === type) {
-                file.style.display = 'flex'; // Show file
-              } else {
-                file.style.display = 'none'; // Hide file
-              }
+            const icons = {
+              'Image': document.getElementById('image-icon'),
+              'Video': document.getElementById('video-icon'),
+              '3D Model': document.getElementById('model-icon')
+            };
+        
+            // Reset all icons to unchecked (fa-square)
+            Object.keys(icons).forEach(key => {
+              icons[key].classList.remove('fa-square-check');
+              icons[key].classList.add('fa-square');
             });
-          }
-
-          function showAllFiles() {
-            filterFiles('all');
+        
+            if (selectedType === type) {
+              // If the same type is clicked again, show all files and reset selection
+              selectedType = null;
+              files.forEach(file => file.style.display = 'flex');
+            } else {
+              // Apply filter and toggle icon to checked
+              selectedType = type;
+              files.forEach(file => {
+                if (file.getAttribute('data-file-type') === type) {
+                  file.style.display = 'flex'; // Show file
+                } else {
+                  file.style.display = 'none'; // Hide file
+                }
+              });
+        
+              // Update the selected icon to checked
+              if (icons[type]) {
+                icons[type].classList.remove('fa-square');
+                icons[type].classList.add('fa-square-check');
+              }
+            }
           }
         </script>
 
