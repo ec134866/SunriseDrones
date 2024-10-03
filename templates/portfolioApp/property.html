@@ -204,21 +204,19 @@
                     document.getElementById('downloadSectionBtn').classList.replace('btn-dark', 'btn-light');
 
                     if (!isActive) {
-                        targetSection.classList.add('show');
-                        button.classList.replace('btn-light', 'btn-dark');
-
-                        if (button.id === 'downloadSectionBtn') {
-                            toggleSection2(); // Show filter icons
-                        } else {
-                            toggleSection2(false); // Hide filter icons
-                        }
-                    } else {
-                        if (button.id === 'downloadSectionBtn') {
-                            toggleSection2(); // Toggle filter icons
-                        } else {
-                            toggleSection2(false); // Hide filter icons if not download section
-                        }
-                    }
+                      targetSection.classList.add('show');
+                      button.classList.replace('btn-light', 'btn-dark');
+          
+                      if (button.id === 'downloadSectionBtn') {
+                          toggleSection2(true); // Show filter icons when Download section is active
+                      }
+                  } else {
+                      if (button.id === 'downloadSectionBtn') {
+                          toggleSection2(); // Toggle filter icons only for Download section
+                      } else {
+                          toggleSection2(false); // Hide filter icons if Contract Tracker is active
+                      }
+                  }
                 }
             }
 
