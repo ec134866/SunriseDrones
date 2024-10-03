@@ -208,8 +208,16 @@
                         button.classList.replace('btn-light', 'btn-dark');
 
                         if (button.id === 'downloadSectionBtn') {
-                          toggleSection2();
-                      }
+                            toggleSection2(); // Show filter icons
+                        } else {
+                            toggleSection2(false); // Hide filter icons
+                        }
+                    } else {
+                        if (button.id === 'downloadSectionBtn') {
+                            toggleSection2(); // Toggle filter icons
+                        } else {
+                            toggleSection2(false); // Hide filter icons if not download section
+                        }
                     }
                 }
             }
