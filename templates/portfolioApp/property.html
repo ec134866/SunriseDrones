@@ -48,38 +48,38 @@
                 </div>
             </div>
             {% comment %} filters {% endcomment %}
-            <div class="col-auto" id="filterIcons" style="display:none;">
-              <!-- Centered Filter Text -->
-              <div class="row text-center" style="padding-top:.5vh;">
-                <div class="col-12">
-                  <span style="font-size: 1vh;">Filter:</span>
+              <div class="col-auto" id="filterIcons" style="display:none;">
+                <!-- Centered Filter Text -->
+                <div class="row text-center" style="padding-top:.5vh;">
+                  <div class="col-12">
+                    <span style="font-size: 1vh;">Filter:</span>
+                  </div>
                 </div>
-              </div>
-            
-              <!-- Image Filter -->
-              <div class="row justify-content-center" style="padding-bottom:.5vh;">
-                <div class="col-auto d-flex justify-content-center align-items-center">
-                  <i class="fa-regular fa-image" onclick="filterFiles('Image')" style="height:2vh; cursor: pointer;"></i>
-                  <i class="fa-regular fa-square" id="image-icon" style="height:2vh; cursor: pointer; margin-left: 0.5vh;"></i>
+              
+                <!-- Image Filter -->
+                <div class="row justify-content-center" style="padding-bottom:.5vh;">
+                  <div class="col-auto d-flex justify-content-center align-items-center">
+                    <i class="fa-regular fa-image" onclick="filterFiles('Image')" style="height:2vh; cursor: pointer;"></i>
+                    <i class="fa-regular fa-square" id="image-icon" style="height:2vh; cursor: pointer; margin-left: 0.5vh;"></i>
+                  </div>
                 </div>
-              </div>
-            
-              <!-- Video Filter -->
-              <div class="row justify-content-center" style="padding-bottom:.5vh;">
-                <div class="col-auto d-flex justify-content-center align-items-center">
-                  <i class="fa-solid fa-clapperboard" onclick="filterFiles('Video')" style="height:2vh; cursor: pointer;"></i>
-                  <i class="fa-regular fa-square" id="video-icon" style="height:2vh; cursor: pointer; margin-left: 0.5vh;"></i>
+              
+                <!-- Video Filter -->
+                <div class="row justify-content-center" style="padding-bottom:.5vh;">
+                  <div class="col-auto d-flex justify-content-center align-items-center">
+                    <i class="fa-solid fa-clapperboard" onclick="filterFiles('Video')" style="height:2vh; cursor: pointer;"></i>
+                    <i class="fa-regular fa-square" id="video-icon" style="height:2vh; cursor: pointer; margin-left: 0.5vh;"></i>
+                  </div>
                 </div>
-              </div>
-            
-              <!-- 3D Model Filter -->
-              <div class="row justify-content-center" style="padding-bottom:.5vh;">
-                <div class="col-auto d-flex justify-content-center align-items-center">
-                  <i class="fa-solid fa-cube" onclick="filterFiles('3D Model')" style="height:2vh; cursor: pointer;"></i>
-                  <i class="fa-regular fa-square" id="model-icon" style="height:2vh; cursor: pointer; margin-left: 0.5vh;"></i>
+              
+                <!-- 3D Model Filter -->
+                <div class="row justify-content-center" style="padding-bottom:.5vh;">
+                  <div class="col-auto d-flex justify-content-center align-items-center">
+                    <i class="fa-solid fa-cube" onclick="filterFiles('3D Model')" style="height:2vh; cursor: pointer;"></i>
+                    <i class="fa-regular fa-square" id="model-icon" style="height:2vh; cursor: pointer; margin-left: 0.5vh;"></i>
+                  </div>
                 </div>
-              </div>
-            </div>            
+              </div>            
             {% comment %} tracker or downloads {% endcomment %}
             <div class="col" style="max-height:17vh; padding-right: 3vh; padding-left: 3vh; min-width:70%;">
               <div class="collapse" id="contractTracker">
@@ -251,8 +251,8 @@
         
             // Reset all icons to unchecked (fa-regular fa-square)
             Object.keys(icons).forEach(key => {
-              icons[key].classList.remove('fa-square-check');
-              icons[key].classList.add('fa-square');
+              icons[key].classList.remove('fa-regular fa-square-check');
+              icons[key].classList.add('fa-regular fa-square');
             });
         
             if (selectedType === type) {
@@ -272,8 +272,8 @@
         
               // Update the selected icon to checked (fa-regular fa-square-check)
               if (icons[type]) {
-                icons[type].classList.remove('fa-square');
-                icons[type].classList.add('fa-square-check');
+                icons[type].classList.remove('fa-regular fa-square');
+                icons[type].classList.add('fa-regular fa-square-check');
               }
             }
           }
