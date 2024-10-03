@@ -198,9 +198,9 @@
             const container = document.getElementById('exteriorModelContainer');
             container.innerHTML = ''; 
 
-            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), .1, {{ selected_flight.scriptexterior.camera_far }});
-            camera.position.set({{ selected_flight.scriptexterior.camera_position }});
-            camera.up = new THREE.Vector3({{ selected_flight.scriptexterior.camera_axis }});
+            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), .1, {{ selected_flight.script_exterior.camera_far }});
+            camera.position.set({{ selected_flight.script_exterior.camera_position }});
+            camera.up = new THREE.Vector3({{ selected_flight.script_exterior.camera_axis }});
 
             scene = new THREE.Scene();
             let light = new THREE.AmbientLight(0x404040, 80);
@@ -224,7 +224,7 @@
             controls.zoomToCursor = true;
             controls.enablePan = true;
             controls.minDistance = 0;
-            controls.maxDistance = {{selected_flight.scriptexterior.max_camera_zoom}};
+            controls.maxDistance = {{selected_flight.script_exterior.max_camera_zoom}};
             controls.minPolarAngle = 0.25;
             controls.maxPolarAngle = 1.8;
             controls.autoRotate = false;
@@ -261,10 +261,10 @@
               tilesRenderer.getBoundingSphere(sphere);
               tilesRenderer.group.position.copy(sphere.center).multiplyScalar(-1);
 
-              modelGroup.position.set({{selected_flight.scriptexterior.model_position}});
-              modelGroup.rotation.x = THREE.MathUtils.degToRad({{selected_flight.scriptexterior.model_rotation_x}});
-              modelGroup.rotation.z = THREE.MathUtils.degToRad({{selected_flight.scriptexterior.model_rotation_y}});
-              modelGroup.rotation.y = THREE.MathUtils.degToRad({{selected_flight.scriptexterior.model_rotation_z}});
+              modelGroup.position.set({{selected_flight.script_exterior.model_position}});
+              modelGroup.rotation.x = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_x}});
+              modelGroup.rotation.z = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_y}});
+              modelGroup.rotation.y = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_z}});
           });
   
              // -- freewalk
@@ -299,9 +299,9 @@
             const container = document.getElementById('interiorModelContainer');
             container.innerHTML = '';
 
-            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, {{ selected_flight.scriptinterior.camera_far }});
-            camera.position.set({{ selected_flight.scriptinterior.camera_position }});
-            camera.up = new THREE.Vector3({{ selected_flight.scriptinterior.camera_axis }});
+            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, {{ selected_flight.script_interior.camera_far }});
+            camera.position.set({{ selected_flight.script_interior.camera_position }});
+            camera.up = new THREE.Vector3({{ selected_flight.script_interior.camera_axis }});
 
             scene = new THREE.Scene();
             let light = new THREE.AmbientLight(0x404040, 80);
