@@ -17,10 +17,15 @@ class FilterFlight(admin.ModelAdmin):
         return ", ".join([person.name for person in obj.person.all()])
     get_person_names.short_description = 'Persons'
 
+
+class FilterFile(admin.ModelAdmin):
+    list_display = ("name", "link", "thumbnail", "direct_download_link", "size_in_mb", "file_type", "flight")
+    list_filter = ("flight", "file_type", "name", "size_in_mb")
+
 admin.site.register(Person, PersonID)
 admin.site.register(Owner)
 admin.site.register(Property)
 admin.site.register(ScriptExterior)
 admin.site.register(ScriptInterior)
-admin.site.register(File)
+admin.site.register(File, FilterFile)
 admin.site.register(Flight, FilterFlight)
