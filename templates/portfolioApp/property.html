@@ -79,17 +79,17 @@
                     </div>
                   </div>
                   <div class="collapse" id="downloadSection">
-                    <div class="row" style="margin: 0.5vh;">
+                    <div class="row overflow-scroll" style="padding: 1vh; max-height: 20vh; background-color: lightgray;">
                       {% for file in files %}
-                        <div class="col-auto" style="width: auto; height: 80%; border-radius: 1vh; background-color: #f0f0f0; padding: 0.5vh; display: flex; flex-direction: column; align-items: center;">
-                          <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 0.5vh; max-height: 14vh; margin-bottom: 0.3vh;">
+                        <div class="col-auto" style="width: auto; height: 80%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
+                          <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 14vh;">
                           <div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
                             <div class="col" style="display: flex; align-items: center;">
                                 <div>{{ file.name }}</div>
                             </div>
                             <div class="col-auto" style="display: flex; align-items: center; justify-content: flex-end;">
                                 <div>{{ file.size_in_mb }} MB</div>
-                                <a href="{{ file.direct_download_link }}" target="_blank" style="margin-left: 5px;">
+                                <a href="{{ file.direct_download_link }}" target="_blank" style="margin-left: 0.5vh;">
                                   <span class="icon">
                                       <i class="fa-solid fa-download"></i>
                                   </span>
