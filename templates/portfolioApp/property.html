@@ -193,32 +193,36 @@
             });
 
             function toggleSection(button) {
-                const targetSection = document.querySelector(button.getAttribute('data-bs-target'));
-                const isActive = targetSection.classList.contains('show'); // show means it's active
-
-                if (button.id === 'contractTrackerBtn' || button.id === 'downloadSectionBtn') {
-                    // reset sections
-                    document.getElementById('contractTracker').classList.remove('show');
-                    document.getElementById('downloadSection').classList.remove('show');
-                    document.getElementById('contractTrackerBtn').classList.replace('btn-dark', 'btn-light');
-                    document.getElementById('downloadSectionBtn').classList.replace('btn-dark', 'btn-light');
-
-                    if (!isActive) {
+              const targetSection = document.querySelector(button.getAttribute('data-bs-target'));
+              const isActive = targetSection.classList.contains('show'); // show means it's active
+          
+              if (button.id === 'contractTrackerBtn' || button.id === 'downloadSectionBtn') {
+                  // reset sections
+                  document.getElementById('contractTracker').classList.remove('show');
+                  document.getElementById('downloadSection').classList.remove('show');
+                  document.getElementById('contractTrackerBtn').classList.replace('btn-dark', 'btn-light');
+                  document.getElementById('downloadSectionBtn').classList.replace('btn-dark', 'btn-light');
+          
+                  if (!isActive) {
                       targetSection.classList.add('show');
                       button.classList.replace('btn-light', 'btn-dark');
           
+                      // Show filter icons only if the Download section is active
                       if (button.id === 'downloadSectionBtn') {
                           toggleSection2(true); // Show filter icons when Download section is active
                       }
                   } else {
+                      // If the button is the Download section button, toggle filter icons
                       if (button.id === 'downloadSectionBtn') {
                           toggleSection2(); // Toggle filter icons only for Download section
-                      } else {
+                      } 
+                      // If the button is the Contract Tracker button, ensure filter icons are hidden
+                      else {
                           toggleSection2(false); // Hide filter icons if Contract Tracker is active
                       }
                   }
-                }
-            }
+              }
+          }
 
         </script>
 
