@@ -46,6 +46,17 @@
                     <button id="downloadSectionBtn" class="btn btn-light" type="button" data-bs-target="#downloadSection" onclick="toggleSection(this)" style="margin-top: 0.5vh">Download My Files</button>
                 </div>
             </div>
+            <div class="col-auto" style="align-items:center; align-content:center;">
+              <div class="row">
+                <i class="fa-regular fa-image" onclick="filterFiles('image')" style="cursor: pointer;"></i>
+              </div>
+              <div class="row">
+                <i class="fa-solid fa-clapperboard" onclick="filterFiles('video')" style="cursor: pointer;"></i>
+              </div>
+              <div class="row">
+                <i class="fa-solid fa-cube" onclick="filterFiles('3D model')" style="cursor: pointer;"></i>
+              </div>
+            </div>
             <div class="col" style="max-height:17vh; padding-right: 3vh; padding-left: 3vh; min-width:70%;">
               <div class="collapse" id="contractTracker">
                 <div class="track d-flex">
@@ -77,9 +88,9 @@
                 </div>
               </div>
               <div class="collapse" id="downloadSection">
-                <div class="row overflow-scroll" style="max-height:17vh; background-color: lightgray;">
+                <div class="row overflow-scroll" style="max-height:17vh; background-color: lightgray;" id="fileContainer">
                   {% for file in files %}
-                    <div class="col-auto" style="width: auto; height: 80%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
+                    <div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 80%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
                       <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 14vh;">
                       <div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
                         <div class="col" style="display: flex; align-items: center;">
@@ -196,6 +207,26 @@
                 }
             }
 
+        </script>
+
+
+        {% comment %} script for filtering files {% endcomment %}
+        <script>
+          function filterFiles(type) {
+            const files = document.querySelectorAll('.file');
+            
+            files.forEach(file => {
+              if (file.getAttribute('data-file-type') === type) {
+                file.style.display = 'flex'; // Show file
+              } else {
+                file.style.display = 'none'; // Hide file
+              }
+            });
+          }
+
+          function showAllFiles() {
+            filterFiles('all');
+          }
         </script>
 
 
