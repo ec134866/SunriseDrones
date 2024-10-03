@@ -81,12 +81,12 @@
                   <div class="collapse" id="downloadSection">
                     <div>
                       {% for file in files %}
-                          <div style="align-items: center; margin: 0.5vw;">
-                              <img src="{{ selected_flight.file.link }}" alt="{{ selected_flight.file.name }}" style="width: 2vw; height: 2vh;">
-                              <div style="margin: 0.5vw;">{{ selected_flight.file.name }}</div>
-                              <div style="margin: 0.5vw;">{{ selected_flight.file.size_in_mb }} MB</div>
-                              <a href="{{ selected_flight.file.direct_download_link }}" style="text-decoration: none; color: black; margin: 5px;">
-                                  <button style="border: none; background-color: #007BFF; color: white; padding: 5px 10px; border-radius: 5px;">
+                          <div style="display: flex; flex-direction: column; align-items: center; margin: 0.5vw; width: 6vw; height: 6vh; border: 1px solid #ccc; padding: 0.5vh;">
+                              <img src="{{ file.link }}" alt="{{ file.name }}" style="width: 4vw; height: 4vh;">
+                              <div style="font-size: 1vh; margin: 0.2vh;">{{ file.name }}</div>
+                              <div style="font-size: 1vh; margin: 0.2vh;">{{ file.size_in_mb }} MB</div>
+                              <a href="{{ file.direct_download_link }}" style="text-decoration: none; color: black; margin: 5px;">
+                                  <button style="border: none; background-color: #007BFF; color: white; padding: 2px 5px; font-size: 1vh; border-radius: 5px;">
                                       <i class="fa-solid fa-download"></i> Download
                                   </button>
                               </a>
@@ -94,6 +94,7 @@
                       {% empty %}
                           <div>No files available.</div>
                       {% endfor %}
+                    </div>
                   </div>
                 </div>
               </div>
