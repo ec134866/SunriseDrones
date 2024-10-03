@@ -55,20 +55,32 @@
             
               <!-- Image Filter -->
               <div class="row" style="justify-content: center; padding-left:.5vh; padding-right:.5vh; padding-bottom:.5vh;">
-                <i class="fa-regular fa-image" onclick="filterFiles('Image')" style="height:2vh; cursor: pointer;"></i>
-                <i class="fa-square fa-regular" id="image-icon" style="margin-left: 1vh; height:2vh;"></i>
+                <div class="col"> 
+                  <i class="fa-regular fa-image" onclick="filterFiles('Image')" style="height:2vh; cursor: pointer;"></i>
+                </div>
+                <div class="col"> 
+                  <i class="fa-square fa-regular" id="image-icon" style="margin-left: 1vh; height:2vh;"></i>
+                </div>
               </div>
             
               <!-- Video Filter -->
               <div class="row" style="justify-content: center; padding:.5vh;">
-                <i class="fa-solid fa-clapperboard" onclick="filterFiles('Video')" style="height:2vh; cursor: pointer;"></i>
-                <i class="fa-square fa-regular" id="video-icon" style="margin-left: 1vh; height:2vh;"></i>
+                <div class="col"> 
+                  <i class="fa-solid fa-clapperboard" onclick="filterFiles('Video')" style="height:2vh; cursor: pointer;"></i>
+                </div>
+                <div class="col"> 
+                  <i class="fa-square fa-regular" id="video-icon" style="margin-left: 1vh; height:2vh;"></i>
+                </div>
               </div>
             
               <!-- 3D Model Filter -->
               <div class="row" style="justify-content: center; padding:.5vh;">
-                <i class="fa-solid fa-cube" onclick="filterFiles('3D Model')" style="height:2vh; cursor: pointer;"></i>
-                <i class="fa-square fa-regular" id="model-icon" style="margin-left: 1vh; height:2vh;"></i>
+                <div class="col"> 
+                  <i class="fa-solid fa-cube" onclick="filterFiles('3D Model')" style="height:2vh; cursor: pointer;"></i>
+                </div>
+                <div class="col"> 
+                  <i class="fa-square fa-regular" id="model-icon" style="margin-left: 1vh; height:2vh;"></i>
+                </div>
               </div>
             </div>
             {% comment %} tracker or downloads {% endcomment %}
