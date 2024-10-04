@@ -44,6 +44,7 @@ def ownerPageView(request, person_uuid):
     
     person = get_object_or_404(Person, uuid=person_uuid)
     owners = Owner.objects.filter(person=person)
+    property = Property.objects.filter(person=person)
     
     properties_by_owner = []
     for owner in owners:
@@ -69,7 +70,8 @@ def ownerPageView(request, person_uuid):
         'owners': owners,
         'owner_name': owner_name,
         'owner_palette1': owner_palette1,
-        'properties_by_owner': properties_by_owner
+        'properties_by_owner': properties_by_owner,
+        'property': property
     }
 
     return render(request, 'portfolioApp/owner.html', context)
