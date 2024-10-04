@@ -18,7 +18,7 @@
         <div style="padding-top: 2vh; padding-bottom: 2vh">
           {% comment %} dropdown section {% endcomment %}
           <div class="row" style="align-items:center; min-height:17vh; max-height: 17vh;">
-            <div class="col-auto" style="padding-left: 2vw; padding-right: 1vw; align-content: center; max-width:15%;">
+            <div class="col-auto" style="padding-left: 2vw; padding-right: 1vw; align-content: center; min-width:10%; max-width:15%;">
               <div class="dropdown">
                 <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                   {% if selected_flight %}
@@ -39,7 +39,7 @@
               </div>
             </div>
             {% comment %} buttons {% endcomment %}
-            <div class="col-auto" style="align-items:center; align-content:center; max-height:17vh; max-width:10%;">
+            <div class="col-auto" style="align-items:center; align-content:center; max-height:17vh; min-width:8%; max-width:10%;">
                 <div class="row">
                     <button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
                 </div>
@@ -48,7 +48,7 @@
                 </div>
             </div>
             {% comment %} filters {% endcomment %}
-              <div class="col-auto" id="filterIcons" style="display:none; max-width:5%;">
+              <div class="col-auto" id="filterIcons" style="display:none; min-width:3%; max-width:5%;">
                 <!-- Centered Filter Text -->
                 <div class="row text-center" style="padding-top:.5vh;">
                   <div class="col-12">
