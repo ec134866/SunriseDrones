@@ -14,20 +14,33 @@ def basePageView(request):
         person = get_object_or_404(Person, uuid=person_uuid)
 
 
-    owner = Owner.objects.filter(person=person)
+    owners = Owner.objects.filter(person=person)
+
+    properties_by_owner = []
+    for owner in owners:
+        properties = Property.objects.filter(owner=owner, person=person)
+        properties_by_owner.append((owner, properties))
     
     context = {
         'person': person,
-        'owner' : owner
+        'owners' : owners,
+        'properties_by_owner': properties_by_owner
     }
 
     return render(request, 'portfolioApp/index.html', context)
+
+
+
+
 
 def indexPageView(request):
    
     context = {}
 
     return render(request, 'portfolioApp/index.html', context)
+
+
+
 
 def ownerPageView(request, person_uuid):
     
@@ -62,6 +75,9 @@ def ownerPageView(request, person_uuid):
     }
 
     return render(request, 'portfolioApp/owner.html', context)
+
+
+
 
 def propertyPageView(request, person_uuid, owner_name, property_name):
    

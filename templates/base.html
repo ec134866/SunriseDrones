@@ -123,6 +123,18 @@
                 </li>
                 {% comment %} potentially have for loop of all properties? {% endcomment %}
                 <li class="sidebar-nav-item"><a href="#about">  Properties:</a></li>
+                {% for owners, properties in properties_by_owner %}
+                  <div class="row">
+                    <h1>{{ owners.name }}</h1> 
+                    {% for property in properties %}
+                      <div class="row">
+                        <a href="{% url 'property' person.uuid owners.name property.name %}" class="text-decoration-none">
+                          <h2>{{ property.name }}</h2>
+                        </a>
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% endfor %}
             </ul>
         </nav>
         
