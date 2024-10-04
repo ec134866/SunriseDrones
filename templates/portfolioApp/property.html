@@ -205,24 +205,28 @@
         <script>
           document.getElementById('downloadSelected').addEventListener('click', function() {
               const selectedFiles = document.querySelectorAll('.file-select:checked');
-              const delay = 50; // Delay in milliseconds
-        
-              selectedFiles.forEach(function(checkbox, index) {
-                  const link = checkbox.getAttribute('data-link');
-        
-                  // Create a temporary anchor element
-                  const a = document.createElement('a');
-                  a.href = link;
-                  a.download = ''; // This attribute suggests that the target will be downloaded instead of navigating
-                  document.body.appendChild(a); // Append the anchor to the body
-        
-                  // Use setTimeout to create a delay for each download
+              const links = Array.from(selectedFiles).map(checkbox => checkbox.getAttribute('data-link'));
+              const delay = 100; // Delay in milliseconds
+      
+              if (links.length === 0) {
+                  alert('Please select at least one file to download.'); // Alert if no files are selected
+                  return;
+              }
+      
+              var link = document.createElement('a');
+              link.setAttribute('download', null);
+              link.style.display = 'none';
+              document.body.appendChild(link);
+      
+              links.forEach(function(url, index) {
                   setTimeout(function() {
-                      a.click(); // Programmatically click the anchor to trigger the download
-                      document.body.removeChild(a); // Remove the anchor after downloading
-                  }, index * delay); // Increase delay for each subsequent file
+                      link.setAttribute('href', url);
+                      link.click();
+                  }, index * delay);
               });
-          });
+      
+              document.body.removeChild(link);
+            });
         </script>
 
 
