@@ -303,7 +303,10 @@
           const selectedContent = document.getElementById(contentId);
           selectedContent.classList.add('show');
 
-          selectedContent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          const yOffset = -100;
+          const y = selectedContent.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      
+          window.scrollTo({ top: y, behavior: 'smooth' });
           
           if (contentId === 'exteriorModelContent' && !exteriorModelLoaded) {
             initExteriorModel();  
