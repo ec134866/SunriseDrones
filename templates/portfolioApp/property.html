@@ -17,8 +17,8 @@
         
         <div style="padding-top: 2vh; padding-bottom: 2vh">
           {% comment %} dropdown section {% endcomment %}
-          <div class="row" style="align-items:center; min-height:17vh;">
-            <div class="col-auto" style="padding-left: 2vw; padding-right: 1vw; align-content: center;">
+          <div class="row align-items-center justify-content-center" style="min-height:17vh;">
+            <div class="col-auto" style="padding-left: 2vw; padding-right: 1vw;">
               <div class="dropdown">
                 <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                   {% if selected_flight %}
@@ -39,7 +39,7 @@
               </div>
             </div>
             {% comment %} buttons {% endcomment %}
-            <div class="col-auto" style="align-items:center; align-content:center;">
+            <div class="col-auto">
                 <div class="row">
                     <button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
                 </div>
@@ -81,7 +81,7 @@
                 </div>
               </div>      
             {% comment %} tracker or downloads {% endcomment %}
-            <div class="col-12 col-md-9 d-flex align-items-center" style="max-height:17vh; padding-right: 3vh; padding-left: 3vh;">
+            <div class="col-12 col-md-9 col-lg-10 col-xl-11 d-flex" style="max-height:17vh; padding-right: 3vh; padding-left: 3vh;">
               <div class="collapse w-100" id="contractTracker">
                 <div class="track d-flex">
                     <div class="step"> 
