@@ -115,29 +115,34 @@
               {% comment %} download section {% endcomment %}
               <div class="collapse w-100" id="downloadSection">
                 <div class="row overflow-scroll" style="max-height:17vh; background-color: lightgray;" id="fileContainer">
-                  {% for file in files %}
-                    <div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 80%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
-                      <a href="{{ file.link }}" target="_blank">
+                  <form id="downloadForm">
+                    {% csrf_token %}
+                    {% for file in files %}
+                      <div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 80%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
+                        <input type="checkbox" name="selected_files" value="{{ file.direct_download_link }}" id="file-{{ forloop.counter }}">
+                        <a href="{{ file.link }}" target="_blank">
                           <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 14vh;">
-                      </a>                    
-                      <div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
-                        <div class="col" style="display: flex; align-items: center;">
+                        </a>
+                        <div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
+                          <div class="col" style="display: flex; align-items: center;">
                             <div>{{ file.name }}</div>
-                        </div>
-                        <div class="col-auto" style="display: flex; align-items: center; justify-content: flex-end;">
+                          </div>
+                          <div class="col-auto" style="display: flex; align-items: center; justify-content: flex-end;">
                             <div>{{ file.size_in_mb }} MB</div>
                             <a href="{{ file.direct_download_link }}" target="_blank" style="margin-left: 0.5vh;">
                               <span class="icon">
-                                  <i class="fa-solid fa-download"></i>
+                                <i class="fa-solid fa-download"></i>
                               </span>
                             </a>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  {% empty %}
-                    <div>No files available.</div>
-                  {% endfor %}
+                    {% empty %}
+                      <div>No files available.</div>
+                    {% endfor %}
+                  </form>
                 </div>
+                <button type="button" id="downloadSelected" class="btn btn-primary mt-2">Download Selected</button>
               </div>     
             </div>
           </div>
