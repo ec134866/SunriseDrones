@@ -82,6 +82,7 @@
               </div>      
             {% comment %} tracker or downloads {% endcomment %}
             <div class="col" style="min-width:70%; max-height:17vh; padding-right: 3vh; padding-left: 3vh;">
+              {% comment %} contract section {% endcomment %}
               <div class="collapse w-100" id="contractTracker">
                 <div class="track d-flex">
                     <div class="step"> 
@@ -111,11 +112,14 @@
                     </div>
                 </div>
               </div>
+              {% comment %} download section {% endcomment %}
               <div class="collapse w-100" id="downloadSection">
                 <div class="row overflow-scroll" style="max-height:17vh; background-color: lightgray;" id="fileContainer">
                   {% for file in files %}
                     <div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 80%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
-                      <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 14vh;">
+                      <a href="{{ file.link }}" target="_blank">
+                          <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 14vh;">
+                      </a>                    
                       <div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
                         <div class="col" style="display: flex; align-items: center;">
                             <div>{{ file.name }}</div>
@@ -328,7 +332,7 @@
 
    
 
-      {% comment %} exterior model {% endcomment %}
+      {% comment %}  models {% endcomment %}
       <script type="module">
         import * as THREE from 'three';
         import { Scene, PerspectiveCamera, WebGLRenderer, GridHelper } from 'three'
