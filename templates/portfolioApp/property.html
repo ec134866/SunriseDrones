@@ -306,7 +306,11 @@
           const yOffset = -100;
           const y = selectedContent.getBoundingClientRect().top + window.pageYOffset + yOffset;
       
-          window.scrollTo({ top: y, behavior: 'smooth' });
+
+          setTimeout(() => {
+              window.scrollTo({ top: y, behavior: 'smooth' });
+          }, 500);
+          
           
           if (contentId === 'exteriorModelContent' && !exteriorModelLoaded) {
             initExteriorModel();  
