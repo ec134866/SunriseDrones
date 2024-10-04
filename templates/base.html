@@ -124,9 +124,6 @@
           <li class="sidebar-nav-item">
             <a style="pointer-events: none;">Search Properties... </a>
           </li>
-          <li class="sidebar-nav-item">
-            <a style="pointer-events: none;">Search Properties... </a>
-          </li>
           {% for property in properties %}
           <li class="sidebar-nav-item" style="text-align: right;">
             <a href="{% url 'property' person.uuid proeprty.owner.name property.name %}"> {{ property.name }}</a>
