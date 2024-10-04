@@ -121,8 +121,9 @@
               <a href="{% url 'index' %}"><em>Logged Out</em></a>
             {% endif %}
           </li>
-          <li class="sidebar-nav-item">
-            <input type="text" id="propertySearch" placeholder="Search Properties..." onkeyup="filterProperties()">
+          <li class="sidebar-nav-item" style="position: relative;">
+            <input type="text" id="propertySearch" placeholder="Search Properties..." onkeyup="filterProperties()" style="display: none;">
+            <span style="color: #888; font-size: 16px;">Search Properties...</span>
           </li>
           {% for property in nav_properties %}
           <li class="sidebar-nav-item property-item" style="text-align: right;" 
