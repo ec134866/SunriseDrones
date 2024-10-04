@@ -122,7 +122,8 @@
                       </a>                    
                       <div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
                         <div class="col" style="display: flex; align-items: center;">
-                            <div>{{ file.name }}</div>
+                          <input type="checkbox" class="file-select" data-link="{{ file.direct_download_link }}" style="margin-right: 0.5vh;">
+                          <div>{{ file.name }}</div>
                         </div>
                         <div class="col-auto" style="display: flex; align-items: center; justify-content: flex-end;">
                             <div>{{ file.size_in_mb }} MB</div>
@@ -138,6 +139,7 @@
                     <div>No files available.</div>
                   {% endfor %}
                 </div>
+                <button id="downloadSelected" style="margin-top: 10px;">Download Selected</button>
               </div>     
             </div>
           </div>
@@ -198,6 +200,17 @@
             </div>
         </footer>
 
+
+        {% comment %} download multiple files {% endcomment %}
+        <script>
+          document.getElementById('downloadSelected').addEventListener('click', function() {
+              const selectedFiles = document.querySelectorAll('.file-select:checked');
+              selectedFiles.forEach(function(checkbox) {
+                  const link = checkbox.getAttribute('data-link');
+                  window.open(link, '_blank'); // Open each link in a new tab
+              });
+          });
+        </script>
 
 
 
