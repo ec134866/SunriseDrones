@@ -16,15 +16,13 @@ def basePageView(request):
 
     owners = Owner.objects.filter(person=person)
 
-    properties_by_owner = []
-    for owner in owners:
-        properties = Property.objects.filter(owner=owner, person=person)
-        properties_by_owner.append((owner, properties))
+    properties = Property.objects.filter(person=person)
+
     
     context = {
         'person': person,
         'owners' : owners,
-        'properties_by_owner': properties_by_owner
+        'properties': properties
     }
 
     return render(request, 'portfolioApp/index.html', context)
