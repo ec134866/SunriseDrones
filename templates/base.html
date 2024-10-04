@@ -141,7 +141,7 @@
           {% for property in properties %}
             <div class="row">
               <li class="sidebar-nav-item" style="text-align: right;">
-                <a href="{% url 'property' person.uuid owners.name property.name %}"> {{ property.name }}</a>
+                <a href="{% url 'property' person.uuid proeprty.owner.name property.name %}"> {{ property.name }}</a>
               </li>
             </div>
           {% endfor %}
