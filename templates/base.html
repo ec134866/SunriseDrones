@@ -126,7 +126,7 @@
           </li>
           {% for property in property %}
           <li class="sidebar-nav-item" style="text-align: right;">
-            <a href="{% url 'property' person.uuid proeprty.owner.name property.name %}"> {{ property.name }}</a>
+            <a href="{% url 'property' person.uuid property.owner.name property.name %}"> {{ property.name }}</a>
           </li>
           {% endfor %}
           {% comment %} {% for owners, properties in properties_by_owner %}
