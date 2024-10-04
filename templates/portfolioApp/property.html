@@ -204,6 +204,26 @@
         </footer>
 
 
+        {% comment %} script for multi select downloads {% endcomment %}
+        <script>
+          document.getElementById('downloadSelected').addEventListener('click', async function() {
+            const zip = new JSZip();
+            const files = document.querySelectorAll('input[name="selected_files"]:checked');
+        
+            for (const file of files) {
+              const fileUrl = file.value;
+              const fileName = fileUrl.split('/').pop(); // Extract filename from URL
+        
+              const response = await fetch(fileUrl);
+              const blob = await response.blob(); // Fetch and create a blob from the response
+              zip.file(fileName, blob); // Add file to the zip
+            }
+        
+            // Generate the zip file and prompt for download
+            const content = await zip.generateAsync({ type: 'blob' });
+            saveAs(content, 'selected_files.zip');
+          });
+        </script>
 
 
         {% comment %} script for contract tracker and download section {% endcomment %}
