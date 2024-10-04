@@ -18,7 +18,7 @@
         <div style="padding-top: 2vh; padding-bottom: 2vh">
           {% comment %} dropdown section {% endcomment %}
           <div class="row" style="align-items:center; min-height:17vh;">
-            <div class="col-2" style="padding-left: 2vw; padding-right: 1vw; align-content: center;">
+            <div class="col-auto" style="padding-left: 2vw; padding-right: 1vw; align-content: center;">
               <div class="dropdown">
                 <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                   {% if selected_flight %}
@@ -39,7 +39,7 @@
               </div>
             </div>
             {% comment %} buttons {% endcomment %}
-            <div class="col-2" style="align-items:center; align-content:center;">
+            <div class="col-auto" style="align-items:center; align-content:center;">
                 <div class="row">
                     <button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
                 </div>
@@ -48,7 +48,7 @@
                 </div>
             </div>
             {% comment %} filters {% endcomment %}
-              <div class="col-1" id="filterIcons" style="display:none;">
+              <div class="col-auto" id="filterIcons" style="display:none;">
                 <!-- Centered Filter Text -->
                 <div class="row text-center" style="padding-top:.5vh;">
                   <div class="col-12">
@@ -81,7 +81,7 @@
                 </div>
               </div>      
             {% comment %} tracker or downloads {% endcomment %}
-            <div class="col-7 d-flex align-items-center" style="max-height:17vh; padding-right: 3vh; padding-left: 3vh;">
+            <div class="col-12 col-md-9 d-flex align-items-center" style="max-height:17vh; padding-right: 3vh; padding-left: 3vh;">
               <div class="collapse w-100" id="contractTracker">
                 <div class="track d-flex">
                     <div class="step"> 
