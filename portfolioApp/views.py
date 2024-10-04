@@ -57,13 +57,13 @@ def ownerPageView(request, person_uuid):
 
     if owners.exists():
         if owners.count() > 1:
-            owner_name = "Owner View"
+            owner_name = "The Owner Suite"
             owner_palette1 = "(174,225,174,1)"
         else:
             owner_name = owners.first().name + " Properties"
             owner_palette1 = owners.first().palette1
     else:
-        owner_name = "Owner View"
+        owner_name = "The Owner Suite"
         owner_palette1 = "(174,225,174,1)"
 
     context = {
