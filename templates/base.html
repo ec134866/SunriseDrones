@@ -122,13 +122,23 @@
             {% endif %}
           </li>
           <li class="sidebar-nav-item">
-            <a style="pointer-events: none;">Search Properties... </a>
+            <input type="text" id="propertySearch" placeholder="Search Properties..." onkeyup="filterProperties()">
           </li>
           {% for property in nav_properties %}
-          <li class="sidebar-nav-item" style="text-align: right;">
-            <a href="{% url 'property' person.uuid property.owner.name property.name %}"> {{ property.name }}</a>
+          <li class="sidebar-nav-item property-item" style="text-align: right;" 
+              data-name="{{ property.name}}"
+              data-city="{{ property.loc_city|default:''}}"
+              data-state="{{ property.loc_state|default:''}}"
+              data-country="{{ property.loc_country|default:''}}"
+              data-owner="{{ property.owner.name}}">
+              <a href="{% url 'property' person.uuid property.owner.name property.name %}">{{ property.name }}</a>
           </li>
           {% endfor %}
+      </ul>
+  </nav>
+
+
+          {% comment %} not used anymore {% endcomment %}
           {% comment %} {% for owners, properties in properties_by_owner %}
             <div class="row">
               <li class="sidebar-nav-item">
@@ -143,16 +153,46 @@
               {% endfor %}
             </div>
           {% endfor %} {% endcomment %}
-      </ul>
-  </nav>
         
   {% block body %}
   {% endblock %}
 
+    {% comment %} scroll to top button {% endcomment %}
     <a class="scroll-to-top rounded">
       <i class="fas fa-angle-up"></i>
     </a>
 
+
+    {% comment %} right menu bar property search {% endcomment %}
+    <script>
+      function filterProperties() {
+          const input = document.getElementById('propertySearch');
+          const filter = input.value.toLowerCase();
+          const propertyItems = document.getElementsByClassName('property-item');
+  
+          for (let i = 0; i < propertyItems.length; i++) {
+              const propertyName = propertyItems[i].getAttribute('data-name') || '';
+              const propertyCity = propertyItems[i].getAttribute('data-city') || '';
+              const propertyState = propertyItems[i].getAttribute('data-state') || '';
+              const propertyCountry = propertyItems[i].getAttribute('data-country') || '';
+              const propertyOwner = propertyItems[i].getAttribute('data-owner') || '';
+  
+              if (
+                  propertyName.toLowerCase().indexOf(filter) > -1 ||
+                  propertyCity.toLowerCase().indexOf(filter) > -1 ||
+                  propertyState.toLowerCase().indexOf(filter) > -1 ||
+                  propertyCountry.toLowerCase().indexOf(filter) > -1 ||
+                  propertyOwner.toLowerCase().indexOf(filter) > -1
+              ) {
+                  propertyItems[i].style.display = '';
+              } else {
+                  propertyItems[i].style.display = 'none';
+              }
+          }
+      }
+    </script>
+
+    {% comment %} page up scroll script {% endcomment %}
     <script>
       window.onscroll = function() {
         const scrollButton = document.querySelector('.scroll-to-top');
@@ -173,6 +213,7 @@
       });
       
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
   </div>
 </body>
