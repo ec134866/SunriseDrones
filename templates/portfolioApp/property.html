@@ -239,8 +239,8 @@
 
         {% comment %} script for filtering files {% endcomment %}
         <script>
-          let selectedType = null; // Track the selected file type
-        
+          let selectedTypes = []; // Track selected file types
+          
           function filterFiles(type) {
             const files = document.querySelectorAll('.file');
             const icons = {
@@ -248,36 +248,31 @@
               'Video': document.getElementById('video-icon'),
               '3D Model': document.getElementById('model-icon')
             };
-        
-            // Reset all icons to unchecked (fa-regular fa-square)
-            Object.keys(icons).forEach(key => {
-              icons[key].classList.remove('fa-regular', 'fa-square-check');
-              icons[key].classList.add('fa-regular', 'fa-square');
-            });
-        
-            if (selectedType === type) {
-              // If the same type is clicked again, show all files and reset selection
-              selectedType = null;
-              files.forEach(file => file.style.display = 'flex');
+          
+            // Toggle selection of the type
+            const typeIndex = selectedTypes.indexOf(type);
+            if (typeIndex > -1) {
+              // If already selected, remove it
+              selectedTypes.splice(typeIndex, 1);
+              icons[type].classList.remove('fa-regular', 'fa-square-check');
+              icons[type].classList.add('fa-regular', 'fa-square');
             } else {
-              // Apply filter and toggle icon to checked
-              selectedType = type;
-              files.forEach(file => {
-                if (file.getAttribute('data-file-type') === type) {
-                  file.style.display = 'flex'; // Show file
-                } else {
-                  file.style.display = 'none'; // Hide file
-                }
-              });
-        
-              // Update the selected icon to checked (fa-regular fa-square-check)
-              if (icons[type]) {
-                icons[type].classList.remove('fa-regular', 'fa-square');
-                icons[type].classList.add('fa-regular', 'fa-square-check');
-              }
+              // If not selected, add it
+              selectedTypes.push(type);
+              icons[type].classList.remove('fa-regular', 'fa-square');
+              icons[type].classList.add('fa-regular', 'fa-square-check');
             }
+          
+            // Filter files based on selected types
+            files.forEach(file => {
+              if (selectedTypes.length === 0 || selectedTypes.includes(file.getAttribute('data-file-type'))) {
+                file.style.display = 'flex'; // Show file
+              } else {
+                file.style.display = 'none'; // Hide file
+              }
+            });
           }
-        </script>
+          </script>
 
 
       <script>
