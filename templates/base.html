@@ -111,36 +111,35 @@
   <div style="display: flex; flex-direction: column; min-height: 100vh;"> 
   
   <a class="menu-toggle rounded" href="#"><i class="fas fa-bars"></i></a>
-        <nav id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand"><a href="{% url 'index' %}">Sunrise Drones</a></li>
-                <li class="sidebar-nav-item">
-                  {% if person %}
-                    <a href="{% url 'owner' person.uuid %}">The Owner Suite</a>
-                  {% else %}
-                    <a href="{% url 'index' %}"><em>Logged Out</em></a>
-                  {% endif %}
-                </li>
-                {% comment %} potentially have for loop of all properties? {% endcomment %}
-                <li class="sidebar-nav-item">
-                  <a>Properties:</a>
-                </li>
-                {% for owners, properties in properties_by_owner %}
-                  <div class="row">
-                    <li class="sidebar-nav-item">
-                      <a>{{ owners.name }}</a>
-                    </li>
-                    {% for property in properties %}
-                      <div class="row">
-                        <li class="sidebar-nav-item">
-                          <a href="{% url 'property' person.uuid owners.name property.name %}"> {{ property.name }}</a>
-                        </li>
-                      </div>
-                    {% endfor %}
-                  </div>
-                {% endfor %}
-            </ul>
-        </nav>
+  <nav id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+          <li class="sidebar-brand"><a href="{% url 'index' %}">Sunrise Drones</a></li>
+          <li class="sidebar-nav-item">
+            {% if person %}
+              <a href="{% url 'owner' person.uuid %}">Owner Suite</a>
+            {% else %}
+              <a href="{% url 'index' %}"><em>Logged Out</em></a>
+            {% endif %}
+          </li>
+          <li class="sidebar-nav-item">
+            <a>Search... </a>
+          </li>
+          {% for owners, properties in properties_by_owner %}
+            <div class="row">
+              <li class="sidebar-nav-item">
+                <a>{{ owners.name }} Properties</a>
+              </li>
+              {% for property in properties %}
+                <div class="row">
+                  <li class="sidebar-nav-item" style="text-align: right;">
+                    <a href="{% url 'property' person.uuid owners.name property.name %}"> {{ property.name }}</a>
+                  </li>
+                </div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+      </ul>
+  </nav>
         
   {% block body %}
   {% endblock %}
