@@ -10934,6 +10934,11 @@ html {
   transition: all 0.4s ease 0s;
 }
 
+#propertySearch::placeholder {
+  color: #fff; 
+  opacity: 1; 
+}
+
 .menu-toggle {
   position: fixed;
   right: 15px;
