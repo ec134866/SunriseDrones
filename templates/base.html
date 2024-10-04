@@ -122,7 +122,7 @@
             {% endif %}
           </li>
           <li class="sidebar-nav-item">
-            <input type="text" id="propertySearch" placeholder="Search Properties..." onkeyup="filterProperties()">
+            <input type="text" id="propertySearch" placeholder="Search Properties..." onkeyup="filterProperties()" style="border: none; background-color: rgba(255, 255, 255, 0); color: #fff; font-size: 1rem; padding: 15px; width: calc(100% - 30px); margin: 0; outline: none;">
           </li>
           {% for property in nav_properties %}
           <li class="sidebar-nav-item property-item" style="text-align: right;" 
