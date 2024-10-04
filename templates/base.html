@@ -122,9 +122,9 @@
             {% endif %}
           </li>
           <li class="sidebar-nav-item">
-            <a>Search... </a>
+            <a style="pointer-events: none;">Search Properties... </a>
           </li>
-          {% for owners, properties in properties_by_owner %}
+          {% comment %} {% for owners, properties in properties_by_owner %}
             <div class="row">
               <li class="sidebar-nav-item">
                 <a>{{ owners.name }} Properties</a>
@@ -136,6 +136,13 @@
                   </li>
                 </div>
               {% endfor %}
+            </div>
+          {% endfor %} {% endcomment %}
+          {% for property in properties %}
+            <div class="row">
+              <li class="sidebar-nav-item" style="text-align: right;">
+                <a href="{% url 'property' person.uuid owners.name property.name %}"> {{ property.name }}</a>
+              </li>
             </div>
           {% endfor %}
       </ul>
