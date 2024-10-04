@@ -122,14 +122,14 @@
                   {% endif %}
                 </li>
                 {% comment %} potentially have for loop of all properties? {% endcomment %}
-                <li class="sidebar-nav-item"><a href="#about">  Properties:</a></li>
+                <div class="sidebar-nav">Properties:</div>
                 {% for owners, properties in properties_by_owner %}
                   <div class="row">
-                    <h1>{{ owners.name }}</h1> 
+                    <div class="sidebar-nav-item">{{ owners.name }}</div>
                     {% for property in properties %}
                       <div class="row">
                         <a href="{% url 'property' person.uuid owners.name property.name %}" class="text-decoration-none">
-                          <h2>{{ property.name }}</h2>
+                          <div class="sidebar-nav-item">{{ property.name }}</div>
                         </a>
                       </div>
                     {% endfor %}
