@@ -139,11 +139,13 @@
             </div>
           {% endfor %} {% endcomment %}
           {% for owner, properties in properties_by_owner %}
-            <div class="row">
-              <li class="sidebar-nav-item" style="text-align: right;">
-                <a href="{% url 'property' person.uuid owners.name property.name %}"> {{ property.name }}</a>
-              </li>
-            </div>
+            {% for property in properties %}
+              <div class="row">
+                <li class="sidebar-nav-item" style="text-align: right;">
+                  <a href="{% url 'property' person.uuid owners.name property.name %}"> {{ property.name }}</a>
+                </li>
+              </div>
+            {% endfor %}
           {% endfor %}
       </ul>
   </nav>
