@@ -207,9 +207,16 @@
               const selectedFiles = document.querySelectorAll('.file-select:checked');
               selectedFiles.forEach(function(checkbox) {
                   const link = checkbox.getAttribute('data-link');
-                  window.open(link, '_blank'); // Open each link in a new tab
-              });
-          });
+      
+                  // Create a temporary anchor element
+                  const a = document.createElement('a');
+                  a.href = link;
+                  a.download = ''; // This attribute suggests that the target will be downloaded instead of navigating
+                  document.body.appendChild(a); // Append the anchor to the body
+                  a.click(); // Programmatically click the anchor to trigger the download
+                  document.body.removeChild(a); // Remove the anchor after downloading
+                });
+            });
         </script>
 
 
