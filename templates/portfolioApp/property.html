@@ -205,27 +205,17 @@
         <script>
           document.getElementById('downloadSelected').addEventListener('click', function() {
               const selectedFiles = document.querySelectorAll('.file-select:checked');
-              const links = Array.from(selectedFiles).map(checkbox => checkbox.getAttribute('data-link'));
-              const delay = 100; // Delay in milliseconds
-      
-              if (links.length === 0) {
-                  alert('Please select at least one file to download.'); // Alert if no files are selected
-                  return;
-              }
-      
-              links.forEach(function(url, index) {
-                  setTimeout(function() {
-                      var link = document.createElement('a'); // Create a new anchor for each download
-                      link.setAttribute('href', url);
-                      link.setAttribute('download', ''); // Suggest that the target will be downloaded
-                      link.style.display = 'none'; // Hide the link
-                      document.body.appendChild(link); // Append the anchor to the body
-                      link.click(); // Programmatically click the anchor to trigger the download
-                      document.body.removeChild(link); // Remove the anchor after downloading
-                  }, index * delay); // Delay each click
+              selectedFiles.forEach(file => {
+                  const link = file.getAttribute('data-link');
+                  const a = document.createElement('a');
+                  a.href = link;
+                  a.download = ''; // Use the empty string to suggest the browser to use the original filename
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
               });
           });
-      </script>
+        </script>
 
 
 
