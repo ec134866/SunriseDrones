@@ -213,21 +213,19 @@
                   return;
               }
       
-              var link = document.createElement('a');
-              link.setAttribute('download', null);
-              link.style.display = 'none';
-              document.body.appendChild(link);
-      
               links.forEach(function(url, index) {
                   setTimeout(function() {
+                      var link = document.createElement('a'); // Create a new anchor for each download
                       link.setAttribute('href', url);
-                      link.click();
-                  }, index * delay);
+                      link.setAttribute('download', ''); // Suggest that the target will be downloaded
+                      link.style.display = 'none'; // Hide the link
+                      document.body.appendChild(link); // Append the anchor to the body
+                      link.click(); // Programmatically click the anchor to trigger the download
+                      document.body.removeChild(link); // Remove the anchor after downloading
+                  }, index * delay); // Delay each click
               });
-      
-              document.body.removeChild(link);
-            });
-        </script>
+          });
+      </script>
 
 
 
