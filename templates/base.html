@@ -125,7 +125,30 @@
   {% block body %}
   {% endblock %}
 
-    <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    <a class="scroll-to-top rounded">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <script>
+      window.onscroll = function() {
+        const scrollButton = document.querySelector('.scroll-to-top');
+        
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+          scrollButton.style.display = 'block';
+        } else {
+          scrollButton.style.display = 'none';
+        }
+      };
+      
+      document.querySelector('.scroll-to-top').addEventListener('click', function(event) {
+        event.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth' 
+        });
+      });
+      
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
   </div>
 </body>
