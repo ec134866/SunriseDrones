@@ -205,18 +205,24 @@
         <script>
           document.getElementById('downloadSelected').addEventListener('click', function() {
               const selectedFiles = document.querySelectorAll('.file-select:checked');
-              selectedFiles.forEach(function(checkbox) {
+              const delay = 50; // Delay in milliseconds
+        
+              selectedFiles.forEach(function(checkbox, index) {
                   const link = checkbox.getAttribute('data-link');
-      
+        
                   // Create a temporary anchor element
                   const a = document.createElement('a');
                   a.href = link;
                   a.download = ''; // This attribute suggests that the target will be downloaded instead of navigating
                   document.body.appendChild(a); // Append the anchor to the body
-                  a.click(); // Programmatically click the anchor to trigger the download
-                  document.body.removeChild(a); // Remove the anchor after downloading
-                });
-            });
+        
+                  // Use setTimeout to create a delay for each download
+                  setTimeout(function() {
+                      a.click(); // Programmatically click the anchor to trigger the download
+                      document.body.removeChild(a); // Remove the anchor after downloading
+                  }, index * delay); // Increase delay for each subsequent file
+              });
+          });
         </script>
 
 
