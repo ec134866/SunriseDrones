@@ -139,31 +139,29 @@
           </div>
           
           {% comment %} main section {% endcomment %}
-          <div style="padding-left: 2vw; padding-right: 2vw; padding-top: 4vh; padding-bottom: 2vh;">
-              <div class="row">
-                  <div class="col-md-4 mb-3 d-flex justify-content-center">
-                    <button class="btn btn-link p-0" onclick="showContent('overflightContent')">
-                        <img src={{selected_flight.overflight_thumbnail_link}} style="width:34vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-                        <br><br>
-                        <h2 class="text-decoration-none" style="color: #333;">Overflight</h2>
-                    </button>
-                  </div>
-                  <div class="col-md-4 mb-3 d-flex justify-content-center">
-                    <button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
-                        <img src={{selected_flight.exterior_thumbnail_link}} style="width:34vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-                        <br><br>
-                        <h2 class="text-decoration-none" style="color: #333;">3D Exterior Model</h2>
-                    </button>
-                  </div>
-                  <div class="col-md-4 mb-3 d-flex justify-content-center">
-                    <button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
-                        <img src={{selected_flight.interior_thumbnail_link}} style="width:34vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-                        <br><br>
-                        <h2 class="text-decoration-none" style="color: #333;">3D Interior Model</h2>
-                    </button>
-                  </div>
-              </div>
-          </div>
+            <div class="row" >
+                <div class="col-md-4 mb-3 d-flex justify-content-center">
+                  <button class="btn btn-link p-0" onclick="showContent('overflightContent')">
+                      <img src={{selected_flight.overflight_thumbnail_link}} style="width:34vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                      <br><br>
+                      <h2 class="text-decoration-none" style="color: #333;">Overflight</h2>
+                  </button>
+                </div>
+                <div class="col-md-4 mb-3 d-flex justify-content-center">
+                  <button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
+                      <img src={{selected_flight.exterior_thumbnail_link}} style="width:34vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                      <br><br>
+                      <h2 class="text-decoration-none" style="color: #333;">3D Exterior Model</h2>
+                  </button>
+                </div>
+                <div class="col-md-4 mb-3 d-flex justify-content-center">
+                  <button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
+                      <img src={{selected_flight.interior_thumbnail_link}} style="width:34vw; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                      <br><br>
+                      <h2 class="text-decoration-none" style="color: #333;">3D Interior Model</h2>
+                  </button>
+                </div>
+            </div>
         </div>
 
         {% comment %} content area {% endcomment %}
