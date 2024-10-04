@@ -203,16 +203,21 @@
 
         {% comment %} download multiple files {% endcomment %}
         <script>
-          document.getElementById('downloadSelected').addEventListener('click', function() {
+          document.getElementById('downloadSelected').addEventListener('click', async function() {
               const selectedFiles = document.querySelectorAll('.file-select:checked');
-              selectedFiles.forEach(file => {
+              const zip = new JSZip();
+          
+              // Iterate through selected files to fetch their contents
+              for (const file of selectedFiles) {
                   const link = file.getAttribute('data-link');
-                  const a = document.createElement('a');
-                  a.href = link;
-                  a.download = ''; // Use the empty string to suggest the browser to use the original filename
-                  document.body.appendChild(a);
-                  a.click();
-                  document.body.removeChild(a);
+                  const response = await fetch(link);
+                  const blob = await response.blob();
+                  zip.file(file.nextElementSibling.innerText, blob); // Use the file name from the checkbox
+              }
+          
+              // Generate the zip file and trigger download
+              zip.generateAsync({ type: 'blob' }).then(function(content) {
+                  saveAs(content, 'selected_files.zip'); // Use FileSaver.js to save the zip file
               });
           });
         </script>
