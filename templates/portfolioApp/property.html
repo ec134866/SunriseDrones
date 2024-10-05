@@ -384,10 +384,14 @@
         toggleDistanceMeasurementButton.addEventListener('click', () => {
             distanceMeasurementEnabled = !distanceMeasurementEnabled;
             toggleDistanceMeasurementButton.textContent = distanceMeasurementEnabled ? 'Disable Distance Measurement' : 'Enable Distance Measurement';
-            if (!distanceMeasurementEnabled) {
+            
+            // Show or hide distance display based on distance measurement state
+            if (distanceMeasurementEnabled) {
+                distanceDisplay.style.display = 'block'; // Show distance display when enabled
+            } else {
                 lastPoint = null; 
                 distanceDisplay.innerText = 'Distance: N/A'; 
-                distanceDisplay.style.display = 'none'; 
+                distanceDisplay.style.display = 'none'; // Hide distance display when disabled
             }
         });
         
