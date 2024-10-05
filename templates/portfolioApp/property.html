@@ -179,7 +179,7 @@
           </div>
           <div class="justify-content-center">    
             <div id="exteriorModelContent" class="content-section">
-              <div style="display: flex; justify-content: center; width: 100%;">
+              <div style="display: flex; width: 100%;">
                 <div class="row" style="width: 90%;">
                     <div class="col-auto" id="gui">
                         <div class="form-check form-switch" style="margin-bottom: 0.5vh;">
@@ -188,18 +188,17 @@
                         </div>
                     </div>
                 </div>
-              </div>
-              <div style="display: flex; justify-content: center; width: 100%;">
-                  <div class="row" style="width: 90%; display: flex; justify-content: center; align-items: center;">
-                      <div class="col-auto" id="developer-options" style="display: none; margin-right: 1vh;">
-                          <button id="toggle-distance-measurement" class="btn btn-primary">Toggle Distance Measurement</button>
-                      </div>
-                      <div class="col" style="display: flex; justify-content: center; flex-grow: 1;">
-                          <div id="distance-display" style="text-align: center; font-size: 2vh; padding: 1vh; display: none;">
-                              Distance: N/A
-                          </div>
+                <div class="row" style="width: 90%; justify-content: center; align-items: center;">
+                  <div class="col-4" id="developer-options" style="display: none; margin-right: 1vh;">
+                      <button id="toggle-distance-measurement" class="btn btn-primary">Toggle Distance Measurement</button>
+                  </div>
+                  <div class="col-4">
+                      <div id="distance-display" style="text-align: center; font-size: 2vh; display: none;">
+                          Distance: N/A
                       </div>
                   </div>
+                  <div class="col-4"></div>
+                </div>
               </div>
               <div id="exteriorModelContainer" class="d-flex justify-content-center">
               </div>
