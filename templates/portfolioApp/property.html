@@ -369,14 +369,14 @@
         const developerModeCheckbox = document.getElementById('developer-mode');
         const developerOptions = document.getElementById('developer-options');
         const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
-        distanceDisplay.style.display = developerModeCheckbox.checked ? 'block' : 'none'; 
 
 
 
+        distanceDisplay.style.display = 'none';
 
+      
         developerModeCheckbox.addEventListener('change', () => {
             developerOptions.style.display = developerModeCheckbox.checked ? 'block' : 'none';
-            distanceDisplay.style.display = developerModeCheckbox.checked ? 'block' : 'none'; // Toggle visibility
         });
 
         let distanceMeasurementEnabled = false;
@@ -385,13 +385,12 @@
             distanceMeasurementEnabled = !distanceMeasurementEnabled;
             toggleDistanceMeasurementButton.textContent = distanceMeasurementEnabled ? 'Disable Distance Measurement' : 'Enable Distance Measurement';
             
-            // Show or hide distance display based on distance measurement state
             if (distanceMeasurementEnabled) {
-                distanceDisplay.style.display = 'block'; // Show distance display when enabled
+                distanceDisplay.style.display = 'block';
             } else {
                 lastPoint = null; 
                 distanceDisplay.innerText = 'Distance: N/A'; 
-                distanceDisplay.style.display = 'none'; // Hide distance display when disabled
+                distanceDisplay.style.display = 'none'; 
             }
         });
         
