@@ -178,6 +178,22 @@
               </div>
           </div>
           <div class="d-flex justify-content-center">
+            <div class="row">
+              <div class="col-auto" id="gui">
+                  <div class="form-check form-switch" style="margin-bottom: 0.5vh;">
+                      <input class="form-check-input" type="checkbox" id="developer-mode" style="margin-right: .25vh;">
+                      <label class="form-check-label" for="developer-mode">Developer Mode</label>
+                  </div>
+              </div>
+            </div>
+            <div class="row" style="justify-content: center; align-items: center;">
+                <div class="col-auto" id="developer-options" style="display: none; margin-right: 1vh;">
+                    <button id="toggle-distance-measurement" class="btn btn-primary">Toggle Distance Measurement</button>
+                </div>
+                <div class="col" id="distance-display" style="text-align: center; font-size: 2vh; padding: 1vh; display: none;">
+                    Distance: N/A
+                </div>
+            </div>    
               <div id="exteriorModelContent" class="content-section">
                   <div id="exteriorModelContainer" class="d-flex justify-content-center">
                   </div>
@@ -342,9 +358,33 @@
         import { CameraRig, FreeMovementControls } from 'three-story-controls';
 
         let camera, scene, renderer, tilesRenderer, controls, modelGroup;
+        let lastPoint = null;
+        const distanceDisplay = document.getElementById('distance-display'); 
+        const developerModeCheckbox = document.getElementById('developer-mode');
+        const developerOptions = document.getElementById('developer-options');
+        const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
+        distanceDisplay.style.display = developerModeCheckbox.checked ? 'block' : 'none'; 
 
 
 
+
+        developerModeCheckbox.addEventListener('change', () => {
+            developerOptions.style.display = developerModeCheckbox.checked ? 'block' : 'none';
+            distanceDisplay.style.display = developerModeCheckbox.checked ? 'block' : 'none'; // Toggle visibility
+        });
+
+        let distanceMeasurementEnabled = false;
+
+        toggleDistanceMeasurementButton.addEventListener('click', () => {
+            distanceMeasurementEnabled = !distanceMeasurementEnabled;
+            toggleDistanceMeasurementButton.textContent = distanceMeasurementEnabled ? 'Disable Distance Measurement' : 'Enable Distance Measurement';
+            if (!distanceMeasurementEnabled) {
+                lastPoint = null; 
+                distanceDisplay.innerText = 'Distance: N/A'; 
+                distanceDisplay.style.display = 'none'; 
+            }
+        });
+        
         window.initExteriorModel = function() {
             const container = document.getElementById('exteriorModelContainer');
             container.innerHTML = ''; 
@@ -435,6 +475,8 @@
             // scene.add(axesHelper);
 
             modelGroup.add(tilesRenderer.group);
+
+            window.addEventListener('click', onClick);
             
 
             // window.addEventListener('resize', () => {
@@ -445,6 +487,39 @@
 
             renderLoop();
         };
+
+        {% comment %} raycasting to measure distance {% endcomment %}
+        function onClick(event) {
+            if (distanceMeasurementEnabled) {
+                // Create a raycaster and calculate the mouse position
+                const raycaster = new THREE.Raycaster();
+                const pointer = new THREE.Vector2(
+                    (event.clientX / window.innerWidth) * 2 - 1,
+                    -(event.clientY / window.innerHeight) * 2 + 1
+                );
+
+                // Update the raycaster with the camera and pointer position
+                raycaster.setFromCamera(pointer, camera);
+
+                // Check for intersections
+                const intersects = raycaster.intersectObjects(modelGroup.children, true);
+
+                if (intersects.length > 0) {
+                    const intersectionPoint = intersects[0].point; // Get the intersection point
+
+                    if (lastPoint) {
+                        const distance = intersectionPoint.distanceTo(lastPoint); // Calculate distance to the last point
+                        const distanceInFeet = distance * 3.28084; // Convert to feet
+                        distanceDisplay.innerText = `Distance: ${distanceInFeet.toFixed(2)} feet`; // Update display
+                    } else {
+                        distanceDisplay.innerText = 'First point clicked: N/A'; // Update display
+                    }
+
+                    // Save the current intersection point as the last point
+                    lastPoint = intersectionPoint.clone(); // Clone the point to keep it immutable for future calculations
+            }
+            }
+        }
         
         window.initInteriorModel = function() {
             const container = document.getElementById('interiorModelContainer');
