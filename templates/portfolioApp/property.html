@@ -417,10 +417,10 @@
             container.appendChild(renderer.domElement);
 
             controls = new OrbitControls(camera, renderer.domElement);
-            controls.listenToKeyEvents( window );
+            // controls.listenToKeyEvents( window );
             const distance = camera.position.distanceTo(controls.target)
-            controls.keyPanSpeed = Math.max(1000 * (500 / distance));
-            controls.zoomSpeed = 10;
+            // controls.keyPanSpeed = Math.max(1000 * (500 / distance));
+            controls.zoomSpeed = 5;
             controls.zoomToCursor = true;
             controls.enablePan = true;
             controls.minDistance = 0;
