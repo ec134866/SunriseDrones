@@ -438,17 +438,18 @@
 
             tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
             tilesRenderer.registerPlugin(debugPlugin);
-            tilesRenderer.errorTarget = 4;
-            tilesRenderer.errorThreshold = Infinity;
-            tilesRenderer.maxDepth = Infinity;
-            tilesRenderer.autoDisableRendererCulling = true;
+            tilesRenderer.errorTarget = 2;
+            // tilesRenderer.errorThreshold = Infinity;
+            // tilesRenderer.maxDepth = Infinity;
+            // tilesRenderer.autoDisableRendererCulling = false;
+            // tilesRenderer.displayActiveTiles = true;
 
 
 
             // Set debugging options (optional)
             // debugPlugin.colorMode = 'DISTANCE'; 
-            // debugPlugin.displayBoxBounds = true;   
-            // debugPlugin.displayRegionBounds = true;
+            debugPlugin.displayBoxBounds = true;   
+            debugPlugin.displayRegionBounds = true;
             // debugPlugin.maxDebugDepth = - 1;
             // debugPlugin.maxDebugError = - 1;
             // debugPlugin.maxDebugDistance = - 1;
@@ -464,6 +465,10 @@
               modelGroup.rotation.x = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_x}});
               modelGroup.rotation.z = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_y}});
               modelGroup.rotation.y = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_z}});
+
+              tilesRenderer.group.frustumCulled = false;
+
+              modelGroup.frustumCulled = false;
           });
   
              // -- freewalk
