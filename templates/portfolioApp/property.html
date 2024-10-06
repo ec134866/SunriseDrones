@@ -358,7 +358,6 @@
       {% comment %}  models {% endcomment %}
       <script type="module">
         import * as THREE from 'three';
-        import { Scene, PerspectiveCamera, WebGLRenderer, GridHelper } from 'three'
         import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
         import { TilesRenderer, DebugTilesPlugin, PriorityQueue } from '3d-tiles-renderer';
         import { CameraRig, FreeMovementControls } from 'three-story-controls';
@@ -439,9 +438,9 @@
             tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
             tilesRenderer.registerPlugin(debugPlugin);
             tilesRenderer.errorTarget = 2;
-            // tilesRenderer.errorThreshold = Infinity;
+            tilesRenderer.errorThreshold = Infinity;
             // tilesRenderer.maxDepth = Infinity;
-            // tilesRenderer.autoDisableRendererCulling = false;
+            tilesRenderer.autoDisableRendererCulling = false;
             // tilesRenderer.displayActiveTiles = true;
 
 
@@ -487,16 +486,21 @@
             // const axesHelper = new THREE.AxesHelper(25);  
             // scene.add(axesHelper);
 
+
+            tilesRenderer.setCamera(camera);
+            tilesRenderer.setResolutionFromRenderer(camera, renderer);
+
+
             modelGroup.add(tilesRenderer.group);
 
             window.addEventListener('click', onClick);
             
 
-            // window.addEventListener('resize', () => {
-                // camera.aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.8);
-                // camera.updateProjectionMatrix();
-                // renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
-            // });
+            window.addEventListener('resize', () => {
+                camera.aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.8);
+                camera.updateProjectionMatrix();
+                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
+            });
 
             renderLoop();
         };
@@ -587,8 +591,6 @@
     
             controls.update();
 
-            tilesRenderer.setCamera(camera);
-            tilesRenderer.setResolutionFromRenderer(camera, renderer);
             tilesRenderer.update();
     
             
