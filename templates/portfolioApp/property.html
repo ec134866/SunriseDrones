@@ -412,7 +412,7 @@
 
             renderer = new THREE.WebGLRenderer();
             renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize((window.innerWidth * 5), (window.innerHeight * 5));
+            renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
             container.appendChild(renderer.domElement);
 
             controls = new OrbitControls(camera, renderer.domElement);
