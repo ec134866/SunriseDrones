@@ -397,7 +397,7 @@
             const container = document.getElementById('exteriorModelContainer');
             container.innerHTML = ''; 
 
-            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 10) / (window.innerHeight * 10), .1, {{ selected_flight.script_exterior.camera_far }});
+            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 1) / (window.innerHeight * 1), .1, {{ selected_flight.script_exterior.camera_far }});
             camera.position.set({{ selected_flight.script_exterior.camera_position }});
             camera.up = new THREE.Vector3({{ selected_flight.script_exterior.camera_axis }});
 
@@ -412,7 +412,7 @@
 
             renderer = new THREE.WebGLRenderer();
             renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
+            renderer.setSize((window.innerWidth * 10), (window.innerHeight * 10));
             container.appendChild(renderer.domElement);
 
             controls = new OrbitControls(camera, renderer.domElement);
