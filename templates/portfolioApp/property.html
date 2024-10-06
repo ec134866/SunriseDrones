@@ -463,6 +463,9 @@
               tilesRenderer.group.position.copy(sphere.center).multiplyScalar(-1);
 
               tilesRenderer.group.frustumCulled = false;
+              tilesRenderer.group.traverse(function (child) {
+                  child.frustumCulled = false;
+              });
 
               modelGroup.position.set({{selected_flight.script_exterior.model_position}});
               modelGroup.rotation.x = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_x}});
@@ -471,6 +474,14 @@
 
               modelGroup.frustumCulled = false;
           });
+
+          tilesRenderer.maximumMemoryUsage = Infinity;  
+          tilesRenderer.unloadOutsideView = false;    
+
+          
+          tilesRenderer.shouldCull = function (tile) {
+              return false;
+          };
   
              // -- freewalk
             // const rig = new CameraRig(camera, scene)
