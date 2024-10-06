@@ -447,8 +447,8 @@
 
             // Set debugging options (optional)
             // debugPlugin.colorMode = 'DISTANCE'; 
-            debugPlugin.displayBoxBounds = true;   
-            debugPlugin.displayRegionBounds = true;
+            // debugPlugin.displayBoxBounds = true;   
+            // debugPlugin.displayRegionBounds = true;
             // debugPlugin.maxDebugDepth = - 1;
             // debugPlugin.maxDebugError = - 1;
             // debugPlugin.maxDebugDistance = - 1;
@@ -460,12 +460,12 @@
               tilesRenderer.getBoundingSphere(sphere);
               tilesRenderer.group.position.copy(sphere.center).multiplyScalar(-1);
 
+              tilesRenderer.group.frustumCulled = false;
+
               modelGroup.position.set({{selected_flight.script_exterior.model_position}});
               modelGroup.rotation.x = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_x}});
               modelGroup.rotation.z = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_y}});
               modelGroup.rotation.y = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_z}});
-
-              tilesRenderer.group.frustumCulled = false;
 
               modelGroup.frustumCulled = false;
           });
@@ -592,8 +592,6 @@
             controls.update();
 
             tilesRenderer.update();
-    
-            
 
             renderer.render(scene, camera);
         }
