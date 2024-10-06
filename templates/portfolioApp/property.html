@@ -358,7 +358,6 @@
       {% comment %}  models {% endcomment %}
       <script type="module">
         import * as THREE from 'three';
-        import { Scene, PerspectiveCamera, WebGLRenderer, GridHelper } from 'three'
         import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
         import { TilesRenderer, DebugTilesPlugin, PriorityQueue } from '3d-tiles-renderer';
         import { CameraRig, FreeMovementControls } from 'three-story-controls';
@@ -449,7 +448,7 @@
             // Set debugging options (optional)
             // debugPlugin.colorMode = 'DISTANCE'; 
             // debugPlugin.displayBoxBounds = true;   
-            // debugPlugin.displayRegionBounds = true;
+            debugPlugin.displayRegionBounds = true;
             // debugPlugin.maxDebugDepth = - 1;
             // debugPlugin.maxDebugError = - 1;
             // debugPlugin.maxDebugDistance = - 1;
@@ -480,8 +479,8 @@
             // controls.enable()
 
             // -- helpful grid
-            const grid = new GridHelper(750, 20)
-            scene.add(grid)
+            // const grid = new GridHelper(750, 20)
+            // scene.add(grid)
 
             // -- helpful axes X (red), Y (green), Z (blue) 
             // const axesHelper = new THREE.AxesHelper(25);  
