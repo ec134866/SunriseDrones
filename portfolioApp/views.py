@@ -38,6 +38,12 @@ def indexPageView(request):
     return render(request, 'portfolioApp/index.html', context)
 
 
+def testPageView(request):
+   
+    context = {}
+
+    return render(request, 'portfolioApp/test.html', context)
+
 
 
 def ownerPageView(request, person_uuid):
