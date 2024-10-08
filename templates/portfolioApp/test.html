@@ -106,7 +106,7 @@
             
             const debugPlugin = new DebugTilesPlugin();
 
-            tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
+            tilesRenderer = new TilesRenderer('https://raw.githubusercontent.com/ec134866/BalancedRock/refs/heads/main/sunrise/2023_07_22-2/tileset.json');
             tilesRenderer.registerPlugin(debugPlugin);
             tilesRenderer.errorTarget = 2;
             tilesRenderer.errorThreshold = Infinity;
@@ -146,14 +146,6 @@
             // })
             // controls.enable()
 
-            // // // -- helpful grid
-            // const grid = new GridHelper(750, 20)
-            // scene.add(grid)
-
-            // // -- helpful axes X (red), Y (green), Z (blue) 
-            // const axesHelper = new THREE.AxesHelper(25);  
-            // scene.add(axesHelper);
-
 
             tilesRenderer.setCamera(camera);
             tilesRenderer.setResolutionFromRenderer(camera, renderer);
@@ -170,38 +162,6 @@
 
             renderLoop();
         };
-
-        // function onClick(event) {
-        //     if (distanceMeasurementEnabled) {
-        //         // Create a raycaster and calculate the mouse position
-        //         const raycaster = new THREE.Raycaster();
-        //         const pointer = new THREE.Vector2(
-        //             (event.clientX / window.innerWidth) * 2 - 1,
-        //             -(event.clientY / window.innerHeight) * 2 + 1
-        //         );
-
-        //         // Update the raycaster with the camera and pointer position
-        //         raycaster.setFromCamera(pointer, camera);
-
-        //         // Check for intersections
-        //         const intersects = raycaster.intersectObjects(modelGroup.children, true);
-
-        //         if (intersects.length > 0) {
-        //             const intersectionPoint = intersects[0].point; // Get the intersection point
-
-        //             if (lastPoint) {
-        //                 const distance = intersectionPoint.distanceTo(lastPoint); // Calculate distance to the last point
-        //                 const distanceInFeet = distance * 3.28084; // Convert to feet
-        //                 distanceDisplay.innerText = `Distance: ${distanceInFeet.toFixed(2)} feet`; // Update display
-        //             } else {
-        //                 distanceDisplay.innerText = 'First point clicked: N/A'; // Update display
-        //             }
-
-        //             // Save the current intersection point as the last point
-        //             lastPoint = intersectionPoint.clone(); // Clone the point to keep it immutable for future calculations
-        //     }
-        //     }
-        // }
        
 
         function renderLoop() {

@@ -38,39 +38,10 @@ def indexPageView(request):
     return render(request, 'portfolioApp/index.html', context)
 
 
-def testPageView(request, person_uuid, owner_name, property_name):
+def testPageView(request):
    
-    person = get_object_or_404(Person, uuid=person_uuid)
-    owner = get_object_or_404(Owner, name=owner_name, person=person)
-    property = get_object_or_404(Property, name=property_name, person=person)
-    flights = Flight.objects.filter(property=property).order_by('-date')
-    nav_properties = Property.objects.filter(person=person)
-    
-    selected_date = request.GET.get('date')
-    if not selected_date:
-        selected_date = flights.first().date 
 
-    selected_flight = Flight.objects.filter(property=property, date=selected_date).first()
-
-    script_exterior = selected_flight.script_exterior if selected_flight else None
-    script_interior = selected_flight.script_interior if selected_flight else None
-    files = selected_flight.files.all() if selected_flight else None
-
-    context = {
-        'person': person,
-        'owner': owner,
-        'owner_name': owner_name,
-        'property': property,
-        'nav_properties': nav_properties,
-        'flights': flights,
-        'selected_flight': selected_flight,
-        'script_exterior': script_exterior,
-        'script_interior': script_interior,
-        'files': files,
-    }
-
-
-    return render(request, 'portfolioApp/test.html', context)
+    return render(request, 'portfolioApp/test.html')
 
 
 
