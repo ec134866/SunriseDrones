@@ -255,191 +255,234 @@
 
 
 
-
-        {% comment %} settings script {% endcomment %}
-        <script>
+        {% comment %} settings script  {% endcomment %}
+      <script>
           function toggleSettings() {
+            const settingsBox = document.getElementById('settings-box');
+            const settingsIcon = document.getElementById('settings-icon');
+            const optionsColumn = document.getElementById('options-column');
+        
+            // Use toggle for simplicity
+            const isHidden = settingsBox.style.display === 'none' || settingsBox.style.display === '';
+            settingsBox.style.display = isHidden ? 'block' : 'none';
+            settingsIcon.classList.toggle('fa-rotate-90', isHidden);
+        
+            // Reset both sections and background color when opening the settings box
+            if (isHidden) {
+                optionsColumn.querySelectorAll('div').forEach(div => div.style.backgroundColor = '');
+                document.getElementById('movement-controls').style.display = 'none';
+                document.getElementById('measurement-tools').style.display = 'none';
+            }
+          }
+          
+          function closeSettings() {
               const settingsBox = document.getElementById('settings-box');
               const settingsIcon = document.getElementById('settings-icon');
-              const optionsColumn = document.getElementById('options-column');
-              
-              const isHidden = settingsBox.style.display === 'none' || settingsBox.style.display === '';
-              settingsBox.style.display = isHidden ? 'block' : 'none';
-              settingsIcon.classList.toggle('fa-rotate-90', isHidden);
-              
-              // Reset both sections and background color when opening the settings box
-              if (isHidden) {
-                  optionsColumn.querySelectorAll('div').forEach(div => div.style.backgroundColor = '');
-                  ['movement-controls', 'measurement-tools'].forEach(id => {
-                      document.getElementById(id).style.display = 'none';
-                  });
-              }
+          
+              settingsBox.style.display = 'none';
+              settingsIcon.classList.remove('fa-rotate-90');
           }
-
-          function closeSettings() {
-              document.getElementById('settings-box').style.display = 'none';
-              document.getElementById('settings-icon').classList.remove('fa-rotate-90');
-          }
-
+          
+          // Generic function to toggle controls
           function toggleControls(activeOptionId, otherOptionId, activeControlsId, otherControlsId) {
               const activeControls = document.getElementById(activeControlsId);
               const otherControls = document.getElementById(otherControlsId);
               const activeOption = document.getElementById(activeOptionId);
               const otherOption = document.getElementById(otherOptionId);
-              
-              const isActive = activeControls.style.display === 'block';
-              activeControls.style.display = isActive ? 'none' : 'block';
-              otherControls.style.display = 'none';
-              activeOption.style.backgroundColor = isActive ? '' : 'lightblue';
-              otherOption.style.backgroundColor = '';
+          
+              if (activeControls.style.display === 'block') {
+                  activeControls.style.display = 'none';
+                  activeOption.style.backgroundColor = '';
+              } else {
+                  activeControls.style.display = 'block';
+                  otherControls.style.display = 'none';
+                  activeOption.style.backgroundColor = 'lightblue';
+                  otherOption.style.backgroundColor = '';
+              }
           }
-
-          document.getElementById('movement-controls-option').addEventListener('click', () => {
+          
+          // Show movement controls when the button is clicked
+          document.getElementById('movement-controls-option').addEventListener('click', function() {
               toggleControls('movement-controls-option', 'measurement-tools-option', 'movement-controls', 'measurement-tools');
           });
-
-          document.getElementById('measurement-tools-option').addEventListener('click', () => {
+          
+          // Show measurement tools when the button is clicked
+          document.getElementById('measurement-tools-option').addEventListener('click', function() {
               toggleControls('measurement-tools-option', 'movement-controls-option', 'measurement-tools', 'movement-controls');
           });
-
+          
           document.addEventListener('keydown', function(event) {
-              if (event.key === 'Escape' && document.getElementById('settings-box').style.display === 'block') {
-                  closeSettings();
+              if (event.key === 'Escape') {
+                  const settingsBox = document.getElementById('settings-box');
+                  if (settingsBox.style.display === 'block') {
+                      closeSettings();
+                  }
               }
           });
-
+          
+          // Add event listeners to each button
+          document.getElementById('fly-controls-btn').addEventListener('click', function() {
+              selectMovementButton('fly-controls-btn');
+          });
+          
+          document.getElementById('camera-controls-btn').addEventListener('click', function() {
+              selectMovementButton('camera-controls-btn');
+          });
+          
+          document.getElementById('toggle-distance-measurement').addEventListener('click', function() {
+              toggleMeasurementButton('toggle-distance-measurement');
+          });
+          
+          // Function to handle movement controls (cannot be deselected)
           function selectMovementButton(activeButtonId) {
-              document.querySelectorAll('button[data-group="movement"]').forEach(button => {
+              const buttons = document.querySelectorAll('button[data-group="movement"]');
+          
+              // Loop through the movement control buttons
+              buttons.forEach(button => {
                   button.classList.toggle('btn-dark', button.id === activeButtonId);
                   button.classList.toggle('btn-light', button.id !== activeButtonId);
               });
           }
-
+          
+          // Function to handle measurement tools (can toggle on and off)
           function toggleMeasurementButton(buttonId) {
               const button = document.getElementById(buttonId);
+          
+              // Toggle between dark and light for measurement tools
               button.classList.toggle('btn-dark');
               button.classList.toggle('btn-light');
-          }
-
-          ['fly-controls-btn', 'camera-controls-btn'].forEach(id => {
-              document.getElementById(id).addEventListener('click', () => selectMovementButton(id));
-          });
-
-          document.getElementById('toggle-distance-measurement').addEventListener('click', () => {
-              toggleMeasurementButton('toggle-distance-measurement');
-          });
-        </script>
+          }        
+      </script>
 
         {% comment %} script for contract tracker and download section {% endcomment %}
-        <script>
-          document.addEventListener('DOMContentLoaded', () => {
+      <script>
+          document.addEventListener('DOMContentLoaded', function () {
               const today = new Date().toISOString().split('T')[0];
-              const publishDate = '{{ selected_flight.contractPublishDate | date:'Y-m-d' }}';
+              const publishDate = '{{selected_flight.contractPublishDate | date:'Y-m-d' }}'; 
               const contractTracker = document.getElementById('contractTracker');
               const contractTrackerBtn = document.getElementById('contractTrackerBtn');
-
+      
+              // Show contract tracker if the publish date is today or in the future
               if (publishDate >= today) {
                   contractTracker.classList.add('show');
                   contractTrackerBtn.classList.replace('btn-light', 'btn-dark');
               }
           });
-
+      
           function toggleSection(button) {
               const isDownloadSection = button.id === 'downloadSectionBtn';
               const targetSection = document.querySelector(button.getAttribute('data-bs-target'));
-              const isAlreadyActive = targetSection.classList.contains('show');
-
-              ['contractTracker', 'downloadSection'].forEach(id => {
-                  document.getElementById(id).classList.remove('show');
-              });
-              ['contractTrackerBtn', 'downloadSectionBtn'].forEach(id => {
-                  document.getElementById(id).classList.replace('btn-dark', 'btn-light');
-              });
-
+              const isAlreadyActive = targetSection.classList.contains('show'); // Check if the section is already active
+      
+              // Reset both sections and button states
+              document.getElementById('contractTracker').classList.remove('show');
+              document.getElementById('downloadSection').classList.remove('show');
+              document.getElementById('contractTrackerBtn').classList.replace('btn-dark', 'btn-light');
+              document.getElementById('downloadSectionBtn').classList.replace('btn-dark', 'btn-light');
+      
+              // If the section was already active, we don't reactivate it (deselect)
               if (!isAlreadyActive) {
                   targetSection.classList.add('show');
                   button.classList.replace('btn-light', 'btn-dark');
               }
-
-              document.getElementById('filterIcons').style.display = (isDownloadSection && !isAlreadyActive) ? 'block' : 'none';
+      
+              // Show filter icons only for the Download section if it's being activated
+              document.getElementById("filterIcons").style.display = (isDownloadSection && !isAlreadyActive) ? "block" : "none";
           }
-        </script>
+      </script>
+
 
         {% comment %} script for filtering files {% endcomment %}
-        <script>
-          let selectedTypes = [];
-
+      <script>
+          let selectedTypes = []; // Track selected file types
+          
           function filterFiles(type) {
-              const icons = {
-                  'Image': document.getElementById('image-icon'),
-                  'Video': document.getElementById('video-icon'),
-                  '3D Model': document.getElementById('model-icon')
-              };
-              const files = document.querySelectorAll('.file');
-              const typeIndex = selectedTypes.indexOf(type);
-
-              if (typeIndex > -1) {
-                  selectedTypes.splice(typeIndex, 1);
-                  icons[type].classList.replace('fa-square-check', 'fa-square');
+            const files = document.querySelectorAll('.file');
+            const icons = {
+              'Image': document.getElementById('image-icon'),
+              'Video': document.getElementById('video-icon'),
+              '3D Model': document.getElementById('model-icon')
+            };
+          
+            // Toggle selection of the type
+            const typeIndex = selectedTypes.indexOf(type);
+            if (typeIndex > -1) {
+              // If already selected, remove it
+              selectedTypes.splice(typeIndex, 1);
+              icons[type].classList.remove('fa-regular', 'fa-square-check');
+              icons[type].classList.add('fa-regular', 'fa-square');
+            } else {
+              // If not selected, add it
+              selectedTypes.push(type);
+              icons[type].classList.remove('fa-regular', 'fa-square');
+              icons[type].classList.add('fa-regular', 'fa-square-check');
+            }
+          
+            // Filter files based on selected types
+            files.forEach(file => {
+              if (selectedTypes.length === 0 || selectedTypes.includes(file.getAttribute('data-file-type'))) {
+                file.style.display = 'flex'; // Show file
               } else {
-                  selectedTypes.push(type);
-                  icons[type].classList.replace('fa-square', 'fa-square-check');
+                file.style.display = 'none'; // Hide file
               }
-
-              files.forEach(file => {
-                  const fileType = file.getAttribute('data-file-type');
-                  file.style.display = (selectedTypes.length === 0 || selectedTypes.includes(fileType)) ? 'flex' : 'none';
-              });
+            });
           }
-        </script>
+      </script>
 
-        {% comment %} script for dropdown flight selection {% endcomment %}
-        <script>
-          const today = new Date().toISOString().split('T')[0];
-          const steps = [
-              { element: document.querySelector('.step:nth-child(1)'), date: "{{ selected_flight.contractSigned | date:'Y-m-d' }}" },
-              { element: document.querySelector('.step:nth-child(2)'), date: "{{ selected_flight.contractFlightDate | date:'Y-m-d' }}" },
-              { element: document.querySelector('.step:nth-child(3)'), date: "{{ selected_flight.contractProcessingDate | date:'Y-m-d' }}" },
-              { element: document.querySelector('.step:nth-child(4)'), date: "{{ selected_flight.contractFinalTouches | date:'Y-m-d' }}" },
-              { element: document.querySelector('.step:nth-child(5)'), date: "{{ selected_flight.contractPublishDate | date:'Y-m-d' }}" }
-          ];
 
-          steps.forEach(step => {
-              if (today >= step.date) {
-                  step.element.classList.add('active');
-              }
+      {% comment %} script for dropdown flight selection {% endcomment %}
+      <script>
+        const today = new Date().toISOString().split('T')[0];
+
+        const steps = [
+                { element: document.querySelector('.step:nth-child(1)'), date: "{{ selected_flight.contractSigned | date:'Y-m-d' }}" },
+                { element: document.querySelector('.step:nth-child(2)'), date: "{{ selected_flight.contractFlightDate | date:'Y-m-d'  }}" },
+                { element: document.querySelector('.step:nth-child(3)'), date: "{{ selected_flight.contractProcessingDate | date:'Y-m-d'  }}" },
+                { element: document.querySelector('.step:nth-child(4)'), date: "{{ selected_flight.contractFinalTouches | date:'Y-m-d'  }}" },
+                { element: document.querySelector('.step:nth-child(5)'), date: "{{ selected_flight.contractPublishDate | date:'Y-m-d'  }}" }
+            ];
+
+        steps.forEach(step => {
+            if (today >= step.date) {
+                step.element.classList.add('active');
+            }
+        });
+      </script>
+
+      {% comment %} script for content buttons {% endcomment %}
+      <script>
+
+
+        function showContent(contentId) {
+          document.querySelectorAll('.content-section').forEach(section => {
+            section.classList.remove('show');
           });
-        </script>
+      
+          const selectedContent = document.getElementById(contentId);
+          selectedContent.classList.add('show');
 
-        {% comment %} script for content buttons {% endcomment %}
-        <script>
-          let exteriorModelLoaded = false;
-          let interiorModelLoaded = false;
+          const yOffset = -100;
+          const y = selectedContent.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      
 
-          function showContent(contentId) {
-              document.querySelectorAll('.content-section').forEach(section => {
-                  section.classList.remove('show');
-              });
-
-              const selectedContent = document.getElementById(contentId);
-              selectedContent.classList.add('show');
-
-              const yOffset = -100;
-              const y = selectedContent.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-              setTimeout(() => {
-                  window.scrollTo({ top: y, behavior: 'smooth' });
-              }, 20);
-
-              if (contentId === 'exteriorModelContent' && !exteriorModelLoaded) {
-                  initExteriorModel();
-                  exteriorModelLoaded = true;
-              } else if (contentId === 'interiorModelContent' && !interiorModelLoaded) {
-                  initInteriorModel();
-                  interiorModelLoaded = true;
-              }
+          setTimeout(() => {
+              window.scrollTo({ top: y, behavior: 'smooth' });
+          }, 20);
+          
+          
+          if (contentId === 'exteriorModelContent' && !exteriorModelLoaded) {
+            initExteriorModel();  
+            exteriorModelLoaded = true;  
+          } else if (contentId === 'interiorModelContent' && !interiorModelLoaded) {
+            initInteriorModel();  
+            interiorModelLoaded = true;  
           }
-        </script>
+          
+        }
+
+        let exteriorModelLoaded = false;
+        let interiorModelLoaded = false;
+      </script>
 
       
 
