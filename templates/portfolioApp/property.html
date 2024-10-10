@@ -179,27 +179,60 @@
           </div>
           <div class="justify-content-center">    
             <div id="exteriorModelContent" class="content-section">
-              <div style="display: flex; justify-content: center; width: 100%;">
-                <div class="row" style="width: 90%;">
-                    <div class="col-auto" id="gui">
-                        <div class="form-check form-switch" style="margin-bottom: 0.5vh;">
-                            <input class="form-check-input" type="checkbox" id="developer-mode" style="margin-right: .25vh;">
-                            <label class="form-check-label" for="developer-mode">Developer Mode</label>
-                        </div>
-                    </div>
+              <div class="row">
+                <div class="col">
+                </div>
+                <div class="col" style="display: flex; justify-content: center; flex-grow: 1;">
+                  <div id="distance-display" style="text-align: center; font-size: 2vh; display: none;">
+                      Distance: N/A
+                  </div>
+                </div>
+                <div class="col" style="text-align: right; padding: 10px;">
+                    <i id="settings-icon" class="fa-solid fa-gear" style="font-size: 3vh; cursor: pointer;" onclick="toggleSettings()"></i>
                 </div>
               </div>
-              <div style="display: flex; justify-content: center; width: 100%;">
-                <div class="row" style="width: 90%; display: flex; justify-content: center; align-items: center;">
-                    <div class="col-auto" id="developer-options" style="display: none; margin-right: 1vh;">
-                        <button id="toggle-distance-measurement" class="btn btn-primary">Toggle Distance Measurement</button>
-                    </div>
-                    <div class="col" style="display: flex; justify-content: center; flex-grow: 1;">
-                        <div id="distance-display" style="text-align: center; font-size: 2vh; display: none;">
-                            Distance: N/A
-                        </div>
-                    </div>
-                </div>
+          
+              <div class="row" id="settings-box" style="
+                  display: none;
+                  position: fixed;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  width: 50%;
+                  height: 25%;">
+                  <div class="row" style="height:100%;">
+                      <div class="col-auto" id="options-column" style="width: 30%; padding:2vh; background-color: darkgrey; border-top-left-radius: 2vh; border-bottom-left-radius: 2vh; padding-top:4vh;">
+                          <div style="font-size: clamp(1vh,1.5vw,2vh); margin-bottom: 2vh; cursor: pointer; background-color: lightblue;" id="movement-controls-option" onclick="showMovementControls()">
+                              <i class="fa-solid fa-up-down-left-right"></i> Movement Controls
+                          </div>
+                          <div style="font-size: clamp(1vh,1.5vw,2vh); margin-bottom: 2vh; cursor: pointer;" id="measurement-tools-option" onclick="showMeasurementTools()">
+                              <i class="fa-solid fa-ruler"></i> Measurement Tools
+                          </div>
+                      </div>
+                      <div class="col-auto" id="settings-content" style="width: 70%; padding:2vh; background-color: lightgrey; border-top-right-radius: 2vh; border-bottom-right-radius: 2vh;">
+                          <div class="row">
+                              <div class="text-end" style="margin-bottom: 1vh;">
+                                  <i id="close-settings" class="fa-solid fa-x" style="font-size: 1.5vh; cursor: pointer;" onclick="closeSettings()"></i>
+                              </div>
+                          </div>
+                          <div class="row" style="overflow: scroll;">
+                              <div id="movement-controls" style="display: none;">
+                                  <div class="text-end" style="margin-bottom: 2vh;">
+                                      <button id="fly-controls-btn" class="btn btn-secondary">Fly Controls</button>
+                                  </div>
+                                  <div class="text-end" style="margin-bottom: 2vh;">
+                                      <button id="camera-controls-btn" class="btn btn-secondary">Camera Controls</button>
+                                  </div>
+                              </div>
+          
+                              <div id="measurement-tools" style="display: none;">
+                                  <div class="text-end" style="margin-bottom: 2vh;">
+                                      <button id="toggle-distance-measurement" class="btn btn-primary">Toggle Distance Measurement</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
               </div>
               <div id="exteriorModelContainer" class="d-flex justify-content-center">
               </div>
@@ -223,6 +256,77 @@
 
 
 
+        {% comment %} settings script  {% endcomment %}
+        <script>
+          function toggleSettings() {
+              const settingsBox = document.getElementById('settings-box');
+              const settingsIcon = document.getElementById('settings-icon');
+              const movementControls = document.getElementById('movement-controls');
+              const measurementTools = document.getElementById('measurement-tools');
+              const optionsColumn = document.getElementById('options-column');
+      
+              // Reset both sections and background color when opening the settings box
+              movementControls.style.display = 'none';
+              measurementTools.style.display = 'none';
+              optionsColumn.querySelectorAll('div').forEach(div => div.style.backgroundColor = '');
+      
+              if (settingsBox.style.display === 'none' || settingsBox.style.display === '') {
+                  settingsBox.style.display = 'block';
+                  settingsIcon.classList.add('fa-rotate-90');
+              } else {
+                  settingsBox.style.display = 'none';
+                  settingsIcon.classList.remove('fa-rotate-90');
+              }
+          }
+      
+          function closeSettings() {
+              const settingsBox = document.getElementById('settings-box');
+              const settingsIcon = document.getElementById('settings-icon');
+      
+              settingsBox.style.display = 'none';
+              settingsIcon.classList.remove('fa-rotate-90');
+          }
+      
+          function showMovementControls() {
+              const movementControls = document.getElementById('movement-controls');
+              const measurementTools = document.getElementById('measurement-tools');
+              const movementOption = document.getElementById('movement-controls-option');
+              const measurementOption = document.getElementById('measurement-tools-option');
+  
+              // Toggle the movement controls
+              if (movementControls.style.display === 'block') {
+                  // Hide movement controls if they're currently displayed
+                  movementControls.style.display = 'none';
+                  movementOption.style.backgroundColor = '';
+              } else {
+                  // Show movement controls and hide measurement tools
+                  movementControls.style.display = 'block';
+                  measurementTools.style.display = 'none';
+                  movementOption.style.backgroundColor = 'lightblue';
+                  measurementOption.style.backgroundColor = '';
+              }
+          }
+  
+          function showMeasurementTools() {
+              const movementControls = document.getElementById('movement-controls');
+              const measurementTools = document.getElementById('measurement-tools');
+              const movementOption = document.getElementById('movement-controls-option');
+              const measurementOption = document.getElementById('measurement-tools-option');
+  
+              // Toggle the measurement tools
+              if (measurementTools.style.display === 'block') {
+                  // Hide measurement tools if they're currently displayed
+                  measurementTools.style.display = 'none';
+                  measurementOption.style.backgroundColor = '';
+              } else {
+                  // Show measurement tools and hide movement controls
+                  measurementTools.style.display = 'block';
+                  movementControls.style.display = 'none';
+                  measurementOption.style.backgroundColor = 'lightblue';
+                  movementOption.style.backgroundColor = '';
+              }
+          }
+      </script>
 
         {% comment %} script for contract tracker and download section {% endcomment %}
         <script>
@@ -365,18 +469,11 @@
         let camera, scene, renderer, tilesRenderer, controls, modelGroup;
         let lastPoint = null;
         const distanceDisplay = document.getElementById('distance-display'); 
-        const developerModeCheckbox = document.getElementById('developer-mode');
-        const developerOptions = document.getElementById('developer-options');
         const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
-
 
 
         distanceDisplay.style.display = 'none';
 
-      
-        developerModeCheckbox.addEventListener('change', () => {
-            developerOptions.style.display = developerModeCheckbox.checked ? 'block' : 'none';
-        });
 
         let distanceMeasurementEnabled = false;
 
