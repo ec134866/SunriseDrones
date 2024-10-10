@@ -532,7 +532,7 @@
                     if (isTouchDevice) {
                         // 
                     } else {                       
-                        controls = new FlyControls(camera, renderer.domElement);
+                        controls = new FlyControls(camera, container);
                         controls.movementSpeed = 80; 
                         controls.rollSpeed = 0.6;
                         controls.domElement = renderer.domElement;
@@ -731,11 +731,15 @@
         };
 
         function renderLoop() {
-            requestAnimationFrame(renderLoop);
+            requestAnimationFrame(renderLoop);            
+    
+            let delta = clock.getDelta();  
+            
+            if (controls) {
+                controls.update(delta); 
+            }
 
             camera.updateMatrixWorld();
-    
-            controls.update();
 
             tilesRenderer.update();
 
