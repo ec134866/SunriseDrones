@@ -560,16 +560,20 @@
             let shiftPressed = false; 
 
             function onKeyDown(event) {
+                if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                    event.preventDefault(); // Prevent page scrolling
+                }
+            
                 if (event.key === 'Shift') {
-                    shiftPressed = true; 
-                    controls.movementSpeed = 260; 
+                    shiftPressed = true;
+                    controls.movementSpeed = 260;
                 }
             }
-
+            
             function onKeyUp(event) {
                 if (event.key === 'Shift') {
-                    shiftPressed = false; 
-                    controls.movementSpeed = 80; 
+                    shiftPressed = false;
+                    controls.movementSpeed = 80;
                 }
             }
 
