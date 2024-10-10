@@ -326,6 +326,15 @@
                   movementOption.style.backgroundColor = '';
               }
           }
+          
+          document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const settingsBox = document.getElementById('settings-box');
+                if (settingsBox.style.display === 'block') {
+                    closeSettings();
+                }
+            }
+          });
       </script>
 
         {% comment %} script for contract tracker and download section {% endcomment %}
