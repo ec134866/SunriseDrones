@@ -217,16 +217,16 @@
                           <div class="row" style="overflow: scroll;">
                               <div id="movement-controls" style="display: none;">
                                   <div class="text-end" style="margin-bottom: 2vh;">
-                                      <button id="fly-controls-btn" class="btn btn-secondary">Fly Controls</button>
+                                      <button id="fly-controls-btn" class="btn btn-light" data-group="movement">Fly Controls</button>
                                   </div>
                                   <div class="text-end" style="margin-bottom: 2vh;">
-                                      <button id="camera-controls-btn" class="btn btn-secondary">Camera Controls</button>
+                                      <button id="camera-controls-btn" class="btn btn-light" data-group="movement">Camera Controls</button>
                                   </div>
                               </div>
           
                               <div id="measurement-tools" style="display: none;">
                                   <div class="text-end" style="margin-bottom: 2vh;">
-                                      <button id="toggle-distance-measurement" class="btn btn-primary">Toggle Distance Measurement</button>
+                                      <button id="toggle-distance-measurement" class="btn btn-light" data-group="measurement">Toggle Distance Measurement</button>
                                   </div>
                               </div>
                           </div>
@@ -334,6 +334,37 @@
                 }
             }
           });
+
+          document.getElementById('fly-controls-btn').addEventListener('click', function() {
+              toggleButton('fly-controls-btn', 'movement');
+          });
+          
+          document.getElementById('camera-controls-btn').addEventListener('click', function() {
+              toggleButton('camera-controls-btn', 'movement');
+          });
+          
+          document.getElementById('toggle-distance-measurement').addEventListener('click', function() {
+              toggleButton('toggle-distance-measurement', 'measurement');
+          });
+          
+          // Function to toggle the button styles within a specific group
+          function toggleButton(activeButtonId, group) {
+              // Find all buttons that belong to the same group
+              const buttons = document.querySelectorAll(`button[data-group="${group}"]`);
+              
+              // Loop through the buttons
+              buttons.forEach(button => {
+                  if (button.id === activeButtonId) {
+                      // Add btn-dark to the active button, remove btn-light
+                      button.classList.remove('btn-light');
+                      button.classList.add('btn-dark');
+                  } else {
+                      // Revert other buttons in the group to btn-light
+                      button.classList.remove('btn-dark');
+                      button.classList.add('btn-light');
+                  }
+              });
+          }
       </script>
 
         {% comment %} script for contract tracker and download section {% endcomment %}
