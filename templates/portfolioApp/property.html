@@ -501,6 +501,7 @@
         let lastPoint = null;
         const distanceDisplay = document.getElementById('distance-display'); 
         const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
+        const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
 
 
         distanceDisplay.style.display = 'none';
@@ -541,7 +542,7 @@
             renderer = new THREE.WebGLRenderer();
             renderer.setPixelRatio(window.devicePixelRatio);
 
-            if (isMobileDevice()) {
+            if (isTouchDevice()) {
                 renderer.setPixelRatio(0.5);  
                 renderer.setSize(window.innerWidth * 0.75, window.innerHeight * 0.75);  
             } else {
@@ -561,8 +562,6 @@
                 if (controls) {
                     controls.dispose();
                 }
-
-                const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
 
 
                 if (controlType === 'fly') {
@@ -738,7 +737,7 @@
             renderer = new THREE.WebGLRenderer();
             renderer.setPixelRatio(window.devicePixelRatio);
 
-            if (isMobileDevice()) {
+            if (isTouchDevice()) {
                 renderer.setPixelRatio(0.5);  
                 renderer.setSize(window.innerWidth * 0.75, window.innerHeight * 0.75);  
             } else {
