@@ -258,126 +258,89 @@
         {% comment %} settings script  {% endcomment %}
         <script>
           function toggleSettings() {
-              const settingsBox = document.getElementById('settings-box');
-              const settingsIcon = document.getElementById('settings-icon');
-              const movementControls = document.getElementById('movement-controls');
-              const measurementTools = document.getElementById('measurement-tools');
-              const optionsColumn = document.getElementById('options-column');
-      
-              // Reset both sections and background color when opening the settings box
-              movementControls.style.display = 'none';
-              measurementTools.style.display = 'none';
-              optionsColumn.querySelectorAll('div').forEach(div => div.style.backgroundColor = '');
-      
-              if (settingsBox.style.display === 'none' || settingsBox.style.display === '') {
-                  settingsBox.style.display = 'block';
-                  settingsIcon.classList.add('fa-rotate-90');
-              } else {
-                  settingsBox.style.display = 'none';
-                  settingsIcon.classList.remove('fa-rotate-90');
-              }
+            const settingsBox = document.getElementById('settings-box');
+            const settingsIcon = document.getElementById('settings-icon');
+            const movementControls = document.getElementById('movement-controls');
+            const measurementTools = document.getElementById('measurement-tools');
+            const optionsColumn = document.getElementById('options-column');
+        
+            // Reset both sections and background color when opening the settings box
+            movementControls.style.display = 'none';
+            measurementTools.style.display = 'none';
+            optionsColumn.querySelectorAll('div').forEach(div => div.style.backgroundColor = '');
+        
+            // Use toggle for simplicity
+            const isHidden = settingsBox.style.display === 'none' || settingsBox.style.display === '';
+            settingsBox.style.display = isHidden ? 'block' : 'none';
+            settingsIcon.classList.toggle('fa-rotate-90', isHidden);
           }
-      
+          
           function closeSettings() {
               const settingsBox = document.getElementById('settings-box');
               const settingsIcon = document.getElementById('settings-icon');
-      
+          
               settingsBox.style.display = 'none';
               settingsIcon.classList.remove('fa-rotate-90');
           }
-      
-          function showMovementControls() {
-              const movementControls = document.getElementById('movement-controls');
-              const measurementTools = document.getElementById('measurement-tools');
-              const movementOption = document.getElementById('movement-controls-option');
-              const measurementOption = document.getElementById('measurement-tools-option');
-  
-              // Toggle the movement controls
-              if (movementControls.style.display === 'block') {
-                  // Hide movement controls if they're currently displayed
-                  movementControls.style.display = 'none';
-                  movementOption.style.backgroundColor = '';
+          
+          // Generic function to toggle controls
+          function toggleControls(activeOptionId, otherOptionId, activeControlsId, otherControlsId) {
+              const activeControls = document.getElementById(activeControlsId);
+              const otherControls = document.getElementById(otherControlsId);
+              const activeOption = document.getElementById(activeOptionId);
+              const otherOption = document.getElementById(otherOptionId);
+          
+              if (activeControls.style.display === 'block') {
+                  activeControls.style.display = 'none';
+                  activeOption.style.backgroundColor = '';
               } else {
-                  // Show movement controls and hide measurement tools
-                  movementControls.style.display = 'block';
-                  measurementTools.style.display = 'none';
-                  movementOption.style.backgroundColor = 'lightblue';
-                  measurementOption.style.backgroundColor = '';
-              }
-          }
-  
-          function showMeasurementTools() {
-              const movementControls = document.getElementById('movement-controls');
-              const measurementTools = document.getElementById('measurement-tools');
-              const movementOption = document.getElementById('movement-controls-option');
-              const measurementOption = document.getElementById('measurement-tools-option');
-  
-              // Toggle the measurement tools
-              if (measurementTools.style.display === 'block') {
-                  // Hide measurement tools if they're currently displayed
-                  measurementTools.style.display = 'none';
-                  measurementOption.style.backgroundColor = '';
-              } else {
-                  // Show measurement tools and hide movement controls
-                  measurementTools.style.display = 'block';
-                  movementControls.style.display = 'none';
-                  measurementOption.style.backgroundColor = 'lightblue';
-                  movementOption.style.backgroundColor = '';
+                  activeControls.style.display = 'block';
+                  otherControls.style.display = 'none';
+                  activeOption.style.backgroundColor = 'lightblue';
+                  otherOption.style.backgroundColor = '';
               }
           }
           
           document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                const settingsBox = document.getElementById('settings-box');
-                if (settingsBox.style.display === 'block') {
-                    closeSettings();
-                }
-            }
+              if (event.key === 'Escape') {
+                  const settingsBox = document.getElementById('settings-box');
+                  if (settingsBox.style.display === 'block') {
+                      closeSettings();
+                  }
+              }
           });
-
-         // Add event listeners to each button
+          
+          // Add event listeners to each button
           document.getElementById('fly-controls-btn').addEventListener('click', function() {
-            selectMovementButton('fly-controls-btn');
+              selectMovementButton('fly-controls-btn');
           });
-
+          
           document.getElementById('camera-controls-btn').addEventListener('click', function() {
-            selectMovementButton('camera-controls-btn');
+              selectMovementButton('camera-controls-btn');
           });
-
+          
           document.getElementById('toggle-distance-measurement').addEventListener('click', function() {
-            toggleMeasurementButton('toggle-distance-measurement');
+              toggleMeasurementButton('toggle-distance-measurement');
           });
-
+          
           // Function to handle movement controls (cannot be deselected)
           function selectMovementButton(activeButtonId) {
-            const buttons = document.querySelectorAll('button[data-group="movement"]');
-            
-            // Loop through the movement control buttons
-            buttons.forEach(button => {
-                if (button.id === activeButtonId) {
-                    // Activate the selected button (make it dark)
-                    button.classList.remove('btn-light');
-                    button.classList.add('btn-dark');
-                } else {
-                    // Deactivate other buttons (make them light)
-                    button.classList.remove('btn-dark');
-                    button.classList.add('btn-light');
-                }
-            });
+              const buttons = document.querySelectorAll('button[data-group="movement"]');
+          
+              // Loop through the movement control buttons
+              buttons.forEach(button => {
+                  button.classList.toggle('btn-dark', button.id === activeButtonId);
+                  button.classList.toggle('btn-light', button.id !== activeButtonId);
+              });
           }
-
+          
           // Function to handle measurement tools (can toggle on and off)
           function toggleMeasurementButton(buttonId) {
-            const button = document.getElementById(buttonId);
-            
-            // Toggle between dark and light for measurement tools
-            if (button.classList.contains('btn-dark')) {
-                button.classList.remove('btn-dark');
-                button.classList.add('btn-light');
-            } else {
-                button.classList.remove('btn-light');
-                button.classList.add('btn-dark');
-            }
+              const button = document.getElementById(buttonId);
+          
+              // Toggle between dark and light for measurement tools
+              button.classList.toggle('btn-dark');
+              button.classList.toggle('btn-light');
           }
       </script>
 
