@@ -468,6 +468,7 @@
         import { CameraRig, FreeMovementControls } from 'three-story-controls';
 
         let camera, scene, renderer, tilesRenderer, controls, modelGroup;
+        let clock = new THREE.Clock();
         let lastPoint = null;
         const distanceDisplay = document.getElementById('distance-display'); 
         const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
