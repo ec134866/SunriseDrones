@@ -335,35 +335,45 @@
             }
           });
 
+         // Add event listeners to each button
           document.getElementById('fly-controls-btn').addEventListener('click', function() {
-              toggleButton('fly-controls-btn', 'movement');
+            toggleButton('fly-controls-btn', 'movement');
           });
-          
+
           document.getElementById('camera-controls-btn').addEventListener('click', function() {
-              toggleButton('camera-controls-btn', 'movement');
+            toggleButton('camera-controls-btn', 'movement');
           });
-          
+
           document.getElementById('toggle-distance-measurement').addEventListener('click', function() {
-              toggleButton('toggle-distance-measurement', 'measurement');
+            toggleButton('toggle-distance-measurement', 'measurement');
           });
-          
+
           // Function to toggle the button styles within a specific group
           function toggleButton(activeButtonId, group) {
-              // Find all buttons that belong to the same group
-              const buttons = document.querySelectorAll(`button[data-group="${group}"]`);
-              
-              // Loop through the buttons
-              buttons.forEach(button => {
-                  if (button.id === activeButtonId) {
-                      // Add btn-dark to the active button, remove btn-light
-                      button.classList.remove('btn-light');
-                      button.classList.add('btn-dark');
-                  } else {
-                      // Revert other buttons in the group to btn-light
-                      button.classList.remove('btn-dark');
-                      button.classList.add('btn-light');
-                  }
-              });
+            // Get the active button element
+            const activeButton = document.getElementById(activeButtonId);
+            
+            // If the active button is already dark, revert it back to light
+            if (activeButton.classList.contains('btn-dark')) {
+                activeButton.classList.remove('btn-dark');
+                activeButton.classList.add('btn-light');
+            } else {
+                // Otherwise, find all buttons that belong to the same group
+                const buttons = document.querySelectorAll(`button[data-group="${group}"]`);
+                
+                // Loop through the buttons
+                buttons.forEach(button => {
+                    if (button.id === activeButtonId) {
+                        // Add btn-dark to the active button, remove btn-light
+                        button.classList.remove('btn-light');
+                        button.classList.add('btn-dark');
+                    } else {
+                        // Revert other buttons in the group to btn-light
+                        button.classList.remove('btn-dark');
+                        button.classList.add('btn-light');
+                    }
+                });
+            }
           }
       </script>
 
