@@ -512,19 +512,64 @@
             renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
             container.appendChild(renderer.domElement);
 
-            controls = new OrbitControls(camera, renderer.domElement);
-            // controls.listenToKeyEvents( window );
-            const distance = camera.position.distanceTo(controls.target)
-            // controls.keyPanSpeed = Math.max(1000 * (500 / distance));
-            controls.zoomSpeed = 2;
-            controls.zoomToCursor = true;
-            controls.enablePan = true;
-            controls.minDistance = 0;
-            controls.maxDistance = {{selected_flight.script_exterior.max_camera_zoom}};
-            controls.minPolarAngle = 0.25;
-            controls.maxPolarAngle = 1.8;
-            controls.autoRotate = false;
-            // controls.target = new THREE.Vector3(0, 1, 0);
+            initControls('orbit');
+            document.getElementById('fly-controls-btn').addEventListener('click', () => initControls('fly'));
+            document.getElementById('camera-controls-btn').addEventListener('click', () => initControls('orbit'));
+
+
+            const distance = camera.position.distanceTo(controls.target);
+
+            function initControls(controlType) {
+                if (controls) {
+                    controls.dispose();
+                }
+
+                const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
+
+
+                if (controlType === 'fly') {
+                    if (isTouchDevice) {
+                        // 
+                    } else {                       
+                        controls = new FlyControls(camera, renderer.domElement);
+                        controls.movementSpeed = 80; 
+                        controls.rollSpeed = 0.6;
+                        controls.domElement = renderer.domElement;
+                        controls.autoForward = false;
+                        controls.dragToLook = true;
+
+                        document.addEventListener('keydown', onKeyDown);
+                        document.addEventListener('keyup', onKeyUp);
+                    }
+                } else if (controlType === 'orbit') {
+                    controls = new OrbitControls(camera, container);
+                    controls.zoomSpeed = 2;
+                    controls.zoomToCursor = true;
+                    controls.minDistance = 0;
+                    controls.maxDistance = 500;
+                    controls.minPolarAngle = 0.25;
+                    controls.maxPolarAngle = 1.8;
+
+                    document.removeEventListener('keydown', onKeyDown);
+                    document.removeEventListener('keyup', onKeyUp);
+                }
+            }
+
+            let shiftPressed = false; 
+
+            function onKeyDown(event) {
+                if (event.key === 'Shift') {
+                    shiftPressed = true; 
+                    controls.movementSpeed = 260; 
+                }
+            }
+
+            function onKeyUp(event) {
+                if (event.key === 'Shift') {
+                    shiftPressed = false; 
+                    controls.movementSpeed = 80; 
+                }
+            }
 
             modelGroup = new THREE.Group();
             scene.add(modelGroup);
