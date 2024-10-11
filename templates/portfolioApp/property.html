@@ -504,6 +504,12 @@
         const distanceDisplay = document.getElementById('distance-display'); 
         const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
         const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
+        let spinning = true; // Track if the model should spin
+        let initialDistance = 1; // Start close to the model
+        let targetDistance = 500; // End distance from the model
+        let currentDistance = initialDistance; // Current distance from the model
+        const spinSpeed = 0.01; // Speed of spinning around the model
+        const distanceIncrement = 1; // Increment distance per frame
 
 
         distanceDisplay.style.display = 'none';
@@ -798,15 +804,35 @@
         function renderLoop() {
             requestAnimationFrame(renderLoop);            
     
-            let delta = clock.getDelta();  
-            
-            if (controls) {
-                controls.update(delta); 
-            }
-
-            camera.updateMatrixWorld();
-
-            tilesRenderer.update();
+            if (spinning) {
+              // Update camera's position to create a circular path around the model
+              camera.position.x = Math.cos(Date.now() * spinSpeed) * currentDistance;
+              camera.position.z = Math.sin(Date.now() * spinSpeed) * currentDistance;
+              camera.position.y = modelGroup.position.y; // Keep the camera at the model's height
+      
+              // Increase the current distance until it reaches the target distance
+              if (currentDistance < targetDistance) {
+                  currentDistance += distanceIncrement; // Adjust increment speed as needed
+              }
+              
+              camera.lookAt(modelGroup.position); // Make the camera look at the model
+          }
+      
+          if (controls) {
+              controls.update(delta); 
+          }
+      
+          camera.updateMatrixWorld();
+      
+          tilesRenderer.update();
+      
+          // Check if all tiles are loaded
+          if (loadedTilesCount === totalTiles) {
+              spinning = false; // Stop spinning
+              currentDistance = targetDistance; // Set to the target distance
+              camera.position.set( selected_flight.script_exterior.camera_position ); // Update camera position to final distance
+              camera.lookAt(modelGroup.position); // Optional: Adjust the camera to look at the model
+          }
 
             renderer.render(scene, camera);
         }
