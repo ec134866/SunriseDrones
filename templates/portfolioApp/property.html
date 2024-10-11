@@ -233,15 +233,15 @@
                       </div>
                   </div>
                 </div>
-                <div id="exteriorModelContainer" class="d-flex justify-content-center">
-                  <div class="progress-bar-container" style="display: none; position: absolute; justify-content: center; align-items: center; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
-                    <div class="row">
+                <div class="progress-bar-container" style=" position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%);display: none; justify-content: center; align-items: center; text-align: center;">
+                  <div class="row">
                       <label for="progress-bar" style="color: white; font-size: 4vh; margin-bottom: 1vh;">Loading...</label>
-                    </div>
-                    <div class="row">
-                      <progress id="progress-bar" style="height: 5vh;" value="0" max="100"></progress>
-                    </div>
                   </div>
+                  <div class="row">
+                      <progress id="progress-bar" style="height: 5vh;" value="0" max="100"></progress>
+                  </div>
+                </div>
+                <div id="exteriorModelContainer" class="d-flex justify-content-center">
                 </div>
             </div>
           </div>
@@ -470,24 +470,17 @@
             // Use setTimeout to add a delay before scrolling
             setTimeout(() => {
                 selectedContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    
-                // Optional: If you need to account for a header or navbar height, you can do it like this:
-                // const headerOffset = document.querySelector('header').offsetHeight; // Change 'header' to your actual header selector
-                // const elementPosition = selectedContent.getBoundingClientRect().top + window.pageYOffset;
-                // const offsetPosition = elementPosition - headerOffset;
-    
-                // window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-            }, 20); // 20 ms delay
-      
-            // Check if the models need to be initialized
-            if (contentId === 'exteriorModelContent' && !exteriorModelLoaded) {
-                initExteriorModel();  
-                exteriorModelLoaded = true;  
-            } else if (contentId === 'interiorModelContent' && !interiorModelLoaded) {
-                initInteriorModel();  
-                interiorModelLoaded = true;  
-            }
-        }
+              }, 20); // 20 ms delay
+        
+              // Check if the models need to be initialized
+              if (contentId === 'exteriorModelContent' && !exteriorModelLoaded) {
+                  initExteriorModel();  
+                  exteriorModelLoaded = true;  
+              } else if (contentId === 'interiorModelContent' && !interiorModelLoaded) {
+                  initInteriorModel();  
+                  interiorModelLoaded = true;  
+              }
+          }
     
         let exteriorModelLoaded = false;
         let interiorModelLoaded = false;
@@ -642,7 +635,9 @@
             let loadedTilesCount = 0;
 
             // Show loading bar when tiles start loading
-            progressBarContainer.style.display = 'block';
+            setTimeout(() => {
+                progressBarContainer.style.display = 'block';
+            }, 20);
 
             tilesRenderer.addEventListener('load-model', (event) => {
                   loadedTilesCount++;
