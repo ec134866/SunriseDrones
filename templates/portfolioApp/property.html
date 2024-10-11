@@ -233,8 +233,16 @@
                       </div>
                   </div>
                 </div>
-              <div id="exteriorModelContainer" class="d-flex justify-content-center">
-              </div>
+                <div class="progress-bar-container" style="position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);width: 50%;height: 20%;display: flex;flex-direction: column;justify-content: center; align-items: center;text-align: center;">
+                  <div class="row">
+                      <label for="progress-bar" style="color: white; font-size: 4vh; margin-bottom: 1vh;">Loading...</label>
+                  </div>
+                  <div class="row">
+                      <progress id="progress-bar" style="height: 20px;" value="0" max="100"></progress>
+                  </div>
+                </div>
+                <div id="exteriorModelContainer" class="d-flex justify-content-center">
+                </div>
             </div>
           </div>
           <div class="d-flex justify-content-center">
@@ -524,6 +532,8 @@
         
         window.initExteriorModel = function() {
             const container = document.getElementById('exteriorModelContainer');
+            const progressBar = document.getElementById('progress-bar');
+            const progressBarContainer = document.querySelector('.progress-bar-container');
             container.innerHTML = ''; 
 
             camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), .1, {{ selected_flight.script_exterior.camera_far }});
@@ -625,6 +635,25 @@
             // tilesRenderer.maxDepth = Infinity;
             tilesRenderer.autoDisableRendererCulling = true;
             // tilesRenderer.displayActiveTiles = true;
+
+            // MAKE THIS PER SELECTEDFLIGHT, ADD TO MODELS
+            let totalTiles = 208;  // Total number of tiles you expect to load (you can dynamically calculate this)
+            let loadedTilesCount = 0;
+
+            // Show loading bar when tiles start loading
+            progressBarContainer.style.display = 'block';
+
+            tilesRenderer.addEventListener('load-model', (event) => {
+                  loadedTilesCount++;
+                  let progressPercentage = (loadedTilesCount / totalTiles) * 100;
+                  progressBar.value = progressPercentage;
+                  console.log(`Tiles loaded: ${loadedTilesCount} / ${totalTiles}`);
+
+                  if (loadedTilesCount === totalTiles) {
+                      // Hide the loading bar when loading is complete
+                      progressBarContainer.style.display = 'none';
+                  }
+              });
 
 
 
