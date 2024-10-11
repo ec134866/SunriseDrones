@@ -804,40 +804,36 @@
         };
 
         function renderLoop() {
-          requestAnimationFrame(renderLoop);            
-
-          // Calculate delta time
-          const delta = clock.getDelta(); // Seconds since the last call to this function
-      
-          if (spinning) {
-              // Update camera's position to create a circular path around the model
-              camera.position.x = Math.cos(Date.now() * spinSpeed) * currentDistance;
-              camera.position.z = Math.sin(Date.now() * spinSpeed) * currentDistance;
-              camera.position.y = Math.sin(Date.now() * spinSpeed) * currentDistance; // Keep the camera at the model's height
-      
-              // Increase the current distance until it reaches the target distance
-              if (currentDistance < targetDistance) {
-                  currentDistance += distanceIncrement; // Adjust increment speed as needed
-              }
-              
-              camera.lookAt(modelGroup.position); // Make the camera look at the model
+            requestAnimationFrame(renderLoop);
+        
+            // Calculate delta time
+            const delta = clock.getDelta(); // Seconds since the last call to this function
+        
+            if (spinning && loadedTilesCount < totalTiles) {
+                // Only spin if tiles are still loading
+                camera.position.x = Math.cos(Date.now() * spinSpeed) * currentDistance;
+                camera.position.z = Math.sin(Date.now() * spinSpeed) * currentDistance;
+                camera.position.y = Math.sin(Date.now() * spinSpeed) * currentDistance; // Keep the camera at the model's height
+                camera.lookAt(modelGroup.position); // Make the camera look at the model
+            }
+        
+            if (controls) {
+                controls.update(delta); // Update controls
+            }
+        
+            camera.updateMatrixWorld();
+            tilesRenderer.update();
+        
+            // Check if all tiles are loaded
+            if (loadedTilesCount === totalTiles) {
+                spinning = false; // Stop spinning
+                camera.position.set({{selected_flight.script_exterior.camera_position}}); // Update camera position to final distance
+                controls.target.set({{selected_flight.script_exterior.camera_position}}); // Make sure the controls are looking at the right target
+                controls.update(); // Ensure controls update to new target
+            }
+        
+            renderer.render(scene, camera);
           }
-      
-          if (controls) {
-              controls.update(delta); 
-          }
-      
-          camera.updateMatrixWorld();
-          tilesRenderer.update();
-      
-          // Check if all tiles are loaded
-          if (loadedTilesCount === totalTiles) {
-              spinning = false; // Stop spinning
-              camera.position.set({{selected_flight.script_exterior.camera_position}}); // Update camera position to final distance
-          }
-      
-          renderer.render(scene, camera);
-        }
           
         </script>
 
