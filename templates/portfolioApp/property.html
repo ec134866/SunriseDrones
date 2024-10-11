@@ -504,19 +504,23 @@
         const distanceDisplay = document.getElementById('distance-display'); 
         const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
         const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
+        
+        
         let spinning = true; // Track if the model should spin
         let initialDistance = 1; // Start close to the model
-        let initialHeight = 20;
+        let initialHeight = 10;
         let currentHeight = initialHeight;
         let targetDistance = 700; // End distance from the model
-        let targetHeight = 500; // End height from the model
+        let targetHeight = 700; // End height from the model
         let currentDistance = initialDistance; // Current distance from the model
-        const spinSpeed = 0.00007; // Speed of spinning around the model
+        const spinSpeed = 0.0001; // Speed of spinning around the model
         const distanceIncrement = 0.1; // Increment distance per frame
-        const heightIncrement = 10; // Increment distance per frame
+        const heightIncrement = 0.05; // Increment distance per frame
         let loadedTilesCount = 0;
         // MAKE THIS PER SELECTEDFLIGHT, ADD TO MODELS
         let totalTiles = 208;  // Total number of tiles you expect to load (you can dynamically calculate this)
+        let cameraReset = false;  // Track if the camera has been reset
+        let controlsEnabled = false;
 
 
         distanceDisplay.style.display = 'none';
@@ -560,7 +564,7 @@
             renderer.setPixelRatio(window.devicePixelRatio);
 
             if (isTouchDevice) {
-                renderer.setPixelRatio(0.5);  
+                renderer.setPixelRatio(0.75);  
                 renderer.setSize(window.innerWidth * 0.75, window.innerHeight * 0.75);  
             } else {
                 renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8)); 
@@ -643,8 +647,9 @@
             tilesRenderer.autoDisableRendererCulling = true;
             // tilesRenderer.displayActiveTiles = true;
 
-
-
+            // MAKE THIS PER SELECTEDFLIGHT, ADD TO MODELS
+            let totalTiles = 208;  // Total number of tiles you expect to load (you can dynamically calculate this)
+            let loadedTilesCount = 0;
 
             // Show loading bar when tiles start loading
             setTimeout(() => {
@@ -808,44 +813,53 @@
         };
 
         function renderLoop() {
-            requestAnimationFrame(renderLoop);
-        
-            // Calculate delta time
-            const delta = clock.getDelta(); // Seconds since the last call to this function
-        
-            if (loadedTilesCount < totalTiles) {
-                // Only spin if tiles are still loading
-                camera.position.x = Math.cos(Date.now() * spinSpeed) * currentDistance;
-                camera.position.z = Math.sin(Date.now() * spinSpeed) * currentDistance;
+            let delta = clock.getDelta();
 
-                if (currentDistance < targetDistance) {
-                  currentDistance += distanceIncrement; // Adjust increment speed as needed
-              }
-                if (currentHeight < targetHeight) {
-                  currentHeight += heightIncrement; // Adjust increment speed as needed
-              }
-
-              camera.lookAt(modelGroup.position);
-            }
-        
-           
-        
-            // Check if all tiles are loaded
-            if (loadedTilesCount === totalTiles) {
-                spinning = false; // Stop spinning
-                camera.position.set({{selected_flight.script_exterior.camera_position}}); // Update camera position to final distance
-                controls.update(); // Ensure controls update to new target
-            }
-
+            // Update controls if they are initialized
             if (controls) {
-              controls.update(delta); // Update controls
-          }
-      
+                controls.update(delta);
+            }
+
+            // Update the camera and tiles renderer
             camera.updateMatrixWorld();
             tilesRenderer.update();
-        
             renderer.render(scene, camera);
-          }
+
+            // Check if all tiles are loaded
+            if (loadedTilesCount >= totalTiles) {
+                if (!cameraReset) {
+                    // Reset camera once all tiles are loaded
+                    camera.position.set(40, 20, 1);  // Reset camera position
+
+                    // Mark that the camera has been reset
+                    cameraReset = true;
+                    controlsEnabled = true;  // Enable controls after reset
+
+                }
+
+                // Allow normal control only if the camera has been reset
+                if (cameraReset && controls) {
+                    controls.update(delta);  // Update controls based on delta
+                }
+            } else {
+                // Tiles are still loading, apply the spinning behavior
+                camera.position.x = Math.cos(Date.now() * spinSpeed) * currentDistance;
+                camera.position.z = Math.sin(Date.now() * spinSpeed) * currentDistance;
+                camera.position.y = currentHeight;
+
+                if (currentDistance < targetDistance) {
+                    currentDistance += distanceIncrement;
+                }
+                if (currentHeight < targetHeight) {
+                    currentHeight += heightIncrement;
+                }
+
+                camera.lookAt(modelGroup.position); // Ensure camera is looking at the model
+            }
+
+            // Continue the render loop
+            requestAnimationFrame(renderLoop);
+        }
           
         </script>
 
