@@ -647,6 +647,9 @@
                   let progressPercentage = (loadedTilesCount / totalTiles) * 100;
                   progressBar.value = progressPercentage;
 
+                  console.log(`Tiles loaded: ${loadedTilesCount} / ${totalTiles}`);
+                  console.log(`Loaded Tile: ${tileName}, Size: ${tileSize} MB, Progress: ${loadedTilesCount}/${totalTiles}`);
+
                   if (loadedTilesCount === totalTiles) {
                       // Hide the loading bar when loading is complete
                       progressBarContainer.style.display = 'none';
