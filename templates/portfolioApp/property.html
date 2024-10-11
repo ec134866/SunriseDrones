@@ -607,6 +607,7 @@
           }
   
           function onKeyChange(event) {
+              event.preventDefault();
               if (event.key === 'Shift') {
                   controls.movementSpeed = event.type === 'keydown' ? 260 : 80;
               }
