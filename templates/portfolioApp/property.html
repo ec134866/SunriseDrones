@@ -588,11 +588,15 @@
                   : new OrbitControls(camera, renderer.domElement);
               
               if (controlType === 'fly') {
-                  controls.movementSpeed = 80; 
-                  controls.rollSpeed = 0.6;
+                if (isTouchDevice) {
+                    
+                } else {
+                  controls.movementSpeed = 40; 
+                  controls.rollSpeed = 0.5;
                   controls.dragToLook = true;
                   document.addEventListener('keydown', onKeyChange);
                   document.addEventListener('keyup', onKeyChange);
+                }
               } else {
                   controls.zoomSpeed = 2;
                   controls.minDistance = 0;
