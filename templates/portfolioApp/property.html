@@ -514,7 +514,7 @@
         let targetHeight = 1000; // End height from the model
         let currentDistance = initialDistance; // Current distance from the model
         const spinSpeed = 0.00008; // Speed of spinning around the model
-        const distanceIncrement = 0.4; // Increment distance per frame
+        const distanceIncrement = 0.6; // Increment distance per frame
         const heightIncrement = 0.4; // Increment distance per frame
         let loadedTilesCount = 0;
         // MAKE THIS PER SELECTEDFLIGHT, ADD TO MODELS
@@ -611,7 +611,7 @@
           }
   
           function onKeyChange(event) {
-              if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+              if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
                 event.preventDefault();
             }
 
