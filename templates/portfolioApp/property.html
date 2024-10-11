@@ -506,20 +506,20 @@
         const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
         
         
-        let spinning = true;
-        let initialDistance = 10;
+        let spinning = true; // Track if the model should spin
+        let initialDistance = 10; // Start close to the model
         let initialHeight = 10;
         let currentHeight = initialHeight;
-        let targetDistance = 900;
-        let targetHeight = 900;
-        let currentDistance = initialDistance;
-        const spinSpeed = 0.00008;
-        const distanceIncrement = 0.2;
-        const heightIncrement = 0.2;
+        let targetDistance = 900; // End distance from the model
+        let targetHeight = 900; // End height from the model
+        let currentDistance = initialDistance; // Current distance from the model
+        const spinSpeed = 0.00008; // Speed of spinning around the model
+        const distanceIncrement = 0.2; // Increment distance per frame
+        const heightIncrement = 0.2; // Increment distance per frame
         let loadedTilesCount = 0;
         // MAKE THIS PER SELECTEDFLIGHT, ADD TO MODELS
-        let totalTiles = 208; 
-        let cameraReset = false;  
+        let totalTiles = 208;  // Total number of tiles you expect to load (you can dynamically calculate this)
+        let cameraReset = false;  // Track if the camera has been reset
         let controlsEnabled = false;
 
 
@@ -579,6 +579,37 @@
 
             const distance = camera.position.distanceTo(controls.target);
 
+            
+            function initControls(controlType) {
+              if (controls) controls.dispose();
+  
+              controls = (controlType === 'fly') 
+                  ? new FlyControls(camera, renderer.domElement) 
+                  : new OrbitControls(camera, renderer.domElement);
+              
+              if (controlType === 'fly') {
+                  controls.movementSpeed = 80; 
+                  controls.rollSpeed = 0.6;
+                  controls.dragToLook = true;
+                  document.addEventListener('keydown', onKeyChange);
+                  document.addEventListener('keyup', onKeyChange);
+              } else {
+                  controls.zoomSpeed = 2;
+                  controls.minDistance = 0;
+                  controls.maxDistance = 500;
+                  controls.minPolarAngle = 0.25;
+                  controls.maxPolarAngle = 1.8;
+                  document.removeEventListener('keydown', onKeyChange);
+                  document.removeEventListener('keyup', onKeyChange);
+              }
+          }
+  
+          function onKeyChange(event) {
+              if (event.key === 'Shift') {
+                  controls.movementSpeed = event.type === 'keydown' ? 260 : 80;
+              }
+          }
+
             modelGroup = new THREE.Group();
             scene.add(modelGroup);
             
@@ -602,6 +633,7 @@
                   progressBar.value = progressPercentage;
 
                   if (loadedTilesCount === totalTiles) {
+                      // Hide the loading bar when loading is complete
                       progressBarContainer.style.display = 'none';
                   }
               });
@@ -640,37 +672,6 @@
 
             renderLoop();
         };
-
-        {% comment %} controls function {% endcomment %}
-        function initControls(controlType) {
-            if (controls) controls.dispose();
-
-            controls = (controlType === 'fly') 
-                ? new FlyControls(camera, renderer.domElement) 
-                : new OrbitControls(camera, renderer.domElement);
-            
-            if (controlType === 'fly') {
-                controls.movementSpeed = 80; 
-                controls.rollSpeed = 0.6;
-                controls.dragToLook = true;
-                document.addEventListener('keydown', onKeyChange);
-                document.addEventListener('keyup', onKeyChange);
-            } else {
-                controls.zoomSpeed = 2;
-                controls.minDistance = 0;
-                controls.maxDistance = 500;
-                controls.minPolarAngle = 0.25;
-                controls.maxPolarAngle = 1.8;
-                document.removeEventListener('keydown', onKeyChange);
-                document.removeEventListener('keyup', onKeyChange);
-            }
-        }
-
-        function onKeyChange(event) {
-            if (event.key === 'Shift') {
-                controls.movementSpeed = event.type === 'keydown' ? 260 : 80;
-            }
-        }
 
         {% comment %} raycasting to measure distance {% endcomment %}
         function onClick(event) {
@@ -775,7 +776,7 @@
             if (loadedTilesCount >= totalTiles) {
                 if (!cameraReset) {
                     // Reset camera once all tiles are loaded
-                    camera.position.set(selected_flight.script_exterior.camera_position);  // Reset camera position
+                    camera.position.set({{selected_flight.script_exterior.camera_position}});  // Reset camera position
 
                     // Mark that the camera has been reset
                     cameraReset = true;
