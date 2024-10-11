@@ -233,15 +233,15 @@
                       </div>
                   </div>
                 </div>
-                <div class="progress-bar-container" style="display: none; justify-content: center; align-items: center; text-align: center;">
-                  <div class="row">
-                      <label for="progress-bar" style="color: white; font-size: 4vh; margin-bottom: 1vh;">Loading...</label>
-                  </div>
-                  <div class="row">
-                      <progress id="progress-bar" style="height: 20px;" value="0" max="100"></progress>
-                  </div>
-                </div>
                 <div id="exteriorModelContainer" class="d-flex justify-content-center">
+                  <div class="progress-bar-container" style="display: none; position: absolute; justify-content: center; align-items: center; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+                    <div class="row">
+                      <label for="progress-bar" style="color: white; font-size: 4vh; margin-bottom: 1vh;">Loading...</label>
+                    </div>
+                    <div class="row">
+                      <progress id="progress-bar" style="height: 5vh;" value="0" max="100"></progress>
+                    </div>
+                  </div>
                 </div>
             </div>
           </div>
