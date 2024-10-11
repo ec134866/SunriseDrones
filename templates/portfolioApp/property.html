@@ -813,7 +813,7 @@
                 // Only spin if tiles are still loading
                 camera.position.x = Math.cos(Date.now() * spinSpeed) * currentDistance;
                 camera.position.z = Math.sin(Date.now() * spinSpeed) * currentDistance;
-                camera.position.y = Math.sin(Date.now() * (spinSpeed)*0.1) * currentDistance; // Keep the camera at the model's height
+                camera.position.y = Math.sin(Date.now() * (spinSpeed)* 0.5) * currentDistance; // Keep the camera at the model's height
 
                 if (currentDistance < targetDistance) {
                   currentDistance += distanceIncrement; // Adjust increment speed as needed
