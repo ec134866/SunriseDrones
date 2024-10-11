@@ -510,8 +510,8 @@
         let initialDistance = 10; // Start close to the model
         let initialHeight = 10;
         let currentHeight = initialHeight;
-        let targetDistance = 900; // End distance from the model
-        let targetHeight = 900; // End height from the model
+        let targetDistance = 1000; // End distance from the model
+        let targetHeight = 1000; // End height from the model
         let currentDistance = initialDistance; // Current distance from the model
         const spinSpeed = 0.00008; // Speed of spinning around the model
         const distanceIncrement = 0.4; // Increment distance per frame
@@ -743,7 +743,8 @@
             controls.zoomToCursor = true;
             controls.enablePan = true;
             controls.minDistance = 0;
-            controls.maxDistance = 50000;
+            controls.maxDistance = 1000;
+            // ADD SELECTED FLIGHT TO MODELS
             controls.minPolarAngle = 0.25;
             controls.maxPolarAngle = 1.8;
             controls.autoRotate = false;
