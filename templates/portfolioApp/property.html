@@ -657,7 +657,6 @@
                   loadedTilesCount++;
                   let progressPercentage = (loadedTilesCount / totalTiles) * 100;
                   progressBar.value = progressPercentage;
-                  console.log(`Tiles loaded: ${loadedTilesCount} / ${totalTiles}`);
 
                   if (loadedTilesCount === totalTiles) {
                       // Hide the loading bar when loading is complete
@@ -826,7 +825,7 @@
             if (loadedTilesCount >= totalTiles) {
                 if (!cameraReset) {
                     // Reset camera once all tiles are loaded
-                    camera.position.set(40, 20, 1);  // Reset camera position
+                    camera.position.set(selected_flight.script_exterior.camera_position);  // Reset camera position
 
                     // Mark that the camera has been reset
                     cameraReset = true;
