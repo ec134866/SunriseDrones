@@ -506,10 +506,14 @@
         const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
         let spinning = true; // Track if the model should spin
         let initialDistance = 1; // Start close to the model
-        let targetDistance = 500; // End distance from the model
+        let initialHeight = 20;
+        let currentHeight = initialHeight;
+        let targetDistance = 700; // End distance from the model
+        let targetHeight = 500; // End height from the model
         let currentDistance = initialDistance; // Current distance from the model
         const spinSpeed = 0.00007; // Speed of spinning around the model
         const distanceIncrement = 0.1; // Increment distance per frame
+        const heightIncrement = 0.1; // Increment distance per frame
         let loadedTilesCount = 0;
         // MAKE THIS PER SELECTEDFLIGHT, ADD TO MODELS
         let totalTiles = 208;  // Total number of tiles you expect to load (you can dynamically calculate this)
@@ -813,11 +817,13 @@
                 // Only spin if tiles are still loading
                 camera.position.x = Math.cos(Date.now() * spinSpeed) * currentDistance;
                 camera.position.z = Math.sin(Date.now() * spinSpeed) * currentDistance;
-                camera.position.y = Math.sin(Date.now() * (spinSpeed)* 0.5) * currentDistance; // Keep the camera at the model's height
 
                 if (currentDistance < targetDistance) {
                   currentDistance += distanceIncrement; // Adjust increment speed as needed
               }
+              if (currentHeight < targetHeight) {
+                currentHeight += heightIncrement; // Adjust increment speed as needed
+            }
 
               camera.lookAt(modelGroup.position);
             }
