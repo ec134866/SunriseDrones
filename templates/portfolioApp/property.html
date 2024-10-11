@@ -814,6 +814,12 @@
                 camera.position.x = Math.cos(Date.now() * spinSpeed) * currentDistance;
                 camera.position.z = Math.sin(Date.now() * spinSpeed) * currentDistance;
                 camera.position.y = Math.sin(Date.now() * spinSpeed) * currentDistance; // Keep the camera at the model's height
+
+                if (currentDistance < targetDistance) {
+                  currentDistance += distanceIncrement; // Adjust increment speed as needed
+              }
+
+              camera.lookAt(modelGroup.position);
             }
         
             if (controls) {
