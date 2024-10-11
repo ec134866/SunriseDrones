@@ -814,7 +814,6 @@
                 camera.position.x = Math.cos(Date.now() * spinSpeed) * currentDistance;
                 camera.position.z = Math.sin(Date.now() * spinSpeed) * currentDistance;
                 camera.position.y = Math.sin(Date.now() * spinSpeed) * currentDistance; // Keep the camera at the model's height
-                camera.lookAt(modelGroup.position); // Make the camera look at the model
             }
         
             if (controls) {
@@ -828,7 +827,6 @@
             if (loadedTilesCount === totalTiles) {
                 spinning = false; // Stop spinning
                 camera.position.set({{selected_flight.script_exterior.camera_position}}); // Update camera position to final distance
-                controls.target.set({{selected_flight.script_exterior.camera_position}}); // Make sure the controls are looking at the right target
                 controls.update(); // Ensure controls update to new target
             }
         
