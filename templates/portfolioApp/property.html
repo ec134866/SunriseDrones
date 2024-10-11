@@ -828,20 +828,21 @@
               camera.lookAt(modelGroup.position);
             }
         
+           
         
             // Check if all tiles are loaded
             if (loadedTilesCount === totalTiles) {
                 spinning = false; // Stop spinning
                 camera.position.set({{selected_flight.script_exterior.camera_position}}); // Update camera position to final distance
                 controls.update(); // Ensure controls update to new target
-
-                if (controls) {
-                  controls.update(delta); // Update controls
-              }
-          
-                camera.updateMatrixWorld();
-                tilesRenderer.update();
             }
+
+            if (controls) {
+              controls.update(delta); // Update controls
+          }
+      
+            camera.updateMatrixWorld();
+            tilesRenderer.update();
         
             renderer.render(scene, camera);
           }
