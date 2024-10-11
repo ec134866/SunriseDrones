@@ -833,7 +833,7 @@
           // Check if all tiles are loaded
           if (loadedTilesCount === totalTiles) {
               spinning = false; // Stop spinning
-              camera.position.set(selected_flight.script_exterior.camera_position); // Update camera position to final distance
+              camera.position.set({{selected_flight.script_exterior.camera_position}}); // Update camera position to final distance
               camera.lookAt(modelGroup.position); // Optional: Adjust the camera to look at the model
           }
       
