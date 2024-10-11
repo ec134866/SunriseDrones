@@ -470,7 +470,7 @@
             // Use setTimeout to add a delay before scrolling
             setTimeout(() => {
                 selectedContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }, 30); // 20 ms delay
+              }, 25); 
         
               // Check if the models need to be initialized
               if (contentId === 'exteriorModelContent' && !exteriorModelLoaded) {
@@ -637,7 +637,7 @@
             // Show loading bar when tiles start loading
             setTimeout(() => {
                 progressBarContainer.style.display = 'block';
-            }, 100);
+            }, 10000);
 
             tilesRenderer.addEventListener('load-model', (event) => {
                   loadedTilesCount++;
