@@ -467,17 +467,17 @@
             const selectedContent = document.getElementById(contentId);
             selectedContent.classList.add('show');
     
-            // Use scrollIntoView to scroll to the selected content
-            selectedContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Use setTimeout to add a delay before scrolling
+            setTimeout(() => {
+                selectedContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
     
-            // Optional: If you need to account for a header or navbar height, you can do it like this:
-            // setTimeout(() => {
-            //     const headerOffset = document.querySelector('header').offsetHeight; // Change 'header' to your actual header selector
-            //     const elementPosition = selectedContent.getBoundingClientRect().top + window.pageYOffset;
-            //     const offsetPosition = elementPosition - headerOffset;
+                // Optional: If you need to account for a header or navbar height, you can do it like this:
+                // const headerOffset = document.querySelector('header').offsetHeight; // Change 'header' to your actual header selector
+                // const elementPosition = selectedContent.getBoundingClientRect().top + window.pageYOffset;
+                // const offsetPosition = elementPosition - headerOffset;
     
-            //     window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-            // }, 20);
+                // window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            }, 20); // 20 ms delay
       
             // Check if the models need to be initialized
             if (contentId === 'exteriorModelContent' && !exteriorModelLoaded) {
@@ -491,7 +491,7 @@
     
         let exteriorModelLoaded = false;
         let interiorModelLoaded = false;
-    </script>
+      </script>
 
       
 
