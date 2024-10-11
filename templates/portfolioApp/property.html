@@ -644,8 +644,11 @@
 
             tilesRenderer.addEventListener('load-model', (event) => {
                   loadedTilesCount++;
+                  const loadedTile = event.tile; 
+                  
                   let progressPercentage = (loadedTilesCount / totalTiles) * 100;
                   progressBar.value = progressPercentage;
+                  console.log(`Tile: ${loadedTile.content.uri} loaded: ${loadedTilesCount} / ${totalTiles}`);
 
                   if (loadedTilesCount === totalTiles) {
                       // Hide the loading bar when loading is complete
