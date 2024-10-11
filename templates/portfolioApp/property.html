@@ -611,7 +611,15 @@
           }
   
           function onKeyChange(event) {
-              event.preventDefault();
+              if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+                event.preventDefault();
+            }
+
+            if (event.key === 'Escape') {
+                document.removeEventListener('keydown', onKeyChange);
+                document.removeEventListener('keyup', onKeyChange);
+            }
+            
               if (event.key === 'Shift') {
                   controls.movementSpeed = event.type === 'keydown' ? 260 : 80;
               }
