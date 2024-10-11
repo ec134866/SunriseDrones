@@ -506,20 +506,20 @@
         const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
         
         
-        let spinning = true; // Track if the model should spin
-        let initialDistance = 1; // Start close to the model
+        let spinning = true;
+        let initialDistance = 10;
         let initialHeight = 10;
         let currentHeight = initialHeight;
-        let targetDistance = 700; // End distance from the model
-        let targetHeight = 700; // End height from the model
-        let currentDistance = initialDistance; // Current distance from the model
-        const spinSpeed = 0.0001; // Speed of spinning around the model
-        const distanceIncrement = 0.1; // Increment distance per frame
-        const heightIncrement = 0.05; // Increment distance per frame
+        let targetDistance = 900;
+        let targetHeight = 900;
+        let currentDistance = initialDistance;
+        const spinSpeed = 0.00008;
+        const distanceIncrement = 0.2;
+        const heightIncrement = 0.2;
         let loadedTilesCount = 0;
         // MAKE THIS PER SELECTEDFLIGHT, ADD TO MODELS
-        let totalTiles = 208;  // Total number of tiles you expect to load (you can dynamically calculate this)
-        let cameraReset = false;  // Track if the camera has been reset
+        let totalTiles = 208; 
+        let cameraReset = false;  
         let controlsEnabled = false;
 
 
@@ -579,60 +579,6 @@
 
             const distance = camera.position.distanceTo(controls.target);
 
-            function initControls(controlType) {
-                if (controls) {
-                    controls.dispose();
-                }
-
-
-                if (controlType === 'fly') {
-                    if (isTouchDevice) {
-                        // 
-                    } else {                       
-                        controls = new FlyControls(camera, container);
-                        controls.movementSpeed = 80; 
-                        controls.rollSpeed = 0.6;
-                        controls.domElement = renderer.domElement;
-                        controls.autoForward = false;
-                        controls.dragToLook = true;
-
-                        document.addEventListener('keydown', onKeyDown);
-                        document.addEventListener('keyup', onKeyUp);
-                    }
-                } else if (controlType === 'orbit') {
-                    controls = new OrbitControls(camera, container);
-                    controls.zoomSpeed = 2;
-                    controls.zoomToCursor = true;
-                    controls.minDistance = 0;
-                    controls.maxDistance = 500;
-                    controls.minPolarAngle = 0.25;
-                    controls.maxPolarAngle = 1.8;
-
-                    document.removeEventListener('keydown', onKeyDown);
-                    document.removeEventListener('keyup', onKeyUp);
-                }
-            }
-
-            let shiftPressed = false; 
-
-            function onKeyDown(event) {
-                if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                    event.preventDefault(); // Prevent page scrolling
-                }
-            
-                if (event.key === 'Shift') {
-                    shiftPressed = true;
-                    controls.movementSpeed = 260;
-                }
-            }
-            
-            function onKeyUp(event) {
-                if (event.key === 'Shift') {
-                    shiftPressed = false;
-                    controls.movementSpeed = 80;
-                }
-            }
-
             modelGroup = new THREE.Group();
             scene.add(modelGroup);
             
@@ -645,10 +591,7 @@
             // tilesRenderer.errorThreshold = Infinity;
             // tilesRenderer.maxDepth = Infinity;
             tilesRenderer.autoDisableRendererCulling = true;
-            // tilesRenderer.displayActiveTiles = true;
 
-
-            // Show loading bar when tiles start loading
             setTimeout(() => {
                 progressBarContainer.style.display = 'block';
             }, 900);
@@ -659,25 +602,11 @@
                   progressBar.value = progressPercentage;
 
                   if (loadedTilesCount === totalTiles) {
-                      // Hide the loading bar when loading is complete
                       progressBarContainer.style.display = 'none';
                   }
               });
 
-
-
-            // debugPlugin.displayBoxBounds = true;   
-
-
-            // Set debugging options (optional)
-            // debugPlugin.colorMode = 'DISTANCE'; 
-            
-            // debugPlugin.displayRegionBounds = true;
-            // debugPlugin.maxDebugDepth = - 1;
-            // debugPlugin.maxDebugError = - 1;
-            // debugPlugin.maxDebugDistance = - 1;
-
-        
+            // debugPlugin.displayBoxBounds = true;           
 
             tilesRenderer.addEventListener('load-tile-set', () => {
               const sphere = new THREE.Sphere();
@@ -693,16 +622,6 @@
 
               modelGroup.frustumCulled = false;
           });
-  
-             // -- freewalk
-            // const rig = new CameraRig(camera, scene)
-            // controls = new FreeMovementControls(rig, {
-            //     domElement: container,
-            //     pointerScaleFactor: 15,
-            // })
-            // controls.enable()
-
-
 
             tilesRenderer.setCamera(camera);
             tilesRenderer.setResolutionFromRenderer(camera, renderer);
@@ -721,6 +640,37 @@
 
             renderLoop();
         };
+
+        {% comment %} controls function {% endcomment %}
+        function initControls(controlType) {
+            if (controls) controls.dispose();
+
+            controls = (controlType === 'fly') 
+                ? new FlyControls(camera, renderer.domElement) 
+                : new OrbitControls(camera, renderer.domElement);
+            
+            if (controlType === 'fly') {
+                controls.movementSpeed = 80; 
+                controls.rollSpeed = 0.6;
+                controls.dragToLook = true;
+                document.addEventListener('keydown', onKeyChange);
+                document.addEventListener('keyup', onKeyChange);
+            } else {
+                controls.zoomSpeed = 2;
+                controls.minDistance = 0;
+                controls.maxDistance = 500;
+                controls.minPolarAngle = 0.25;
+                controls.maxPolarAngle = 1.8;
+                document.removeEventListener('keydown', onKeyChange);
+                document.removeEventListener('keyup', onKeyChange);
+            }
+        }
+
+        function onKeyChange(event) {
+            if (event.key === 'Shift') {
+                controls.movementSpeed = event.type === 'keydown' ? 260 : 80;
+            }
+        }
 
         {% comment %} raycasting to measure distance {% endcomment %}
         function onClick(event) {
