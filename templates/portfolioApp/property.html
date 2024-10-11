@@ -511,6 +511,8 @@
         const spinSpeed = 0.01; // Speed of spinning around the model
         const distanceIncrement = 1; // Increment distance per frame
         let loadedTilesCount = 0;
+        // MAKE THIS PER SELECTEDFLIGHT, ADD TO MODELS
+        let totalTiles = 208;  // Total number of tiles you expect to load (you can dynamically calculate this)
 
 
         distanceDisplay.style.display = 'none';
@@ -637,8 +639,7 @@
             tilesRenderer.autoDisableRendererCulling = true;
             // tilesRenderer.displayActiveTiles = true;
 
-            // MAKE THIS PER SELECTEDFLIGHT, ADD TO MODELS
-            let totalTiles = 208;  // Total number of tiles you expect to load (you can dynamically calculate this)
+
 
 
             // Show loading bar when tiles start loading
