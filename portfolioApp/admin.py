@@ -19,8 +19,14 @@ class FilterFlight(admin.ModelAdmin):
 
 
 class FilterProperty(admin.ModelAdmin):
-    list_display = ("name", "loc_city", "loc_state", "loc_country", "person", "owner")
-    list_filter = ("name", "loc_city", "loc_state", "loc_country", "owner")
+    list_display = ("name", "loc_city", "loc_state", "loc_country", "get_person_names", "owner")
+    list_filter = ("name", "loc_city", "loc_state", "loc_country", "person", "owner")
+
+    def get_person(self, obj):
+        return ", ".join([p.name for p in obj.person.all()]) 
+
+    get_person.short_description = 'Person'
+
 
 class FilterFile(admin.ModelAdmin):
     list_display = ("name", "link", "thumbnail", "direct_download_link", "size_in_mb", "file_type", "flight")
