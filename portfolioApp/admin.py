@@ -20,7 +20,7 @@ class FilterFlight(admin.ModelAdmin):
 
 class FilterProperty(admin.ModelAdmin):
     list_display = ("name", "loc_city", "loc_state", "loc_country", "person", "owner")
-    list_filter = ("name", "loc_city", "loc_state", "person", "owner")
+    list_filter = ("name", "loc_city", "loc_state", "loc_country", "owner")
 
 class FilterFile(admin.ModelAdmin):
     list_display = ("name", "link", "thumbnail", "direct_download_link", "size_in_mb", "file_type", "flight")
