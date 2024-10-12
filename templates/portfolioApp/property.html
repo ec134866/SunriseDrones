@@ -520,7 +520,7 @@
         const heightIncrement = 0.4; // Increment distance per frame
         let loadedTilesCount = 0;
         // MAKE THIS PER SELECTEDFLIGHT, ADD TO MODELS
-        let totalTiles = 208;  // Total number of tiles you expect to load (you can dynamically calculate this)
+        let totalTiles = {{selected_flight.script_exterior.total_tiles}};  // Total number of tiles you expect to load (you can dynamically calculate this)
         let cameraReset = false;  // Track if the camera has been reset
         let controlsEnabled = false;
 

@@ -60,6 +60,7 @@ class ScriptExterior(models.Model):
     model_rotation_y = models.CharField(max_length=20, blank=True, null=True, default="22")
     model_rotation_z = models.CharField(max_length=20, blank=True, null=True, default="0")
     max_camera_zoom = models.CharField(max_length=20, blank=True, null=True, default="100")
+    total_tiles = models.CharField(max_length=20, blank=True, null=True, default="100")
 
     def __str__(self):
         return f"Exterior Script {self.id}"
