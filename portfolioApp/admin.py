@@ -19,11 +19,12 @@ class FilterFlight(admin.ModelAdmin):
 
 
 class FilterProperty(admin.ModelAdmin):
-    list_display = ("name", "loc_city", "loc_state", "loc_country", "get_person_names", "owner")
+    list_display = ("name", "loc_city", "loc_state", "loc_country", "get_person", "owner")
     list_filter = ("name", "loc_city", "loc_state", "loc_country", "person", "owner")
 
+    # Custom method to display related person names
     def get_person(self, obj):
-        return ", ".join([p.name for p in obj.person.all()]) 
+        return ", ".join([p.name for p in obj.person.all()])
 
     get_person.short_description = 'Person'
 
