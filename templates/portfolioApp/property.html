@@ -512,14 +512,13 @@
         let initialDistance = 10; // Start close to the model
         let initialHeight = 10;
         let currentHeight = initialHeight;
-        let targetDistance = 1000; // End distance from the model
-        let targetHeight = 1000; // End height from the model
+        let targetDistance = {{selected_flight.script_exterior.max_distance}}; // End distance from the model
+        let targetHeight = {{selected_flight.script_exterior.max_distance}}; // End height from the model
         let currentDistance = initialDistance; // Current distance from the model
         const spinSpeed = 0.00008; // Speed of spinning around the model
-        const distanceIncrement = 0.6; // Increment distance per frame
-        const heightIncrement = 0.4; // Increment distance per frame
+        const distanceIncrement = {{selected_flight.script_exterior.distance_increment}}; // Increment distance per frame
+        const heightIncrement = {{selected_flight.script_exterior.height_increment}}; // Increment distance per frame
         let loadedTilesCount = 0;
-        // MAKE THIS PER SELECTEDFLIGHT, ADD TO MODELS
         let totalTiles = {{selected_flight.script_exterior.total_tiles}};  // Total number of tiles you expect to load (you can dynamically calculate this)
         let cameraReset = false;  // Track if the camera has been reset
         let controlsEnabled = false;
@@ -766,8 +765,7 @@
             controls.zoomToCursor = true;
             controls.enablePan = true;
             controls.minDistance = 0;
-            controls.maxDistance = 1000;
-            // ADD SELECTED FLIGHT TO MODELS
+            controls.maxDistance = {{selected_flight.script_exterior.max_distance}};
             controls.minPolarAngle = 0.25;
             controls.maxPolarAngle = 1.8;
             controls.autoRotate = false;
