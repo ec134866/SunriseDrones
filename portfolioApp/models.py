@@ -102,6 +102,12 @@ class Flight(models.Model):
     script_interior = models.ForeignKey(ScriptInterior, on_delete=models.CASCADE, related_name='flights', blank=True, null=True)
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='flights')
     person = models.ManyToManyField(Person, related_name='flights')
+    of_content_btn_1 = models.CharField(max_length=6, blank=True, null=True, default="d-none")
+    of_content_btn_2 = models.CharField(max_length=6, blank=True, null=True, default="d-none")
+    ext_content_btn_1 = models.CharField(max_length=6, blank=True, null=True, default="d-none")
+    ext_content_btn_2 = models.CharField(max_length=6, blank=True, null=True, default="d-none")
+    int_content_btn_1 = models.CharField(max_length=6, blank=True, null=True, default="d-none")
+    int_content_btn_2 = models.CharField(max_length=6, blank=True, null=True, default="d-none")
 
     def __str__(self):
         return self.id
