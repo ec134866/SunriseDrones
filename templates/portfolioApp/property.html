@@ -641,7 +641,9 @@
             tilesRenderer.autoDisableRendererCulling = true;
 
             setTimeout(() => {
-                progressBarContainer.style.display = 'block';
+                if (loadedTilesCount < totalTiles && !allTilesLoaded) {
+                    progressBarContainer.style.display = 'block';
+                }
             }, 900);
 
             tilesRenderer.addEventListener('load-model', (event) => {
