@@ -59,7 +59,6 @@ class ScriptExterior(models.Model):
     model_rotation_x = models.CharField(max_length=20, blank=True, null=True, default="-50")
     model_rotation_y = models.CharField(max_length=20, blank=True, null=True, default="22")
     model_rotation_z = models.CharField(max_length=20, blank=True, null=True, default="0")
-    max_camera_zoom = models.CharField(max_length=20, blank=True, null=True, default="100")
     total_tiles = models.CharField(max_length=20, blank=True, null=True, default="100")
     max_distance = models.CharField(max_length=20, blank=True, null=True, default="1000")
     distance_increment = models.CharField(max_length=20, blank=True, null=True, default="0.06")
