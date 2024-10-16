@@ -82,7 +82,7 @@
                 </div>
               </div>      
             {% comment %} tracker or downloads {% endcomment %}
-            <div class="col" style="min-width:70%; max-height:17vh; padding-right: 3vh; padding-left: 3vh;">
+            <div class="col" style="min-width:70%; max-height:19vh; padding-right: 3vh; padding-left: 3vh;">
               {% comment %} contract section {% endcomment %}
               <div class="collapse w-100" id="contractTracker">
                 <div class="track d-flex">
@@ -115,9 +115,9 @@
               </div>
               {% comment %} download section {% endcomment %}
               <div class="collapse w-100" id="downloadSection">
-                <div class="row overflow-scroll" style="max-height:17vh; background-color: lightgray;" id="fileContainer">
+                <div class="row overflow-scroll" style="max-height:19vh; background-color: lightgray;" id="fileContainer">
                   {% for file in files %}
-                    <div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 80%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
+                    <div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 70%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
                       <a href="{{ file.link }}" target="_blank">
                           <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 14vh;">
                       </a>                    
