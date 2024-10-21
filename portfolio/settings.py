@@ -18,6 +18,12 @@ from django.core.management.utils import get_random_secret_key
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Path to the environment file
+env_path = os.path.join(BASE_DIR, '..', 'environment')
+
+# Read the environment file
+with open(env_path) as f:
+    DJANGO_ENV = f.read().strip()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -26,11 +32,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "False") == "True"
+DEBUG = (DJANGO_ENV == 'dev')
 
-DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
-
-ALLOWED_HOSTS = ['127.0.0.1', 'sunrisedrones.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'sunrisedrones.pythonanywhere.com', 'balancedrock.pythonanywhere.com']
 
 
 # Application definition
@@ -82,15 +86,26 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'SunriseDrones$default',
-        'USER': 'SunriseDrones',
-        'PASSWORD': 'weakPassword',
-        'HOST': 'SunriseDrones.mysql.pythonanywhere-services.com',
+if DJANGO_ENV == 'dev':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'SunriseDrones$dev',
+            'USER': 'SunriseDrones',
+            'PASSWORD': 'weakPassword', 
+            'HOST': 'SunriseDrones.mysql.pythonanywhere-services.com',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'SunriseDrones$default',
+            'USER': 'SunriseDrones',
+            'PASSWORD': 'weakerPassword', 
+            'HOST': 'SunriseDrones.mysql.pythonanywhere-services.com',
+        }
+    }
 
 
 # Password validation
