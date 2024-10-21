@@ -100,10 +100,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'SunriseDrones$master',
-            'USER': 'SunriseDrones',
+            'NAME': 'BalancedRockImag$default',
+            'USER': 'BalancedRockImag',
             'PASSWORD': 'weakerPassword', 
-            'HOST': 'SunriseDrones.mysql.pythonanywhere-services.com',
+            'HOST': 'BalancedRockImaging.mysql.pythonanywhere-services.com',
         }
     }
 
