@@ -90,7 +90,7 @@ if DJANGO_ENV == 'dev':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'SunriseDrones$dev',
+            'NAME': 'SunriseDrones$default',
             'USER': 'SunriseDrones',
             'PASSWORD': 'weakPassword', 
             'HOST': 'SunriseDrones.mysql.pythonanywhere-services.com',
@@ -100,7 +100,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'SunriseDrones$default',
+            'NAME': 'SunriseDrones$master',
             'USER': 'SunriseDrones',
             'PASSWORD': 'weakerPassword', 
             'HOST': 'SunriseDrones.mysql.pythonanywhere-services.com',
