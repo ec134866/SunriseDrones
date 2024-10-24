@@ -130,9 +130,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'evanspam719@gmail.com'
-EMAIL_HOST_PASSWORD = 'evanspam'
-DEFAULT_FROM_EMAIL = 'evanspam719@gmail.com'
+EMAIL_HOST_USER = 'provocarters@gmail.com'
+EMAIL_HOST_PASSWORD = 'ece0513!'
+DEFAULT_FROM_EMAIL = 'provocarters@gmail.com'
 
 
 # Internationalization
