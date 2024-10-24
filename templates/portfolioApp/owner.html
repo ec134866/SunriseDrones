@@ -22,9 +22,9 @@
                   <a href="{% url 'property' person.uuid owners.name property.name %}" class="text-decoration-none">
                     <div class="d-flex justify-content-center">
                       {% if property.latest_flight %}
-                        <img src="{{ property.latest_flight.top_image_link_1 }}" class="img-fluid" style="width:24vw; height:auto; border-radius:2vw;" alt="{{ property.name }}">
+                        <img src="{{ property.latest_flight.top_image_link_1 }}" class="img-fluid" style="width:75%; height:auto; border-radius:2vw;" alt="{{ property.name }}">
                       {% else %}
-                        <img src="default_image_url" class="img-fluid" style="width:34vw; height:24vh; border-radius:2vw;" alt="{{ property.name }}">
+                        <img src="default_image_url" class="img-fluid" style="width:34vw; height:75%; border-radius:2vw;" alt="{{ property.name }}">
                       {% endif %}
                     </div>
                     <br>
