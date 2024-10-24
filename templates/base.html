@@ -132,11 +132,9 @@
               <a href="{% url 'property' person.uuid property.owner.name property.name %}">{{ property.name }}</a>
           </li>
           {% endfor %}
-      </ul>
-      <ul class="sidebar-nav" style="padding: 0; margin: 0; list-style: none; text-align: center;">
-        <li class="sidebar-nav-item" style="padding-bottom: 20px;">
+          <li class="sidebar-nav-item" style="padding-bottom: 20px;">
             <a href="{% url 'feedback' %}" style="color: white; text-decoration: none;">Give Feedback / Report an Issue</a>
-        </li>
+          </li>
       </ul>
   </nav>
 
