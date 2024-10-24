@@ -4,6 +4,9 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from .models import Person, Owner, Property, Flight, ScriptExterior, ScriptInterior, File
+from django.core.mail import send_mail
+from django.conf import settings
+from .forms import FeedbackForm
 
 # Create your views here.
 
@@ -117,3 +120,26 @@ def propertyPageView(request, person_uuid, owner_name, property_name):
 
     return render(request, 'portfolioApp/property.html', context)
 
+
+def feedbackPageView(request):
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            feedback = form.save()
+
+            send_mail(
+                subject=f"New {feedback.feedback_type.capitalize()}",
+                message=(
+                    f"Name: {feedback.name or 'Anonymous'}\n"
+                    f"Email: {feedback.email or 'Not provided'}\n"
+                    f"Number: {feedback.number or 'Not provided'}\n\n"
+                    f"Message:\n{feedback.message}"
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=['evan@thecarters.com'],
+            )
+            return redirect('feedback_success')
+    else:
+        form = FeedbackForm()
+    
+    return render(request, 'portfolioApp/form.html', {'form': form})
