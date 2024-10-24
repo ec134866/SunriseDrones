@@ -127,18 +127,3 @@ class File(models.Model):
     def __str__(self):
         return f"File {self.id}"
     
-
-class Feedback(models.Model):
-    FEEDBACK_TYPE_CHOICES = [
-        ('issue', 'Issue'),
-        ('suggestion', 'Suggestion'),
-    ]
-
-    name = models.CharField(max_length=100, blank=True)
-    email = models.EmailField(blank=True)
-    number = models.CharField(max_length=15, blank=True)
-    feedback_type = models.CharField(max_length=10, choices=FEEDBACK_TYPE_CHOICES)
-    message = models.TextField()
-
-    def __str__(self):
-        return f"{self.feedback_type.capitalize()} from {self.name or 'Anonymous'}"

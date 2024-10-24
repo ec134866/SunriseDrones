@@ -122,24 +122,7 @@ def propertyPageView(request, person_uuid, owner_name, property_name):
 
 
 def feedbackPageView(request):
-    if request.method == 'POST':
-        form = FeedbackForm(request.POST)
-        if form.is_valid():
-            feedback = form.save()
-
-            send_mail(
-                subject=f"New {feedback.feedback_type.capitalize()}",
-                message=(
-                    f"Name: {feedback.name or 'Anonymous'}\n"
-                    f"Email: {feedback.email or 'Not provided'}\n"
-                    f"Number: {feedback.number or 'Not provided'}\n\n"
-                    f"Message:\n{feedback.message}"
-                ),
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=['evan@thecarters.com'],
-            )
-            return redirect('feedback_success')
-    else:
-        form = FeedbackForm()
     
-    return render(request, 'portfolioApp/form.html', {'form': form})
+    context = {}
+    
+    return render(request, 'portfolioApp/form.html')
