@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Person, Owner, Property, Flight, ScriptExterior, ScriptInterior, File
 from django.core.mail import send_mail
 from django.conf import settings
-from .forms import FeedbackForm
 
 # Create your views here.
 
