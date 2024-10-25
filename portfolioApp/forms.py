@@ -5,20 +5,17 @@ class PersonForm(forms.ModelForm):
     owners = forms.ModelMultipleChoiceField(
         queryset=Owner.objects.none(),
         required=False,
-        widget=forms.CheckboxSelectMultiple,
-        label="Associate with Owners"
+        widget=forms.CheckboxSelectMultiple
     )
     properties = forms.ModelMultipleChoiceField(
         queryset=Property.objects.none(),
         required=False,
-        widget=forms.CheckboxSelectMultiple,
-        label="Associate with Properties"
+        widget=forms.CheckboxSelectMultiple
     )
     flights = forms.ModelMultipleChoiceField(
         queryset=Flight.objects.none(),
         required=False,
-        widget=forms.CheckboxSelectMultiple,
-        label="Associate with Flights"
+        widget=forms.CheckboxSelectMultiple
     )
 
     class Meta:

@@ -141,38 +141,32 @@ def feedbackPageView(request):
     return render(request, 'portfolioApp/form.html')
 
 
-def managementPageView(request, person_uuid):
-    # Retrieve the person based on the URL uuid or create a blank form for a new person
+def managementPageView(request, person_uuid=None):
+    # If person_uuid is provided, fetch the person; otherwise create a new instance
     person = get_object_or_404(Person, uuid=person_uuid) if person_uuid else None
     person_form = PersonForm(instance=person)
 
-    # Filter accessible data based on the associated owners and properties of the person
-    accessible_owners = Owner.objects.all()
-    accessible_properties = Property.objects.filter(owner__in=accessible_owners)
-    accessible_flights = Flight.objects.filter(property__in=accessible_properties)
+    # Filter accessible data based on the person identified by uuid
+    accessible_owners = Owner.objects.filter(person=person) if person else Owner.objects.all()
+    accessible_properties = Property.objects.filter(owner__in=accessible_owners) if person else Property.objects.all()
+    accessible_flights = Flight.objects.filter(property__in=accessible_properties) if person else Flight.objects.all()
 
-    if request.method == "POST":
-        person_form = PersonForm(request.POST, instance=person)
-        
-        # Save the new or updated Person and link with selected related data
-        if person_form.is_valid():
-            new_person = person_form.save(commit=False)
-            new_person.save()
-            
-            # Link the person to selected owners, properties, and flights
-            person_form.save_m2m()  # Required to save ManyToMany relationships
-
-            # Redirect to the same page after form submission to clear the form and show success
-            return redirect('management', person_uuid=new_person.uuid)
-
-    # Restrict choices for the form based on accessible data
+    # Update form field querysets
     person_form.fields['owners'].queryset = accessible_owners
     person_form.fields['properties'].queryset = accessible_properties
     person_form.fields['flights'].queryset = accessible_flights
 
-    context = {
-        'person_form': person_form,
-        'uuid_created': person_uuid,
-    }
+    if request.method == "POST":
+        # Handle form submission
+        person_form = PersonForm(request.POST, instance=person)
+        if person_form.is_valid():
+            new_person = person_form.save()
+            return redirect('management', person_uuid=new_person.uuid)
 
+    context = {
+        'persons': Person.objects.all(),
+        'person_form': person_form,
+        'person': person,
+    }
+    
     return render(request, 'portfolioApp/management.html', context)
