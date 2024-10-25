@@ -101,6 +101,7 @@ def propertyPageView(request, person_uuid, owner_name, property_name):
 
     script_exterior = selected_flight.script_exterior if selected_flight else None
     script_interior = selected_flight.script_interior if selected_flight else None
+    notice = selected_flight.notice if selected_flight else None
     files = selected_flight.files.all() if selected_flight else None
 
     access_contract = None
@@ -126,6 +127,7 @@ def propertyPageView(request, person_uuid, owner_name, property_name):
         'access_contract': access_contract,
         'access_files': access_files,
         'files': files,
+        'notice': notice,
     }
 
     return render(request, 'portfolioApp/property.html', context)

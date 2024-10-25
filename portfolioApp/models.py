@@ -111,6 +111,7 @@ class Flight(models.Model):
     ext_content_btn_2 = models.CharField(max_length=6, blank=True, null=True, default="d-none")
     int_content_btn_1 = models.CharField(max_length=6, blank=True, null=True, default="d-none")
     int_content_btn_2 = models.CharField(max_length=6, blank=True, null=True, default="d-none")
+    notice = models.CharField(max_length=500, blank=True, null=True)
 
     def __str__(self):
         return self.id
