@@ -150,7 +150,8 @@ def managementPageView(request):
             person_form = PersonForm(request.POST)
             if person_form.is_valid():
                 new_person = person_form.save()  
-                return redirect('management', uuid_created=new_person.uuid)  
+                request.session['uuid_created'] = new_person.uuid  #
+                return redirect('management')  
         elif 'edit_person' in request.POST:
             person_id = request.POST.get('person_id')  
             person = get_object_or_404(Person, uuid=person_id)  
@@ -160,10 +161,12 @@ def managementPageView(request):
                 return redirect('management')  
 
     
+    uuid_created = request.session.pop('uuid_created', None)  
+    
     context = {
         'persons': persons,
         'person_form': person_form,
-        'uuid_created': request.GET.get('uuid_created')  
+        'uuid_created': uuid_created,  
     }
     
     return render(request, 'portfolioApp/management.html', context)
