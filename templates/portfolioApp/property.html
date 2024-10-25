@@ -41,12 +41,16 @@
             </div>
             {% comment %} buttons {% endcomment %}
             <div class="col-auto">
+              {% if access_contract%}
                 <div class="row">
-                    <button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
+                  <button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
                 </div>
+              {% endif %}
+              {% if access_files%}
                 <div class="row">
-                    <button id="downloadSectionBtn" class="btn btn-light" type="button" data-bs-target="#downloadSection" onclick="toggleSection(this)" style="margin-top: 0.5vh">Download My Files</button>
+                  <button id="downloadSectionBtn" class="btn btn-light" type="button" data-bs-target="#downloadSection" onclick="toggleSection(this)" style="margin-top: 0.5vh">Download My Files</button>
                 </div>
+              {% endif %}
             </div>
             {% comment %} filters {% endcomment %}
               <div class="col-auto" id="filterIcons" style="display:none;">

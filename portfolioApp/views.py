@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
-from .models import Person, Owner, Property, Flight, ScriptExterior, ScriptInterior, File
-from django.core.mail import send_mail
-from django.conf import settings
+from .models import Person, Owner, Property, Flight, ScriptExterior, ScriptInterior, File, PersonFlightAccess
 
 # Create your views here.
 
@@ -104,6 +103,16 @@ def propertyPageView(request, person_uuid, owner_name, property_name):
     script_interior = selected_flight.script_interior if selected_flight else None
     files = selected_flight.files.all() if selected_flight else None
 
+    access_contract = None
+    access_files = None
+    if selected_flight:
+        try:
+            person_flight_access = PersonFlightAccess.objects.get(person=person, flight=selected_flight)
+            access_contract = person_flight_access.access_contract
+            access_files = person_flight_access.access_files
+        except ObjectDoesNotExist:
+            pass
+
     context = {
         'person': person,
         'owner': owner,
@@ -114,6 +123,8 @@ def propertyPageView(request, person_uuid, owner_name, property_name):
         'selected_flight': selected_flight,
         'script_exterior': script_exterior,
         'script_interior': script_interior,
+        'access_contract': access_contract,
+        'access_files': access_files,
         'files': files,
     }
 
