@@ -3,14 +3,11 @@
   <title> Create a Share Link </title>
 {% endblock %}
         
-{% block search %}
-{% endblock %}
-        
 {% block body %}
     <div>
         <h1>Management Dashboard</h1>
 
-        <h2>Persons</h2>
+        <h2>Add or Edit Person</h2>
         <form method="POST">
             {% csrf_token %}
             {{ person_form.as_p }}
@@ -41,17 +38,39 @@
 
         <h3>Existing Persons</h3>
         {% for person in persons %}
-        <div>
-            <h4>{{ person.name }}</h4>
-            <form method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="person_id" value="{{ person.uuid }}">
-                {{ person_form.as_p }} 
-                <button type="submit" name="edit_person">Edit Person</button>
-            </form>
-            <p>Phone: {{ person.phone_number }}</p> 
-            <p>Email: {{ person.email }}</p> 
-        </div>
+            <div>
+                <h4>{{ person.name }}</h4>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="person_id" value="{{ person.uuid }}">
+                    {{ person_form.as_p }} 
+                    <button type="submit" name="edit_person">Edit Person</button>
+                </form>
+                <p>Phone: {{ person.phone_number }}</p> 
+                <p>Email: {{ person.email }}</p> 
+
+                <!-- Display Accessible Owners, Properties, and Flights -->
+                <h5>Accessible Owners</h5>
+                <ul>
+                    {% for owner in person.owners.all %}
+                    <li>{{ owner.name }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h5>Accessible Properties</h5>
+                <ul>
+                    {% for property in person.properties.all %}
+                    <li>{{ property.name }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h5>Accessible Flights</h5>
+                <ul>
+                    {% for flight in person.flights.all %}
+                    <li>{{ flight.id }} - {{ flight.date }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         {% endfor %}
 </div>
 
