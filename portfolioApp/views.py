@@ -141,40 +141,38 @@ def feedbackPageView(request):
     return render(request, 'portfolioApp/form.html')
 
 
-def managementPageView(request):
-    persons = Person.objects.all()
+def managementPageView(request, person_uuid):
+    # Retrieve the person object using uuid from the URL
+    person = get_object_or_404(Person, uuid=person_uuid)
     person_form = PersonForm()
 
-    # Filter options based on user access
-    accessible_owners = Owner.objects.filter(person=request.user)
+    # Filter accessible data based on the person identified by uuid
+    accessible_owners = Owner.objects.filter(person=person)
     accessible_properties = Property.objects.filter(owner__in=accessible_owners)
     accessible_flights = Flight.objects.filter(property__in=accessible_properties)
 
+    # Form submission logic
     if request.method == "POST":
-        if 'add_person' in request.POST:
-            person_form = PersonForm(request.POST)
-            if person_form.is_valid():
-                new_person = person_form.save()
-                person_form.save_m2m()
-                request.session['uuid_created'] = str(new_person.uuid)  
-                return redirect('management')
-        elif 'edit_person' in request.POST:
-            person_id = request.POST.get('person_id')
-            person = get_object_or_404(Person, uuid=person_id)
-            person_form = PersonForm(request.POST, instance=person)
-            if person_form.is_valid():
-                person_form.save()
-                return redirect('management')
+        # Determine action based on the form submission
+        action = 'add_person' if 'add_person' in request.POST else 'edit_person'
+        form_instance = None if action == 'add_person' else person
+        
+        person_form = PersonForm(request.POST, instance=form_instance)
+        if person_form.is_valid():
+            new_person = person_form.save()
+            request.session['uuid_created'] = str(new_person.uuid)
+            return redirect('management', person_uuid=person_uuid)
 
-    # Populate the form with filtered options
+    # Populate the form fields with filtered options
     person_form.fields['owners'].queryset = accessible_owners
     person_form.fields['properties'].queryset = accessible_properties
     person_form.fields['flights'].queryset = accessible_flights
 
+    # Retrieve uuid_created if available in session
     uuid_created = request.session.pop('uuid_created', None)
 
     context = {
-        'persons': persons,
+        'persons': Person.objects.all(),
         'person_form': person_form,
         'uuid_created': uuid_created,
     }
