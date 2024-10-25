@@ -19,7 +19,10 @@
     
     {% if uuid_created %}
         <p>New person can access:</p> 
-        <p>https://sunrisedrones.pythonanywhere.com/{{ uuid_created }}</p> 
+        <p id="share-link">https://sunrisedrones.pythonanywhere.com/{{ uuid_created }}</p>
+        <button onclick="copyToClipboard()"> 
+            <i class="fa-solid fa-copy"></i> Copy
+        </button>
     {% endif %}
 
     <h3>Existing Persons</h3>
