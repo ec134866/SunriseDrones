@@ -142,39 +142,37 @@ def feedbackPageView(request):
 
 
 def managementPageView(request, person_uuid):
-    # Retrieve the person object using uuid from the URL
-    person = get_object_or_404(Person, uuid=person_uuid)
-    person_form = PersonForm()
+    # Retrieve the person based on the URL uuid or create a blank form for a new person
+    person = get_object_or_404(Person, uuid=person_uuid) if person_uuid else None
+    person_form = PersonForm(instance=person)
 
-    # Filter accessible data based on the person identified by uuid
-    accessible_owners = Owner.objects.filter(person=person)
+    # Filter accessible data based on the associated owners and properties of the person
+    accessible_owners = Owner.objects.all()
     accessible_properties = Property.objects.filter(owner__in=accessible_owners)
     accessible_flights = Flight.objects.filter(property__in=accessible_properties)
 
-    # Form submission logic
     if request.method == "POST":
-        # Determine action based on the form submission
-        action = 'add_person' if 'add_person' in request.POST else 'edit_person'
-        form_instance = None if action == 'add_person' else person
+        person_form = PersonForm(request.POST, instance=person)
         
-        person_form = PersonForm(request.POST, instance=form_instance)
+        # Save the new or updated Person and link with selected related data
         if person_form.is_valid():
-            new_person = person_form.save()
-            request.session['uuid_created'] = str(new_person.uuid)
-            return redirect('management', person_uuid=person_uuid)
+            new_person = person_form.save(commit=False)
+            new_person.save()
+            
+            # Link the person to selected owners, properties, and flights
+            person_form.save_m2m()  # Required to save ManyToMany relationships
 
-    # Populate the form fields with filtered options
+            # Redirect to the same page after form submission to clear the form and show success
+            return redirect('management', person_uuid=new_person.uuid)
+
+    # Restrict choices for the form based on accessible data
     person_form.fields['owners'].queryset = accessible_owners
     person_form.fields['properties'].queryset = accessible_properties
     person_form.fields['flights'].queryset = accessible_flights
 
-    # Retrieve uuid_created if available in session
-    uuid_created = request.session.pop('uuid_created', None)
-
     context = {
-        'persons': Person.objects.all(),
         'person_form': person_form,
-        'uuid_created': uuid_created,
+        'uuid_created': person_uuid,
     }
-    
+
     return render(request, 'portfolioApp/management.html', context)
