@@ -374,11 +374,13 @@
               const contractTracker = document.getElementById('contractTracker');
               const contractTrackerBtn = document.getElementById('contractTrackerBtn');
       
-              // Show contract tracker if the publish date is today or in the future
-              if (publishDate >= today) {
-                  contractTracker.classList.add('show');
-                  contractTrackerBtn.classList.replace('btn-light', 'btn-dark');
-              }
+              // Show contract tracker if the publish date is today or in the future IF access
+              {% if access_contract%}
+                if (publishDate >= today) {
+                    contractTracker.classList.add('show');
+                    contractTrackerBtn.classList.replace('btn-light', 'btn-dark');
+                }
+              {% endif %}
           });
       
           function toggleSection(button) {
