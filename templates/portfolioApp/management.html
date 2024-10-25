@@ -18,7 +18,8 @@
     </form>
     
     {% if uuid_created %}
-        <p>New person created with UUID: {{ uuid_created }}</p>  <!-- Display the UUID -->
+        <p>New person can access:</p> 
+        <p>https://sunrisedrones.pythonanywhere.com/{{ uuid_created }}</p> 
     {% endif %}
 
     <h3>Existing Persons</h3>
@@ -28,11 +29,11 @@
         <form method="POST">
             {% csrf_token %}
             <input type="hidden" name="person_id" value="{{ person.uuid }}">
-            {{ person_form.as_p }}  <!-- This can be adjusted to show editable fields -->
+            {{ person_form.as_p }} 
             <button type="submit" name="edit_person">Edit Person</button>
         </form>
-        <p>Phone: {{ person.phone_number }}</p>  <!-- Display the phone number -->
-        <p>Email: {{ person.email }}</p>  <!-- Display the email -->
+        <p>Phone: {{ person.phone_number }}</p> 
+        <p>Email: {{ person.email }}</p> 
     </div>
     {% endfor %}
 </div>
