@@ -386,11 +386,17 @@
               const targetSection = document.querySelector(button.getAttribute('data-bs-target'));
               const isAlreadyActive = targetSection.classList.contains('show'); // Check if the section is already active
       
-              // Reset both sections and button states
-              document.getElementById('contractTracker').classList.remove('show');
-              document.getElementById('downloadSection').classList.remove('show');
-              document.getElementById('contractTrackerBtn').classList.replace('btn-dark', 'btn-light');
-              document.getElementById('downloadSectionBtn').classList.replace('btn-dark', 'btn-light');
+              // Check existence before manipulating elements
+              const contractTrackerSection = document.getElementById('contractTracker');
+              const downloadSection = document.getElementById('downloadSection');
+              const contractTrackerBtn = document.getElementById('contractTrackerBtn');
+              const downloadSectionBtn = document.getElementById('downloadSectionBtn');
+
+              // Reset both sections and button states, if they exist
+              if (contractTrackerSection) contractTrackerSection.classList.remove('show');
+              if (downloadSection) downloadSection.classList.remove('show');
+              if (contractTrackerBtn) contractTrackerBtn.classList.replace('btn-dark', 'btn-light');
+              if (downloadSectionBtn) downloadSectionBtn.classList.replace('btn-dark', 'btn-light');
       
               // If the section was already active, we don't reactivate it (deselect)
               if (!isAlreadyActive) {
