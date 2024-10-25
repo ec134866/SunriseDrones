@@ -143,13 +143,14 @@ def feedbackPageView(request):
 
 def managementPageView(request):
     persons = Person.objects.all()
+    uuid_created = None 
 
     if request.method == "POST":
         if 'add_person' in request.POST:
             person_form = PersonForm(request.POST)
             if person_form.is_valid():
-                person_form.save()  
-                return redirect('management')
+                new_person = person_form.save() 
+                uuid_created = new_person.uuid 
         elif 'edit_person' in request.POST:
             person_id = request.POST.get('person_id')  
             person = get_object_or_404(Person, uuid=person_id)  
@@ -163,6 +164,7 @@ def managementPageView(request):
     context = {
         'persons': persons,
         'person_form': person_form,
+        'uuid_created': uuid_created, 
     }
     
     return render(request, 'portfolioApp/management.html', context)
