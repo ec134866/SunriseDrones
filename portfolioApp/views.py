@@ -151,8 +151,8 @@ def managementPageView(request):
                 person_form.save()  
                 return redirect('management_page')
         elif 'edit_person' in request.POST:
-            person_id = request.POST.get('person_id')
-            person = get_object_or_404(Person, id=person_id)
+            person_id = request.POST.get('person_id')  
+            person = get_object_or_404(Person, uuid=person_id)  
             person_form = PersonForm(request.POST, instance=person)
             if person_form.is_valid():
                 person_form.save()  
