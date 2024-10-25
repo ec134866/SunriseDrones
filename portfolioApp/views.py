@@ -149,8 +149,8 @@ def managementPageView(request):
         if 'add_person' in request.POST:
             person_form = PersonForm(request.POST)
             if person_form.is_valid():
-                new_person = person_form.save()  
-                request.session['uuid_created'] = new_person.uuid  #
+                new_person = person_form.save()
+                request.session['uuid_created'] = str(new_person.uuid)  
                 return redirect('management')  
         elif 'edit_person' in request.POST:
             person_id = request.POST.get('person_id')  
@@ -160,7 +160,6 @@ def managementPageView(request):
                 person_form.save()  
                 return redirect('management')  
 
-    
     uuid_created = request.session.pop('uuid_created', None)  
     
     context = {
