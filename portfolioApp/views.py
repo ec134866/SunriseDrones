@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from .models import Person, Owner, Property, Flight, ScriptExterior, ScriptInterior, File, PersonFlightAccess
+from .forms import PersonForm 
 
 # Create your views here.
 
@@ -138,3 +139,30 @@ def feedbackPageView(request):
     context = {}
     
     return render(request, 'portfolioApp/form.html')
+
+
+def managementPageView(request):
+    persons = Person.objects.all()
+
+    if request.method == "POST":
+        if 'add_person' in request.POST:
+            person_form = PersonForm(request.POST)
+            if person_form.is_valid():
+                person_form.save()  
+                return redirect('management_page')
+        elif 'edit_person' in request.POST:
+            person_id = request.POST.get('person_id')
+            person = get_object_or_404(Person, id=person_id)
+            person_form = PersonForm(request.POST, instance=person)
+            if person_form.is_valid():
+                person_form.save()  
+                return redirect('management_page')
+
+    person_form = PersonForm()
+
+    context = {
+        'persons': persons,
+        'person_form': person_form,
+    }
+    
+    return render(request, 'portfolioApp/management.html', context)

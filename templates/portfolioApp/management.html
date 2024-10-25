@@ -1,0 +1,23 @@
+<div>
+    <h1>Management Dashboard</h1>
+
+    <h2>Persons</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ person_form.as_p }}
+        <button type="submit" name="add_person">Add Person</button>
+    </form>
+    
+    <h3>Existing Persons</h3>
+    {% for person in persons %}
+    <div>
+        <h4>{{ person.name }}</h4>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="person_id" value="{{ person.id }}">
+            {{ person_form.as_p }}  <!-- This can be adjusted if needed to show editable fields for each person -->
+            <button type="submit" name="edit_person">Edit Person</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
