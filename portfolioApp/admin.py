@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Person, Owner, Property, Flight, ScriptExterior, ScriptInterior, File
+from .models import Person, Owner, Property, Flight, ScriptExterior, ScriptInterior, File, PersonFlightAccess
 
 
 class PersonID(admin.ModelAdmin):
@@ -40,3 +40,4 @@ admin.site.register(ScriptExterior)
 admin.site.register(ScriptInterior)
 admin.site.register(File, FilterFile)
 admin.site.register(Flight, FilterFlight)
+admin.site.register(PersonFlightAccess)
