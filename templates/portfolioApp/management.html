@@ -19,10 +19,14 @@
     
     {% if uuid_created %}
         <p>New person can access:</p> 
-        <p id="share-link">https://sunrisedrones.pythonanywhere.com/{{ uuid_created }}</p>
-        <button onclick="copyToClipboard()"> 
-            <i class="fa-solid fa-copy"></i> Copy
-        </button>
+        <div style="display: flex; align-items: center;">
+            <a id="share-link" href="https://sunrisedrones.pythonanywhere.com/{{ uuid_created }}" target="_blank" style="margin-right: 10px;">
+                https://sunrisedrones.pythonanywhere.com/{{ uuid_created }}
+            </a>
+            <button onclick="alert('Copy this link manually')"> 
+                <i class="fa-solid fa-copy"></i> Copy
+            </button>
+        </div>
     {% endif %}
 
 
