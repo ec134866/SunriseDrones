@@ -12,10 +12,11 @@ class Person(models.Model):
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     email = models.EmailField(unique=True, blank=True, null=True)
     view = models.BooleanField(default=False)
+    accessAdmin = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
-    
+      
 
 
 # Owner Model
@@ -127,3 +128,16 @@ class File(models.Model):
     def __str__(self):
         return f"File {self.id}"
     
+
+
+class PersonFlightAccess(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name="flight_accesses")
+    flight = models.ForeignKey(Flight, on_delete=models.CASCADE, related_name="person_accesses")
+    access_contract = models.BooleanField(default=True)  
+    access_files = models.BooleanField(default=True)     
+
+    class Meta:
+        unique_together = ("person", "flight") 
+
+    def __str__(self):
+        return f"{self.person.name} access for {self.flight.id}"
