@@ -142,11 +142,9 @@
                   {% endfor %}
                 </div>
               </div>     
-              <div id="popupViewer" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); align-items: center; justify-content: center; z-index: 1000;">
-                <div class="popup-container bg-light position-relative w-75 w-md-50 w-lg-40">
-                  <!-- Close Button -->
+              <div id="popupViewer" onclick="closePopupOnClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+                <div class="popup-container bg-light position-relative w-100 w-md-75 w-lg-50" style="min-height: 70vh; max-height: 90vh; border-radius: 8px; padding: 1rem;">
                   <span onclick="closePopup()" class="close-btn position-absolute top-0 end-0 m-2 fs-3 text-dark" style="cursor: pointer;">&times;</span>
-                  <!-- Image Preview -->
                   <iframe id="popupContent" src="" allow="autoplay" width="100%" height="80%" style="border: none;"></iframe>
                 </div>
               </div>
@@ -286,25 +284,33 @@
 
 
       {% comment %} popup file preview script {% endcomment %}
-        <script>
-          function openPopup(previewSrc) {
+      <script>
+        function openPopup(previewSrc) {
+          closePopup();
+          document.getElementById('popupContent').src = previewSrc;
+          document.getElementById('popupViewer').style.display = 'flex';
+        }
+      
+        function closePopup() {
+          document.getElementById('popupViewer').style.display = 'none';
+          document.getElementById('popupContent').src = '';
+        }
+      
+        // Close popup when clicking outside of popup-container
+        function closePopupOnClick(event) {
+          const popupContainer = document.querySelector('.popup-container');
+          if (!popupContainer.contains(event.target)) {
             closePopup();
-        
-            document.getElementById('popupContent').src = previewSrc;
-            document.getElementById('popupViewer').style.display = 'flex';
           }
-        
-          function closePopup() {
-            document.getElementById('popupViewer').style.display = 'none';
-            document.getElementById('popupContent').src = '';
+        }
+      
+        // Close popup with Escape key
+        document.addEventListener('keydown', function(event) {
+          if (event.key === 'Escape') {
+            closePopup();
           }
-        
-          document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-              closePopup();
-            }
-          });
-        </script>
+        });
+      </script>
 
         {% comment %} settings script  {% endcomment %}
       <script>
