@@ -286,6 +286,7 @@
       {% comment %} popup file preview script {% endcomment %}
       <script>
         function openPopupFile(previewSrc) {
+          console.log("Popup opened with source:", previewSrc);
             // Close any open popup first
             closePopupFile();
             // Set iframe src to the preview source and display the popup
