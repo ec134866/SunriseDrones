@@ -143,11 +143,13 @@
                 </div>
               </div>     
               <div id="uniquePopupViewer" onclick="closePopupFileOnClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
-                <div class="popup-container bg-light position-relative" style="width: 70%; min-height: 70vh; max-height: 90vh; border-radius: 8px; padding: 0; display: flex; flex-direction: column;">
+                <div class="popup-container bg-light position-relative" style="width: 70%; min-height: 70vh; max-height: 90vh; border-radius: 8px; padding: 0; display: flex; flex-direction: column; align-items: center;">
                     <span onclick="closePopupFile()" class="close-btn position-absolute top-0 start-0 m-3 fs-2 text-white" style="font-size: 2rem; cursor: pointer;">&times;</span>
-                    <iframe id="popupContent" src="" allow="autoplay" style="border: none; flex: 1 1 auto;"></iframe>
+                    <button id="prevBtn" onclick="navigate(-1)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: white; font-size: 2rem; cursor: pointer;">&#9664;</button>
+                    <button id="nextBtn" onclick="navigate(1)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: white; font-size: 2rem; cursor: pointer;">&#9654;</button>
+                    <iframe id="popupContent" src="" allow="autoplay" style="border: none; flex: 1 1 auto; width: 100%;"></iframe>
                 </div>
-              </div>
+            </div>
             </div>
           </div>
           
@@ -285,20 +287,39 @@
 
       {% comment %} popup file preview script {% endcomment %}
       <script>
-        document.getElementById('uniquePopupViewer').style.display = 'none'; // Ensure popup is hidden
-        
-        function openPopupFile(previewSrc) {
-            // Close any open popup first
-            closePopupFile();
-            // Set iframe src to the preview source and display the popup
-            document.getElementById('popupContent').src = previewSrc;
-            document.getElementById('uniquePopupViewer').style.display = 'flex';
+        let currentIndex = 0; // To track the current image index
+        let filesArray = []; // This will hold the files data
+    
+        // Function to open the popup and initialize the files array
+        function openPopupFile(previewSrc, files) {
+            // Initialize the files array
+            filesArray = files; // Pass the files data to this function when opening the popup
+            
+            currentIndex = filesArray.findIndex(file => file.preview === previewSrc); // Set the current index
+            
+            document.getElementById('popupContent').src = previewSrc; // Set the iframe src to the preview source
+            document.getElementById('uniquePopupViewer').style.display = 'flex'; // Show the popup
+        }
+    
+        // Navigation function
+        function navigate(direction) {
+            // Update the current index based on direction
+            currentIndex += direction;
+            
+            // Check bounds
+            if (currentIndex < 0) {
+                currentIndex = filesArray.length - 1; // Loop to last image
+            } else if (currentIndex >= filesArray.length) {
+                currentIndex = 0; // Loop to first image
+            }
+            
+            // Update the iframe src to the new preview source
+            document.getElementById('popupContent').src = filesArray[currentIndex].preview;
         }
     
         function closePopupFile() {
-            // Hide the popup and clear the iframe src
-            document.getElementById('uniquePopupViewer').style.display = 'none';
-            document.getElementById('popupContent').src = '';
+            document.getElementById('uniquePopupViewer').style.display = 'none'; // Hide the popup
+            document.getElementById('popupContent').src = ''; // Clear the iframe src
         }
     
         // Close popup when clicking outside of popup-container
@@ -315,7 +336,6 @@
                 closePopupFile();
             }
         });
-    
       </script>
 
         {% comment %} settings script  {% endcomment %}
