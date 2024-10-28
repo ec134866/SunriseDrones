@@ -285,8 +285,9 @@
 
       {% comment %} popup file preview script {% endcomment %}
       <script>
+        document.getElementById('uniquePopupViewer').style.display = 'none'; // Ensure popup is hidden
+        
         function openPopupFile(previewSrc) {
-          console.log("Popup opened with source:", previewSrc);
             // Close any open popup first
             closePopupFile();
             // Set iframe src to the preview source and display the popup
@@ -419,7 +420,6 @@
         {% comment %} script for contract tracker and download section {% endcomment %}
       <script>
           document.addEventListener('DOMContentLoaded', function () {
-              document.getElementById('uniquePopupViewer').style.display = 'none'; // Ensure popup is hidden
               const today = new Date().toISOString().split('T')[0];
               const publishDate = '{{selected_flight.contractPublishDate | date:'Y-m-d' }}'; 
               const contractTracker = document.getElementById('contractTracker');
