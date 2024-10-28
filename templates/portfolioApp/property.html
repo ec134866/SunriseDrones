@@ -144,8 +144,8 @@
               </div>     
               <div id="popupViewer" onclick="closePopupOnClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
                 <div class="popup-container bg-light position-relative" style="width: 70%; min-height: 70vh; max-height: 90vh; border-radius: 8px; padding: 0; display: flex; flex-direction: column;">
-                  <span onclick="closePopup()" class="close-btn position-absolute top-0 start-0 m-3 fs-2 text-white" style="font-size: 2rem; cursor: pointer;">&times;</span>
-                  <iframe id="popupContent" src="" allow="autoplay" style="border: none; flex: 1 1 auto;"></iframe>
+                    <span onclick="closePopup()" class="close-btn position-absolute top-0 start-0 m-3 fs-2 text-white" style="font-size: 2rem; cursor: pointer;">&times;</span>
+                    <iframe id="popupContent" src="" allow="autoplay" style="border: none; flex: 1 1 auto;"></iframe>
                 </div>
               </div>
             </div>
@@ -286,38 +286,36 @@
       {% comment %} popup file preview script {% endcomment %}
       <script>
         function openPopup(previewSrc) {
-          // Close any open popup first
-          closePopup();
-          // Set iframe src to the preview source and display the popup
-          document.getElementById('popupContent').src = previewSrc;
-          document.getElementById('popupViewer').style.display = 'flex';
+            // Close any open popup first
+            closePopup();
+            // Set iframe src to the preview source and display the popup
+            document.getElementById('popupContent').src = previewSrc;
+            document.getElementById('popupViewer').style.display = 'flex';
         }
-      
+    
         function closePopup() {
-          // Hide the popup and clear the iframe src
-          document.getElementById('popupViewer').style.display = 'none';
-          document.getElementById('popupContent').src = '';
+            // Hide the popup and clear the iframe src
+            document.getElementById('popupViewer').style.display = 'none';
+            document.getElementById('popupContent').src = '';
         }
-      
+    
         // Close popup when clicking outside of popup-container
         function closePopupOnClick(event) {
-          const popupContainer = document.querySelector('.popup-container');
-          if (!popupContainer.contains(event.target)) {
-            closePopup();
-          }
+            const popupContainer = document.querySelector('.popup-container');
+            if (!popupContainer.contains(event.target)) {
+                closePopup();
+            }
         }
-      
+    
         // Close popup with Escape key
         document.addEventListener('keydown', function(event) {
-          if (event.key === 'Escape') {
-            closePopup();
-          }
+            if (event.key === 'Escape') {
+                closePopup();
+            }
         });
-      
+    
         // Prevent automatic opening of popup on page load
-        window.onload = function() {
-          closePopup();
-        };
+        // No need for window.onload; simply don't call openPopup anywhere on load
       </script>
 
         {% comment %} settings script  {% endcomment %}
