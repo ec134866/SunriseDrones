@@ -122,7 +122,7 @@
                 <div class="row overflow-scroll" style="max-height:17vh; background-color: lightgray;" id="fileContainer">
                   {% for file in files %}
                     <div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 70%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
-                      <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 12vh; cursor: pointer;" onclick="openPopupFile('{{ file.preview }}', {{ forloop.counter0 }})">
+                      <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 12vh; cursor: pointer;" onclick="openPopupFile('{{ file.preview }}')">
                       <div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
                         <div class="col" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center;" title="{{ file.name }}">
                             <div>{{ file.name }}</div>
@@ -142,16 +142,11 @@
                   {% endfor %}
                 </div>
               </div>     
-              <div class="popup-container bg-light position-relative" style="width: 70%; min-height: 70vh; max-height: 90vh; border-radius: 8px; padding: 0; display: flex; flex-direction: column;">
-                <span onclick="closePopupFile()" class="close-btn position-absolute top-0 start-0 m-3 fs-2 text-white" style="font-size: 2rem; cursor: pointer;">&times;</span>
-                
-                <!-- Navigation Arrows -->
-                <div class="arrow-navigation" style="position: absolute; width: 100%; top: 50%; transform: translateY(-50%);">
-                    <button onclick="prevFile()" class="btn btn-light position-absolute start-0" style="margin-left: 10px;">&lt;</button>
-                    <button onclick="nextFile()" class="btn btn-light position-absolute end-0" style="margin-right: 10px;">&gt;</button>
+              <div id="uniquePopupViewer" onclick="closePopupFileOnClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+                <div class="popup-container bg-light position-relative" style="width: 70%; min-height: 70vh; max-height: 90vh; border-radius: 8px; padding: 0; display: flex; flex-direction: column;">
+                    <span onclick="closePopupFile()" class="close-btn position-absolute top-0 start-0 m-3 fs-2 text-white" style="font-size: 2rem; cursor: pointer;">&times;</span>
+                    <iframe id="popupContent" src="" allow="autoplay" style="border: none; flex: 1 1 auto;"></iframe>
                 </div>
-            
-                <iframe id="popupContent" src="" allow="autoplay" style="border: none; flex: 1 1 auto;"></iframe>
               </div>
             </div>
           </div>
@@ -290,32 +285,14 @@
 
       {% comment %} popup file preview script {% endcomment %}
       <script>
-        let files = []; // Array to hold all file preview URLs
-        let currentIndex = -1; // Current index of the displayed file
-    
         document.getElementById('uniquePopupViewer').style.display = 'none'; // Ensure popup is hidden
-    
-        function openPopupFile(previewSrc, index) {
-            closePopupFile(); // Close any open popup first
-    
-            currentIndex = index; // Update current index
-            files = Array.from(document.querySelectorAll('.file')).map(file => file.getAttribute('data-file-preview')); // Gather all file previews
-            document.getElementById('popupContent').src = previewSrc; // Set iframe src to the preview source
-            document.getElementById('uniquePopupViewer').style.display = 'flex'; // Display the popup
-        }
-    
-        function prevFile() {
-            if (currentIndex > 0) {
-                currentIndex--; // Decrement index
-                document.getElementById('popupContent').src = files[currentIndex]; // Load previous file
-            }
-        }
-    
-        function nextFile() {
-            if (currentIndex < files.length - 1) {
-                currentIndex++; // Increment index
-                document.getElementById('popupContent').src = files[currentIndex]; // Load next file
-            }
+        
+        function openPopupFile(previewSrc) {
+            // Close any open popup first
+            closePopupFile();
+            // Set iframe src to the preview source and display the popup
+            document.getElementById('popupContent').src = previewSrc;
+            document.getElementById('uniquePopupViewer').style.display = 'flex';
         }
     
         function closePopupFile() {
@@ -339,8 +316,6 @@
             }
         });
     
-        // Add event listener for closing the popup on click outside
-        document.addEventListener('click', closePopupFileOnClick);
       </script>
 
         {% comment %} settings script  {% endcomment %}
