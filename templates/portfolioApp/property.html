@@ -420,6 +420,7 @@
         {% comment %} script for contract tracker and download section {% endcomment %}
       <script>
           document.addEventListener('DOMContentLoaded', function () {
+              document.getElementById('uniquePopupViewer').style.display = 'none'; // Ensure popup is hidden
               const today = new Date().toISOString().split('T')[0];
               const publishDate = '{{selected_flight.contractPublishDate | date:'Y-m-d' }}'; 
               const contractTracker = document.getElementById('contractTracker');
