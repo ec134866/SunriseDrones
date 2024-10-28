@@ -121,6 +121,7 @@ class File(models.Model):
     name = models.CharField(max_length=255)
     link = models.URLField()
     thumbnail = models.URLField()
+    preview = models.URLField()
     direct_download_link = models.URLField()
     size_in_mb = models.DecimalField(max_digits=10, decimal_places=2)
     file_type = models.CharField(max_length=10)
