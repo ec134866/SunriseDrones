@@ -34,8 +34,29 @@ def basePageView(request):
 
 
 def indexPageView(request):
+
+    property = get_object_or_404(Property, name='Herndon Community Center')
+    flights = Flight.objects.filter(property=property).order_by('-date')
+
+    selected_date = request.GET.get('date')
+    if not selected_date:
+        selected_date = flights.first().date 
+
+    selected_flight = Flight.objects.filter(property=property, date=selected_date).first()
+
+    script_exterior = selected_flight.script_exterior if selected_flight else None
+    script_interior = selected_flight.script_interior if selected_flight else None
+    notice = selected_flight.notice if selected_flight else None
+    files = selected_flight.files.all() if selected_flight else None
    
-    context = {}
+    context = {
+        'flights': flights,
+        'selected_flight': selected_flight,
+        'script_exterior': script_exterior,
+        'script_interior': script_interior,
+        'files': files,
+        'notice': notice,
+        }
 
     return render(request, 'portfolioApp/index.html', context)
 

@@ -73,57 +73,896 @@
       </section>
       <!-- Portfolio-->
       <section class="content-section2" id="portfolio" style="display: flex; justify-content: center;">
-          <div class="col" style="width:85%; height:100vh; overflow:scroll;border:5px solid darkgrey">
-              <div class="content-section2-heading text-center">
-                  <h3 class="text-secondary mb-0">Portfolio</h3>
-                  <h2 class="mb-5">Recent Projects</h2>
-              </div>
-              <div class="row gx-0">
-                  <div class="col-lg-6">
-                      <a class="portfolio-item" href="#!">
-                          <div class="caption">
-                              <div class="caption-content">
-                                  <div class="h2">Project 1</div>
-                                  <p class="mb-0">Description 1</p>
-                              </div>
-                          </div>
-                          <img class="img-fluid" src="" alt="..." />
-                      </a>
-                  </div>
-                  <div class="col-lg-6">
-                      <a class="portfolio-item" href="#!">
-                          <div class="caption">
-                              <div class="caption-content">
-                                  <div class="h2">Project 2</div>
-                                  <p class="mb-0">Description 2</p>
-                              </div>
-                          </div>
-                          <img class="img-fluid" src="" alt="..." />
-                      </a>
-                  </div>
-                  <div class="col-lg-6">
-                      <a class="portfolio-item" href="#!">
-                          <div class="caption">
-                              <div class="caption-content">
-                                  <div class="h2">Project 3</div>
-                                  <p class="mb-0">Description 3</p>
-                              </div>
-                          </div>
-                          <img class="img-fluid" src="" alt="..." />
-                      </a>
-                  </div>
-                  <div class="col-lg-6">
-                      <a class="portfolio-item" href="#!">
-                          <div class="caption">
-                              <div class="caption-content">
-                                  <div class="h2">Project 4</div>
-                                  <p class="mb-0">Description 4</p>
-                              </div>
-                          </div>
-                          <img class="img-fluid" src="" alt="..." />
-                      </a>
-                  </div>
-              </div>
+          <div class="col-10" style="height:80vh; overflow:scroll;border:5px solid darkgrey">
+              {% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}
+                        <header class="d-flex align-items-center" style="padding-top: 2vh; padding-bottom: 2vh; background-color: rgba{{owner.palette1}}">
+                            <div class="container px-4 px-lg-5 text-center">
+                            <h1 class="mb-1" style="font-size: 4vw;">Your Properties</h1>
+                            <h2 class="mb-1" style="font-size: 2vw;">Herndon Community Center</h2>
+                            </div>
+                        </header>
+                        
+                        <div style="padding-top: 2vh; padding-bottom: 2vh">
+                            <div class="row align-items-center" style="min-height:17vh;">
+                            {% comment %} dropdown section {% endcomment %}
+                            <div class="col-auto" style="padding-left: 2vw; padding-right: 1vw;">
+                                <div class="dropdown">
+                                <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-regular fa-map" style="margin-right: 0.15vw;"></i> 
+                                    {% if selected_flight %}
+                                    {{ selected_flight.date}}
+                                    {% else %}
+                                    Select a date
+                                    {% endif %}
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    {% for flight in flights %}
+                                    <li>
+                                        <a class="dropdown-item" href="?date={{ flight.date|date:'Y-m-d' }}">
+                                        {{ flight.date}}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                </div>
+                            </div>
+                            {% comment %} buttons {% endcomment %}
+                            <div class="col-auto">
+                                <div class="row">
+                                    <button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
+                                </div>
+                                <div class="row">
+                                    <button id="downloadSectionBtn" class="btn btn-light" type="button" data-bs-target="#downloadSection" onclick="toggleSection(this)" style="margin-top: 0.5vh">Download My Files</button>
+                                </div>
+                            </div>
+                            {% comment %} filters {% endcomment %}
+                                <div class="col-auto" id="filterIcons" style="display:none;">
+                                <!-- Centered Filter Text -->
+                                <div class="row text-center" style="padding-top:.5vh;">
+                                    <div class="col-12">
+                                    <span style="font-size: 1vh;">Filter:</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Image Filter -->
+                                <div class="row justify-content-center" style="padding-bottom:.5vh;">
+                                    <div class="col-auto d-flex justify-content-center align-items-center">
+                                    <i class="fa-regular fa-image" onclick="filterFiles('Image')" style="height:2vh; cursor: pointer;"></i>
+                                    <i class="fa-regular fa-square" onclick="filterFiles('Image')" id="image-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- Video Filter -->
+                                <div class="row justify-content-center" style="padding-bottom:.5vh;">
+                                    <div class="col-auto d-flex justify-content-center align-items-center">
+                                    <i class="fa-solid fa-clapperboard" onclick="filterFiles('Video')" style="height:2vh; cursor: pointer;"></i>
+                                    <i class="fa-regular fa-square" onclick="filterFiles('Video')" id="video-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- 3D Model Filter -->
+                                <div class="row justify-content-center" style="padding-bottom:.5vh;">
+                                    <div class="col-auto d-flex justify-content-center align-items-center">
+                                    <i class="fa-solid fa-cube" onclick="filterFiles('3D Model')" style="height:2vh; cursor: pointer;"></i>
+                                    <i class="fa-regular fa-square" onclick="filterFiles('3D Model')" id="model-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
+                                    </div>
+                                </div>
+                                </div>      
+                            {% comment %} tracker or downloads {% endcomment %}
+                            <div class="col" style="min-width:70%; max-height:17vh; padding-right: 3vh; padding-left: 3vh;">
+                                {% comment %} contract section {% endcomment %}
+                                <div class="collapse w-100" id="contractTracker">
+                                <div class="track d-flex">
+                                    <div class="step"> 
+                                        <span class="icon"> <i class="fa fa-file-signature"></i> </span> 
+                                        <span class="text">Contract Signed</span> 
+                                        <span class="text" style="margin-top: -2px;"> {{selected_flight.contractSigned}}</span> 
+                                    </div>
+                                    <div class="step"> 
+                                        <span class="icon"> <i class="fa fa-helicopter"></i> </span> 
+                                        <span class="text"> Drone Capture </span> 
+                                        <span class="text" style="margin-top: -2px;"> {{selected_flight.contractFlightDate}}</span> 
+                                    </div>
+                                    <div class="step"> 
+                                        <span class="icon"> <i class="fa fa-image"></i> </span> 
+                                        <span class="text"> Image Processing </span> 
+                                        <span class="text" style="margin-top: -2px;"> {{selected_flight.contractProcessingDate}}</span> 
+                                    </div>
+                                    <div class="step"> 
+                                        <span class="icon"> <i class="fa fa-tasks"></i> </span> 
+                                        <span class="text">Final Preparations</span> 
+                                        <span class="text" style="margin-top: -2px;"> {{selected_flight.contractFinalTouches}}</span> 
+                                    </div>
+                                    <div class="step"> 
+                                        <span class="icon"> <i class="fa fa-upload"></i> </span> 
+                                        <span class="text">Published</span> 
+                                        <span class="text" style="margin-top: -2px;"> {{selected_flight.contractPublishDate}}</span> 
+                                    </div>
+                                </div>
+                                </div>
+                                {% comment %} download section {% endcomment %}
+                                <div class="collapse w-100" id="downloadSection">
+                                <div class="row overflow-scroll" style="max-height:17vh; background-color: lightgray;" id="fileContainer">
+                                    {% for file in files %}
+                                    <div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 70%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
+                                        <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 12vh; cursor: pointer;" onclick="openPopupFile('{{ file.preview }}')">
+                                        <div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
+                                        <div class="col" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center;" title="{{ file.name }}">
+                                            <div>{{ file.name }}</div>
+                                        </div>
+                                        <div class="col-auto" style="display: flex; align-items: center; justify-content: flex-end;">
+                                            <div>{{ file.size_in_mb }} MB</div>
+                                            <a href="{{ file.direct_download_link }}" target="_blank" style="margin-left: 0.5vh;">
+                                                <span class="icon">
+                                                    <i class="fa-solid fa-download"></i>
+                                                </span>
+                                            </a>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    {% empty %}
+                                    <div>No files available.</div>
+                                    {% endfor %}
+                                </div>
+                                </div>     
+                                <div id="uniquePopupViewer" onclick="closePopupFileOnClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+                                <div class="popup-container bg-light position-relative" style="width: 70%; min-height: 70vh; max-height: 90vh; border-radius: 8px; padding: 0; display: flex; flex-direction: column;">
+                                    <span onclick="closePopupFile()" class="close-btn position-absolute top-0 start-0 m-3 fs-2 text-white" style="font-size: 2rem; cursor: pointer;">&times;</span>
+                                    <iframe id="popupContent" src="" allow="autoplay" style="border: none; flex: 1 1 auto;"></iframe>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            
+                            {% comment %} main section {% endcomment %}
+                            {% if notice %}
+                            <div class="row justify-content-center text-center align-items-center">
+                                <div class="col-2">
+                                    <i class="fa-solid fa-triangle-exclamation" style="font-size: 5vh;"></i>
+                                </div> 
+                                <div class="col-6">
+                                    <span style="font-size: clamp(2vh,3vw,4vh);">{{ selected_flight.notice }}</span>
+                                </div> 
+                                <div class="col-2">
+                                    <i class="fa-solid fa-triangle-exclamation" style="font-size: 5vh;"></i>
+                                </div> 
+                            </div>
+                            {% endif %}
+                            <div class="row justify-content-center" style="padding-left: 2vw; padding-right: 2vw; padding-top: 4vh; padding-bottom: 2vh;">
+                                <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.of_content_btn_1}}">
+                                <button class="btn btn-link p-0" onclick="showContent('overflightContent')">
+                                    <img src={{selected_flight.overflight_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                                    <br><br>
+                                    <h2 class="text-decoration-none" style="color: #333;">Overflight</h2>
+                                </button>
+                                </div>
+                                <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.ext_content_btn_1}}">
+                                <button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
+                                    <img src={{selected_flight.exterior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                                    <br><br>
+                                    <h2 class="text-decoration-none" style="color: #333;">3D Exterior Model</h2>
+                                </button>
+                                </div>
+                                <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.int_content_btn_1}}">
+                                <button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
+                                    <img src={{selected_flight.interior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                                    <br><br>
+                                    <h2 class="text-decoration-none" style="color: #333;">3D Interior Model</h2>
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                
+                        {% comment %} content area {% endcomment %}
+                        <div id="contentArea" class="container-fluid" style="padding-top: 6vh; padding-bottom: 6vh; background-color: rgba{{owner.palette2}}">
+                            <div class="d-flex justify-content-center">
+                                <div id="overflightContent" class="content-section" style="width: 90%; height: 75vh;">
+                                <iframe width="100%" height="100%" id="overflightVideoElement" src="https://www.youtube.com/embed/{{selected_flight.overflight_link}}?autoplay=1&rel=0" frameborder="0">
+                                </iframe>
+                                </div>
+                            </div>
+                            <div class="justify-content-center">    
+                            <div id="exteriorModelContent" class="content-section">
+                                <div class="row justify-content-center" style="width: 90%; margin: 0 auto; padding-bottom:1vh;">
+                                <div class="col">
+                                </div>
+                                <div class="col" style="display: flex; justify-content: center;">
+                                    <div id="distance-display" style="text-align: center; font-size: 2vh; display: none;">
+                                        Distance: N/A
+                                    </div>
+                                </div>
+                                <div class="col" style="text-align: right;">
+                                    <i id="settings-icon" class="fa-solid fa-gear" style="font-size: 3vh; cursor: pointer;" onclick="toggleSettings()"></i>
+                                </div>
+                                </div>
+                                <div class="row" id="settings-box" style="
+                                    display: none;
+                                    position: fixed;
+                                    top: 50%;
+                                    left: 50%;
+                                    transform: translate(-50%, -50%);
+                                    width: 50%;
+                                    height: 25%;">
+                                    <div class="row" style="height:100%;">
+                                        <div class="col-auto" id="options-column" style="width: 30%; padding:2vh; background-color: rgba(169, 169, 169, 0.9); border-top-left-radius: 2vh; border-bottom-left-radius: 2vh; padding-top:4vh;">
+                                            <div style="font-size: clamp(1vh,1.5vw,2vh); margin-bottom: 2vh; cursor: pointer; background-color: lightblue;" id="movement-controls-option" onclick="showMovementControls()">
+                                                <i class="fa-solid fa-up-down-left-right"></i> Movement Controls
+                                            </div>
+                                            <div style="font-size: clamp(1vh,1.5vw,2vh); margin-bottom: 2vh; cursor: pointer;" id="measurement-tools-option" onclick="showMeasurementTools()">
+                                                <i class="fa-solid fa-ruler"></i> Measurement Tools
+                                            </div>
+                                        </div>
+                                        <div class="col-auto" id="settings-content" style="width: 70%; padding:2vh; background-color: rgba(211, 211, 211, 0.9); border-top-right-radius: 2vh; border-bottom-right-radius: 2vh;">
+                                            <div class="row">
+                                                <div class="text-end" style="margin-bottom: 1vh;">
+                                                    <i id="close-settings" class="fa-solid fa-x" style="font-size: 1.5vh; cursor: pointer;" onclick="closeSettings()"></i>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="overflow: scroll;">
+                                                <div id="movement-controls" style="display: none;">
+                                                    <div class="text-end" style="margin-bottom: 2vh; font-size: clamp(0.75vh,1vw,1.5vh);">
+                                                        <button id="fly-controls-btn" class="btn btn-light" data-group="movement">Fly Controls</button>
+                                                    </div>
+                                                    <div class="text-end" style="margin-bottom: 2vh; font-size: clamp(0.75vh,1vw,1.5vh);">
+                                                        <button id="camera-controls-btn" class="btn btn-dark" data-group="movement">Camera Controls</button>
+                                                    </div>
+                                                </div>
+                            
+                                                <div id="measurement-tools" style="display: none;">
+                                                    <div class="text-end" style="margin-bottom: 2vh; font-size: clamp(0.75vh,1vw,1.5vh);">
+                                                        <button id="toggle-distance-measurement" class="btn btn-light" data-group="measurement">Toggle Distance Measurement</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-bar-container" style="width: 55%; position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%);display: none; justify-content: center; align-items: center; text-align: center;">
+                                    <div class="row">
+                                        <label for="progress-bar" style="color: white; font-size: 4vh; margin-bottom: 1vh;">Loading...</label>
+                                    </div>
+                                    <div class="row">
+                                        <progress id="progress-bar" style="height: 5vh;" value="0" max="100"></progress>
+                                    </div>
+                                </div>
+                                <div id="exteriorModelContainer" class="d-flex justify-content-center">
+                                </div>
+                            </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <div id="interiorModelContent" class="content-section">
+                                    <div id="interiorModelContainer" class="d-flex justify-content-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                        {% comment %} footer {% endcomment %}
+                        <footer class="footer text-center" style="margin-top:auto;padding-top: 4vh;">
+                            <div class="container px-4 px-lg-5">
+                                <p class="text-muted small mb-0">These are not official surveys. No models should be relied upon for safety. All models should be used strictly for planning and estimate purposes.</p>
+                                {% comment %} <p class="text-muted small mb-0">Copyright &copy; SunriseDrones 2024</p> {% endcomment %}
+                            </div>
+                        </footer>
+                
+                
+                        {% comment %} popup file preview script {% endcomment %}
+                        <script>
+                        document.getElementById('uniquePopupViewer').style.display = 'none'; // Ensure popup is hidden
+                        
+                        function openPopupFile(previewSrc) {
+                            // Close any open popup first
+                            closePopupFile();
+                            // Set iframe src to the preview source and display the popup
+                            document.getElementById('popupContent').src = previewSrc;
+                            document.getElementById('uniquePopupViewer').style.display = 'flex';
+                        }
+                    
+                        function closePopupFile() {
+                            // Hide the popup and clear the iframe src
+                            document.getElementById('uniquePopupViewer').style.display = 'none';
+                            document.getElementById('popupContent').src = '';
+                        }
+                    
+                        // Close popup when clicking outside of popup-container
+                        function closePopupFileOnClick(event) {
+                            const popupContainer = document.querySelector('.popup-container');
+                            if (!popupContainer.contains(event.target)) {
+                                closePopupFile();
+                            }
+                        }
+                    
+                        // Close popup with Escape key
+                        document.addEventListener('keydown', function(event) {
+                            if (event.key === 'Escape') {
+                                closePopupFile();
+                            }
+                        });
+                    
+                        </script>
+                
+                        {% comment %} settings script  {% endcomment %}
+                        <script>
+                            function toggleSettings() {
+                            const settingsBox = document.getElementById('settings-box');
+                            const settingsIcon = document.getElementById('settings-icon');
+                            const optionsColumn = document.getElementById('options-column');
+                        
+                            // Use toggle for simplicity
+                            const isHidden = settingsBox.style.display === 'none' || settingsBox.style.display === '';
+                            settingsBox.style.display = isHidden ? 'block' : 'none';
+                            settingsIcon.classList.toggle('fa-rotate-90', isHidden);
+                        
+                            // Reset both sections and background color when opening the settings box
+                            if (isHidden) {
+                                optionsColumn.querySelectorAll('div').forEach(div => div.style.backgroundColor = '');
+                                document.getElementById('movement-controls').style.display = 'none';
+                                document.getElementById('measurement-tools').style.display = 'none';
+                            }
+                            }
+                            
+                            function closeSettings() {
+                                const settingsBox = document.getElementById('settings-box');
+                                const settingsIcon = document.getElementById('settings-icon');
+                            
+                                settingsBox.style.display = 'none';
+                                settingsIcon.classList.remove('fa-rotate-90');
+                            }
+                            
+                            // Generic function to toggle controls
+                            function toggleControls(activeOptionId, otherOptionId, activeControlsId, otherControlsId) {
+                                const activeControls = document.getElementById(activeControlsId);
+                                const otherControls = document.getElementById(otherControlsId);
+                                const activeOption = document.getElementById(activeOptionId);
+                                const otherOption = document.getElementById(otherOptionId);
+                            
+                                if (activeControls.style.display === 'block') {
+                                    activeControls.style.display = 'none';
+                                    activeOption.style.backgroundColor = '';
+                                } else {
+                                    activeControls.style.display = 'block';
+                                    otherControls.style.display = 'none';
+                                    activeOption.style.backgroundColor = 'lightblue';
+                                    otherOption.style.backgroundColor = '';
+                                }
+                            }
+                            
+                            // Show movement controls when the button is clicked
+                            document.getElementById('movement-controls-option').addEventListener('click', function() {
+                                toggleControls('movement-controls-option', 'measurement-tools-option', 'movement-controls', 'measurement-tools');
+                            });
+                            
+                            // Show measurement tools when the button is clicked
+                            document.getElementById('measurement-tools-option').addEventListener('click', function() {
+                                toggleControls('measurement-tools-option', 'movement-controls-option', 'measurement-tools', 'movement-controls');
+                            });
+                            
+                            document.addEventListener('keydown', function(event) {
+                                if (event.key === 'Escape') {
+                                    const settingsBox = document.getElementById('settings-box');
+                                    if (settingsBox.style.display === 'block') {
+                                        closeSettings();
+                                    }
+                                }
+                            });
+                            
+                            // Add event listeners to each button
+                            document.getElementById('fly-controls-btn').addEventListener('click', function() {
+                                selectMovementButton('fly-controls-btn');
+                            });
+                            
+                            document.getElementById('camera-controls-btn').addEventListener('click', function() {
+                                selectMovementButton('camera-controls-btn');
+                            });
+                            
+                            document.getElementById('toggle-distance-measurement').addEventListener('click', function() {
+                                toggleMeasurementButton('toggle-distance-measurement');
+                            });
+                            
+                            // Function to handle movement controls (cannot be deselected)
+                            function selectMovementButton(activeButtonId) {
+                                const buttons = document.querySelectorAll('button[data-group="movement"]');
+                            
+                                // Loop through the movement control buttons
+                                buttons.forEach(button => {
+                                    button.classList.toggle('btn-dark', button.id === activeButtonId);
+                                    button.classList.toggle('btn-light', button.id !== activeButtonId);
+                                });
+                            }
+                            
+                            // Function to handle measurement tools (can toggle on and off)
+                            function toggleMeasurementButton(buttonId) {
+                                const button = document.getElementById(buttonId);
+                            
+                                // Toggle between dark and light for measurement tools
+                                button.classList.toggle('btn-dark');
+                                button.classList.toggle('btn-light');
+                            }        
+                        </script>
+                
+                        {% comment %} script for contract tracker and download section {% endcomment %}
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const today = new Date().toISOString().split('T')[0];
+                                const publishDate = '{{selected_flight.contractPublishDate | date:'Y-m-d' }}'; 
+                                const contractTracker = document.getElementById('contractTracker');
+                                const contractTrackerBtn = document.getElementById('contractTrackerBtn');
+                        
+                                // Show contract tracker if the publish date is today or in the future IF access
+                                {% if access_contract%}
+                                if (publishDate >= today) {
+                                    contractTracker.classList.add('show');
+                                    contractTrackerBtn.classList.replace('btn-light', 'btn-dark');
+                                }
+                                {% endif %}
+                            });
+                        
+                            function toggleSection(button) {
+                                const isDownloadSection = button.id === 'downloadSectionBtn';
+                                const targetSection = document.querySelector(button.getAttribute('data-bs-target'));
+                                const isAlreadyActive = targetSection.classList.contains('show'); // Check if the section is already active
+                        
+                                // Check existence before manipulating elements
+                                const contractTrackerSection = document.getElementById('contractTracker');
+                                const downloadSection = document.getElementById('downloadSection');
+                                const contractTrackerBtn = document.getElementById('contractTrackerBtn');
+                                const downloadSectionBtn = document.getElementById('downloadSectionBtn');
+                
+                                // Reset both sections and button states, if they exist
+                                if (contractTrackerSection) contractTrackerSection.classList.remove('show');
+                                if (downloadSection) downloadSection.classList.remove('show');
+                                if (contractTrackerBtn) contractTrackerBtn.classList.replace('btn-dark', 'btn-light');
+                                if (downloadSectionBtn) downloadSectionBtn.classList.replace('btn-dark', 'btn-light');
+                        
+                                // If the section was already active, we don't reactivate it (deselect)
+                                if (!isAlreadyActive) {
+                                    targetSection.classList.add('show');
+                                    button.classList.replace('btn-light', 'btn-dark');
+                                }
+                        
+                                // Show filter icons only for the Download section if it's being activated
+                                document.getElementById("filterIcons").style.display = (isDownloadSection && !isAlreadyActive) ? "block" : "none";
+                            }
+                        </script>
+                
+                
+                        {% comment %} script for filtering files {% endcomment %}
+                        <script>
+                            let selectedTypes = []; // Track selected file types
+                            
+                            function filterFiles(type) {
+                            const files = document.querySelectorAll('.file');
+                            const icons = {
+                                'Image': document.getElementById('image-icon'),
+                                'Video': document.getElementById('video-icon'),
+                                '3D Model': document.getElementById('model-icon')
+                            };
+                            
+                            // Toggle selection of the type
+                            const typeIndex = selectedTypes.indexOf(type);
+                            if (typeIndex > -1) {
+                                // If already selected, remove it
+                                selectedTypes.splice(typeIndex, 1);
+                                icons[type].classList.remove('fa-regular', 'fa-square-check');
+                                icons[type].classList.add('fa-regular', 'fa-square');
+                            } else {
+                                // If not selected, add it
+                                selectedTypes.push(type);
+                                icons[type].classList.remove('fa-regular', 'fa-square');
+                                icons[type].classList.add('fa-regular', 'fa-square-check');
+                            }
+                            
+                            // Filter files based on selected types
+                            files.forEach(file => {
+                                if (selectedTypes.length === 0 || selectedTypes.includes(file.getAttribute('data-file-type'))) {
+                                file.style.display = 'flex'; // Show file
+                                } else {
+                                file.style.display = 'none'; // Hide file
+                                }
+                            });
+                            }
+                        </script>
+                
+                
+                        {% comment %} script for dropdown flight selection {% endcomment %}
+                        <script>
+                        const today = new Date().toISOString().split('T')[0];
+                
+                        const steps = [
+                                { element: document.querySelector('.step:nth-child(1)'), date: "{{ selected_flight.contractSigned | date:'Y-m-d' }}" },
+                                { element: document.querySelector('.step:nth-child(2)'), date: "{{ selected_flight.contractFlightDate | date:'Y-m-d'  }}" },
+                                { element: document.querySelector('.step:nth-child(3)'), date: "{{ selected_flight.contractProcessingDate | date:'Y-m-d'  }}" },
+                                { element: document.querySelector('.step:nth-child(4)'), date: "{{ selected_flight.contractFinalTouches | date:'Y-m-d'  }}" },
+                                { element: document.querySelector('.step:nth-child(5)'), date: "{{ selected_flight.contractPublishDate | date:'Y-m-d'  }}" }
+                            ];
+                
+                        steps.forEach(step => {
+                            if (today >= step.date) {
+                                step.element.classList.add('active');
+                            }
+                        });
+                        </script>
+                
+                        {% comment %} script for content buttons {% endcomment %}
+                        <script>
+                        function showContent(contentId) {
+                            document.querySelectorAll('.content-section').forEach(section => {
+                                section.classList.remove('show');
+                            });
+                        
+                            const selectedContent = document.getElementById(contentId);
+                            selectedContent.classList.add('show');
+                    
+                            // Use setTimeout to add a delay before scrolling
+                            setTimeout(() => {
+                                selectedContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }, 25); 
+                        
+                                // Check if the models need to be initialized
+                                if (contentId === 'exteriorModelContent' && !exteriorModelLoaded) {
+                                    initExteriorModel();  
+                                    exteriorModelLoaded = true;  
+                                } else if (contentId === 'interiorModelContent' && !interiorModelLoaded) {
+                                    initInteriorModel();  
+                                    interiorModelLoaded = true;  
+                                }
+                            }
+                    
+                        let exteriorModelLoaded = false;
+                        let interiorModelLoaded = false;
+                        </script>
+                
+                        
+                
+                    
+                
+                        {% comment %}  models {% endcomment %}
+                        <script type="module">
+                        import * as THREE from 'three';
+                        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+                        import { FlyControls } from 'three/addons/controls/FlyControls.js';
+                        import { TilesRenderer, DebugTilesPlugin, PriorityQueue } from '3d-tiles-renderer';
+                        import { CameraRig, FreeMovementControls } from 'three-story-controls';
+                        import Stats from 'three/examples/jsm/libs/stats.module';
+                        
+                
+                        let camera, scene, renderer, tilesRenderer, controls, modelGroup;
+                        let clock = new THREE.Clock();
+                        let lastPoint = null;
+                        const distanceDisplay = document.getElementById('distance-display'); 
+                        const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
+                        const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
+                        
+                        
+                        let spinning = true; // Track if the model should spin
+                        let initialDistance = 10; // Start close to the model
+                        let initialHeight = 10;
+                        let currentHeight = initialHeight;
+                        let targetDistance = {{selected_flight.script_exterior.max_distance}}; // End distance from the model
+                        let targetHeight = {{selected_flight.script_exterior.max_distance}}; // End height from the model
+                        let currentDistance = initialDistance; // Current distance from the model
+                        const spinSpeed = 0.00008; // Speed of spinning around the model
+                        const distanceIncrement = {{selected_flight.script_exterior.distance_increment}}; // Increment distance per frame
+                        const heightIncrement = {{selected_flight.script_exterior.height_increment}}; // Increment distance per frame
+                        let loadedTilesCount = 0;
+                        let totalTiles = {{selected_flight.script_exterior.total_tiles}};  // Total number of tiles you expect to load (you can dynamically calculate this)
+                        let cameraReset = false;  // Track if the camera has been reset
+                        let controlsEnabled = false;
+                
+                        const stats = new Stats()
+                
+                        distanceDisplay.style.display = 'none';
+                
+                
+                        let distanceMeasurementEnabled = false;
+                
+                        toggleDistanceMeasurementButton.addEventListener('click', () => {
+                            distanceMeasurementEnabled = !distanceMeasurementEnabled;
+                            toggleDistanceMeasurementButton.textContent = distanceMeasurementEnabled ? 'Disable Distance Measurement' : 'Enable Distance Measurement';
+                            
+                            if (distanceMeasurementEnabled) {
+                                distanceDisplay.style.display = 'block';
+                            } else {
+                                lastPoint = null; 
+                                distanceDisplay.innerText = 'Distance: N/A'; 
+                                distanceDisplay.style.display = 'none'; 
+                            }
+                        });
+                        
+                        window.initExteriorModel = function() {
+                            const container = document.getElementById('exteriorModelContainer');
+                            const progressBar = document.getElementById('progress-bar');
+                            const progressBarContainer = document.querySelector('.progress-bar-container');
+                            container.innerHTML = ''; 
+                
+                            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), .1, {{ selected_flight.script_exterior.camera_far }});
+                            camera.position.set({{ selected_flight.script_exterior.camera_position }});
+                            camera.up = new THREE.Vector3({{ selected_flight.script_exterior.camera_axis }});
+                
+                            scene = new THREE.Scene();
+                            let light = new THREE.AmbientLight(0x404040, 90);
+                            scene.add(light);
+                
+                            // const loader = new FBXLoader();
+                            // loader.load('{{ selected_flight.exterior_link|safe }}', (object) => {
+                                //  scene.add(object);
+                            // });
+                
+                            renderer = new THREE.WebGLRenderer();
+                            renderer.setPixelRatio(window.devicePixelRatio);
+                
+                            if (isTouchDevice) {
+                                renderer.setSize(window.innerWidth * 0.9, window.innerHeight * 0.8);  
+                            } else {
+                                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8)); 
+                            }
+                
+                            container.appendChild(renderer.domElement);
+                
+                            initControls('orbit');
+                            document.getElementById('fly-controls-btn').addEventListener('click', () => initControls('fly'));
+                            document.getElementById('camera-controls-btn').addEventListener('click', () => initControls('orbit'));
+                
+                
+                            const distance = camera.position.distanceTo(controls.target);
+                
+                            
+                            function initControls(controlType) {
+                                if (controls) controls.dispose();
+                    
+                                controls = (controlType === 'fly') 
+                                    ? new FlyControls(camera, renderer.domElement) 
+                                    : new OrbitControls(camera, renderer.domElement);
+                                
+                                if (controlType === 'fly') {
+                                if (isTouchDevice) {
+                                    
+                                } else {
+                                    controls.movementSpeed = 40; 
+                                    controls.rollSpeed = 0.5;
+                                    controls.dragToLook = true;
+                                    document.addEventListener('keydown', onKeyChange);
+                                    document.addEventListener('keyup', onKeyChange);
+                                }
+                                } else {
+                                    controls.zoomSpeed = 2;
+                                    controls.minDistance = 0;
+                                    controls.maxDistance = 1000;
+                                    controls.minPolarAngle = 0.25;
+                                    controls.maxPolarAngle = 1.8;
+                                    controls.zoomToCursor = true;
+                                    controls.enablePan = true;
+                                    document.removeEventListener('keydown', onKeyChange);
+                                    document.removeEventListener('keyup', onKeyChange);
+                                }
+                            }
+                    
+                            function onKeyChange(event) {
+                                if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                                event.preventDefault();
+                            }
+                
+                            if (event.key === 'Escape') {
+                                document.removeEventListener('keydown', onKeyChange);
+                                document.removeEventListener('keyup', onKeyChange);
+                            }
+                            
+                                if (event.key === 'Shift') {
+                                    controls.movementSpeed = event.type === 'keydown' ? 260 : 80;
+                                }
+                            }
+                
+                            modelGroup = new THREE.Group();
+                            scene.add(modelGroup);
+                            
+                            
+                            const debugPlugin = new DebugTilesPlugin();
+                
+                            tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
+                            tilesRenderer.registerPlugin(debugPlugin);
+                            // tilesRenderer.errorTarget = 2;
+                            // tilesRenderer.errorThreshold = Infinity;
+                            // tilesRenderer.maxDepth = Infinity;
+                            tilesRenderer.autoDisableRendererCulling = true;
+                
+                            setTimeout(() => {
+                                if (loadedTilesCount < totalTiles) {
+                                    progressBarContainer.style.display = 'block';
+                                }
+                            }, 900);
+                
+                            tilesRenderer.addEventListener('load-model', (event) => {
+                                    loadedTilesCount++;
+                                    const loadedTile = event.tile; 
+                                    
+                                    let progressPercentage = (loadedTilesCount / totalTiles) * 100;
+                                    progressBar.value = progressPercentage;
+                                    console.log(`Tile: ${loadedTile.content.uri} loaded: ${loadedTilesCount} / ${totalTiles}`);
+                
+                                    if (loadedTilesCount === totalTiles) {
+                                        // Hide the loading bar when loading is complete
+                                        progressBarContainer.style.display = 'none';
+                                    }
+                                });
+                
+                            // debugPlugin.displayBoxBounds = true;           
+                
+                            tilesRenderer.addEventListener('load-tile-set', () => {
+                                const sphere = new THREE.Sphere();
+                                tilesRenderer.getBoundingSphere(sphere);
+                                tilesRenderer.group.position.copy(sphere.center).multiplyScalar(-1);
+                
+                                tilesRenderer.group.frustumCulled = false;
+                
+                                modelGroup.position.set({{selected_flight.script_exterior.model_position}});
+                                modelGroup.rotation.x = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_x}});
+                                modelGroup.rotation.z = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_y}});
+                                modelGroup.rotation.y = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_z}});
+                
+                                modelGroup.frustumCulled = false;
+                            });
+                
+                            tilesRenderer.setCamera(camera);
+                            tilesRenderer.setResolutionFromRenderer(camera, renderer);
+                
+                
+                            modelGroup.add(tilesRenderer.group);
+                
+                            window.addEventListener('click', onClick);
+                            
+                
+                            window.addEventListener('resize', () => {
+                                camera.aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.8);
+                                camera.updateProjectionMatrix();
+                                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
+                            });
+                
+                            document.body.appendChild(stats.dom)
+                
+                            renderLoop();
+                        };
+                
+                        {% comment %} raycasting to measure distance {% endcomment %}
+                        function onClick(event) {
+                            if (distanceMeasurementEnabled) {
+                                // Create a raycaster and calculate the mouse position
+                                const raycaster = new THREE.Raycaster();
+                                const pointer = new THREE.Vector2(
+                                    (event.clientX / window.innerWidth) * 2 - 1,
+                                    -(event.clientY / window.innerHeight) * 2 + 1
+                                );
+                
+                                // Update the raycaster with the camera and pointer position
+                                raycaster.setFromCamera(pointer, camera);
+                
+                                // Check for intersections
+                                const intersects = raycaster.intersectObjects(modelGroup.children, true);
+                
+                                if (intersects.length > 0) {
+                                    const intersectionPoint = intersects[0].point; // Get the intersection point
+                
+                                    if (lastPoint) {
+                                        const distance = intersectionPoint.distanceTo(lastPoint); // Calculate distance to the last point
+                                        const distanceInFeet = distance * 3.28084; // Convert to feet
+                                        distanceDisplay.innerText = `Distance: ${distanceInFeet.toFixed(2)} feet`; // Update display
+                                    } else {
+                                        distanceDisplay.innerText = 'First point clicked: N/A'; // Update display
+                                    }
+                
+                                    // Save the current intersection point as the last point
+                                    lastPoint = intersectionPoint.clone(); // Clone the point to keep it immutable for future calculations
+                            }
+                            }
+                        }
+                        
+                        window.initInteriorModel = function() {
+                            const container = document.getElementById('interiorModelContainer');
+                            container.innerHTML = '';
+                
+                            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, {{ selected_flight.script_interior.camera_far }});
+                            camera.position.set({{ selected_flight.script_interior.camera_position }});
+                            camera.up = new THREE.Vector3({{ selected_flight.script_interior.camera_axis }});
+                
+                            scene = new THREE.Scene();
+                            let light = new THREE.AmbientLight(0x404040, 80);
+                            scene.add(light);
+                
+                            const loader = new FBXLoader();
+                            loader.load('{{ selected_flight.interior_link }}', (object) => {
+                                scene.add(object);
+                            });
+                
+                            renderer = new THREE.WebGLRenderer();
+                            renderer.setPixelRatio(window.devicePixelRatio);
+                
+                            if (isTouchDevice) {
+                                renderer.setPixelRatio(0.9);  
+                                renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.8);  
+                            } else {
+                                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8)); 
+                            }
+                
+                            container.appendChild(renderer.domElement);
+                
+                            const controls = new OrbitControls(camera, renderer.domElement);
+                            controls.listenToKeyEvents( window );
+                            const distance = camera.position.distanceTo(controls.target)
+                            controls.keyPanSpeed = Math.max(1000 * (500 / distance));
+                            controls.zoomSpeed = 10;
+                            controls.zoomToCursor = true;
+                            controls.enablePan = true;
+                            controls.minDistance = 0;
+                            controls.maxDistance = {{selected_flight.script_exterior.max_distance}};
+                            controls.minPolarAngle = 0.25;
+                            controls.maxPolarAngle = 1.8;
+                            controls.autoRotate = false;
+                            controls.target = new THREE.Vector3(0, 1, 0);
+                            controls.update();
+                
+                            window.addEventListener('resize', () => {
+                                camera.aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.8);
+                                camera.updateProjectionMatrix();
+                                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
+                            });
+                
+                            renderLoop();
+                        };
+                
+                        function renderLoop() {
+                            let delta = clock.getDelta();
+                
+                            // Update controls if they are initialized
+                            if (controls) {
+                                controls.update(delta);
+                            }
+                            stats.update()
+                
+                            // Update the camera and tiles renderer
+                            camera.updateMatrixWorld();
+                            tilesRenderer.update();
+                            renderer.render(scene, camera);
+                
+                            // Check if all tiles are loaded
+                            if (loadedTilesCount >= totalTiles) {
+                                if (!cameraReset) {
+                                    // Reset camera once all tiles are loaded
+                                    camera.position.set({{selected_flight.script_exterior.camera_position}});  // Reset camera position
+                
+                                    // Mark that the camera has been reset
+                                    cameraReset = true;
+                                    controlsEnabled = true;  // Enable controls after reset
+                
+                                }
+                                stats.update()
+                
+                                // Allow normal control only if the camera has been reset
+                                if (cameraReset && controls) {
+                                    controls.update(delta);  // Update controls based on delta
+                                    stats.update()
+                                }
+                            } else {
+                                // Tiles are still loading, apply the spinning behavior
+                                camera.position.x = Math.cos(Date.now() * spinSpeed) * currentDistance;
+                                camera.position.z = Math.sin(Date.now() * spinSpeed) * currentDistance;
+                                camera.position.y = currentHeight;
+                                stats.update()
+                
+                                if (currentDistance < targetDistance) {
+                                    currentDistance += distanceIncrement;
+                                }
+                                if (currentHeight < targetHeight) {
+                                    currentHeight += heightIncrement;
+                                }
+                
+                                camera.lookAt(modelGroup.position); // Ensure camera is looking at the model
+                            }
+                
+                            // Continue the render loop
+                            requestAnimationFrame(renderLoop);
+                        }
+                            
+                        </script>
+              {% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}
           </div>
       </section>
       <!-- Call to Action-->
