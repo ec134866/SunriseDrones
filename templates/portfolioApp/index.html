@@ -73,7 +73,7 @@
       </section>
       <!-- Portfolio-->
       <section class="content-section2" id="portfolio" style="display: flex; justify-content: center;">
-          <div class="col-10" style="height:80vh; overflow:scroll;border:5px solid darkgrey">
+          <div class="col-10" style="height:80vh; overflow:scroll;border:8px solid darkgrey">
               {% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}{% comment %}  {% endcomment %}
                         <header class="d-flex align-items-center" style="padding-top: 2vh; padding-bottom: 2vh; background-color: rgba{{owner.palette1}}">
                             <div class="container px-4 px-lg-5 text-center">
@@ -675,7 +675,7 @@
                             const progressBarContainer = document.querySelector('.progress-bar-container');
                             container.innerHTML = ''; 
                 
-                            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), .1, {{ selected_flight.script_exterior.camera_far }});
+                            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.7) / (window.innerHeight * 0.6), .1, {{ selected_flight.script_exterior.camera_far }});
                             camera.position.set({{ selected_flight.script_exterior.camera_position }});
                             camera.up = new THREE.Vector3({{ selected_flight.script_exterior.camera_axis }});
                 
@@ -692,9 +692,9 @@
                             renderer.setPixelRatio(window.devicePixelRatio);
                 
                             if (isTouchDevice) {
-                                renderer.setSize(window.innerWidth * 0.9, window.innerHeight * 0.8);  
+                                renderer.setSize(window.innerWidth * 0.7, window.innerHeight * 0.6);  
                             } else {
-                                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8)); 
+                                renderer.setSize((window.innerWidth * 0.7), (window.innerHeight * 0.6)); 
                             }
                 
                             container.appendChild(renderer.domElement);
@@ -812,9 +812,9 @@
                             
                 
                             window.addEventListener('resize', () => {
-                                camera.aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.8);
+                                camera.aspect = (window.innerWidth * 0.7) / (window.innerHeight * 0.6);
                                 camera.updateProjectionMatrix();
-                                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
+                                renderer.setSize((window.innerWidth * 0.7), (window.innerHeight * 0.6));
                             });
                 
                             document.body.appendChild(stats.dom)
@@ -859,7 +859,7 @@
                             const container = document.getElementById('interiorModelContainer');
                             container.innerHTML = '';
                 
-                            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, {{ selected_flight.script_interior.camera_far }});
+                            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.7) / (window.innerHeight * 0.6), 1, {{ selected_flight.script_interior.camera_far }});
                             camera.position.set({{ selected_flight.script_interior.camera_position }});
                             camera.up = new THREE.Vector3({{ selected_flight.script_interior.camera_axis }});
                 
@@ -876,10 +876,10 @@
                             renderer.setPixelRatio(window.devicePixelRatio);
                 
                             if (isTouchDevice) {
-                                renderer.setPixelRatio(0.9);  
-                                renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.8);  
+                                renderer.setPixelRatio(0.7);  
+                                renderer.setSize(window.innerWidth * 0.6, window.innerHeight * 0.6);  
                             } else {
-                                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8)); 
+                                renderer.setSize((window.innerWidth * 0.7), (window.innerHeight * 0.6)); 
                             }
                 
                             container.appendChild(renderer.domElement);
@@ -900,9 +900,9 @@
                             controls.update();
                 
                             window.addEventListener('resize', () => {
-                                camera.aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.8);
+                                camera.aspect = (window.innerWidth * 0.7) / (window.innerHeight * 0.6);
                                 camera.updateProjectionMatrix();
-                                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
+                                renderer.setSize((window.innerWidth * 0.7), (window.innerHeight * 0.6));
                             });
                 
                             renderLoop();
