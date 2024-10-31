@@ -10,11 +10,10 @@ from .forms import PersonForm
 # Create your views here.
 
 def basePageView(request):
-    person_uuid = request.GET.get('person_uuid') or request.session.get('person_uuid')
+    person_uuid = request.session.get('person_uuid', None)
     person = None
     if person_uuid:
         person = get_object_or_404(Person, uuid=person_uuid)
-        request.session['person_uuid'] = person_uuid
 
 
     owners = Owner.objects.filter(person=person)
@@ -35,14 +34,6 @@ def basePageView(request):
 
 
 def indexPageView(request):
-    
-    person_uuid = request.GET.get('person_uuid') or request.session.get('person_uuid')
-    person = None
-    if person_uuid:
-        person = get_object_or_404(Person, uuid=person_uuid)
-        # Store UUID in session to persist it for navigation
-        request.session['person_uuid'] = person_uuid
-
 
     property = get_object_or_404(Property, name='Herndon Community Center')
     flights = Flight.objects.filter(property=property).order_by('-date')
@@ -59,7 +50,6 @@ def indexPageView(request):
     files = selected_flight.files.all() if selected_flight else None
    
     context = {
-        'person': person,
         'flights': flights,
         'selected_flight': selected_flight,
         'script_exterior': script_exterior,
@@ -80,8 +70,6 @@ def testPageView(request):
 
 def ownerPageView(request, person_uuid):
     
-    request.session['person_uuid'] = person_uuid
-
     person = get_object_or_404(Person, uuid=person_uuid)
     owners = Owner.objects.filter(person=person)
     nav_properties = Property.objects.filter(person=person)
@@ -111,8 +99,7 @@ def ownerPageView(request, person_uuid):
         'owner_name': owner_name,
         'owner_palette1': owner_palette1,
         'properties_by_owner': properties_by_owner,
-        'nav_properties': nav_properties,
-        'person_uuid': str(person.uuid),
+        'nav_properties': nav_properties
     }
 
     return render(request, 'portfolioApp/owner.html', context)
@@ -121,8 +108,6 @@ def ownerPageView(request, person_uuid):
 
 
 def propertyPageView(request, person_uuid, owner_name, property_name):
-
-    request.session['person_uuid'] = person_uuid
    
     person = get_object_or_404(Person, uuid=person_uuid)
     owner = get_object_or_404(Owner, name=owner_name, person=person)
@@ -157,7 +142,6 @@ def propertyPageView(request, person_uuid, owner_name, property_name):
         'owner_name': owner_name,
         'property': property,
         'nav_properties': nav_properties,
-        'person_uuid': str(person.uuid),
         'flights': flights,
         'selected_flight': selected_flight,
         'script_exterior': script_exterior,
