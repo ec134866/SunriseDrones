@@ -10,6 +10,7 @@ from .forms import PersonForm
 # Create your views here.
 
 def basePageView(request):
+    print("Entering basePageView")
     
     person_uuid = request.session.get('person_uuid', None)
 
@@ -39,6 +40,7 @@ def basePageView(request):
 
 
 def indexPageView(request):
+    print("Entering indexPageView")
 
     person_uuid = request.GET.get('uuid')
 
