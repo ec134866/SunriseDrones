@@ -35,6 +35,19 @@ def basePageView(request):
 
 def indexPageView(request):
 
+
+    person_uuid = request.GET.get('uuid')
+    
+    if person_uuid:
+        request.session['person_uuid'] = person_uuid
+    
+    person_uuid = request.session.get('person_uuid', None)
+
+    if person_uuid:
+        person = get_object_or_404(Person, uuid=person_uuid)
+    else:
+        person = None 
+
     property = get_object_or_404(Property, name='Herndon Community Center')
     flights = Flight.objects.filter(property=property).order_by('-date')
 
@@ -56,6 +69,7 @@ def indexPageView(request):
         'script_interior': script_interior,
         'files': files,
         'notice': notice,
+        'person': person,
         }
 
     return render(request, 'portfolioApp/index.html', context)
