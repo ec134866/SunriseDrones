@@ -11,18 +11,15 @@ from .forms import PersonForm
 
 def basePageView(request):
     
-    person_uuid = request.GET.get('uuid')
-    
-    if person_uuid:
-        request.session['person_uuid'] = person_uuid
-    
     person_uuid = request.session.get('person_uuid', None)
 
     if person_uuid:
         person = get_object_or_404(Person, uuid=person_uuid)
     else:
-        person = None 
+        person = None
 
+    print("BASE UUID from session:", request.session.get('person_uuid'))
+    print("BASE Person object:", person)
 
     owners = Owner.objects.filter(person=person)
 
@@ -44,16 +41,20 @@ def basePageView(request):
 def indexPageView(request):
 
     person_uuid = request.GET.get('uuid')
-    
+
     if person_uuid:
         request.session['person_uuid'] = person_uuid
-    
+
+    # Check the session for person_uuid
     person_uuid = request.session.get('person_uuid', None)
 
     if person_uuid:
         person = get_object_or_404(Person, uuid=person_uuid)
     else:
         person = None 
+
+    print("INDEX UUID from session:", request.session.get('person_uuid'))
+    print("INDEX Person object:", person)
 
     property = get_object_or_404(Property, name='Herndon Community Center')
     flights = Flight.objects.filter(property=property).order_by('-date')
