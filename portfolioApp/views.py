@@ -34,6 +34,14 @@ def basePageView(request):
 
 
 def indexPageView(request):
+    
+    person_uuid = request.GET.get('person_uuid') or request.session.get('person_uuid')
+    person = None
+    if person_uuid:
+        person = get_object_or_404(Person, uuid=person_uuid)
+        # Store UUID in session to persist it for navigation
+        request.session['person_uuid'] = person_uuid
+
 
     property = get_object_or_404(Property, name='Herndon Community Center')
     flights = Flight.objects.filter(property=property).order_by('-date')
@@ -50,6 +58,7 @@ def indexPageView(request):
     files = selected_flight.files.all() if selected_flight else None
    
     context = {
+        'person': person,
         'flights': flights,
         'selected_flight': selected_flight,
         'script_exterior': script_exterior,
