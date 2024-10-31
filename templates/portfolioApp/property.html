@@ -654,13 +654,14 @@
               
               if (controlType === 'fly') {
                 if (isTouchDevice) {
-                    
+                  console.log("TOUCH device in fly mode");
                 } else {
                   controls.movementSpeed = 40; 
                   controls.rollSpeed = 0.5;
                   controls.dragToLook = true;
                   document.addEventListener('keydown', onKeyChange);
                   document.addEventListener('keyup', onKeyChange);
+                  console.log("NOT TOUCH device in fly mode");
                 }
               } else {
                   controls.zoomSpeed = 2;
@@ -672,6 +673,7 @@
                   controls.enablePan = true;
                   document.removeEventListener('keydown', onKeyChange);
                   document.removeEventListener('keyup', onKeyChange);
+                  console.log("device in camera mode");
               }
           }
   
