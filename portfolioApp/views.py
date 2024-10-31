@@ -14,6 +14,7 @@ def basePageView(request):
     person = None
     if person_uuid:
         person = get_object_or_404(Person, uuid=person_uuid)
+        request.session['person_uuid'] = person_uuid
 
 
     owners = Owner.objects.filter(person=person)
@@ -79,6 +80,8 @@ def testPageView(request):
 
 def ownerPageView(request, person_uuid):
     
+    request.session['person_uuid'] = person_uuid
+
     person = get_object_or_404(Person, uuid=person_uuid)
     owners = Owner.objects.filter(person=person)
     nav_properties = Property.objects.filter(person=person)
@@ -117,6 +120,8 @@ def ownerPageView(request, person_uuid):
 
 
 def propertyPageView(request, person_uuid, owner_name, property_name):
+
+    request.session['person_uuid'] = person_uuid
    
     person = get_object_or_404(Person, uuid=person_uuid)
     owner = get_object_or_404(Owner, name=owner_name, person=person)
