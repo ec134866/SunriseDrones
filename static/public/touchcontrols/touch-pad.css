@@ -7,7 +7,7 @@
 	width: 100px;
 	height: 100px;
 	background: radial-gradient(rgba(218, 225, 230, 0.25) 5%, rgba(218, 225, 230, 0.50) 95%),
-				url("https://raw.githubusercontent.com/ec134866/SunriseDrones/refs/heads/dev/static/public/touchcontrols/images/cam.png") center center no-repeat;
+				url("images/cam.png") center center no-repeat;
 	border: 2px solid rgba(218, 225, 230, 0.25);
 	border-radius: 90px;
 	box-shadow: 0px 0px 5px rgba(194, 200, 204, 0.55);
@@ -39,7 +39,7 @@
 	width: 100px;
 	height: 100px;
 	background: radial-gradient(rgba(218, 225, 230, 0.25) 5%, rgba(218, 225, 230, 0.50) 95%),
-				url("https://raw.githubusercontent.com/ec134866/SunriseDrones/refs/heads/dev/static/public/touchcontrols/images/nav2.png") center center no-repeat;
+				url("images/nav2.png") center center no-repeat;
 	border: 2px solid rgba(218, 225, 230, 0.25);
 	border-radius: 90px;
 	box-shadow: 0px 0px 5px rgba(194, 200, 204, 0.55);
