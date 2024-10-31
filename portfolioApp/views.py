@@ -10,10 +10,18 @@ from .forms import PersonForm
 # Create your views here.
 
 def basePageView(request):
+    
+    person_uuid = request.GET.get('uuid')
+    
+    if person_uuid:
+        request.session['person_uuid'] = person_uuid
+    
     person_uuid = request.session.get('person_uuid', None)
-    person = None
+
     if person_uuid:
         person = get_object_or_404(Person, uuid=person_uuid)
+    else:
+        person = None 
 
 
     owners = Owner.objects.filter(person=person)
@@ -34,7 +42,6 @@ def basePageView(request):
 
 
 def indexPageView(request):
-
 
     person_uuid = request.GET.get('uuid')
     
