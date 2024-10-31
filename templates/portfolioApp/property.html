@@ -212,6 +212,18 @@
                 <div class="col" style="text-align: right;">
                     <i id="settings-icon" class="fa-solid fa-gear" style="font-size: 3vh; cursor: pointer;" onclick="toggleSettings()"></i>
                 </div>
+                <div id="joystickWrapper1" style="pointer-events: auto;
+                    display: block;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    background-color: transparent;
+                    width: 120px;
+                    height: 120px;
+                    z-index: 12;
+                    touch-action: manipulation;
+                    background-color: rgba(red, 0.2);">
+                </div>
               </div>
               <div class="row" id="settings-box" style="
                   display: none;
@@ -587,6 +599,14 @@
         let cameraReset = false;  // Track if the camera has been reset
         let controlsEnabled = false;
 
+        let fwdValue = 0;
+        let bkdValue = 0;
+        let rgtValue = 0;
+        let lftValue = 0;
+        let tempVector = new THREE.Vector3();
+        let upVector = new THREE.Vector3(0, 1, 0);
+        let joyManager;
+
         const stats = new Stats()
 
         distanceDisplay.style.display = 'none';
@@ -654,7 +674,25 @@
               
               if (controlType === 'fly') {
                 if (isTouchDevice) {
-                    
+                  controls.maxPolarAngle = Math.PI/2 ;
+                  controls.minPolarAngle = 0;
+                  controls.autoRotate = false;
+                  controls.autoRotateSpeed = 0;
+                  controls.rotateSpeed = 0.4;
+                  controls.enableDamping = false;
+                  controls.dampingFactor = 0.1;
+                  controls.enableZoom = false;
+                  controls.enablePan = false;
+                  controls.minAzimuthAngle = - Math.PI/2; // radians
+                  controls.maxAzimuthAngle = Math.PI/4 // radians
+                  
+                  var geometry = new THREE.BoxGeometry(5,5,5);
+                  var cubeMaterial = new THREE.MeshNormalMaterial(); 
+
+                  var mesh = new THREE.Mesh( geometry, cubeMaterial );
+                  scene.add( mesh );
+
+                  addJoystick();
                 } else {
                   controls.movementSpeed = 40; 
                   controls.rollSpeed = 0.5;
@@ -792,6 +830,98 @@
             }
             }
         }
+
+        {% comment %} touch joystick {% endcomment %}
+        function updatePlayer(){
+          // move the player
+          const angle = controls.getAzimuthalAngle()
+          
+            if (fwdValue > 0) {
+                tempVector
+                  .set(0, 0, -fwdValue)
+                  .applyAxisAngle(upVector, angle)
+                mesh.position.addScaledVector(
+                  tempVector,
+                  1
+                )
+              }
+          
+              if (bkdValue > 0) {
+                tempVector
+                  .set(0, 0, bkdValue)
+                  .applyAxisAngle(upVector, angle)
+                mesh.position.addScaledVector(
+                  tempVector,
+                  1
+                )
+              }
+        
+              if (lftValue > 0) {
+                tempVector
+                  .set(-lftValue, 0, 0)
+                  .applyAxisAngle(upVector, angle)
+                mesh.position.addScaledVector(
+                  tempVector,
+                  1
+                )
+              }
+        
+              if (rgtValue > 0) {
+                tempVector
+                  .set(rgtValue, 0, 0)
+                  .applyAxisAngle(upVector, angle)
+                mesh.position.addScaledVector(
+                  tempVector,
+                  1
+                )
+              }
+
+          function addJoystick(){
+              const options = {
+                  zone: document.getElementById('joystickWrapper1'),
+                  size: 120,
+                  multitouch: true,
+                  maxNumberOfNipples: 2,
+                  mode: 'static',
+                  restJoystick: true,
+                  shape: 'circle',
+                  // position: { top: 20, left: 20 },
+                  position: { top: '60px', left: '60px' },
+                  dynamicPage: true,
+                }
+              
+              
+          joyManager = nipplejs.create(options);
+            
+          joyManager['0'].on('move', function (evt, data) {
+                  const forward = data.vector.y
+                  const turn = data.vector.x
+          
+                  if (forward > 0) {
+                    fwdValue = Math.abs(forward)
+                    bkdValue = 0
+                  } else if (forward < 0) {
+                    fwdValue = 0
+                    bkdValue = Math.abs(forward)
+                  }
+          
+                  if (turn > 0) {
+                    lftValue = 0
+                    rgtValue = Math.abs(turn)
+                  } else if (turn < 0) {
+                    lftValue = Math.abs(turn)
+                    rgtValue = 0
+                  }
+                })
+          
+                joyManager['0'].on('end', function (evt) {
+                  bkdValue = 0
+                  fwdValue = 0
+                  lftValue = 0
+                  rgtValue = 0
+                })
+            
+          }
         
         window.initInteriorModel = function() {
             const container = document.getElementById('interiorModelContainer');
@@ -858,6 +988,7 @@
             // Update the camera and tiles renderer
             camera.updateMatrixWorld();
             tilesRenderer.update();
+            updatePlayer();
             renderer.render(scene, camera);
 
             // Check if all tiles are loaded
