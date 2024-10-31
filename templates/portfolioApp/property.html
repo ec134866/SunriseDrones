@@ -562,6 +562,7 @@
         import { TilesRenderer, DebugTilesPlugin, PriorityQueue } from '3d-tiles-renderer';
         import { CameraRig, FreeMovementControls } from 'three-story-controls';
         import Stats from 'three/examples/jsm/libs/stats.module';
+        import TouchControls from '/static/public/touchcontrols/TouchControls.js'
         
 
         let camera, scene, renderer, tilesRenderer, controls, modelGroup;
@@ -655,6 +656,17 @@
               if (controlType === 'fly') {
                 if (isTouchDevice) {
                   console.log("TOUCH device in fly mode");
+                  console.log("TOUCH device in fly mode");
+                    let options = {
+                        delta: 0.75,           // coefficient of movement
+                        moveSpeed: 0.07,        // speed of movement
+                        rotationSpeed: 0.0009,  // coefficient of rotation
+                        maxPitch: 20,          // max camera pitch angle
+                        hitTest: true,         // stop on hitting objects
+                        hitTestDistance: 40    // distance to test for hit
+                    }
+                    controls = new TouchControls(container.parentNode, camera, options)
+                    controls.addToScene(scene)
                 } else {
                   controls.movementSpeed = 40; 
                   controls.rollSpeed = 0.5;
