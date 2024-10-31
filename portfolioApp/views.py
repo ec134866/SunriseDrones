@@ -10,7 +10,7 @@ from .forms import PersonForm
 # Create your views here.
 
 def basePageView(request):
-    person_uuid = request.session.get('person_uuid', None)
+    person_uuid = request.GET.get('person_uuid') or request.session.get('person_uuid')
     person = None
     if person_uuid:
         person = get_object_or_404(Person, uuid=person_uuid)
