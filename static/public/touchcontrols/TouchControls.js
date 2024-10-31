@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import * as utils from './utils.js'
 import RotationPad from 'https://raw.githubusercontent.com/ec134866/SunriseDrones/refs/heads/dev/static/public/touchcontrols/RotationPad.js'
-import MovementPad from 'https://raw.githubusercontent.com/ec134866/SunriseDrones/refs/heads/dev/static/public/touchcontrols/images/cam.png/MovementPad.js'
+import MovementPad from 'https://raw.githubusercontent.com/ec134866/SunriseDrones/refs/heads/dev/static/public/touchcontrols/MovementPad.js'
 
 
 class TouchControls {
