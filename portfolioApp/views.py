@@ -111,7 +111,8 @@ def ownerPageView(request, person_uuid):
         'owner_name': owner_name,
         'owner_palette1': owner_palette1,
         'properties_by_owner': properties_by_owner,
-        'nav_properties': nav_properties
+        'nav_properties': nav_properties,
+        'person_uuid': str(person.uuid),
     }
 
     return render(request, 'portfolioApp/owner.html', context)
@@ -156,6 +157,7 @@ def propertyPageView(request, person_uuid, owner_name, property_name):
         'owner_name': owner_name,
         'property': property,
         'nav_properties': nav_properties,
+        'person_uuid': str(person.uuid),
         'flights': flights,
         'selected_flight': selected_flight,
         'script_exterior': script_exterior,
