@@ -53,6 +53,7 @@ class RotationPad {
 
         //Touch events:
         this.region.addEventListener('touchstart', (event) => {
+            event.preventDefault();
             this.mouseDown = true
             this.handle.style.opacity = 1.0
             this.update(
@@ -71,6 +72,7 @@ class RotationPad {
         document.addEventListener('touchmove', (event) => {
             if (!this.mouseDown)
                 return
+            event.preventDefault();
             this.update(event.touches[0].pageX, event.touches[0].pageY)
         })
 
