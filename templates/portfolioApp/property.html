@@ -676,8 +676,8 @@
                         moveSpeed: 0.1, // 0.07,        // speed of movement
                         rotationSpeed: 0.0015, // 0.0009,  // coefficient of rotation
                         maxPitch: 20          // max camera pitch angle
-                        // hitTest: true,         // stop on hitting objects
-                        // hitTestDistance: 40    // distance to test for hit
+                        hitTest: false,         // stop on hitting objects
+                        hitTestDistance: 1000    // distance to test for hit
                     }
                     controls = new TouchControls(container.parentNode, camera, options)
                     controls.addToScene(scene)

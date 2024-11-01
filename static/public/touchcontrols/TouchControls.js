@@ -37,8 +37,8 @@ class TouchControls {
             moveSpeed: 0.5,         // speed of movement
             rotationSpeed: 0.002,   // coefficient of rotation
             maxPitch: 55,           // max camera pitch angle
-            hitTest: true,          // stop on hitting objects
-            hitTestDistance: 40     // distance to test for hit
+            hitTest: false,          // stop on hitting objects
+            hitTestDistance: 1000     // distance to test for hit
         }, options)
 
         this.#rotationMatrices = []
