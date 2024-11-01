@@ -76,8 +76,43 @@ class MovementPad {
     }
 
     alignAndConfigPad(canvas) {
-        this.padElement.style.top = (window.innerHeight * 1.41) + 'px';
-        this.padElement.style.left = (window.innerWidth * 0.07) + 'px';
+        const containerRect = this.container.getBoundingClientRect();
+
+        // this.region.offsetHeight = height of the image (100)
+    
+        const verticalOffset = (canvas.height * 0.9) + (containerRect.top) - this.region.offsetHeight; 
+        const horizontalOffset = (containerRect.width * 0.06)
+
+        this.padElement.style.top = `${verticalOffset}px`;
+        this.padElement.style.left = `${horizontalOffset}px`;
+
+
+        // console.log("Container Dimensions and Position:");
+        // console.log("Width:", containerRect.width);
+        // console.log("Height:", containerRect.height);
+        // console.log("Top:", containerRect.top);
+        // console.log("Right:", containerRect.right);
+        // console.log("Bottom:", containerRect.bottom);
+        // console.log("Left:", containerRect.left);
+
+        // // Log canvas dimensions
+        // console.log("Canvas Dimensions:");
+        // console.log("Offset Width:", canvas.offsetWidth);
+        // console.log("Width:", canvas.width);
+        // console.log("Offset Height:", canvas.offsetHeight);
+        // console.log("Height:", canvas.height);
+
+        // console.log("Region Dimensions:");
+        // console.log("Width:", this.region.offsetWidth);
+        // console.log("Height:", this.region.offsetHeight);
+
+        // console.log("Calculating Pad Position:");
+        // console.log(`Vertical Offset Calculation: (${canvas.height} * 0.9) + (${containerRect.top}) - (${this.region.offsetHeight}) = ${verticalOffset}`);
+        // console.log(`Horizontal Offset Calculation: (${containerRect.width} * 0.06)  = ${horizontalOffset}`);
+
+        // console.log("Pad Position:");
+        // console.log("Top:", this.padElement.style.top);
+        // console.log("Left:", this.padElement.style.left);
 
         this.regionData.width = this.region.offsetWidth
         this.regionData.height = this.region.offsetHeight

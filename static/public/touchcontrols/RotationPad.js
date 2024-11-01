@@ -76,25 +76,61 @@ class RotationPad {
     }
 
     alignAndConfigPad(canvas){
-        this.padElement.style.top = (window.innerHeight * 1.41) + 'px';
-        this.padElement.style.left = (window.innerWidth * 0.88) + 'px';
+        const containerRect = this.container.getBoundingClientRect();
 
-        this.regionData.width = this.region.offsetWidth
-        this.regionData.height = this.region.offsetHeight
+        // this.region.offsetHeight = height of the image (100)
+    
+        const verticalOffset = (canvas.height * 0.9) + (containerRect.top) - this.region.offsetHeight; //
+        const horizontalOffset = (containerRect.width * 0.95) - this.region.offsetWidth; 
+
+        this.padElement.style.top = `${verticalOffset}px`;
+        this.padElement.style.left = `${horizontalOffset}px`;
+
+
+        // console.log("Container Dimensions and Position:");
+        // console.log("Width:", containerRect.width);
+        // console.log("Height:", containerRect.height);
+        // console.log("Top:", containerRect.top);
+        // console.log("Right:", containerRect.right);
+        // console.log("Bottom:", containerRect.bottom);
+        // console.log("Left:", containerRect.left);
+
+        // // Log canvas dimensions
+        // console.log("Canvas Dimensions:");
+        // console.log("Offset Width:", canvas.offsetWidth);
+        // console.log("Width:", canvas.width);
+        // console.log("Offset Height:", canvas.offsetHeight);
+        // console.log("Height:", canvas.height);
+
+        // console.log("Region Dimensions:");
+        // console.log("Width:", this.region.offsetWidth);
+        // console.log("Height:", this.region.offsetHeight);
+
+        // console.log("Calculating Pad Position:");
+        // console.log(`Vertical Offset Calculation: (${canvas.height} * 0.9) + (${containerRect.top}) - (${this.region.offsetHeight}) = ${verticalOffset}`);
+        // console.log(`Horizontal Offset Calculation: (${containerRect.width} * 0.95) - (${this.region.offsetWidth}) = ${horizontalOffset}`);
+
+        // console.log("Pad Position:");
+        // console.log("Top:", this.padElement.style.top);
+        // console.log("Left:", this.padElement.style.left);
+
+
+        this.regionData.width = this.region.offsetWidth;
+        this.regionData.height = this.region.offsetHeight;
         this.regionData.position = {
             top: this.region.offsetTop,
             left: this.region.offsetLeft
-        }
-        this.regionData.offset = utils.getOffset(this.region)
-        this.regionData.radius = this.regionData.width / 2
-        this.regionData.centerX = this.regionData.position.left + this.regionData.radius
-        this.regionData.centerY = this.regionData.position.top + this.regionData.radius
+        };
+        this.regionData.offset = utils.getOffset(this.region);
+        this.regionData.radius = this.regionData.width / 2;
+        this.regionData.centerX = this.regionData.position.left + this.regionData.radius;
+        this.regionData.centerY = this.regionData.position.top + this.regionData.radius;
 
-        this.handleData.width = this.handle.offsetWidth
-        this.handleData.height = this.handle.offsetHeight
-        this.handleData.radius = this.handleData.width / 2
+        this.handleData.width = this.handle.offsetWidth;
+        this.handleData.height = this.handle.offsetHeight;
+        this.handleData.radius = this.handleData.width / 2;
 
-        this.regionData.radius = this.regionData.width / 2 - this.handleData.radius
+        this.regionData.radius = this.regionData.width / 2 - this.handleData.radius;
     }
 
     update(pageX, pageY) {
