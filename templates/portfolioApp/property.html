@@ -209,9 +209,9 @@
                       Distance: N/A
                   </div>
                 </div>
-                <div class="col" style="text-align: right;">
+                {% comment %} <div class="col" style="text-align: right;">
                     <i id="settings-icon" class="fa-solid fa-gear" style="font-size: 3vh; cursor: pointer;" onclick="toggleSettings()"></i>
-                </div>
+                </div> {% endcomment %}
               </div>
               <div class="row" id="settings-box" style="
                   display: none;
@@ -220,7 +220,8 @@
                   left: 50%;
                   transform: translate(-50%, -50%);
                   width: 50%;
-                  height: 25%;">
+                  height: 25%;
+                  z-index: 1000;">
                   <div class="row" style="height:100%;">
                       <div class="col-auto" id="options-column" style="width: 30%; padding:2vh; background-color: rgba(169, 169, 169, 0.9); border-top-left-radius: 2vh; border-bottom-left-radius: 2vh; padding-top:4vh;">
                           <div style="font-size: clamp(1vh,1.5vw,2vh); margin-bottom: 2vh; cursor: pointer; background-color: lightblue;" id="movement-controls-option">
@@ -255,15 +256,28 @@
                       </div>
                   </div>
                 </div>
-                <div class="progress-bar-container" style="width: 55%; position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%);display: none; justify-content: center; align-items: center; text-align: center;">
+                <div class="progress-bar-container" style="
+                  width: 55%;
+                  position: fixed;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  display: none;
+                  justify-content: center;
+                  align-items: center;
+                  text-align: center;
+                  z-index: 1500;">
                   <div class="row">
-                      <label for="progress-bar" style="color: white; font-size: 4vh; margin-bottom: 1vh;">Loading...</label>
+                      <label for="progress-bar" style="color: white;font-size: 4vh; margin-bottom: 1vh;">Loading...</label>
                   </div>
                   <div class="row">
                       <progress id="progress-bar" style="height: 5vh;" value="0" max="100"></progress>
                   </div>
                 </div>
-                <div id="exteriorModelContainer" class="d-flex justify-content-center">
+                <div id="exteriorOuterModelContainer" class="d-flex justify-content-center" style="position: relative;">
+                  <i id="settings-icon" class="fa-solid fa-gear" style="font-size: 3vh; cursor: pointer; position: absolute; top: 10px; right: 10px; z-index: 10;" onclick="toggleSettings()"></i>
+                  <div id="exteriorModelContainer" class="d-flex justify-content-center">
+                  </div>
                 </div>
             </div>
           </div>

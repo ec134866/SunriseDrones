@@ -24,6 +24,8 @@ class MovementPad {
         this.padElement.append(this.region)
         this.container.append(this.padElement)
 
+        this.container.style.position = 'relative';
+
         // Aligning pad:
         let canvas = container.getElementsByTagName('canvas')[0]
         this.alignAndConfigPad(canvas)
@@ -78,13 +80,19 @@ class MovementPad {
     alignAndConfigPad(canvas) {
         const containerRect = this.container.getBoundingClientRect();
 
+        this.padElement.style.position = 'absolute';
+
         // this.region.offsetHeight = height of the image (100)
     
-        const verticalOffset = (canvas.height * 0.9) + (containerRect.top) - this.region.offsetHeight; 
+        const verticalOffset = (canvas.height) - (containerRect.bottom) - this.region.offsetHeight; 
         const horizontalOffset = (containerRect.width * 0.06)
 
         this.padElement.style.top = `${verticalOffset}px`;
         this.padElement.style.left = `${horizontalOffset}px`;
+
+        // console.log("Current Container:");
+        // console.log("Container ID:", this.container.id); 
+        // console.log("Container Type:", this.container.tagName);
 
 
         // console.log("Container Dimensions and Position:");
@@ -107,7 +115,7 @@ class MovementPad {
         // console.log("Height:", this.region.offsetHeight);
 
         // console.log("Calculating Pad Position:");
-        // console.log(`Vertical Offset Calculation: (${canvas.height} * 0.9) + (${containerRect.top}) - (${this.region.offsetHeight}) = ${verticalOffset}`);
+        // console.log(`Vertical Offset Calculation: (${canvas.height}) - (${containerRect.bottom}) - (${this.region.offsetHeight}) = ${verticalOffset}`);
         // console.log(`Horizontal Offset Calculation: (${containerRect.width} * 0.06)  = ${horizontalOffset}`);
 
         // console.log("Pad Position:");
