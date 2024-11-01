@@ -652,7 +652,7 @@
 
             container.appendChild(renderer.domElement);
 
-            initControls('orbit');
+            initControls(isTouchDevice ? 'fly' : 'orbit');
             document.getElementById('fly-controls-btn').addEventListener('click', () => initControls('fly'));
             document.getElementById('camera-controls-btn').addEventListener('click', () => initControls('orbit'));
 
