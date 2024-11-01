@@ -653,8 +653,12 @@
             container.appendChild(renderer.domElement);
 
             initControls('orbit');
-            document.getElementById('fly-controls-btn').addEventListener('click', () => initControls('fly'));
-            document.getElementById('camera-controls-btn').addEventListener('click', () => initControls('orbit'));
+            document.getElementById('fly-controls-btn').addEventListener('click', () => {
+                if (!spinning) initControls('fly');
+            });
+            document.getElementById('camera-controls-btn').addEventListener('click', () => {
+                if (!spinning) initControls('orbit');
+            });
 
 
             const distance = camera.position.distanceTo(controls.target);
@@ -748,6 +752,8 @@
                   if (loadedTilesCount === totalTiles) {
                       // Hide the loading bar when loading is complete
                       progressBarContainer.style.display = 'none';
+                      spinning = false; 
+                      initControls(isTouchDevice ? 'fly' : 'orbit'); 
                   }
               });
 
