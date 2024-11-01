@@ -60,14 +60,14 @@ class MovementPad {
                 event.targetTouches[0].pageX,
                 event.targetTouches[0].pageY
             )
-        })
+        },{ passive: false }); 
 
         let touchEnd = () => {
             this.mouseDown = false
             this.resetHandlePosition()
         }
-        document.addEventListener('touchend', touchEnd)
-        document.addEventListener('touchcancel', touchEnd)
+        document.addEventListener('touchend', touchEnd,{ passive: false }); 
+        document.addEventListener('touchcancel', touchEnd,{ passive: false }); 
 
         document.addEventListener('touchmove', (event) => {
             
@@ -75,7 +75,7 @@ class MovementPad {
                 return
             event.preventDefault();
             this.update(event.touches[0].pageX, event.touches[0].pageY)
-        })
+        },{ passive: false }); 
 
         this.resetHandlePosition()
     }
