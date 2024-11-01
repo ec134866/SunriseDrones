@@ -656,9 +656,6 @@
             document.getElementById('fly-controls-btn').addEventListener('click', () => initControls('fly'));
             document.getElementById('camera-controls-btn').addEventListener('click', () => initControls('orbit'));
 
-
-            const distance = camera.position.distanceTo(controls.target);
-
             
             function initControls(controlType) {
               if (controls) controls.dispose();
@@ -666,6 +663,8 @@
               controls = (controlType === 'fly') 
                   ? new FlyControls(camera, renderer.domElement) 
                   : new OrbitControls(camera, renderer.domElement);
+
+              const distance = camera.position.distanceTo(controls.target);
               
               if (controlType === 'fly') {
                 if (isTouchDevice) {
