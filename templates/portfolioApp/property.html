@@ -653,12 +653,8 @@
             container.appendChild(renderer.domElement);
 
             initControls('orbit');
-            document.getElementById('fly-controls-btn').addEventListener('click', () => {
-                if (!spinning) initControls('fly');
-            });
-            document.getElementById('camera-controls-btn').addEventListener('click', () => {
-                if (!spinning) initControls('orbit');
-            });
+            document.getElementById('fly-controls-btn').addEventListener('click', () => initControls('fly'));
+            document.getElementById('camera-controls-btn').addEventListener('click', () => initControls('orbit'));
 
 
             const distance = camera.position.distanceTo(controls.target);
@@ -674,10 +670,11 @@
               if (controlType === 'fly') {
                 if (isTouchDevice) {
                   console.log("TOUCH device in fly mode");
+                  console.log("TOUCH device in fly mode");
                     let options = {
                         delta: 0.75,           // coefficient of movement
-                        moveSpeed: 0.1,   // speed of movement
-                        rotationSpeed: 0.001, // coefficient of rotation
+                        moveSpeed: 0.07,        // speed of movement
+                        rotationSpeed: 0.0009,  // coefficient of rotation
                         maxPitch: 20,          // max camera pitch angle
                         hitTest: true,         // stop on hitting objects
                         hitTestDistance: 40    // distance to test for hit
@@ -751,8 +748,6 @@
                   if (loadedTilesCount === totalTiles) {
                       // Hide the loading bar when loading is complete
                       progressBarContainer.style.display = 'none';
-                      spinning = false; 
-                      initControls(isTouchDevice ? 'fly' : 'orbit'); 
                   }
               });
 
