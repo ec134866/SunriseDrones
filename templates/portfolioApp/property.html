@@ -675,10 +675,12 @@
                         hitTest: false,         // stop on hitting objects
                         hitTestDistance: 1000    // distance to test for hit
                     }
+                    camera.rotation.set(0, 0, 0);
                     controls = new TouchControls(container.parentNode, camera, options)
                     controls.addToScene(scene)
                 } else {
                   controls.movementSpeed = 40; 
+                  camera.rotation.set(0, 0, 0);
                   controls.rollSpeed = 0.5;
                   controls.dragToLook = true;
                   document.addEventListener('keydown', onKeyChange);
