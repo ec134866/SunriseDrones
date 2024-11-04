@@ -22,6 +22,7 @@ class Person(models.Model):
 # Owner Model
 class Owner(models.Model):
     name = models.CharField(max_length=255)
+    url_name = models.CharField(max_length=255, blank=True, null=True)
     palette1 = models.CharField(max_length=50)
     palette2 = models.CharField(max_length=50)
     palette3 = models.CharField(max_length=50)
@@ -36,6 +37,7 @@ class Owner(models.Model):
 # Property Model
 class Property(models.Model):
     name = models.CharField(max_length=255)
+    url_name = models.CharField(max_length=255, blank=True, null=True)
     loc_city = models.CharField(max_length=255, blank=True, null=True)
     loc_state = models.CharField(max_length=255, blank=True, null=True)
     loc_country = models.CharField(max_length=255, blank=True, null=True)
