@@ -678,12 +678,14 @@
                         hitTest: false,         // stop on hitting objects
                         hitTestDistance: 1000    // distance to test for hit
                     }
+                    controls.target = controls.target || new THREE.Vector3(0, 0, 0); 
                     controls = new TouchControls(container.parentNode, camera, options)
                     controls.addToScene(scene)
                 } else {
                   controls.movementSpeed = 40; 
                   controls.rollSpeed = 0.5;
                   controls.dragToLook = true;
+                  controls.target = controls.target || new THREE.Vector3(0, 0, 0); 
                   document.addEventListener('keydown', onKeyChange);
                   document.addEventListener('keyup', onKeyChange);
                   console.log("NOT TOUCH device in fly mode");
@@ -696,6 +698,7 @@
                   controls.maxPolarAngle = 1.8;
                   controls.zoomToCursor = true;
                   controls.enablePan = true;
+                  controls.target = controls.target || new THREE.Vector3(0, 0, 0); 
                   document.removeEventListener('keydown', onKeyChange);
                   document.removeEventListener('keyup', onKeyChange);
                   console.log("device in camera mode");
@@ -861,7 +864,7 @@
             controls.minPolarAngle = 0.25;
             controls.maxPolarAngle = 1.8;
             controls.autoRotate = false;
-            controls.target = new THREE.Vector3(0, 1, 0);
+            controls.target = new THREE.Vector3(0, 0, 0);
             controls.update();
 
             window.addEventListener('resize', () => {
