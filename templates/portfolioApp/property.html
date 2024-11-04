@@ -772,6 +772,10 @@
 
             modelGroup.add(tilesRenderer.group);
 
+            // // -- helpful axes X (red), Y (green), Z (blue) 
+            const axesHelper = new THREE.AxesHelper(100);  
+            scene.add(axesHelper);
+
             window.addEventListener('click', onClick);
             
 
