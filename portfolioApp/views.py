@@ -107,11 +107,11 @@ def ownerPageView(request, person_uuid):
 
 
 
-def propertyPageView(request, person_uuid, owner_name, property_name):
+def propertyPageView(request, person_uuid, owner_url_name, property_url_name):
    
     person = get_object_or_404(Person, uuid=person_uuid)
-    owner = get_object_or_404(Owner, name=owner_name, person=person)
-    property = get_object_or_404(Property, name=property_name, person=person)
+    owner = get_object_or_404(Owner, url_name=owner_url_name, person=person)
+    property = get_object_or_404(Property, url_name=property_url_name, person=person)
     flights = Flight.objects.filter(property=property).order_by('-date')
     nav_properties = Property.objects.filter(person=person)
     
@@ -139,8 +139,9 @@ def propertyPageView(request, person_uuid, owner_name, property_name):
     context = {
         'person': person,
         'owner': owner,
-        'owner_name': owner_name,
+        'owner_url_name' : owner_url_name,
         'property': property,
+        'property_url_name': property_url_name,
         'nav_properties': nav_properties,
         'flights': flights,
         'selected_flight': selected_flight,

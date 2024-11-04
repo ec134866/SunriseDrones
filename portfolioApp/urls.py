@@ -7,5 +7,5 @@ urlpatterns = [
     path('feedback/', feedbackPageView, name = "feedback"),
     path('management/<uuid:person_uuid>/', managementPageView, name = "management"),
     path('<uuid:person_uuid>/', ownerPageView, name='owner'),
-    path('<uuid:person_uuid>/<str:owner_name>/<str:property_name>/', propertyPageView, name='property'),    
+    path('<uuid:person_uuid>/<str:owner_url_name>/<str:property_url_name>/', propertyPageView, name='property'),    
 ]

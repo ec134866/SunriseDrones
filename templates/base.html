@@ -131,7 +131,7 @@
               data-state="{{ property.loc_state|default:''}}"
               data-country="{{ property.loc_country|default:''}}"
               data-owner="{{ property.owner.name}}">
-              <a href="{% url 'property' person.uuid property.owner.name property.name %}">{{ property.name }}</a>
+              <a href="{% url 'property' person.uuid property.owner.url_name property.url_name %}">{{ property.name }}</a>
           </li>
           {% endfor %}
           <li class="sidebar-nav-item" style="text-align:right; margin-top:auto;">
