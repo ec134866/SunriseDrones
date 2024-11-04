@@ -34,7 +34,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (DJANGO_ENV == 'dev')
 
-ALLOWED_HOSTS = ['127.0.0.1', 'sunrisedrones.pythonanywhere.com', 'balancedrockimaging.pythonanywhere.com', 'www.balancedrockimaging.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'sunrisedrones.pythonanywhere.com', 'balancedrockimaging.pythonanywhere.com', 'balancedrockimaging.com', 'www.balancedrockimaging.com']
 
 
 # Application definition
