@@ -670,7 +670,7 @@
                     let options = {
                         delta: 0.75,           // coefficient of movement
                         moveSpeed: 0.1, // 0.07,        // speed of movement
-                        rotationSpeed: 0.003, // 0.0009,  // coefficient of rotation
+                        rotationSpeed: 0.002, // 0.0009,  // coefficient of rotation
                         maxPitch: 20,          // max camera pitch angle
                         hitTest: false,         // stop on hitting objects
                         hitTestDistance: 1000    // distance to test for hit
@@ -890,6 +890,10 @@
             tilesRenderer.update();
             renderer.render(scene, camera);
 
+            console.log(Camera Position: x=${camera.position.x.toFixed(2)}, y=${camera.position.y.toFixed(2)}, z=${camera.position.z.toFixed(2)});
+            console.log(Camera Rotation: x=${camera.rotation.x.toFixed(2)}, y=${camera.rotation.y.toFixed(2)}, z=${camera.rotation.z.toFixed(2)});
+            console.log(Camera LookAt: ${modelGroup.position.toArray().map(val => val.toFixed(2)).join(", ")});
+
 
 
             // Check if all tiles are loaded
@@ -897,12 +901,11 @@
                 if (!cameraReset) {
                     // Reset camera once all tiles are loaded
                     camera.position.set({{selected_flight.script_exterior.camera_position}});  // Reset camera position
-                    camera.rotation.set(-0.20, 0.63, 0.12);
+                    // camera.rotation.set(-0.20, 0.63, 0.12);
 
                     // Mark that the camera has been reset
                     cameraReset = true;
                     controlsEnabled = true;  // Enable controls after reset
-
 
 
                 }
