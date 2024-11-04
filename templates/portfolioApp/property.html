@@ -773,8 +773,8 @@
             modelGroup.add(tilesRenderer.group);
 
             // // -- helpful axes X (red), Y (green), Z (blue) 
-            const axesHelper = new THREE.AxesHelper(100);  
-            scene.add(axesHelper);
+            // const axesHelper = new THREE.AxesHelper(100);  
+            // scene.add(axesHelper);
 
             window.addEventListener('click', onClick);
             
@@ -890,20 +890,19 @@
             tilesRenderer.update();
             renderer.render(scene, camera);
 
-            // console.log(`Camera Position: x=${camera.position.x.toFixed(2)}, y=${camera.position.y.toFixed(2)}, z=${camera.position.z.toFixed(2)}`);
-            // console.log(`Camera Rotation: x=${camera.rotation.x.toFixed(2)}, y=${camera.rotation.y.toFixed(2)}, z=${camera.rotation.z.toFixed(2)}`);
-            // console.log(`Camera LookAt: ${modelGroup.position.toArray().map(val => val.toFixed(2)).join(", ")}`);
+
 
             // Check if all tiles are loaded
             if (loadedTilesCount >= totalTiles) {
                 if (!cameraReset) {
                     // Reset camera once all tiles are loaded
                     camera.position.set({{selected_flight.script_exterior.camera_position}});  // Reset camera position
-                    camera.rotation.set({{selected_flight.script_exterior.camera_rotation}});  // Reset camera position
+                    camera.rotation.set(-0.20, 0.63, 0.12);
 
                     // Mark that the camera has been reset
                     cameraReset = true;
                     controlsEnabled = true;  // Enable controls after reset
+
 
 
                 }
