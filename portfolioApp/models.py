@@ -54,7 +54,8 @@ class Property(models.Model):
 # ScriptExterior Model
 class ScriptExterior(models.Model):
     camera_far = models.CharField(max_length=20, blank=True, null=True, default="50000")
-    camera_position = models.CharField(max_length=20, blank=True, null=True, default="1,3000,-1500")
+    camera_position = models.CharField(max_length=20, blank=True, null=True, default="75, 20, 100")
+    camera_rotation = models.CharField(max_length=20, blank=True, null=True, default="-0.20, 0.63, 0.12")
     camera_axis = models.CharField(max_length=20, blank=True, null=True, default="0, 1, 0")
     model_position = models.CharField(max_length=20, blank=True, null=True, default="1,1,1")
     model_rotation_x = models.CharField(max_length=20, blank=True, null=True, default="-50")
