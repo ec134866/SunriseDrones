@@ -11049,6 +11049,11 @@ footer.footer .social-link:hover {
   font-size: 4rem;
   margin: 0;
   padding: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add drop shadow */
+}
+
+.masthead h3 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add drop shadow to h3 */
 }
 @media (min-width: 992px) {
   .masthead {
