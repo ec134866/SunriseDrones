@@ -11011,18 +11011,39 @@ footer.footer .social-link:hover {
     height: 75%;
   }
 }
+
+.homepagevid-video-background {
+  background: #000;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.homepagevid-video-foreground,
+.homepagevid-video-background iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+
 .masthead {
-  min-height: 30rem;
+  min-height: 40rem;
   position: relative;
   display: table;
   width: 100%;
   height: auto;
   padding-top: 8rem;
   padding-bottom: 8rem;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("https://i.imgur.com/6r2EYtn.jpg");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  z-index: 1;
+  text-align: center;
+  color: #fff;
 }
 .masthead h1, .masthead .h1 {
   font-size: 4rem;
@@ -11036,6 +11057,13 @@ footer.footer .social-link:hover {
   .masthead h1, .masthead .h1 {
     font-size: 5.5rem;
   }
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .homepagevid-video-foreground { height: 300%; top: -100%; }
+}
+@media (max-aspect-ratio: 16/9) {
+  .homepagevid-video-foreground { width: 300%; left: -100%; }
 }
 
 .portfolio-item {
