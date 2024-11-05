@@ -167,27 +167,27 @@
             </div>
           {% endif %}
           <div class="row justify-content-center" style="padding-left: 2vw; padding-right: 2vw; padding-top: 4vh; padding-bottom: 2vh;">
-              <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.of_content_btn_1}}">
-                <button class="btn btn-link p-0" onclick="showContent('overflightContent')">
-                    <img src={{selected_flight.overflight_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-                    <br><br>
-                    <h2 class="text-decoration-none" style="color: #333;">Overflight</h2>
-                </button>
-              </div>
-              <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.ext_content_btn_1}}">
-                <button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
-                    <img src={{selected_flight.exterior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-                    <br><br>
-                    <h2 class="text-decoration-none" style="color: #333;">3D Exterior Model</h2>
-                </button>
-              </div>
-              <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.int_content_btn_1}}">
-                <button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
-                    <img src={{selected_flight.interior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-                    <br><br>
-                    <h2 class="text-decoration-none" style="color: #333;">3D Interior Model</h2>
-                </button>
-              </div>
+            <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.of_content_btn_1}}">
+              <button class="btn btn-link p-0" onclick="showContent('overflightContent')">
+                  <img src={{selected_flight.overflight_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                  <br><br>
+                  <h2 class="text-decoration-none" style="color: #333;">Overflight</h2>
+              </button>
+            </div>
+            <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.ext_content_btn_1}}">
+              <button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
+                  <img src={{selected_flight.exterior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                  <br><br>
+                  <h2 class="text-decoration-none" style="color: #333;">3D Exterior Model</h2>
+              </button>
+            </div>
+            <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.int_content_btn_1}}">
+              <button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
+                  <img src={{selected_flight.interior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+                  <br><br>
+                  <h2 class="text-decoration-none" style="color: #333;">3D Interior Model</h2>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -544,6 +544,8 @@
       
             const selectedContent = document.getElementById(contentId);
             selectedContent.classList.add('show');
+
+            window.location.hash = contentId;
     
             // Use setTimeout to add a delay before scrolling
             setTimeout(() => {
@@ -562,6 +564,13 @@
     
         let exteriorModelLoaded = false;
         let interiorModelLoaded = false;
+
+        window.onload = function() {
+            const hash = window.location.hash.substring(1); // Remove the '#'
+            if (hash) {
+                showContent(hash);
+            }
+        };
       </script>
 
       
