@@ -980,8 +980,8 @@
                 <input type="checkbox" id="captcha" onclick="checkCaptcha()"> I am not a robot
             </div>
             <div id="result" style="display: none;">
-                <span></span>
-                <button id="copyBtn" style="margin-left: 10px; padding: 5px 10px; background-color: #28a745; color: white; border: none; cursor: pointer; border-radius: 5px;" onclick="copyToClipboard()">Copy</button>
+                <h4 style="display: inline;">Please contact: <span></span></h4>
+                <i class="fa-solid fa-copy" style="cursor: pointer; margin-left: 10px;" onclick="copyToClipboard()"></i>
             </div>
             <button id="closeBtn" style="display: none; margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer;" onclick="closeModal()">Close</button>
         </div>
@@ -999,7 +999,7 @@
         function checkCaptcha() {
             const isChecked = document.getElementById('captcha').checked;
             if (isChecked) {
-                document.getElementById('result').querySelector('span').innerText = `Please contact: ${window.contactInfo}`;
+                document.getElementById('result').querySelector('span').innerText = window.contactInfo;
                 document.getElementById('result').style.display = 'block';
                 document.getElementById('closeBtn').style.display = 'inline';
             } else {
