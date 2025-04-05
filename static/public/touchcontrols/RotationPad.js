@@ -85,8 +85,8 @@ class RotationPad {
         this.padElement.style.position = 'absolute';
 
         // Adjusting the height and width as per your requirement
-        const padWidth = this.region.offsetWidth * 0.5;  // Make it 50% smaller in width
-        const padHeight = this.region.offsetHeight * 2;  // Make it 200% taller
+        const padWidth = this.region.offsetWidth * 0.5; 
+        const padHeight = this.region.offsetHeight * 0.75; 
 
         this.region.style.width = `${padWidth}px`;
         this.region.style.height = `${padHeight}px`;
