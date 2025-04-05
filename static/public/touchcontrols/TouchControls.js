@@ -29,6 +29,9 @@ class TouchControls {
     #moveRightLocked = false
     #ztouch = 1
     #xtouch = 1
+    #ytouch = 1 
+    #moveUpward = false 
+    #moveDownward = false 
     
     constructor(container, camera, options) {
         this.container = container
@@ -59,15 +62,26 @@ class TouchControls {
 
         /* CHAT */
         this.rotationPad.padElement.addEventListener('move', (event) => {
-            let deltaY = event.detail.deltaY; // This will control vertical movement
-            let verticalSpeed = 0.01; // Adjust speed for vertical movement
+                this.#ytouch = Math.abs(event.detail.deltaZ)
 
-            // Update camera/person's Y position based on vertical slider
-            this.fpsBody.position.y += deltaY * verticalSpeed;
-
-            // Optional: Clamp the Y position if you want to limit vertical movement
-            this.fpsBody.position.y = Math.max(0, Math.min(this.fpsBody.position.y, 1000)); // example clamping
-        });
+                if (event.detail.deltaZ == event.detail.middle) {
+                    this.#ytouch = 1
+                    this.#moveUpward = this.#moveDownward = false
+                } else {
+                    if (event.detail.deltaZ > event.detail.middle) {
+                        this.#moveUpward = true
+                        this.#moveDownward = false
+                    }
+                    else if (event.detail.deltaZ < event.detail.middle) {
+                        this.#moveUpward = false
+                        this.#moveDownward = true
+                    }
+                }
+            })
+            this.rotationPad.padElement.addEventListener('stopMove', (event) => {
+                this.#ytouch = 1
+                this.#moveUpward = this.#moveDownward = false
+            })
         /* CHAT */
 
         // Creating movement pad
