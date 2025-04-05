@@ -84,6 +84,13 @@ class RotationPad {
 
         this.padElement.style.position = 'absolute';
 
+        // Adjusting the height and width as per your requirement
+        const padWidth = this.region.offsetWidth * 0.5;  // Make it 50% smaller in width
+        const padHeight = this.region.offsetHeight * 2;  // Make it 200% taller
+
+        this.region.style.width = `${padWidth}px`;
+        this.region.style.height = `${padHeight}px`;
+
         // this.region.offsetHeight = height of the image (100)
     
         const verticalOffset = (window.innerHeight * 0.75) - this.region.offsetHeight;
@@ -154,8 +161,9 @@ class RotationPad {
             newLeft = (Math.cos(angle) * this.regionData.radius) + this.regionData.centerX
             newTop = (Math.sin(angle) * this.regionData.radius) + this.regionData.centerY
         }
-        newTop = Math.round(newTop * 10) / 10
-        newLeft = Math.round(newLeft * 10) / 10
+        newLeft = this.regionData.centerX;  // Lock horizontal movement to center (bar position).
+        newTop = Math.min(Math.max(newTop, this.regionData.position.top), this.regionData.position.top + this.regionData.height);  // Constrain vertical movement.
+
 
         this.handle.style.top = newTop - this.handleData.radius + 'px'
         this.handle.style.left = newLeft - this.handleData.radius + 'px'
@@ -164,13 +172,11 @@ class RotationPad {
         // Providing event and data for handling camera movement.
         var deltaX = this.regionData.centerX - parseInt(newLeft)
         var deltaY = this.regionData.centerY - parseInt(newTop)
-        // Normalize x,y between -2 to 2 range.
-        deltaX = -2 + (2 + 2) * (deltaX - (-this.regionData.radius)) / (this.regionData.radius - (-this.regionData.radius))
-        deltaY = -2 + (2 + 2) * (deltaY - (-this.regionData.radius)) / (this.regionData.radius - (-this.regionData.radius))
-        deltaX = -1 * Math.round(deltaX * 10) / 10
-        deltaY = -1 * Math.round(deltaY * 10) / 10
-        // console.log(deltaX, deltaY)
-        this.sendEvent(deltaX, deltaY)
+        
+        var deltaY = this.regionData.centerY - newTop;
+        deltaY = -1 * Math.round(deltaY * 10) / 10;
+    
+        this.sendEvent(0, deltaY);  // Only send deltaY for vertical movement
     }
 
     sendEvent(dx, dy) {
