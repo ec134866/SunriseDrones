@@ -159,29 +159,32 @@ class RotationPad {
     }
 
     update(pageX, pageY) {
-        let newLeft = pageX - this.regionData.offset.left;
-        let newTop = pageY - this.regionData.offset.top;
+        let newLeft = (pageX - this.regionData.offset.left)
+        let newTop = (pageY - this.regionData.offset.top)
     
-        // Clamping handle within circular region
-        let dx = newLeft - this.regionData.centerX;
-        let dy = newTop - this.regionData.centerY;
-        let distance = Math.sqrt(dx * dx + dy * dy);
-    
-        if (distance > this.regionData.radius) {
-            let angle = Math.atan2(dy, dx);
-            newLeft = this.regionData.centerX + Math.cos(angle) * this.regionData.radius;
-            newTop = this.regionData.centerY + Math.sin(angle) * this.regionData.radius;
+        // If handle reaches the pad boundaries, ensure it stays within the pad.
+        let distance = Math.pow(this.regionData.centerX - newLeft, 2) + Math.pow(this.regionData.centerY - newTop, 2)
+        if (distance > Math.pow(this.regionData.radius, 2)) {
+            let angle = Math.atan2((newTop - this.regionData.centerY), (newLeft - this.regionData.centerX))
+            newLeft = (Math.cos(angle) * this.regionData.radius) + this.regionData.centerX
+            newTop = (Math.sin(angle) * this.regionData.radius) + this.regionData.centerY
         }
     
-        // Update the handle's position
-        newTop = Math.round(newTop * 10) / 10;
+        // Calculate new top position
+        newTop = Math.round(newTop * 10) / 10
         newLeft = this.regionData.centerX;
     
-        this.handle.style.top = `${newTop - this.handleData.radius}px`;
-        this.handle.style.left = `${newLeft - this.handleData.radius}px`;
+        // Make sure the handle is centered where it is supposed to be
+        this.handle.style.top = `${newTop - this.handleData.radius}px`
+        this.handle.style.left = `${newLeft - this.handleData.radius}px`
     
-        // Calculate deltaY (vertical movement)
-        let deltaY = this.regionData.centerY - newTop;
+        // For vertical movement only, pass the delta
+        var deltaY = this.regionData.centerY - newTop;
+    
+        // Adjust the range for the movement based on the handle position.
+        deltaY = -2 + (2 + 2) * (deltaY - (-this.regionData.radius)) / (this.regionData.radius - (-this.regionData.radius))
+        deltaY = Math.round(deltaY * 10) / 10
+    
         this.sendEvent(0, deltaY);  // Send only vertical movement event
     }
 
