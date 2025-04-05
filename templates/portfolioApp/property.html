@@ -611,7 +611,9 @@
         let cameraReset = false;  // Track if the camera has been reset
         let controlsEnabled = false;
 
-        const stats = new Stats()
+
+        // activity monitor stats
+        // const stats = new Stats()
 
         distanceDisplay.style.display = 'none';
 
@@ -794,7 +796,8 @@
                 renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
             });
 
-            document.body.appendChild(stats.dom)
+            // activity monitor stats
+            // document.body.appendChild(stats.dom)
 
             renderLoop();
         };
@@ -892,7 +895,8 @@
             if (controls) {
                 controls.update(delta);
             }
-            stats.update()
+            // activity monitor stats
+            // stats.update()
 
             // Update the camera and tiles renderer
             camera.updateMatrixWorld();
@@ -915,19 +919,22 @@
 
 
                 }
-                stats.update()
+                // activity monitor stats
+                // stats.update()
 
                 // Allow normal control only if the camera has been reset
                 if (cameraReset && controls) {
                     controls.update(delta);  // Update controls based on delta
-                    stats.update()
+                    // activity monitor stats
+                    // stats.update()
                 }
             } else {
                 // Tiles are still loading, apply the spinning behavior
                 camera.position.x = Math.cos(Date.now() * spinSpeed) * currentDistance;
                 camera.position.z = Math.sin(Date.now() * spinSpeed) * currentDistance;
                 camera.position.y = currentHeight;
-                stats.update()
+                // activity monitor stats
+                // stats.update()
 
                 if (currentDistance < targetDistance) {
                     currentDistance += distanceIncrement;
