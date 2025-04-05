@@ -56,10 +56,19 @@ class TouchControls {
 
         // Creating rotation pad
         this.rotationPad = new RotationPad(container)
-        this.rotationPad.padElement.addEventListener('YawPitch', (event) =>{
-            let rotation = this.#calculateCameraRotation(event.detail.deltaX, event.detail.deltaY)
-            this.setRotation(rotation.rx, rotation.ry)
-        })
+
+        /* CHAT */
+        this.rotationPad.padElement.addEventListener('move', (event) => {
+            let deltaY = event.detail.deltaY; // This will control vertical movement
+            let verticalSpeed = 0.01; // Adjust speed for vertical movement
+
+            // Update camera/person's Y position based on vertical slider
+            this.fpsBody.position.y += deltaY * verticalSpeed;
+
+            // Optional: Clamp the Y position if you want to limit vertical movement
+            this.fpsBody.position.y = Math.max(0, Math.min(this.fpsBody.position.y, 1000)); // example clamping
+        });
+        /* CHAT */
 
         // Creating movement pad
         this.movementPad = new MovementPad(container)
