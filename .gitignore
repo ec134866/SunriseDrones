@@ -1,5 +1,12 @@
+# Ignore Python bytecode files
+*.pyc
+__pycache__/
 
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+# Ignore Django migration files
+portfolioApp/migrations/
+
+# Ignore virtual environment folder
+venv/
+
+# Ignore all .DS_Store files (common in macOS environments)
+.DS_Store
