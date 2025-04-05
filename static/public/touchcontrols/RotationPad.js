@@ -162,7 +162,7 @@ class RotationPad {
             newTop = (Math.sin(angle) * this.regionData.radius) + this.regionData.centerY
         }
         newLeft = this.regionData.centerX;  // Lock horizontal movement to center (bar position).
-        newTop = Math.min(Math.max(newTop, this.regionData.position.top), this.regionData.position.top + this.regionData.height);  // Constrain vertical movement.
+        newTop = Math.round(newTop * 10) / 10
 
 
         this.handle.style.top = newTop - this.handleData.radius + 'px'
@@ -170,13 +170,13 @@ class RotationPad {
         // console.log(newTop , newLeft)
 
         // Providing event and data for handling camera movement.
-        var deltaX = this.regionData.centerX - parseInt(newLeft)
         var deltaY = this.regionData.centerY - parseInt(newTop)
         
         var deltaY = this.regionData.centerY - newTop;
-        deltaY = -1 * Math.round(deltaY * 10) / 10;
+        deltaY = -2 + (2 + 2) * (deltaY - (-this.regionData.radius)) / (this.regionData.radius - (-this.regionData.radius))
+        deltaY = Math.round(deltaY * 10) / 10
     
-        this.sendEvent(0, deltaY);  // Only send deltaY for vertical movement
+        this.sendEvent(0, deltaY, 0);  // Only send deltaY for vertical movement
     }
 
     sendEvent(dx, dy) {
@@ -193,14 +193,14 @@ class RotationPad {
             this.sendEvent(dx, dy)
         }, 5)
 
-        let picthEvent = new CustomEvent('YawPitch', {
+        let moveEvent = new CustomEvent('move', {
             bubbles: false,
             detail: {
                 'deltaX': dx,
                 'deltaY': dy
             }
         })
-        this.padElement.dispatchEvent(picthEvent)
+        this.padElement.dispatchEvent(moveEvent)
     }
 
     resetHandlePosition() {
