@@ -125,52 +125,41 @@ class RotationPad {
         // console.log("Left:", this.padElement.style.left);
 
 
-        this.regionData.width = this.region.offsetWidth
-        this.regionData.height = this.region.offsetHeight
+        this.regionData.width = this.region.offsetWidth;
+        this.regionData.height = this.region.offsetHeight;
         this.regionData.position = {
             top: this.region.offsetTop,
             left: this.region.offsetLeft
         };
-        this.regionData.offset = utils.getOffset(this.region)
-        this.regionData.radius = this.regionData.width / 2
-        this.regionData.centerX = this.regionData.position.left + this.regionData.radius
-        this.regionData.centerY = this.regionData.position.top + this.regionData.radius
+        this.regionData.offset = utils.getOffset(this.region);
 
-        this.handleData.width = this.handle.offsetWidth
-        this.handleData.height = this.handle.offsetHeight * 2
-        this.handleData.radius = this.handleData.width / 2
-
-        this.regionData.top = this.regionData.position.top
-        this.regionData.bottom = this.regionData.position.top + this.regionData.height - this.handleData.height    
+        // Handle height can be set directly here without radius calculations.
+        this.handleData.width = this.handle.offsetWidth;
+        this.handleData.height = this.handle.offsetHeight * 4;  // Doubling the handle height.
+        
+        // No need for radius calculation for the handle anymore.
+        
+        // Set boundaries for the handle, only vertical movement matters.
+        this.regionData.top = this.regionData.position.top;
+        this.regionData.bottom = this.regionData.position.top + this.regionData.height - this.handleData.height;
     }
 
     update(pageX, pageY) {
-        let newLeft = (pageX - this.regionData.offset.left)
         let newTop = (pageY - this.regionData.offset.top)
 
-        // If handle reaches the pad boundaries.
-        let distance = Math.pow(this.regionData.centerX - newLeft, 2) + Math.pow(this.regionData.centerY - newTop, 2)
-        if (distance > Math.pow(this.regionData.radius, 2)) {
-            let angle = Math.atan2((newTop - this.regionData.centerY), (newLeft - this.regionData.centerX))
-            newLeft = (Math.cos(angle) * this.regionData.radius) + this.regionData.centerX
-            newTop = (Math.sin(angle) * this.regionData.radius) + this.regionData.centerY
-        }
-        newLeft = this.regionData.centerX;  // Lock horizontal movement to center (bar position).
+        // Constrain the handle's vertical position to the bounds of the region.
+        newTop = Math.max(this.regionData.top, Math.min(newTop, this.regionData.bottom));
 
-        newTop = Math.max(this.regionData.top, Math.min(newTop, this.regionData.bottom)); // Prevent going out of bounds
+        // Update handle's position based on the new top.
+        this.handle.style.top = newTop + 'px';  // Move the handle vertically within the region.
+        this.handle.style.left = this.regionData.centerX - this.handleData.width / 2 + 'px';  // Keep it centered horizontally.
 
-        this.handle.style.top = newTop - this.handleData.radius + 'px'
-        this.handle.style.left = newLeft - this.handleData.radius + 'px'
-        // console.log(newTop , newLeft)
-
-        let deltaY = this.regionData.centerY - newTop
+        // Optionally calculate deltaY if needed for external event triggers:
+        let deltaY = this.regionData.position.top + this.regionData.height / 2 - newTop;
         
-        // var deltaY = this.regionData.centerY - newTop;
-        
-        deltaY = -2 + (2 + 2) * (deltaY - (-this.regionData.radius)) / (this.regionData.radius - (-this.regionData.radius))
-        deltaY = Math.round(deltaY * 10) / 10
-    
-        this.sendEvent(0, deltaY);  // Only send deltaY for vertical movement
+        deltaY = Math.round(deltaY * 10) / 10;  // Round to one decimal place.
+
+        this.sendEvent(0, deltaY);  // Send the event with the deltaY value.
     }
 
     sendEvent(dx, dy) {
@@ -199,9 +188,10 @@ class RotationPad {
 
     resetHandlePosition() {
         
-        this.handle.style.top = this.regionData.centerY - this.handleData.height + 'px'
-        this.handle.style.left = this.regionData.centerX - this.handleData.radius + 'px'
-        this.handle.style.opacity = 0.1
+        // Shift the handle's starting position to be near the center or any position you like.
+        this.handle.style.top = (this.regionData.position.top + this.regionData.height / 2) - (this.handleData.height / 2) + 'px';
+        this.handle.style.left = this.regionData.centerX - this.handleData.width / 2 + 'px';  // Center horizontally.
+        this.handle.style.opacity = 0.1; 
     }
 }
 
