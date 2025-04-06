@@ -165,13 +165,12 @@ class RotationPad {
         newLeft = this.regionData.centerX;  // Lock horizontal movement to center (bar position).
         newTop = Math.round(newTop * 10) / 10
 
+        const topOffset = newTop - this.handleData.radius; // Position the handle based on its radius.
 
-        this.handle.style.top = newTop - this.handleData.radius + 'px'
+
+        this.handle.style.top = `${topOffset}px`;
         this.handle.style.left = newLeft - this.handleData.radius + 'px'
         // console.log(newTop , newLeft)
-
-        // Providing event and data for handling camera movement.
-        var deltaY = this.regionData.centerY - parseInt(newTop)
         
         var deltaY = this.regionData.centerY - newTop;
 
