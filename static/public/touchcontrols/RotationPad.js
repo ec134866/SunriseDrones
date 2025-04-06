@@ -85,8 +85,8 @@ class RotationPad {
         this.padElement.style.position = 'absolute';
 
         // Adjusting the height and width as per your requirement
-        const padWidth = this.region.offsetWidth * 0.75; 
-        const padHeight = this.region.offsetHeight * 0.55; 
+        const padWidth = this.region.offsetWidth * 1; 
+        const padHeight = this.region.offsetHeight * 0.7; 
 
 
         this.region.style.width = `${padWidth}px`;
@@ -163,17 +163,15 @@ class RotationPad {
             newTop = (Math.sin(angle) * this.regionData.radius) + this.regionData.centerY
         }
         newLeft = this.regionData.centerX;  // Lock horizontal movement to center (bar position).
-        newTop = Math.max(this.regionData.top, Math.min(newTop, this.regionData.bottom)); // ensure handle stays within top and bottom bounds
+        newTop = Math.round(newTop * 10) / 10
 
-        const topOffset = newTop - this.handleData.radius; // Position the handle based on its radius.
-
-
-        this.handle.style.top = `${topOffset}px`;
+        this.handle.style.top = newTop - this.handleData.radius + 'px'
         this.handle.style.left = newLeft - this.handleData.radius + 'px'
         // console.log(newTop , newLeft)
-        
-        var deltaY = this.regionData.centerY - newTop;
 
+        let deltaY = this.regionData.centerY - parseInt(newTop)
+        
+        // var deltaY = this.regionData.centerY - newTop;
         
         deltaY = -2 + (2 + 2) * (deltaY - (-this.regionData.radius)) / (this.regionData.radius - (-this.regionData.radius))
         deltaY = Math.round(deltaY * 10) / 10
