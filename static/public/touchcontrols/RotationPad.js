@@ -198,10 +198,8 @@ class RotationPad {
     }
 
     resetHandlePosition() {
-
-        let shiftedY = this.regionData.centerY + (this.regionData.height / 4);
-
-        this.handle.style.top = shiftedY - this.handleData.radius + 'px'
+        
+        this.handle.style.top = this.regionData.centerY - this.handleData.height + 'px'
         this.handle.style.left = this.regionData.centerX - this.handleData.radius + 'px'
         this.handle.style.opacity = 0.1
     }
