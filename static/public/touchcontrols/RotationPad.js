@@ -152,7 +152,7 @@ class RotationPad {
 
         // Update handle's position based on the new top.
         this.handle.style.top = newTop + 'px';  // Move the handle vertically within the region.
-        this.handle.style.left = this.regionData.centerX - this.handleData.width / 2 + 'px';  // Keep it centered horizontally.
+        this.handle.style.left = this.regionData.centerX - this.handleData.width + 'px';  // Keep it centered horizontally.
 
         // Optionally calculate deltaY if needed for external event triggers:
         let deltaY = this.regionData.position.top + this.regionData.height / 2 - newTop;
@@ -189,8 +189,8 @@ class RotationPad {
     resetHandlePosition() {
         
         // Shift the handle's starting position to be near the center or any position you like.
-        this.handle.style.top = (this.regionData.position.top + this.regionData.height / 2) - (this.handleData.height / 2) + 'px';
-        this.handle.style.left = this.regionData.centerX - this.handleData.width / 2 + 'px';  // Center horizontally.
+        this.handle.style.top = (this.regionData.position.top + this.regionData.height) - (this.handleData.height) + 'px';
+        this.handle.style.left = this.regionData.centerX - this.handleData.width + 'px';  // Center horizontally.
         this.handle.style.opacity = 0.1; 
     }
 }
