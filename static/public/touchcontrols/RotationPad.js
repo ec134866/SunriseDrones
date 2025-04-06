@@ -84,13 +84,21 @@ class RotationPad {
 
         this.padElement.style.position = 'absolute';
 
-        // Adjusting the height and width as per your requirement
-        const padWidth = this.region.offsetWidth * 0.7; 
-        const padHeight = this.region.offsetHeight * 0.6; 
+        // 60% of the image size
+        const imageWidth = canvas.width * 0.6;
+        const imageHeight = canvas.height * 0.6;
 
+        // Region size should be the full image size
+        const regionWidth = canvas.width;
+        const regionHeight = canvas.height;
 
-        this.region.style.width = `${padWidth}px`;
-        this.region.style.height = `${padHeight}px`;
+        // Set the visual image size at 60% but the region will stay the full size
+        this.region.style.width = `${regionWidth}px`;
+        this.region.style.height = `${regionHeight}px`;
+
+        // Apply scaling to the image inside the region
+        this.padElement.style.width = `${imageWidth}px`;
+        this.padElement.style.height = `${imageHeight}px`;
 
         // this.region.offsetHeight = height of the image (100)
     
@@ -149,7 +157,7 @@ class RotationPad {
         this.handleData.radius = this.handleData.width / 2;
 
         this.regionData.top = this.regionData.position.top;
-        this.regionData.bottom = this.regionData.position.top + (this.regionData.height * 3) - this.handleData.height;    
+        this.regionData.bottom = this.regionData.position.top + this.regionData.height - this.handleData.height;    
     }
 
     update(pageX, pageY) {
