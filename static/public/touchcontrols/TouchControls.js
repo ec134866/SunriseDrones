@@ -66,7 +66,7 @@ class TouchControls {
             this.fpsBody.position.y += deltaY * verticalSpeed;
 
             // Optional: Clamp the Y position if you want to limit vertical movement
-             this.fpsBody.position.y = Math.max(-200, Math.min(this.fpsBody.position.y, 400)); // example clamping
+             this.fpsBody.position.y = Math.max(-50, Math.min(this.fpsBody.position.y, 150)); // example clamping
         });
         /* CHAT */
 
