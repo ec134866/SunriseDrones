@@ -86,7 +86,7 @@ class RotationPad {
 
         // Adjusting the height and width as per your requirement
         const padWidth = this.region.offsetWidth * 0.7; 
-        const padHeight = this.region.offsetHeight * 0.5; 
+        const padHeight = this.region.offsetHeight * 0.6; 
 
 
         this.region.style.width = `${padWidth}px`;
@@ -149,7 +149,7 @@ class RotationPad {
         this.handleData.radius = this.handleData.width / 2;
 
         this.regionData.top = this.regionData.position.top;
-        this.regionData.bottom = this.regionData.position.top + (this.regionData.height * 1.5) - this.handleData.height;    
+        this.regionData.bottom = this.regionData.position.top + (this.regionData.height * 3) - this.handleData.height;    
     }
 
     update(pageX, pageY) {
