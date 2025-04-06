@@ -85,16 +85,9 @@ class RotationPad {
         this.padElement.style.position = 'absolute';
 
         // Adjusting the height and width as per your requirement
-        // const padWidth = this.region.offsetWidth * 0.75; 
-        // const padHeight = this.region.offsetHeight * 0.55; 
+        const padWidth = this.region.offsetWidth * 0.75; 
+        const padHeight = this.region.offsetHeight * 0.55; 
 
-        const aspectRatio = canvas.width / canvas.height;  // Assuming canvas is the image element.
-    
-        // Set the height to your desired height
-        const padHeight = containerRect.height * 0.55;
-
-        // Calculate the width based on the aspect ratio
-        const padWidth = padHeight * aspectRatio;
 
         this.region.style.width = `${padWidth}px`;
         this.region.style.height = `${padHeight}px`;
@@ -161,31 +154,32 @@ class RotationPad {
     update(pageX, pageY) {
         let newLeft = (pageX - this.regionData.offset.left)
         let newTop = (pageY - this.regionData.offset.top)
-    
-        // If handle reaches the pad boundaries, ensure it stays within the pad.
+
+        // If handle reaches the pad boundaries.
         let distance = Math.pow(this.regionData.centerX - newLeft, 2) + Math.pow(this.regionData.centerY - newTop, 2)
         if (distance > Math.pow(this.regionData.radius, 2)) {
             let angle = Math.atan2((newTop - this.regionData.centerY), (newLeft - this.regionData.centerX))
             newLeft = (Math.cos(angle) * this.regionData.radius) + this.regionData.centerX
             newTop = (Math.sin(angle) * this.regionData.radius) + this.regionData.centerY
         }
-    
-        // Calculate new top position
+        newLeft = this.regionData.centerX;  // Lock horizontal movement to center (bar position).
         newTop = Math.round(newTop * 10) / 10
-        newLeft = this.regionData.centerX;
-    
-        // Make sure the handle is centered where it is supposed to be
-        this.handle.style.top = `${newTop - this.handleData.radius}px`
-        this.handle.style.left = `${newLeft - this.handleData.radius}px`
-    
-        // For vertical movement only, pass the delta
+
+
+        this.handle.style.top = newTop - this.handleData.radius + 'px'
+        this.handle.style.left = newLeft - this.handleData.radius + 'px'
+        // console.log(newTop , newLeft)
+
+        // Providing event and data for handling camera movement.
+        var deltaY = this.regionData.centerY - parseInt(newTop)
+        
         var deltaY = this.regionData.centerY - newTop;
-    
-        // Adjust the range for the movement based on the handle position.
+
+        
         deltaY = -2 + (2 + 2) * (deltaY - (-this.regionData.radius)) / (this.regionData.radius - (-this.regionData.radius))
         deltaY = Math.round(deltaY * 10) / 10
     
-        this.sendEvent(0, deltaY);  // Send only vertical movement event
+        this.sendEvent(0, deltaY);  // Only send deltaY for vertical movement
     }
 
     sendEvent(dx, dy) {
