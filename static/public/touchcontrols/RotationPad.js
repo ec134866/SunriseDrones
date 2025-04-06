@@ -137,7 +137,7 @@ class RotationPad {
         this.regionData.centerY = this.regionData.position.top + this.regionData.radius
 
         this.handleData.width = this.handle.offsetWidth
-        this.handleData.height = this.handle.offsetHeight
+        this.handleData.height = this.handle.offsetHeight * 2
         this.handleData.radius = this.handleData.width / 2
 
         this.regionData.top = this.regionData.position.top
@@ -198,7 +198,10 @@ class RotationPad {
     }
 
     resetHandlePosition() {
-        this.handle.style.top = this.regionData.centerY - this.handleData.radius + 'px'
+
+        let shiftedY = this.regionData.centerY + (this.regionData.height / 4);
+
+        this.handle.style.top = shiftedY - this.handleData.radius + 'px'
         this.handle.style.left = this.regionData.centerX - this.handleData.radius + 'px'
         this.handle.style.opacity = 0.1
     }
