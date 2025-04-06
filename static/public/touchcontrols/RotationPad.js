@@ -84,22 +84,6 @@ class RotationPad {
 
         this.padElement.style.position = 'absolute';
 
-        // 60% of the image size
-        const imageWidth = canvas.width * 0.6;
-        const imageHeight = canvas.height * 0.6;
-
-        // Region size should be the full image size
-        const regionWidth = canvas.width;
-        const regionHeight = canvas.height;
-
-        // Set the visual image size at 60% but the region will stay the full size
-        this.region.style.width = `${regionWidth}px`;
-        this.region.style.height = `${regionHeight}px`;
-
-        // Apply scaling to the image inside the region
-        this.padElement.style.width = `${imageWidth}px`;
-        this.padElement.style.height = `${imageHeight}px`;
-
         // this.region.offsetHeight = height of the image (100)
     
         const verticalOffset = (window.innerHeight * 0.75) - this.region.offsetHeight;
@@ -141,23 +125,23 @@ class RotationPad {
         // console.log("Left:", this.padElement.style.left);
 
 
-        this.regionData.width = this.region.offsetWidth;
-        this.regionData.height = this.region.offsetHeight;
+        this.regionData.width = this.region.offsetWidth
+        this.regionData.height = this.region.offsetHeight
         this.regionData.position = {
             top: this.region.offsetTop,
             left: this.region.offsetLeft
         };
-        this.regionData.offset = utils.getOffset(this.region);
-        this.regionData.radius = this.regionData.width / 2;
-        this.regionData.centerX = this.regionData.position.left + this.regionData.radius;
-        this.regionData.centerY = this.regionData.position.top + this.regionData.radius;
+        this.regionData.offset = utils.getOffset(this.region)
+        this.regionData.radius = this.regionData.width / 2
+        this.regionData.centerX = this.regionData.position.left + this.regionData.radius
+        this.regionData.centerY = this.regionData.position.top + this.regionData.radius
 
-        this.handleData.width = this.handle.offsetWidth;
-        this.handleData.height = this.handle.offsetHeight;
-        this.handleData.radius = this.handleData.width / 2;
+        this.handleData.width = this.handle.offsetWidth
+        this.handleData.height = this.handle.offsetHeight
+        this.handleData.radius = this.handleData.width / 2
 
-        this.regionData.top = this.regionData.position.top;
-        this.regionData.bottom = this.regionData.position.top + this.regionData.height - this.handleData.height;    
+        this.regionData.top = this.regionData.position.top
+        this.regionData.bottom = this.regionData.position.top + this.regionData.height - this.handleData.height    
     }
 
     update(pageX, pageY) {
