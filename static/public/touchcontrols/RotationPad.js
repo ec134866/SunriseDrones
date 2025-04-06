@@ -149,7 +149,7 @@ class RotationPad {
         this.handleData.radius = this.handleData.width / 2;
 
         this.regionData.top = this.regionData.position.top;
-        this.regionData.bottom = this.regionData.position.top - this.handleData.height;    
+        this.regionData.bottom = this.regionData.position.top + (this.regionData.height * 1.5) - this.handleData.height;    
     }
 
     update(pageX, pageY) {
