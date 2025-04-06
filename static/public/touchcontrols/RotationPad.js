@@ -163,7 +163,7 @@ class RotationPad {
             newTop = (Math.sin(angle) * this.regionData.radius) + this.regionData.centerY
         }
         newLeft = this.regionData.centerX;  // Lock horizontal movement to center (bar position).
-        newTop = Math.round(newTop * 10) / 10
+        newTop = Math.max(this.regionData.top, Math.min(newTop, this.regionData.bottom)); // ensure handle stays within top and bottom bounds
 
         const topOffset = newTop - this.handleData.radius; // Position the handle based on its radius.
 
