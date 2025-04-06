@@ -171,7 +171,7 @@ class RotationPad {
         this.handle.style.left = newLeft - this.handleData.radius + 'px'
         // console.log(newTop , newLeft)
 
-        let deltaY = this.regionData.centerY - parseInt(newTop)
+        let deltaY = this.regionData.centerY - newTop
         
         // var deltaY = this.regionData.centerY - newTop;
         
