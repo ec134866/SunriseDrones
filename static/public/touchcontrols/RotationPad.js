@@ -135,7 +135,7 @@ class RotationPad {
 
         // Handle height can be set directly here without radius calculations.
         this.handleData.width = this.handle.offsetWidth;
-        this.handleData.height = this.handle.offsetHeight * 4;  // Doubling the handle height.
+        this.handleData.height = this.handle.offsetHeight;
         
         // No need for radius calculation for the handle anymore.
         
