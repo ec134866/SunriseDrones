@@ -5,7 +5,7 @@
 /* CHAT */
 .rotation-pad .region {
     position: absolute;
-    width: 40px; /* Adjust width for the vertical slider */
+    width: 20px; /* Adjust width for the vertical slider */
     height: 100px; /* Adjust the height to make the slider vertical */
     background: radial-gradient(rgba(218, 225, 230, 0.25) 5%, rgba(218, 225, 230, 0.50) 95%),
                 url("images/nav3.png") center center no-repeat; /* Use the new nav3.png for the slider */
