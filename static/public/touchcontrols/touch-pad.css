@@ -20,8 +20,8 @@
 .rotation-pad .handle {
 	opacity: 0.1;
 	position: absolute;
-	height: 30px;
-	width: 30px;
+	height: 15px;
+	width: 15px;
 	top: 0px;
 	left: 0px;
 	background: radial-gradient(rgba(215, 225, 255, 0.70) 0%, rgba(215, 225, 255, 0.50) 100%);
