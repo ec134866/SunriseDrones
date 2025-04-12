@@ -59,13 +59,13 @@ class TouchControls {
 
         /* CHAT */
         this.rotationPad.padElement.addEventListener('move', (event) => {
-            // let deltaY = event.detail.deltaY; // This will control vertical movement
 
-            let rawDeltaY = event.detail.deltaY;
+            let deltaY = event.detail.deltaY; // This will control vertical movement
 
             // Normalize and clamp deltaY
-            let deltaY = Math.max(-100, Math.min(100, rawDeltaY)) / 100; // Range: [-1, 1]
-
+            // let rawDeltaY = event.detail.deltaY;
+            // let deltaY = Math.max(-100, Math.min(100, rawDeltaY)) / 100; // Range: [-1, 1]
+            
             let verticalSpeed = 0.001; // Adjust speed for vertical movement
 
             // Update camera/person's Y position based on vertical slider
