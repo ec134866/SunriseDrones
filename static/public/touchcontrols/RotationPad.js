@@ -190,11 +190,12 @@ class RotationPad {
     }
 
     resetHandlePosition() {
-        
-        // Shift the handle's starting position to be near the center or any position you like.
-        this.handle.style.top = (this.regionData.position.top + this.regionData.height) - (this.handleData.height) + 'px';
-        this.handle.style.left = this.regionData.centerX - this.handleData.width + 'px';  // Center horizontally.
-        this.handle.style.opacity = 0.1; 
+        const centerY = (this.regionData.height - this.handleData.height) / 2;
+        const centerX = (this.regionData.width - this.handleData.width) / 2;
+    
+        this.handle.style.top = `${centerY}px`;
+        this.handle.style.left = `${centerX}px`;
+        this.handle.style.opacity = 0.1;
     }
 }
 
