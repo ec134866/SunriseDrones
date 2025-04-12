@@ -59,14 +59,20 @@ class TouchControls {
 
         /* CHAT */
         this.rotationPad.padElement.addEventListener('move', (event) => {
-            let deltaY = event.detail.deltaY; // This will control vertical movement
-            let verticalSpeed = 0.00005; // Adjust speed for vertical movement
+            // let deltaY = event.detail.deltaY; // This will control vertical movement
+
+            let rawDeltaY = event.detail.deltaY;
+
+            // Normalize and clamp deltaY
+            let deltaY = Math.max(-100, Math.min(100, rawDeltaY)) / 100; // Range: [-1, 1]
+
+            let verticalSpeed = 0.001; // Adjust speed for vertical movement
 
             // Update camera/person's Y position based on vertical slider
             this.fpsBody.position.y += deltaY * verticalSpeed;
 
             // Optional: Clamp the Y position if you want to limit vertical movement
-             this.fpsBody.position.y = Math.max(-50, Math.min(this.fpsBody.position.y, 75)); // example clamping
+             this.fpsBody.position.y = Math.max(-50, Math.min(this.fpsBody.position.y, 75));
         });
         /* CHAT */
 
