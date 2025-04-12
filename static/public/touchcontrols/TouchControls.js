@@ -66,7 +66,7 @@ class TouchControls {
             // let rawDeltaY = event.detail.deltaY;
             // let deltaY = Math.max(-100, Math.min(100, rawDeltaY)) / 100; // Range: [-1, 1]
             
-            let verticalSpeed = 0.005; // Adjust speed for vertical movement
+            let verticalSpeed = 0.003; // Adjust speed for vertical movement
 
             // Update camera/person's Y position based on vertical slider
             this.fpsBody.position.y += deltaY * verticalSpeed;
