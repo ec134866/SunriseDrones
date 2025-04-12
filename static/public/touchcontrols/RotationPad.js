@@ -147,12 +147,15 @@ class RotationPad {
     update(pageX, pageY) {
         let newTop = (pageY - this.regionData.offset.top)
 
-        // Constrain the handle's vertical position to the bounds of the region.
-        newTop = Math.max(this.regionData.top, Math.min(newTop, this.regionData.bottom));
+        const minTop = 0;
+        const maxTop = this.regionData.height - this.handleData.height;
+        newTop = Math.max(minTop, Math.min(newTop, maxTop));
+
+        newTop = Math.round(newTop * 10) / 10;
 
         // Update handle's position based on the new top.
-        this.handle.style.top = newTop + 'px';  // Move the handle vertically within the region.
-        this.handle.style.left = this.regionData.centerX - this.handleData.width + 'px';  // Keep it centered horizontally.
+        this.handle.style.top = `${newTop}px`;
+        this.handle.style.left = `${this.regionData.centerX - this.handleData.width}px`;
 
         // Optionally calculate deltaY if needed for external event triggers:
         let deltaY = this.regionData.position.top + this.regionData.height / 2 - newTop;
