@@ -60,7 +60,7 @@ class TouchControls {
         /* CHAT */
         this.rotationPad.padElement.addEventListener('move', (event) => {
             let deltaY = event.detail.deltaY; // This will control vertical movement
-            let verticalSpeed = 0.005; // Adjust speed for vertical movement
+            let verticalSpeed = 0.00005; // Adjust speed for vertical movement
 
             // Update camera/person's Y position based on vertical slider
             this.fpsBody.position.y += deltaY * verticalSpeed;
