@@ -688,18 +688,7 @@
                     }
                     controls = new TouchControls(container.parentNode, camera, options)
                     controls.addToScene(scene)
-
-                     // NEW: Add OrbitControls for touch rotation (around the scene/model)
-                    orbitControls = new OrbitControls(camera, renderer.domElement);
-                    orbitControls.enableZoom = false; // Let TouchControls handle vertical movement
-                    orbitControls.enablePan = false;
-                    orbitControls.enableDamping = true;
-                    orbitControls.dampingFactor = 0.05;
-                    orbitControls.rotateSpeed = 0.5;
-                    orbitControls.screenSpacePanning = false;
-                    orbitControls.target.set(0, 0, 0); // Or modelGroup.position if needed
                 } else {
-                  controls = new FlyControls(camera, renderer.domElement);
                   controls.movementSpeed = 40; 
                   controls.rollSpeed = 0.5;
                   controls.dragToLook = true;
@@ -708,7 +697,6 @@
                   console.log("NOT TOUCH device in fly mode");
                 }
               } else {
-                  controls = new OrbitControls(camera, renderer.domElement);
                   const distance = camera.position.distanceTo(controls.target);
                   controls.zoomSpeed = 2;
                   controls.minDistance = 0;
@@ -904,9 +892,9 @@
             let delta = clock.getDelta();
 
             // Update controls if they are initialized
-            if (controls) controls.update(delta);
-            if (orbitControls) orbitControls.update();
-            
+            if (controls) {
+                controls.update(delta);
+            }
             // activity monitor stats
             // stats.update()
 

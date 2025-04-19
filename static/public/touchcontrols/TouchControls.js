@@ -57,7 +57,7 @@ class TouchControls {
         // Creating rotation pad
         this.rotationPad = new RotationPad(container)
 
-        /* CHAT */
+        /* Rotation Pad */
         this.rotationPad.padElement.addEventListener('move', (event) => {
 
             let deltaY = event.detail.deltaY; // This will control vertical movement
@@ -106,10 +106,15 @@ class TouchControls {
                 }
             }
         })
+
         this.movementPad.padElement.addEventListener('stopMove', (event) => {
             this.#ztouch = this.#xtouch = 1
             this.#moveForward = this.#moveBackward = this.#moveLeft = this.#moveRight = false
         })
+
+        this.container.addEventListener('touchstart', (event) => this.onTouchStart(event));
+        this.container.addEventListener('touchmove', (event) => this.onTouchMove(event));
+        this.container.addEventListener('touchend', (event) => this.onTouchEnd(event));
 
         this.container.addEventListener('contextmenu', (event) => {event.preventDefault()})
         this.container.addEventListener('mousedown', (event) => this.onMouseDown(event))
@@ -121,6 +126,36 @@ class TouchControls {
         document.addEventListener('mouseout', (event) => this.onMouseOut(event))
 
         this.#prepareRotationMatrices()
+    }
+
+    onTouchStart(event) {
+        if (event.touches.length === 2) {
+            this.touchStart = {
+                x: event.touches[0].clientX - event.touches[1].clientX,
+                y: event.touches[0].clientY - event.touches[1].clientY
+            };
+        }
+    }
+    
+    onTouchMove(event) {
+        if (event.touches.length === 2 && this.touchStart) {
+            const deltaX = event.touches[0].clientX - event.touches[1].clientX - this.touchStart.x;
+            const deltaY = event.touches[0].clientY - event.touches[1].clientY - this.touchStart.y;
+    
+            const rotation = this.#calculateCameraRotation(deltaX, deltaY);
+            this.setRotation(rotation.rx, rotation.ry);
+    
+            this.touchStart = {
+                x: event.touches[0].clientX - event.touches[1].clientX,
+                y: event.touches[0].clientY - event.touches[1].clientY
+            };
+        }
+    }
+    
+    onTouchEnd(event) {
+        if (event.touches.length < 2) {
+            this.touchStart = null;
+        }
     }
 
     //
@@ -212,6 +247,16 @@ class TouchControls {
         }
     }
 
+    #calculateCameraRotation(dx, dy) {
+        const rFactor = this.config.rotationSpeed;
+        const ry = this.fpsBody.rotation.y - (dx * rFactor);
+        let rx = this.#cameraHolder.rotation.x - (dy * rFactor);
+        rx = Math.max(-this.#maxPitch, Math.min(this.#maxPitch, rx));
+    
+        return { rx, ry };
+    }
+    
+
     //
     // Private functions
     //
@@ -282,6 +327,9 @@ class TouchControls {
         this.fpsBody.translateX(this.#velocity.x)
         this.fpsBody.translateY(this.#velocity.y)
         this.fpsBody.translateZ(this.#velocity.z)
+
+        this.fpsBody.rotation.x = this.#cameraHolder.rotation.x;
+        this.fpsBody.rotation.y = this.fpsBody.rotation.y;
     }
 
     hitTest() {
