@@ -204,11 +204,11 @@
               <div class="row justify-content-center" style="width: 90%; margin: 0 auto; padding-bottom:1vh;">
                 <div class="col">
                 </div>
-                <div class="col" style="display: flex; justify-content: center;">
+                {% comment %} <div class="col" style="display: flex; justify-content: center;">
                   <div id="distance-display" style="text-align: center; font-size: 2vh; display: none;">
                       Distance: N/A
                   </div>
-                </div>
+                </div> {% endcomment %}
                 {% comment %} <div class="col" style="text-align: right;">
                     <i id="settings-icon" class="fa-solid fa-gear" style="font-size: 3vh; cursor: pointer;" onclick="toggleSettings()"></i>
                 </div> {% endcomment %}
@@ -588,8 +588,8 @@
         let camera, scene, renderer, tilesRenderer, controls, modelGroup;
         let clock = new THREE.Clock();
         let lastPoint = null;
-        const distanceDisplay = document.getElementById('distance-display'); 
-        const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
+        // const distanceDisplay = document.getElementById('distance-display'); 
+        // const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
         
         
         let spinning = true;
@@ -611,12 +611,12 @@
         // activity monitor stats
         // const stats = new Stats()
 
-        distanceDisplay.style.display = 'none';
+        // distanceDisplay.style.display = 'none';
 
 
         let distanceMeasurementEnabled = false;
 
-        toggleDistanceMeasurementButton.addEventListener('click', () => {
+        {% comment %} toggleDistanceMeasurementButton.addEventListener('click', () => {
             distanceMeasurementEnabled = !distanceMeasurementEnabled;
             toggleDistanceMeasurementButton.textContent = distanceMeasurementEnabled ? 'Disable Distance Measurement' : 'Enable Distance Measurement';
             
@@ -627,7 +627,7 @@
                 distanceDisplay.innerText = 'Distance: N/A'; 
                 distanceDisplay.style.display = 'none'; 
             }
-        });
+        }); {% endcomment %}
         
         window.initExteriorModel = function() {
             const container = document.getElementById('exteriorModelContainer');
@@ -746,7 +746,7 @@
         };
 
         {% comment %} raycasting to measure distance {% endcomment %}
-        function onClick(event) {
+        {% comment %} function onClick(event) {
             if (distanceMeasurementEnabled) {
                 // Create a raycaster and calculate the mouse position
                 const raycaster = new THREE.Raycaster();
@@ -776,7 +776,7 @@
                     lastPoint = intersectionPoint.clone(); // Clone the point to keep it immutable for future calculations
             }
             }
-        }
+        } {% endcomment %}
         
         window.initInteriorModel = function() {
             const container = document.getElementById('interiorModelContainer');
