@@ -213,7 +213,7 @@
                     <i id="settings-icon" class="fa-solid fa-gear" style="font-size: 3vh; cursor: pointer;" onclick="toggleSettings()"></i>
                 </div> {% endcomment %}
               </div>
-              <div class="row" id="settings-box" style="
+              {% comment %} <div class="row" id="settings-box" style="
                   display: none;
                   position: fixed;
                   top: 50%;
@@ -255,7 +255,7 @@
                           </div>
                       </div>
                   </div>
-                </div>
+                </div> {% endcomment %}
                 <div class="progress-bar-container" style="
                   width: 55%;
                   position: fixed;
@@ -275,7 +275,7 @@
                   </div>
                 </div>
                 <div id="exteriorOuterModelContainer" class="d-flex justify-content-center" style="position: relative;">
-                  <i id="settings-icon" class="fa-solid fa-gear" style="font-size: 3vh; cursor: pointer; position: absolute; top: 10px; right: 10px; z-index: 10;" onclick="toggleSettings()"></i>
+                  {% comment %} <i id="settings-icon" class="fa-solid fa-gear" style="font-size: 3vh; cursor: pointer; position: absolute; top: 10px; right: 10px; z-index: 10;" onclick="toggleSettings()"></i> {% endcomment %}
                   <div id="exteriorModelContainer" class="d-flex justify-content-center">
                   </div>
                 </div>
@@ -334,7 +334,7 @@
       </script>
 
         {% comment %} settings script  {% endcomment %}
-      <script>
+      {% comment %} <script>
           function toggleSettings() {
             const settingsBox = document.getElementById('settings-box');
             const settingsIcon = document.getElementById('settings-icon');
@@ -430,7 +430,7 @@
               button.classList.toggle('btn-dark');
               button.classList.toggle('btn-light');
           }        
-      </script>
+      </script> {% endcomment %}
 
         {% comment %} script for contract tracker and download section {% endcomment %}
       <script>
@@ -581,11 +581,8 @@
       <script type="module">
         import * as THREE from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        // import { FlyControls } from 'three/addons/controls/FlyControls.js';
         import { TilesRenderer, DebugTilesPlugin, PriorityQueue } from '3d-tiles-renderer';
-        // import { CameraRig, FreeMovementControls } from 'three-story-controls';
         import Stats from 'three/examples/jsm/libs/stats.module';
-        // import TouchControls from '/static/public/touchcontrols/TouchControls.js'
         
 
         let camera, scene, renderer, tilesRenderer, controls, modelGroup;
@@ -593,22 +590,21 @@
         let lastPoint = null;
         const distanceDisplay = document.getElementById('distance-display'); 
         const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
-        // const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
         
         
-        let spinning = true; // Track if the model should spin
-        let initialDistance = 10; // Start close to the model
+        let spinning = true;
+        let initialDistance = 10;
         let initialHeight = 10;
         let currentHeight = initialHeight;
-        let targetDistance = {{selected_flight.script_exterior.max_distance}}; // End distance from the model
-        let targetHeight = {{selected_flight.script_exterior.max_distance}}; // End height from the model
-        let currentDistance = initialDistance; // Current distance from the model
-        const spinSpeed = 0.00008; // Speed of spinning around the model
-        const distanceIncrement = {{selected_flight.script_exterior.distance_increment}}; // Increment distance per frame
-        const heightIncrement = {{selected_flight.script_exterior.height_increment}}; // Increment distance per frame
+        let targetDistance = {{selected_flight.script_exterior.max_distance}};
+        let targetHeight = {{selected_flight.script_exterior.max_distance}};
+        let currentDistance = initialDistance;
+        const spinSpeed = 0.00008;
+        const distanceIncrement = {{selected_flight.script_exterior.distance_increment}};
+        const heightIncrement = {{selected_flight.script_exterior.height_increment}};
         let loadedTilesCount = 0;
-        let totalTiles = {{selected_flight.script_exterior.total_tiles}};  // Total number of tiles you expect to load (you can dynamically calculate this)
-        let cameraReset = false;  // Track if the camera has been reset
+        let totalTiles = {{selected_flight.script_exterior.total_tiles}}; 
+        let cameraReset = false; 
         let controlsEnabled = false;
 
 
@@ -647,26 +643,14 @@
             let light = new THREE.AmbientLight(0x404040, 90);
             scene.add(light);
 
-            // const loader = new FBXLoader();
-            // loader.load('{{ selected_flight.exterior_link|safe }}', (object) => {
-               //  scene.add(object);
-            // });
 
             renderer = new THREE.WebGLRenderer();
             renderer.setPixelRatio(window.devicePixelRatio);
 
-            // if (isTouchDevice) {
-            //     renderer.setSize(window.innerWidth * 0.9, window.innerHeight * 0.8);  
-            // } else {
-            //     renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8)); 
-            // }
 
             container.appendChild(renderer.domElement);
 
-            // initControls(isTouchDevice ? 'fly' : 'orbit');
             initControls();
-            // document.getElementById('fly-controls-btn').addEventListener('click', () => initControls('fly'));
-            // document.getElementById('camera-controls-btn').addEventListener('click', () => initControls('orbit'));
 
             
             function initControls() {
