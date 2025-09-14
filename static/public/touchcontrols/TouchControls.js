@@ -54,6 +54,11 @@ class TouchControls {
         this.fpsBody = new THREE.Object3D()
         this.fpsBody.add(this.#cameraHolder)
 
+		this.lastTouchX = 0;
+        this.lastTouchY = 0;
+        this.touchStarted = false;
+        this.touchRotationEnabled = true;
+
         // Creating rotation pad
         this.rotationPad = new RotationPad(container)
 
@@ -113,9 +118,9 @@ class TouchControls {
         })
 
         // rotation
-        // this.container.addEventListener('touchstart', (event) => this.onTouchStart(event));
-        // this.container.addEventListener('touchmove', (event) => this.onTouchMove(event));
-        // this.container.addEventListener('touchend', (event) => this.onTouchEnd(event));
+        this.container.addEventListener('touchstart', (event) => this.onTouchStart(event));
+        this.container.addEventListener('touchmove', (event) => this.onTouchMove(event));
+        this.container.addEventListener('touchend', (event) => this.onTouchEnd(event));
 
         this.container.addEventListener('contextmenu', (event) => {event.preventDefault()})
         this.container.addEventListener('mousedown', (event) => this.onMouseDown(event))
@@ -130,35 +135,70 @@ class TouchControls {
     }
 
     // rotation
-    // onTouchStart(event) {
-    //     if (event.touches.length === 2) {
-    //         this.touchStart = {
-    //             x: event.touches[0].clientX - event.touches[1].clientX,
-    //             y: event.touches[0].clientY - event.touches[1].clientY
-    //         };
-    //     }
-    // }
+	onTouchStart(event) {
+        // Only handle single touch for rotation (not interfering with pad controls)
+        if (event.touches.length === 1) {
+            const touch = event.touches[0];
+            
+            // Check if touch is not on control pads
+            if (!this.isTouchOnControlPads(touch)) {
+                this.touchStarted = true;
+                this.lastTouchX = touch.clientX;
+                this.lastTouchY = touch.clientY;
+                event.preventDefault();
+            }
+        }
+    }
     
-    // onTouchMove(event) {
-    //     if (event.touches.length === 2 && this.touchStart) {
-    //         const deltaX = event.touches[0].clientX - event.touches[1].clientX - this.touchStart.x;
-    //         const deltaY = event.touches[0].clientY - event.touches[1].clientY - this.touchStart.y;
+	onTouchMove(event) {
+        if (this.touchStarted && event.touches.length === 1) {
+            const touch = event.touches[0];
+            
+            if (!this.isTouchOnControlPads(touch)) {
+                const deltaX = touch.clientX - this.lastTouchX;
+                const deltaY = touch.clientY - this.lastTouchY;
+                
+                // Apply rotation similar to mouse movement
+                const rotation = this.#calculateCameraRotation(-deltaX, -deltaY);
+                this.setRotation(rotation.rx, rotation.ry);
+                
+                this.lastTouchX = touch.clientX;
+                this.lastTouchY = touch.clientY;
+                
+                event.preventDefault();
+            }
+        }
+    }
     
-    //         const rotation = this.#calculateCameraRotation(deltaX, deltaY);
-    //         this.setRotation(rotation.rx, rotation.ry);
-    
-    //         this.touchStart = {
-    //             x: event.touches[0].clientX - event.touches[1].clientX,
-    //             y: event.touches[0].clientY - event.touches[1].clientY
-    //         };
-    //     }
-    // }
-    
-    // onTouchEnd(event) {
-    //     if (event.touches.length < 2) {
-    //         this.touchStart = null;
-    //     }
-    // }
+    onTouchEnd(event) {
+        if (event.touches.length === 0) {
+            this.touchStarted = false;
+        }
+    }
+
+	// Helper method to check if touch is on control pads
+    isTouchOnControlPads(touch) {
+        // Get the bounding rectangles of your control pads
+        const movementPadRect = this.movementPad.padElement.getBoundingClientRect();
+        const rotationPadRect = this.rotationPad.padElement.getBoundingClientRect();
+        
+        // Check if touch point is within either pad
+        const isOnMovementPad = (
+            touch.clientX >= movementPadRect.left &&
+            touch.clientX <= movementPadRect.right &&
+            touch.clientY >= movementPadRect.top &&
+            touch.clientY <= movementPadRect.bottom
+        );
+        
+        const isOnRotationPad = (
+            touch.clientX >= rotationPadRect.left &&
+            touch.clientX <= rotationPadRect.right &&
+            touch.clientY >= rotationPadRect.top &&
+            touch.clientY <= rotationPadRect.bottom
+        );
+        
+        return isOnMovementPad || isOnRotationPad;
+    }
 
     //
     // Events
@@ -250,14 +290,17 @@ class TouchControls {
     }
     
     // rotation
-    // #calculateCameraRotation(dx, dy) {
-    //     const rFactor = this.config.rotationSpeed;
-    //     const ry = this.fpsBody.rotation.y - (dx * rFactor);
-    //     let rx = this.#cameraHolder.rotation.x - (dy * rFactor);
-    //     rx = Math.max(-this.#maxPitch, Math.min(this.#maxPitch, rx));
-    
-    //     return { rx, ry };
-    // }
+    #calculateCameraRotation(dx, dy, factor) {
+        let rFactor = factor ? factor : this.config.rotationSpeed;
+        let ry = this.fpsBody.rotation.y - (dx * rFactor);
+        let rx = this.#cameraHolder.rotation.x - (dy * rFactor);
+        rx = Math.max(-this.#maxPitch, Math.min(this.#maxPitch, rx));
+        
+        return {
+            rx: rx,
+            ry: ry
+        };
+    }
     
 
     //
