@@ -204,16 +204,16 @@
               <div class="row justify-content-center" style="width: 90%; margin: 0 auto; padding-bottom:1vh;">
                 <div class="col">
                 </div>
-                <div class="col" style="display: flex; justify-content: center;">
+                {% comment %} <div class="col" style="display: flex; justify-content: center;">
                   <div id="distance-display" style="text-align: center; font-size: 2vh; display: none;">
                       Distance: N/A
                   </div>
-                </div>
+                </div> {% endcomment %}
                 {% comment %} <div class="col" style="text-align: right;">
                     <i id="settings-icon" class="fa-solid fa-gear" style="font-size: 3vh; cursor: pointer;" onclick="toggleSettings()"></i>
                 </div> {% endcomment %}
               </div>
-              <div class="row" id="settings-box" style="
+              {% comment %} <div class="row" id="settings-box" style="
                   display: none;
                   position: fixed;
                   top: 50%;
@@ -255,7 +255,7 @@
                           </div>
                       </div>
                   </div>
-                </div>
+                </div> {% endcomment %}
                 <div class="progress-bar-container" style="
                   width: 55%;
                   position: fixed;
@@ -275,7 +275,7 @@
                   </div>
                 </div>
                 <div id="exteriorOuterModelContainer" class="d-flex justify-content-center" style="position: relative;">
-                  <i id="settings-icon" class="fa-solid fa-gear" style="font-size: 3vh; cursor: pointer; position: absolute; top: 10px; right: 10px; z-index: 10;" onclick="toggleSettings()"></i>
+                  {% comment %} <i id="settings-icon" class="fa-solid fa-gear" style="font-size: 3vh; cursor: pointer; position: absolute; top: 10px; right: 10px; z-index: 10;" onclick="toggleSettings()"></i> {% endcomment %}
                   <div id="exteriorModelContainer" class="d-flex justify-content-center">
                   </div>
                 </div>
@@ -334,7 +334,7 @@
       </script>
 
         {% comment %} settings script  {% endcomment %}
-      <script>
+      {% comment %} <script>
           function toggleSettings() {
             const settingsBox = document.getElementById('settings-box');
             const settingsIcon = document.getElementById('settings-icon');
@@ -430,7 +430,7 @@
               button.classList.toggle('btn-dark');
               button.classList.toggle('btn-light');
           }        
-      </script>
+      </script> {% endcomment %}
 
         {% comment %} script for contract tracker and download section {% endcomment %}
       <script>
@@ -581,44 +581,42 @@
       <script type="module">
         import * as THREE from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        import { FlyControls } from 'three/addons/controls/FlyControls.js';
         import { TilesRenderer, DebugTilesPlugin, PriorityQueue } from '3d-tiles-renderer';
-        import { CameraRig, FreeMovementControls } from 'three-story-controls';
         import Stats from 'three/examples/jsm/libs/stats.module';
-        import TouchControls from '/static/public/touchcontrols/TouchControls.js'
         
 
         let camera, scene, renderer, tilesRenderer, controls, modelGroup;
         let clock = new THREE.Clock();
         let lastPoint = null;
-        const distanceDisplay = document.getElementById('distance-display'); 
-        const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
-        const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
+        // const distanceDisplay = document.getElementById('distance-display'); 
+        // const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
         
         
-        let spinning = true; // Track if the model should spin
-        let initialDistance = 10; // Start close to the model
+        let spinning = true;
+        let initialDistance = 10;
         let initialHeight = 10;
         let currentHeight = initialHeight;
-        let targetDistance = {{selected_flight.script_exterior.max_distance}}; // End distance from the model
-        let targetHeight = {{selected_flight.script_exterior.max_distance}}; // End height from the model
-        let currentDistance = initialDistance; // Current distance from the model
-        const spinSpeed = 0.00008; // Speed of spinning around the model
-        const distanceIncrement = {{selected_flight.script_exterior.distance_increment}}; // Increment distance per frame
-        const heightIncrement = {{selected_flight.script_exterior.height_increment}}; // Increment distance per frame
+        let targetDistance = {{selected_flight.script_exterior.max_distance}};
+        let targetHeight = {{selected_flight.script_exterior.max_distance}};
+        let currentDistance = initialDistance;
+        const spinSpeed = 0.00008;
+        const distanceIncrement = {{selected_flight.script_exterior.distance_increment}};
+        const heightIncrement = {{selected_flight.script_exterior.height_increment}};
         let loadedTilesCount = 0;
-        let totalTiles = {{selected_flight.script_exterior.total_tiles}};  // Total number of tiles you expect to load (you can dynamically calculate this)
-        let cameraReset = false;  // Track if the camera has been reset
+        let totalTiles = {{selected_flight.script_exterior.total_tiles}}; 
+        let cameraReset = false; 
         let controlsEnabled = false;
 
-        const stats = new Stats()
 
-        distanceDisplay.style.display = 'none';
+        // activity monitor stats
+        // const stats = new Stats()
+
+        // distanceDisplay.style.display = 'none';
 
 
         let distanceMeasurementEnabled = false;
 
-        toggleDistanceMeasurementButton.addEventListener('click', () => {
+        {% comment %} toggleDistanceMeasurementButton.addEventListener('click', () => {
             distanceMeasurementEnabled = !distanceMeasurementEnabled;
             toggleDistanceMeasurementButton.textContent = distanceMeasurementEnabled ? 'Disable Distance Measurement' : 'Enable Distance Measurement';
             
@@ -629,7 +627,7 @@
                 distanceDisplay.innerText = 'Distance: N/A'; 
                 distanceDisplay.style.display = 'none'; 
             }
-        });
+        }); {% endcomment %}
         
         window.initExteriorModel = function() {
             const container = document.getElementById('exteriorModelContainer');
@@ -645,89 +643,37 @@
             let light = new THREE.AmbientLight(0x404040, 90);
             scene.add(light);
 
-            // const loader = new FBXLoader();
-            // loader.load('{{ selected_flight.exterior_link|safe }}', (object) => {
-               //  scene.add(object);
-            // });
 
             renderer = new THREE.WebGLRenderer();
             renderer.setPixelRatio(window.devicePixelRatio);
 
-            if (isTouchDevice) {
-                renderer.setSize(window.innerWidth * 0.9, window.innerHeight * 0.8);  
-            } else {
-                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8)); 
-            }
+            renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
 
             container.appendChild(renderer.domElement);
 
-            initControls(isTouchDevice ? 'fly' : 'orbit');
-            document.getElementById('fly-controls-btn').addEventListener('click', () => initControls('fly'));
-            document.getElementById('camera-controls-btn').addEventListener('click', () => initControls('orbit'));
+            initControls();
 
             
-            function initControls(controlType) {
-              if (controls) controls.dispose();
-  
-              controls = (controlType === 'fly') 
-                  ? new FlyControls(camera, renderer.domElement) 
-                  : new OrbitControls(camera, renderer.domElement);
-              
-              if (controlType === 'fly') {
-                if (isTouchDevice) {
-                  console.log("TOUCH device in fly mode");
-                    let options = {
-                        delta: 0.75,           // coefficient of movement
-                        moveSpeed: 0.1, // 0.07,        // speed of movement
-                        rotationSpeed: 0.002, // 0.0009,  // coefficient of rotation
-                        maxPitch: 20,          // max camera pitch angle
-                        hitTest: false,         // stop on hitting objects
-                        hitTestDistance: 1000    // distance to test for hit
-                    }
-                    controls = new TouchControls(container.parentNode, camera, options)
-                    controls.addToScene(scene)
-                } else {
-                  controls.movementSpeed = 40; 
-                  controls.rollSpeed = 0.5;
-                  controls.dragToLook = true;
-                  document.addEventListener('keydown', onKeyChange);
-                  document.addEventListener('keyup', onKeyChange);
-                  console.log("NOT TOUCH device in fly mode");
-                }
-              } else {
-                  const distance = camera.position.distanceTo(controls.target);
-                  controls.zoomSpeed = 2;
-                  controls.minDistance = 0;
-                  controls.maxDistance = 1000;
-                  controls.minPolarAngle = 0.25;
-                  controls.maxPolarAngle = 1.8;
-                  controls.zoomToCursor = true;
-                  controls.enablePan = true;
-                  controls.target = controls.target || new THREE.Vector3(0, 0, 0); 
-                  document.removeEventListener('keydown', onKeyChange);
-                  document.removeEventListener('keyup', onKeyChange);
-                  console.log("device in camera mode");
-              }
-          }
-  
-          function onKeyChange(event) {
-              if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                event.preventDefault();
+            function initControls() {
+                if (controls) controls.dispose();
+        
+                controls = new OrbitControls(camera, renderer.domElement);
+                
+                const distance = camera.position.distanceTo(controls.target);
+                controls.zoomSpeed = 2;
+                controls.minDistance = 0;
+                controls.maxDistance = 1000;
+                controls.minPolarAngle = 0.25;
+                controls.maxPolarAngle = 1.8;
+                controls.zoomToCursor = true;
+                controls.enablePan = true;
+                controls.target = controls.target || new THREE.Vector3(0, 0, 0); 
+                
+                console.log("OrbitControls initialized");
             }
-
-            if (event.key === 'Escape') {
-                document.removeEventListener('keydown', onKeyChange);
-                document.removeEventListener('keyup', onKeyChange);
-            }
-            
-              if (event.key === 'Shift') {
-                  controls.movementSpeed = event.type === 'keydown' ? 260 : 80;
-              }
-          }
 
             modelGroup = new THREE.Group();
             scene.add(modelGroup);
-            
             
             const debugPlugin = new DebugTilesPlugin();
 
@@ -785,7 +731,7 @@
             // const axesHelper = new THREE.AxesHelper(100);  
             // scene.add(axesHelper);
 
-            window.addEventListener('click', onClick);
+            // window.addEventListener('click', onClick);
             
 
             window.addEventListener('resize', () => {
@@ -794,13 +740,14 @@
                 renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
             });
 
-            document.body.appendChild(stats.dom)
+            // activity monitor stats
+            // document.body.appendChild(stats.dom)
 
             renderLoop();
         };
 
         {% comment %} raycasting to measure distance {% endcomment %}
-        function onClick(event) {
+        {% comment %} function onClick(event) {
             if (distanceMeasurementEnabled) {
                 // Create a raycaster and calculate the mouse position
                 const raycaster = new THREE.Raycaster();
@@ -830,7 +777,7 @@
                     lastPoint = intersectionPoint.clone(); // Clone the point to keep it immutable for future calculations
             }
             }
-        }
+        } {% endcomment %}
         
         window.initInteriorModel = function() {
             const container = document.getElementById('interiorModelContainer');
@@ -892,7 +839,8 @@
             if (controls) {
                 controls.update(delta);
             }
-            stats.update()
+            // activity monitor stats
+            // stats.update()
 
             // Update the camera and tiles renderer
             camera.updateMatrixWorld();
@@ -915,19 +863,22 @@
 
 
                 }
-                stats.update()
+                // activity monitor stats
+                // stats.update()
 
                 // Allow normal control only if the camera has been reset
                 if (cameraReset && controls) {
                     controls.update(delta);  // Update controls based on delta
-                    stats.update()
+                    // activity monitor stats
+                    // stats.update()
                 }
             } else {
                 // Tiles are still loading, apply the spinning behavior
                 camera.position.x = Math.cos(Date.now() * spinSpeed) * currentDistance;
                 camera.position.z = Math.sin(Date.now() * spinSpeed) * currentDistance;
                 camera.position.y = currentHeight;
-                stats.update()
+                // activity monitor stats
+                // stats.update()
 
                 if (currentDistance < targetDistance) {
                     currentDistance += distanceIncrement;

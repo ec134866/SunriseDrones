@@ -54,12 +54,28 @@ class TouchControls {
         this.fpsBody = new THREE.Object3D()
         this.fpsBody.add(this.#cameraHolder)
 
+        this.lastTouchX = 0;
+        this.lastTouchY = 0;
+        this.touchStarted = false;
+        this.touchRotationEnabled = true;
+
         // Creating rotation pad
         this.rotationPad = new RotationPad(container)
-        this.rotationPad.padElement.addEventListener('YawPitch', (event) =>{
-            let rotation = this.#calculateCameraRotation(event.detail.deltaX, event.detail.deltaY)
-            this.setRotation(rotation.rx, rotation.ry)
-        })
+
+        /* Rotation Pad */
+        this.rotationPad.padElement.addEventListener('move', (event) => {
+
+            let deltaY = event.detail.deltaY; // This will control vertical movement
+            
+            let verticalSpeed = 0.005; // Adjust speed for vertical movement
+
+            // Update camera/person's Y position based on vertical slider
+            this.fpsBody.position.y += deltaY * verticalSpeed;
+
+            // Optional: Clamp the Y position if you want to limit vertical movement
+             this.fpsBody.position.y = Math.max(-50, Math.min(this.fpsBody.position.y, 75));
+        });
+        /* CHAT */
 
         // Creating movement pad
         this.movementPad = new MovementPad(container)
@@ -95,10 +111,17 @@ class TouchControls {
                 }
             }
         })
+
         this.movementPad.padElement.addEventListener('stopMove', (event) => {
             this.#ztouch = this.#xtouch = 1
             this.#moveForward = this.#moveBackward = this.#moveLeft = this.#moveRight = false
         })
+
+        // rotation
+        const touchArea = container.parentElement || container;
+        this.container.addEventListener('touchstart', (event) => this.onTouchStart(event));
+        this.container.addEventListener('touchmove', (event) => this.onTouchMove(event));
+        this.container.addEventListener('touchend', (event) => this.onTouchEnd(event));
 
         this.container.addEventListener('contextmenu', (event) => {event.preventDefault()})
         this.container.addEventListener('mousedown', (event) => this.onMouseDown(event))
@@ -110,6 +133,79 @@ class TouchControls {
         document.addEventListener('mouseout', (event) => this.onMouseOut(event))
 
         this.#prepareRotationMatrices()
+    }
+
+    // rotation
+    onTouchStart(event) {
+        // Only handle single touch for rotation (not interfering with pad controls)
+        if (event.touches.length === 1) {
+            const touch = event.touches[0];
+            
+            // Check if touch is not on control pads
+            if (!this.isTouchOnControlPads(touch)) {
+                this.touchStarted = true;
+                this.lastTouchX = touch.clientX;
+                this.lastTouchY = touch.clientY;
+                console.log('Touch rotation started at:', touch.clientX, touch.clientY);
+                event.preventDefault();
+            }
+        }
+    }
+    
+    onTouchMove(event) {
+        if (this.touchStarted && event.touches.length === 1) {
+            const touch = event.touches[0];
+            
+            if (!this.isTouchOnControlPads(touch)) {
+                const deltaX = touch.clientX - this.lastTouchX;
+                const deltaY = touch.clientY - this.lastTouchY;
+                
+                console.log('Touch delta:', deltaX, deltaY);
+                
+                // Apply rotation similar to mouse movement
+                const rotation = this.#calculateCameraRotation(-deltaX, -deltaY);
+                this.setRotation(rotation.rx, rotation.ry);
+                
+                this.lastTouchX = touch.clientX;
+                this.lastTouchY = touch.clientY;
+                
+                event.preventDefault();
+            }
+        }
+    }
+    
+    onTouchEnd(event) {
+        if (event.touches.length === 0) {
+            this.touchStarted = false;
+            console.log('Touch rotation ended:');
+        }
+    }
+
+    // Helper method to check if touch is on control pads
+    isTouchOnControlPads(touch) {
+        const movementPadRect = this.movementPad.padElement.getBoundingClientRect();
+        const rotationPadRect = this.rotationPad.padElement.getBoundingClientRect();
+        
+        // Define smaller center areas of the pads
+        const padMargin = 20; // pixels around pad center to block
+        
+        const movementCenterX = movementPadRect.left + movementPadRect.width / 2;
+        const movementCenterY = movementPadRect.top + movementPadRect.height / 2;
+        
+        const rotationCenterX = rotationPadRect.left + rotationPadRect.width / 2;
+        const rotationCenterY = rotationPadRect.top + rotationPadRect.height / 2;
+        
+        const isOnMovementCenter = (
+            Math.abs(touch.clientX - movementCenterX) < padMargin &&
+            Math.abs(touch.clientY - movementCenterY) < padMargin
+        );
+        
+        const isOnRotationCenter = (
+            Math.abs(touch.clientX - rotationCenterX) < padMargin &&
+            Math.abs(touch.clientY - rotationCenterY) < padMargin
+        );
+        
+        return isOnMovementCenter || isOnRotationCenter;
     }
 
     //
@@ -200,6 +296,20 @@ class TouchControls {
 
         }
     }
+    
+    // rotation
+    #calculateCameraRotation(dx, dy, factor) {
+        let rFactor = factor ? factor : this.config.rotationSpeed;
+        let ry = this.fpsBody.rotation.y - (dx * rFactor);
+        let rx = this.#cameraHolder.rotation.x - (dy * rFactor);
+        rx = Math.max(-this.#maxPitch, Math.min(this.#maxPitch, rx));
+        
+        return {
+            rx: rx,
+            ry: ry
+        };
+    }
+    
 
     //
     // Private functions
@@ -220,18 +330,6 @@ class TouchControls {
         let rotationMatrixR = new THREE.Matrix4()
         rotationMatrixR.makeRotationY((360 - 90) * Math.PI / 180)
         this.#rotationMatrices.push(rotationMatrixR)  // right direction
-    }
-
-    #calculateCameraRotation(dx, dy, factor) {
-        let rFactor = factor ? factor : this.config.rotationSpeed
-        let ry = this.fpsBody.rotation.y - (dx * rFactor)
-        let rx = this.#cameraHolder.rotation.x - (dy * rFactor)
-        rx = Math.max(-this.#maxPitch, Math.min(this.#maxPitch, rx))
-
-        return {
-            rx: rx,
-            ry: ry
-        }
     }
 
     #lockDirectionByIndex(index) {
@@ -271,6 +369,10 @@ class TouchControls {
         this.fpsBody.translateX(this.#velocity.x)
         this.fpsBody.translateY(this.#velocity.y)
         this.fpsBody.translateZ(this.#velocity.z)
+
+        // rotation
+        // this.fpsBody.rotation.x = this.#cameraHolder.rotation.x;
+        // this.fpsBody.rotation.y = this.fpsBody.rotation.y;
     }
 
     hitTest() {

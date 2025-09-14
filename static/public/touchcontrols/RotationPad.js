@@ -132,45 +132,37 @@ class RotationPad {
             left: this.region.offsetLeft
         };
         this.regionData.offset = utils.getOffset(this.region);
-        this.regionData.radius = this.regionData.width / 2;
-        this.regionData.centerX = this.regionData.position.left + this.regionData.radius;
-        this.regionData.centerY = this.regionData.position.top + this.regionData.radius;
 
+        // Handle height can be set directly here without radius calculations.
         this.handleData.width = this.handle.offsetWidth;
         this.handleData.height = this.handle.offsetHeight;
-        this.handleData.radius = this.handleData.width / 2;
-
-        this.regionData.radius = this.regionData.width / 2 - this.handleData.radius;
+        
+        // No need for radius calculation for the handle anymore.
+        
+        // Set boundaries for the handle, only vertical movement matters.
+        this.regionData.top = this.regionData.position.top;
+        this.regionData.bottom = this.regionData.position.top + this.regionData.height - this.handleData.height;
     }
 
     update(pageX, pageY) {
-        let newLeft = (pageX - this.regionData.offset.left)
         let newTop = (pageY - this.regionData.offset.top)
 
-        // If handle reaches the pad boundaries.
-        let distance = Math.pow(this.regionData.centerX - newLeft, 2) + Math.pow(this.regionData.centerY - newTop, 2)
-        if (distance > Math.pow(this.regionData.radius, 2)) {
-            let angle = Math.atan2((newTop - this.regionData.centerY), (newLeft - this.regionData.centerX))
-            newLeft = (Math.cos(angle) * this.regionData.radius) + this.regionData.centerX
-            newTop = (Math.sin(angle) * this.regionData.radius) + this.regionData.centerY
-        }
-        newTop = Math.round(newTop * 10) / 10
-        newLeft = Math.round(newLeft * 10) / 10
+        const minTop = 0;
+        const maxTop = this.regionData.height - this.handleData.height;
+        newTop = Math.max(minTop, Math.min(newTop, maxTop));
 
-        this.handle.style.top = newTop - this.handleData.radius + 'px'
-        this.handle.style.left = newLeft - this.handleData.radius + 'px'
-        // console.log(newTop , newLeft)
+        newTop = Math.round(newTop * 10) / 10;
 
-        // Providing event and data for handling camera movement.
-        var deltaX = this.regionData.centerX - parseInt(newLeft)
-        var deltaY = this.regionData.centerY - parseInt(newTop)
-        // Normalize x,y between -2 to 2 range.
-        deltaX = -2 + (2 + 2) * (deltaX - (-this.regionData.radius)) / (this.regionData.radius - (-this.regionData.radius))
-        deltaY = -2 + (2 + 2) * (deltaY - (-this.regionData.radius)) / (this.regionData.radius - (-this.regionData.radius))
-        deltaX = -1 * Math.round(deltaX * 10) / 10
-        deltaY = -1 * Math.round(deltaY * 10) / 10
-        // console.log(deltaX, deltaY)
-        this.sendEvent(deltaX, deltaY)
+        // Update handle's position based on the new top.
+        this.handle.style.top = `${newTop}px`;
+        this.handle.style.left = `${this.regionData.centerX - this.handleData.width}px`;
+
+        // Optionally calculate deltaY if needed for external event triggers:
+        let deltaY = this.regionData.position.top + this.regionData.height / 2 - newTop;
+        
+        deltaY = Math.round(deltaY * 10) / 10;  // Round to one decimal place.
+
+        this.sendEvent(0, deltaY);  // Send the event with the deltaY value.
     }
 
     sendEvent(dx, dy) {
@@ -187,20 +179,23 @@ class RotationPad {
             this.sendEvent(dx, dy)
         }, 5)
 
-        let picthEvent = new CustomEvent('YawPitch', {
+        let moveEvent = new CustomEvent('move', {
             bubbles: false,
             detail: {
                 'deltaX': dx,
                 'deltaY': dy
             }
         })
-        this.padElement.dispatchEvent(picthEvent)
+        this.padElement.dispatchEvent(moveEvent)
     }
 
     resetHandlePosition() {
-        this.handle.style.top = this.regionData.centerY - this.handleData.radius + 'px'
-        this.handle.style.left = this.regionData.centerX - this.handleData.radius + 'px'
-        this.handle.style.opacity = 0.1
+        const centerY = (this.regionData.height - this.handleData.height) / 2;
+        const centerX = (this.regionData.width - this.handleData.width) / 2;
+    
+        this.handle.style.top = `${centerY}px`;
+        this.handle.style.left = `${centerX}px`;
+        this.handle.style.opacity = 0.1;
     }
 }
 
