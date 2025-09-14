@@ -204,58 +204,7 @@
               <div class="row justify-content-center" style="width: 90%; margin: 0 auto; padding-bottom:1vh;">
                 <div class="col">
                 </div>
-                {% comment %} <div class="col" style="display: flex; justify-content: center;">
-                  <div id="distance-display" style="text-align: center; font-size: 2vh; display: none;">
-                      Distance: N/A
-                  </div>
-                </div> {% endcomment %}
-                {% comment %} <div class="col" style="text-align: right;">
-                    <i id="settings-icon" class="fa-solid fa-gear" style="font-size: 3vh; cursor: pointer;" onclick="toggleSettings()"></i>
-                </div> {% endcomment %}
               </div>
-              {% comment %} <div class="row" id="settings-box" style="
-                  display: none;
-                  position: fixed;
-                  top: 50%;
-                  left: 50%;
-                  transform: translate(-50%, -50%);
-                  width: 50%;
-                  height: 25%;
-                  z-index: 1000;">
-                  <div class="row" style="height:100%;">
-                      <div class="col-auto" id="options-column" style="width: 30%; padding:2vh; background-color: rgba(169, 169, 169, 0.9); border-top-left-radius: 2vh; border-bottom-left-radius: 2vh; padding-top:4vh;">
-                          <div style="font-size: clamp(1vh,1.5vw,2vh); margin-bottom: 2vh; cursor: pointer; background-color: lightblue;" id="movement-controls-option">
-                              <i class="fa-solid fa-up-down-left-right"></i> Movement Controls
-                          </div>
-                          <div style="font-size: clamp(1vh,1.5vw,2vh); margin-bottom: 2vh; cursor: pointer;" id="measurement-tools-option">
-                              <i class="fa-solid fa-ruler"></i> Measurement Tools
-                          </div>
-                      </div>
-                      <div class="col-auto" id="settings-content" style="width: 70%; padding:2vh; background-color: rgba(211, 211, 211, 0.9); border-top-right-radius: 2vh; border-bottom-right-radius: 2vh;">
-                          <div class="row">
-                              <div class="text-end" style="margin-bottom: 1vh;">
-                                  <i id="close-settings" class="fa-solid fa-x" style="font-size: 1.5vh; cursor: pointer;" onclick="closeSettings()"></i>
-                              </div>
-                          </div>
-                          <div class="row" style="overflow: scroll;">
-                              <div id="movement-controls" style="display: none;">
-                                  <div class="text-end" style="margin-bottom: 2vh; font-size: clamp(0.75vh,1vw,1.5vh);">
-                                      <button id="fly-controls-btn" class="btn btn-light" data-group="movement">Fly Controls</button>
-                                  </div>
-                                  <div class="text-end" style="margin-bottom: 2vh; font-size: clamp(0.75vh,1vw,1.5vh);">
-                                      <button id="camera-controls-btn" class="btn btn-dark" data-group="movement">Camera Controls</button>
-                                  </div>
-                              </div>
-          
-                              <div id="measurement-tools" style="display: none;">
-                                  <div class="text-end" style="margin-bottom: 2vh; font-size: clamp(0.75vh,1vw,1.5vh);">
-                                      <button id="toggle-distance-measurement" class="btn btn-light" data-group="measurement">Toggle Distance Measurement</button>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                </div> {% endcomment %}
                 <div class="progress-bar-container" style="
                   width: 55%;
                   position: fixed;
@@ -275,7 +224,6 @@
                   </div>
                 </div>
                 <div id="exteriorOuterModelContainer" class="d-flex justify-content-center" style="position: relative;">
-                  {% comment %} <i id="settings-icon" class="fa-solid fa-gear" style="font-size: 3vh; cursor: pointer; position: absolute; top: 10px; right: 10px; z-index: 10;" onclick="toggleSettings()"></i> {% endcomment %}
                   <div id="exteriorModelContainer" class="d-flex justify-content-center">
                   </div>
                 </div>
@@ -333,104 +281,6 @@
     
       </script>
 
-        {% comment %} settings script  {% endcomment %}
-      {% comment %} <script>
-          function toggleSettings() {
-            const settingsBox = document.getElementById('settings-box');
-            const settingsIcon = document.getElementById('settings-icon');
-            const optionsColumn = document.getElementById('options-column');
-        
-            // Use toggle for simplicity
-            const isHidden = settingsBox.style.display === 'none' || settingsBox.style.display === '';
-            settingsBox.style.display = isHidden ? 'block' : 'none';
-            settingsIcon.classList.toggle('fa-rotate-90', isHidden);
-        
-            // Reset both sections and background color when opening the settings box
-            if (isHidden) {
-                optionsColumn.querySelectorAll('div').forEach(div => div.style.backgroundColor = '');
-                document.getElementById('movement-controls').style.display = 'none';
-                document.getElementById('measurement-tools').style.display = 'none';
-            }
-          }
-          
-          function closeSettings() {
-              const settingsBox = document.getElementById('settings-box');
-              const settingsIcon = document.getElementById('settings-icon');
-          
-              settingsBox.style.display = 'none';
-              settingsIcon.classList.remove('fa-rotate-90');
-          }
-          
-          // Generic function to toggle controls
-          function toggleControls(activeOptionId, otherOptionId, activeControlsId, otherControlsId) {
-              const activeControls = document.getElementById(activeControlsId);
-              const otherControls = document.getElementById(otherControlsId);
-              const activeOption = document.getElementById(activeOptionId);
-              const otherOption = document.getElementById(otherOptionId);
-          
-              if (activeControls.style.display === 'block') {
-                  activeControls.style.display = 'none';
-                  activeOption.style.backgroundColor = '';
-              } else {
-                  activeControls.style.display = 'block';
-                  otherControls.style.display = 'none';
-                  activeOption.style.backgroundColor = 'lightblue';
-                  otherOption.style.backgroundColor = '';
-              }
-          }
-          
-          // Show movement controls when the button is clicked
-          document.getElementById('movement-controls-option').addEventListener('click', function() {
-              toggleControls('movement-controls-option', 'measurement-tools-option', 'movement-controls', 'measurement-tools');
-          });
-          
-          // Show measurement tools when the button is clicked
-          document.getElementById('measurement-tools-option').addEventListener('click', function() {
-              toggleControls('measurement-tools-option', 'movement-controls-option', 'measurement-tools', 'movement-controls');
-          });
-          
-          document.addEventListener('keydown', function(event) {
-              if (event.key === 'Escape') {
-                  const settingsBox = document.getElementById('settings-box');
-                  if (settingsBox.style.display === 'block') {
-                      closeSettings();
-                  }
-              }
-          });
-          
-          // Add event listeners to each button
-          document.getElementById('fly-controls-btn').addEventListener('click', function() {
-              selectMovementButton('fly-controls-btn');
-          });
-          
-          document.getElementById('camera-controls-btn').addEventListener('click', function() {
-              selectMovementButton('camera-controls-btn');
-          });
-          
-          document.getElementById('toggle-distance-measurement').addEventListener('click', function() {
-              toggleMeasurementButton('toggle-distance-measurement');
-          });
-          
-          // Function to handle movement controls (cannot be deselected)
-          function selectMovementButton(activeButtonId) {
-              const buttons = document.querySelectorAll('button[data-group="movement"]');
-          
-              // Loop through the movement control buttons
-              buttons.forEach(button => {
-                  button.classList.toggle('btn-dark', button.id === activeButtonId);
-                  button.classList.toggle('btn-light', button.id !== activeButtonId);
-              });
-          }
-          
-          // Function to handle measurement tools (can toggle on and off)
-          function toggleMeasurementButton(buttonId) {
-              const button = document.getElementById(buttonId);
-          
-              // Toggle between dark and light for measurement tools
-              button.classList.toggle('btn-dark');
-              button.classList.toggle('btn-light');
-          }        
-      </script> {% endcomment %}
 
         {% comment %} script for contract tracker and download section {% endcomment %}
       <script>
@@ -588,8 +438,6 @@
         let camera, scene, renderer, tilesRenderer, controls, modelGroup;
         let clock = new THREE.Clock();
         let lastPoint = null;
-        // const distanceDisplay = document.getElementById('distance-display'); 
-        // const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
         
         
         let spinning = true;
@@ -610,24 +458,6 @@
 
         // activity monitor stats
         // const stats = new Stats()
-
-        // distanceDisplay.style.display = 'none';
-
-
-        let distanceMeasurementEnabled = false;
-
-        {% comment %} toggleDistanceMeasurementButton.addEventListener('click', () => {
-            distanceMeasurementEnabled = !distanceMeasurementEnabled;
-            toggleDistanceMeasurementButton.textContent = distanceMeasurementEnabled ? 'Disable Distance Measurement' : 'Enable Distance Measurement';
-            
-            if (distanceMeasurementEnabled) {
-                distanceDisplay.style.display = 'block';
-            } else {
-                lastPoint = null; 
-                distanceDisplay.innerText = 'Distance: N/A'; 
-                distanceDisplay.style.display = 'none'; 
-            }
-        }); {% endcomment %}
         
         window.initExteriorModel = function() {
             const container = document.getElementById('exteriorModelContainer');
@@ -669,7 +499,7 @@
                 controls.enablePan = true;
                 controls.target = controls.target || new THREE.Vector3(0, 0, 0); 
                 
-                console.log("OrbitControls initialized");
+                // console.log("OrbitControls initialized");
             }
 
             modelGroup = new THREE.Group();
@@ -745,39 +575,6 @@
 
             renderLoop();
         };
-
-        {% comment %} raycasting to measure distance {% endcomment %}
-        {% comment %} function onClick(event) {
-            if (distanceMeasurementEnabled) {
-                // Create a raycaster and calculate the mouse position
-                const raycaster = new THREE.Raycaster();
-                const pointer = new THREE.Vector2(
-                    (event.clientX / window.innerWidth) * 2 - 1,
-                    -(event.clientY / window.innerHeight) * 2 + 1
-                );
-
-                // Update the raycaster with the camera and pointer position
-                raycaster.setFromCamera(pointer, camera);
-
-                // Check for intersections
-                const intersects = raycaster.intersectObjects(modelGroup.children, true);
-
-                if (intersects.length > 0) {
-                    const intersectionPoint = intersects[0].point; // Get the intersection point
-
-                    if (lastPoint) {
-                        const distance = intersectionPoint.distanceTo(lastPoint); // Calculate distance to the last point
-                        const distanceInFeet = distance * 3.28084; // Convert to feet
-                        distanceDisplay.innerText = `Distance: ${distanceInFeet.toFixed(2)} feet`; // Update display
-                    } else {
-                        distanceDisplay.innerText = 'First point clicked: N/A'; // Update display
-                    }
-
-                    // Save the current intersection point as the last point
-                    lastPoint = intersectionPoint.clone(); // Clone the point to keep it immutable for future calculations
-            }
-            }
-        } {% endcomment %}
         
         window.initInteriorModel = function() {
             const container = document.getElementById('interiorModelContainer');
@@ -859,8 +656,6 @@
                     // Mark that the camera has been reset
                     cameraReset = true;
                     controlsEnabled = true;  // Enable controls after reset
-
-
 
                 }
                 // activity monitor stats
