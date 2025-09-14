@@ -581,11 +581,11 @@
       <script type="module">
         import * as THREE from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        import { FlyControls } from 'three/addons/controls/FlyControls.js';
+        // import { FlyControls } from 'three/addons/controls/FlyControls.js';
         import { TilesRenderer, DebugTilesPlugin, PriorityQueue } from '3d-tiles-renderer';
-        import { CameraRig, FreeMovementControls } from 'three-story-controls';
+        // import { CameraRig, FreeMovementControls } from 'three-story-controls';
         import Stats from 'three/examples/jsm/libs/stats.module';
-        import TouchControls from '/static/public/touchcontrols/TouchControls.js'
+        // import TouchControls from '/static/public/touchcontrols/TouchControls.js'
         
 
         let camera, scene, renderer, tilesRenderer, controls, modelGroup;
@@ -593,7 +593,7 @@
         let lastPoint = null;
         const distanceDisplay = document.getElementById('distance-display'); 
         const toggleDistanceMeasurementButton = document.getElementById('toggle-distance-measurement');
-        const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
+        // const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
         
         
         let spinning = true; // Track if the model should spin
@@ -655,81 +655,40 @@
             renderer = new THREE.WebGLRenderer();
             renderer.setPixelRatio(window.devicePixelRatio);
 
-            if (isTouchDevice) {
-                renderer.setSize(window.innerWidth * 0.9, window.innerHeight * 0.8);  
-            } else {
-                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8)); 
-            }
+            // if (isTouchDevice) {
+            //     renderer.setSize(window.innerWidth * 0.9, window.innerHeight * 0.8);  
+            // } else {
+            //     renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8)); 
+            // }
 
             container.appendChild(renderer.domElement);
 
-            initControls(isTouchDevice ? 'fly' : 'orbit');
-            document.getElementById('fly-controls-btn').addEventListener('click', () => initControls('fly'));
-            document.getElementById('camera-controls-btn').addEventListener('click', () => initControls('orbit'));
+            // initControls(isTouchDevice ? 'fly' : 'orbit');
+            initControls();
+            // document.getElementById('fly-controls-btn').addEventListener('click', () => initControls('fly'));
+            // document.getElementById('camera-controls-btn').addEventListener('click', () => initControls('orbit'));
 
             
-            function initControls(controlType) {
-              if (controls) controls.dispose();
-  
-              controls = (controlType === 'fly') 
-                  ? new FlyControls(camera, renderer.domElement) 
-                  : new OrbitControls(camera, renderer.domElement);
-              
-              if (controlType === 'fly') {
-                if (isTouchDevice) {
-                  console.log("TOUCH device in fly mode");
-                    let options = {
-                        delta: 0.75,           // coefficient of movement
-                        moveSpeed: 0.1, // 0.07,        // speed of movement
-                        rotationSpeed: 0.002, // 0.0009,  // coefficient of rotation
-                        maxPitch: 20,          // max camera pitch angle
-                        hitTest: false,         // stop on hitting objects
-                        hitTestDistance: 1000    // distance to test for hit
-                    }
-                    controls = new TouchControls(container.parentNode, camera, options)
-                    controls.addToScene(scene)
-                } else {
-                  controls.movementSpeed = 40; 
-                  controls.rollSpeed = 0.5;
-                  controls.dragToLook = true;
-                  document.addEventListener('keydown', onKeyChange);
-                  document.addEventListener('keyup', onKeyChange);
-                  console.log("NOT TOUCH device in fly mode");
-                }
-              } else {
-                  const distance = camera.position.distanceTo(controls.target);
-                  controls.zoomSpeed = 2;
-                  controls.minDistance = 0;
-                  controls.maxDistance = 1000;
-                  controls.minPolarAngle = 0.25;
-                  controls.maxPolarAngle = 1.8;
-                  controls.zoomToCursor = true;
-                  controls.enablePan = true;
-                  controls.target = controls.target || new THREE.Vector3(0, 0, 0); 
-                  document.removeEventListener('keydown', onKeyChange);
-                  document.removeEventListener('keyup', onKeyChange);
-                  console.log("device in camera mode");
-              }
-          }
-  
-          function onKeyChange(event) {
-              if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                event.preventDefault();
+            function initControls() {
+                if (controls) controls.dispose();
+        
+                controls = new OrbitControls(camera, renderer.domElement);
+                
+                const distance = camera.position.distanceTo(controls.target);
+                controls.zoomSpeed = 2;
+                controls.minDistance = 0;
+                controls.maxDistance = 1000;
+                controls.minPolarAngle = 0.25;
+                controls.maxPolarAngle = 1.8;
+                controls.zoomToCursor = true;
+                controls.enablePan = true;
+                controls.target = controls.target || new THREE.Vector3(0, 0, 0); 
+                
+                console.log("OrbitControls initialized");
             }
-
-            if (event.key === 'Escape') {
-                document.removeEventListener('keydown', onKeyChange);
-                document.removeEventListener('keyup', onKeyChange);
-            }
-            
-              if (event.key === 'Shift') {
-                  controls.movementSpeed = event.type === 'keydown' ? 260 : 80;
-              }
-          }
 
             modelGroup = new THREE.Group();
             scene.add(modelGroup);
-            
             
             const debugPlugin = new DebugTilesPlugin();
 
