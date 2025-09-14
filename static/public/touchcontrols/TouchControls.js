@@ -54,7 +54,7 @@ class TouchControls {
         this.fpsBody = new THREE.Object3D()
         this.fpsBody.add(this.#cameraHolder)
 
-		this.lastTouchX = 0;
+        this.lastTouchX = 0;
         this.lastTouchY = 0;
         this.touchStarted = false;
         this.touchRotationEnabled = true;
@@ -118,6 +118,7 @@ class TouchControls {
         })
 
         // rotation
+        const touchArea = container.parentElement || container;
         this.container.addEventListener('touchstart', (event) => this.onTouchStart(event));
         this.container.addEventListener('touchmove', (event) => this.onTouchMove(event));
         this.container.addEventListener('touchend', (event) => this.onTouchEnd(event));
@@ -135,7 +136,7 @@ class TouchControls {
     }
 
     // rotation
-	onTouchStart(event) {
+    onTouchStart(event) {
         // Only handle single touch for rotation (not interfering with pad controls)
         if (event.touches.length === 1) {
             const touch = event.touches[0];
@@ -145,18 +146,21 @@ class TouchControls {
                 this.touchStarted = true;
                 this.lastTouchX = touch.clientX;
                 this.lastTouchY = touch.clientY;
+                console.log('Touch rotation started at:', touch.clientX, touch.clientY);
                 event.preventDefault();
             }
         }
     }
     
-	onTouchMove(event) {
+    onTouchMove(event) {
         if (this.touchStarted && event.touches.length === 1) {
             const touch = event.touches[0];
             
             if (!this.isTouchOnControlPads(touch)) {
                 const deltaX = touch.clientX - this.lastTouchX;
                 const deltaY = touch.clientY - this.lastTouchY;
+                
+                console.log('Touch delta:', deltaX, deltaY);
                 
                 // Apply rotation similar to mouse movement
                 const rotation = this.#calculateCameraRotation(-deltaX, -deltaY);
@@ -173,31 +177,35 @@ class TouchControls {
     onTouchEnd(event) {
         if (event.touches.length === 0) {
             this.touchStarted = false;
+            console.log('Touch rotation ended:');
         }
     }
 
-	// Helper method to check if touch is on control pads
+    // Helper method to check if touch is on control pads
     isTouchOnControlPads(touch) {
-        // Get the bounding rectangles of your control pads
         const movementPadRect = this.movementPad.padElement.getBoundingClientRect();
         const rotationPadRect = this.rotationPad.padElement.getBoundingClientRect();
         
-        // Check if touch point is within either pad
-        const isOnMovementPad = (
-            touch.clientX >= movementPadRect.left &&
-            touch.clientX <= movementPadRect.right &&
-            touch.clientY >= movementPadRect.top &&
-            touch.clientY <= movementPadRect.bottom
+        // Define smaller center areas of the pads
+        const padMargin = 20; // pixels around pad center to block
+        
+        const movementCenterX = movementPadRect.left + movementPadRect.width / 2;
+        const movementCenterY = movementPadRect.top + movementPadRect.height / 2;
+        
+        const rotationCenterX = rotationPadRect.left + rotationPadRect.width / 2;
+        const rotationCenterY = rotationPadRect.top + rotationPadRect.height / 2;
+        
+        const isOnMovementCenter = (
+            Math.abs(touch.clientX - movementCenterX) < padMargin &&
+            Math.abs(touch.clientY - movementCenterY) < padMargin
         );
         
-        const isOnRotationPad = (
-            touch.clientX >= rotationPadRect.left &&
-            touch.clientX <= rotationPadRect.right &&
-            touch.clientY >= rotationPadRect.top &&
-            touch.clientY <= rotationPadRect.bottom
+        const isOnRotationCenter = (
+            Math.abs(touch.clientX - rotationCenterX) < padMargin &&
+            Math.abs(touch.clientY - rotationCenterY) < padMargin
         );
         
-        return isOnMovementPad || isOnRotationPad;
+        return isOnMovementCenter || isOnRotationCenter;
     }
 
     //
@@ -322,18 +330,6 @@ class TouchControls {
         let rotationMatrixR = new THREE.Matrix4()
         rotationMatrixR.makeRotationY((360 - 90) * Math.PI / 180)
         this.#rotationMatrices.push(rotationMatrixR)  // right direction
-    }
-
-    #calculateCameraRotation(dx, dy, factor) {
-        let rFactor = factor ? factor : this.config.rotationSpeed
-        let ry = this.fpsBody.rotation.y - (dx * rFactor)
-        let rx = this.#cameraHolder.rotation.x - (dy * rFactor)
-        rx = Math.max(-this.#maxPitch, Math.min(this.#maxPitch, rx))
-
-        return {
-            rx: rx,
-            ry: ry
-        }
     }
 
     #lockDirectionByIndex(index) {
