@@ -17,3 +17,5 @@ venv/
 
 # Migrations cache only
 portfolioApp/migrations/__pycache__/
+
+static/
