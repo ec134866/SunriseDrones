@@ -97,7 +97,7 @@ class Flight(models.Model):
     exterior_thumbnail_link = models.CharField(max_length=500, blank=True, null=True, default='https://drive.google.com/thumbnail?sz=w1000&id=1Ya5AsuE7-DnTiz23hcqEtQOeOFZRqMsK')
     interior_link = models.CharField(max_length=500, blank=True, null=True)
     interior_thumbnail_link = models.CharField(max_length=500, blank=True, null=True, default='https://drive.google.com/thumbnail?sz=w1000&id=1e1izphrchnVWN7MZxa-BVffLZbDNAqvd')
-    top_image_link_1 = models.CharField(max_length=500, blank=True, null=True)
+    top_image_link_1 = models.CharField(max_length=500, blank=True, null=True, default='https://drive.google.com/thumbnail?sz=w1000&id=1Ya5AsuE7-DnTiz23hcqEtQOeOFZRqMsK')
     top_image_link_2 = models.CharField(max_length=500, blank=True, null=True)
     contractSigned = models.DateField(default=timezone.now)
     contractFlightDate = models.DateField(default=timezone.now)
