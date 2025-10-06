@@ -1,12 +1,19 @@
-# Ignore Python bytecode files
+# Python bytecode
 *.pyc
 __pycache__/
 
-# Ignore Django migration files
-portfolioApp/migrations/
+# Django
+*.log
+.env
+db.sqlite3
+staticfiles/
+media/
 
-# Ignore virtual environment folder
+# Mac
+.DS_Store
+
+# Virtual environment
 venv/
 
-# Ignore all .DS_Store files (common in macOS environments)
-.DS_Store
+# Migrations cache only
+portfolioApp/migrations/__pycache__/
