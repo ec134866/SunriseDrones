@@ -167,11 +167,14 @@
             </div>
           {% endif %}
           <div class="row justify-content-center" style="padding-left: 2vw; padding-right: 2vw; padding-top: 4vh; padding-bottom: 2vh;">
-            <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.of_content_btn_1}}">
-              <button class="btn btn-link p-0" onclick="showContent('overflightContent')">
-                  <img src={{selected_flight.overflight_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-                  <br><br>
-                  <h2 class="text-decoration-none" style="color: #333;">Overflight</h2>
+            <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.photo_content_btn_1}}">
+                <button class="btn btn-link p-0" onclick="showContent('photoContent')">
+                    <h2 class="text-decoration-none" style="color: #333;">Photos</h2>
+                </button>
+            </div>
+            <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.video_content_btn_1}}">
+              <button class="btn btn-link p-0" onclick="showContent('videoContent')">
+                  <h2 class="text-decoration-none" style="color: #333;">Videos</h2>
               </button>
             </div>
             <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.ext_content_btn_1}}">
@@ -193,9 +196,15 @@
 
         {% comment %} content area {% endcomment %}
         <div id="contentArea" class="container-fluid" style="padding-top: 6vh; padding-bottom: 6vh; background-color: rgba{{owner.palette2}}">
-          <div class="d-flex justify-content-center">
-              <div id="overflightContent" class="content-section" style="width: 90%; height: 75vh;">
-                <iframe width="100%" height="100%" id="overflightVideoElement" src="https://www.youtube.com/embed/{{selected_flight.overflight_link}}?autoplay=1&rel=0" frameborder="0">
+            <div class="d-flex justify-content-center">
+                <div id="photoContent" class="content-section" style="width: 90%; height: 75vh;">
+                    {% comment %} TODO change this to be a gallery of images {% endcomment %}
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+              <div id="videoContent" class="content-section" style="width: 90%; height: 75vh;">
+                {% comment %} TODO change this to be a gallery of images {% endcomment %}
+                <iframe width="100%" height="100%" id="VideoElement" src="https://www.youtube.com/embed/{{selected_flight.overflight_link}}?autoplay=1&rel=0" frameborder="0">
                 </iframe>
               </div>
           </div>
