@@ -1,49 +1,49 @@
 {% extends 'base.html'%}
-        {% block title %}
-          <link rel="icon" href="https://raw.githubusercontent.com/ec134866/SunriseDrones/refs/heads/master/static/public/favicon.ico" type="image/x-icon">  
-          <title> {{owner_name}} </title>
-        {% endblock %}
-        
-        {% block search %}
-        {% endblock %}
-        
-        {% block body %}
-        <header class="d-flex align-items-center" style="padding-top: 3vh; padding-bottom: 3vh; background-color: rgba{{owner_palette1}}">
-          <div class="container px-4 px-lg-5 text-center">
-            <h1 class="mb-1" style="font-size: 6vw;">{{owner_name}}</h1>
-          </div>
-        </header>
-        <div>
-          <div style="padding-left: 2vw; padding-right: 2vw; padding-top: 4vh; padding-bottom: 4vh;">
-            {% for owners, properties in properties_by_owner %}
-            <div class="row">
-              <h1>{{ owners.name }}</h1> 
-              {% for property in properties %}
-                <div class="col-md-4 mb-3 d-flex justify-content-center">
-                  <a href="{% url 'property' person.uuid owners.url_name property.url_name %}" class="text-decoration-none">
-                    <div class="d-flex justify-content-center">
-                      {% if property.latest_flight %}
-                        <img src="{{ property.latest_flight.top_image_link_1 }}" class="img-fluid" style="width:75%; height:auto; border-radius:2vw;" alt="{{ property.name }}">
-                      {% else %}
-                        <img src="default_image_url" class="img-fluid" style="width:34vw; height:75%; border-radius:2vw;" alt="{{ property.name }}">
-                      {% endif %}
-                    </div>
-                    <br>
-                    <div class="text-center">
-                      <h2>{{ property.name }}</h2>
-                    </div>
-                  </a>
-                </div>
-              {% endfor %}
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-        <footer class="footer text-center bg-light" style="margin-top: auto;">
-          <div class="container px-4 px-lg-5">
-            <p class="text-muted small mb-0">These are not official surveys. No models should be relied upon for safety. All models should be used strictly for planning and estimate purposes.</p>
-              {% comment %} <p class="text-muted small mb-0">Copyright &copy; SunriseDrones 2024</p> {% endcomment %}
-          </div>
-      </footer>
+		{% block title %}
+		<link rel="icon" href="https://raw.githubusercontent.com/ec134866/SunriseDrones/refs/heads/master/static/public/favicon.ico" type="image/x-icon">  
+		<title> {{owner_name}} </title>
+		{% endblock %}
+		
+		{% block search %}
+		{% endblock %}
+		
+		{% block body %}
+		<header class="d-flex align-items-center" style="padding-top: 3vh; padding-bottom: 3vh; background-color: rgba{{owner_palette1}}">
+		<div class="container px-4 px-lg-5 text-center">
+			<h1 class="mb-1" style="font-size: 6vw;">{{owner_name}}</h1>
+		</div>
+		</header>
+		<div>
+		<div style="padding-left: 2vw; padding-right: 2vw; padding-top: 4vh; padding-bottom: 4vh;">
+			{% for owners, properties in properties_by_owner %}
+			<div class="row">
+			<h1>{{ owners.name }}</h1> 
+			{% for property in properties %}
+				<div class="col-md-4 mb-3 d-flex justify-content-center">
+				<a href="{% url 'property' person.uuid owners.url_name property.url_name %}" class="text-decoration-none">
+					<div class="d-flex justify-content-center">
+					{% if property.latest_flight %}
+						<img src="{{ property.latest_flight.top_image_link_1 }}" class="img-fluid" style="width:75%; height:auto; border-radius:2vw;" alt="{{ property.name }}">
+					{% else %}
+						<img src="default_image_url" class="img-fluid" style="width:34vw; height:75%; border-radius:2vw;" alt="{{ property.name }}">
+					{% endif %}
+					</div>
+					<br>
+					<div class="text-center">
+					<h2>{{ property.name }}</h2>
+					</div>
+				</a>
+				</div>
+			{% endfor %}
+			</div>
+			{% endfor %}
+		</div>
+		</div>
+		<footer class="footer text-center bg-light" style="margin-top: auto;">
+		<div class="container px-4 px-lg-5">
+			<p class="text-muted small mb-0">These are not official surveys. No models should be relied upon for safety. All models should be used strictly for planning and estimate purposes.</p>
+			{% comment %} <p class="text-muted small mb-0">Copyright &copy; SunriseDrones 2024</p> {% endcomment %}
+		</div>
+	</footer>
 
-        {% endblock %}
+		{% endblock %}
