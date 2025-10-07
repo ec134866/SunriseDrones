@@ -1,90 +1,90 @@
 {% extends 'base.html'%}
 {% block title %}
-  <title> Create a Share Link </title>
+<title> Create a Share Link </title>
 {% endblock %}
-        
+		
 {% block body %}
-    <div>
-        <h1>Management Dashboard</h1>
+	<div>
+		<h1>Management Dashboard</h1>
 
-        <h2>Add or Edit Person</h2>
-        <form method="POST">
-            {% csrf_token %}
-            {{ person_form.as_p }}
-            <button type="submit" name="add_person">Add Person</button>
-        </form>
-        
-        {% if uuid_created %}
-            <div class="row justify-content-center text-center align-items-center">
-                <p>New person can access:</p> 
-            </div>
-            <div class="row display:flex justify-content-center text-center align-items-center">
-                <div class="col-auto justify-content-center text-center align-items-center">
-                    <p id="share-link" style="margin-right: 1vw;">
-                        https://sunrisedrones.pythonanywhere.com/{{ uuid_created }}
-                    </p>
-                </div>
-                <div class="col-auto justify-content-center text-center align-items-center">
-                    <button onclick="copyToClipboard()" style="border: none; background: none; cursor: pointer;"> 
-                        <i class="fa-solid fa-copy"></i> Copy
-                    </button>
-                </div>               
-            </div>
-        {% endif %}
+		<h2>Add or Edit Person</h2>
+		<form method="POST">
+			{% csrf_token %}
+			{{ person_form.as_p }}
+			<button type="submit" name="add_person">Add Person</button>
+		</form>
+		
+		{% if uuid_created %}
+			<div class="row justify-content-center text-center align-items-center">
+				<p>New person can access:</p> 
+			</div>
+			<div class="row display:flex justify-content-center text-center align-items-center">
+				<div class="col-auto justify-content-center text-center align-items-center">
+					<p id="share-link" style="margin-right: 1vw;">
+						https://sunrisedrones.pythonanywhere.com/{{ uuid_created }}
+					</p>
+				</div>
+				<div class="col-auto justify-content-center text-center align-items-center">
+					<button onclick="copyToClipboard()" style="border: none; background: none; cursor: pointer;"> 
+						<i class="fa-solid fa-copy"></i> Copy
+					</button>
+			</div>			   
+			</div>
+		{% endif %}
 
 
 
-        <br><br><br><br>
+		<br><br><br><br>
 
-        <h3>Existing Persons</h3>
-        {% for person in persons %}
-            <div>
-                <h4>{{ person.name }}</h4>
-                <form method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="person_id" value="{{ person.uuid }}">
-                    {{ person_form.as_p }} 
-                    <button type="submit" name="edit_person">Edit Person</button>
-                </form>
-                <p>Phone: {{ person.phone_number }}</p> 
-                <p>Email: {{ person.email }}</p> 
+		<h3>Existing Persons</h3>
+		{% for person in persons %}
+			<div>
+				<h4>{{ person.name }}</h4>
+				<form method="POST">
+					{% csrf_token %}
+					<input type="hidden" name="person_id" value="{{ person.uuid }}">
+					{{ person_form.as_p }} 
+					<button type="submit" name="edit_person">Edit Person</button>
+				</form>
+				<p>Phone: {{ person.phone_number }}</p> 
+				<p>Email: {{ person.email }}</p> 
 
-                <!-- Display Accessible Owners, Properties, and Flights -->
-                <h5>Accessible Owners</h5>
-                <ul>
-                    {% for owner in person.owners.all %}
-                    <li>{{ owner.name }}</li>
-                    {% endfor %}
-                </ul>
+				<!-- Display Accessible Owners, Properties, and Flights -->
+				<h5>Accessible Owners</h5>
+				<ul>
+					{% for owner in person.owners.all %}
+					<li>{{ owner.name }}</li>
+					{% endfor %}
+				</ul>
 
-                <h5>Accessible Properties</h5>
-                <ul>
-                    {% for property in person.properties.all %}
-                    <li>{{ property.name }}</li>
-                    {% endfor %}
-                </ul>
+				<h5>Accessible Properties</h5>
+				<ul>
+					{% for property in person.properties.all %}
+					<li>{{ property.name }}</li>
+					{% endfor %}
+				</ul>
 
-                <h5>Accessible Flights</h5>
-                <ul>
-                    {% for flight in person.flights.all %}
-                    <li>{{ flight.id }} - {{ flight.date }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endfor %}
+				<h5>Accessible Flights</h5>
+				<ul>
+					{% for flight in person.flights.all %}
+					<li>{{ flight.id }} - {{ flight.date }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endfor %}
 </div>
 
 
-    <script>
-        function copyToClipboard() {
-            const shareLink = document.getElementById('share-link').innerText;
-            navigator.clipboard.writeText(shareLink)
-                .then(() => {
-                    alert('Link copied to clipboard!'); // You can customize the notification here
-                })
-                .catch(err => {
-                    console.error('Error copying text: ', err);
-                });
-        }
-    </script>
+	<script>
+		function copyToClipboard() {
+			const shareLink = document.getElementById('share-link').innerText;
+			navigator.clipboard.writeText(shareLink)
+				.then(() => {
+					alert('Link copied to clipboard!'); // You can customize the notification here
+				})
+				.catch(err => {
+					console.error('Error copying text: ', err);
+				});
+		}
+	</script>
 {% endblock %}
