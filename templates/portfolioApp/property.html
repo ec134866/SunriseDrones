@@ -1,703 +1,707 @@
 {% extends 'base.html'%}
-        {% block title %}
-          <link rel="icon" href="https://raw.githubusercontent.com/ec134866/SunriseDrones/refs/heads/master/static/public/favicon.ico" type="image/x-icon">   
-          <title> {{property.name}} Property </title>
-        {% endblock %}
-        
-        {% block search %}
-        {% endblock %}
-        
-        {% block body %}
-        
-        <header class="d-flex align-items-center" style="padding-top: 2vh; padding-bottom: 2vh; background-color: rgba{{owner.palette1}}">
-          <div class="container px-4 px-lg-5 text-center">
-            <h1 class="mb-1" style="font-size: 4vw;">{{owner.name}} Properties</h1>
-            <h2 class="mb-1" style="font-size: 2vw;">{{property.name}}</h2>
-          </div>
-        </header>
-        
-        <div style="padding-top: 2vh; padding-bottom: 2vh">
-          <div class="row align-items-center" style="min-height:17vh;">
-            {% comment %} dropdown section {% endcomment %}
-            <div class="col-auto" style="padding-left: 2vw; padding-right: 1vw;">
-              <div class="dropdown">
-                <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa-regular fa-map" style="margin-right: 0.15vw;"></i> 
-                  {% if selected_flight %}
-                    {{ selected_flight.date}}
-                  {% else %}
-                    Select a date
-                  {% endif %}
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  {% for flight in flights %}
-                    <li>
-                      <a class="dropdown-item" href="?date={{ flight.date|date:'Y-m-d' }}">
-                        {{ flight.date}}
-                      </a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
-            {% comment %} buttons {% endcomment %}
-            <div class="col-auto">
-              {% if access_contract%}
-                <div class="row">
-                  <button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
-                </div>
-              {% endif %}
-              {% if access_files%}
-                <div class="row">
-                  <button id="downloadSectionBtn" class="btn btn-light" type="button" data-bs-target="#downloadSection" onclick="toggleSection(this)" style="margin-top: 0.5vh">Download My Files</button>
-                </div>
-              {% endif %}
-            </div>
-            {% comment %} filters {% endcomment %}
-              <div class="col-auto" id="filterIcons" style="display:none;">
-                <!-- Centered Filter Text -->
-                <div class="row text-center" style="padding-top:.5vh;">
-                  <div class="col-12">
-                    <span style="font-size: 1vh;">Filter:</span>
-                  </div>
-                </div>
-              
-                <!-- Image Filter -->
-                <div class="row justify-content-center" style="padding-bottom:.5vh;">
-                  <div class="col-auto d-flex justify-content-center align-items-center">
-                    <i class="fa-regular fa-image" onclick="filterFiles('Image')" style="height:2vh; cursor: pointer;"></i>
-                    <i class="fa-regular fa-square" onclick="filterFiles('Image')" id="image-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
-                  </div>
-                </div>
-              
-                <!-- Video Filter -->
-                <div class="row justify-content-center" style="padding-bottom:.5vh;">
-                  <div class="col-auto d-flex justify-content-center align-items-center">
-                    <i class="fa-solid fa-clapperboard" onclick="filterFiles('Video')" style="height:2vh; cursor: pointer;"></i>
-                    <i class="fa-regular fa-square" onclick="filterFiles('Video')" id="video-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
-                  </div>
-                </div>
-              
-                <!-- 3D Model Filter -->
-                <div class="row justify-content-center" style="padding-bottom:.5vh;">
-                  <div class="col-auto d-flex justify-content-center align-items-center">
-                    <i class="fa-solid fa-cube" onclick="filterFiles('3D Model')" style="height:2vh; cursor: pointer;"></i>
-                    <i class="fa-regular fa-square" onclick="filterFiles('3D Model')" id="model-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
-                  </div>
-                </div>
-              </div>      
-            {% comment %} tracker or downloads {% endcomment %}
-            <div class="col" style="min-width:70%; max-height:17vh; padding-right: 3vh; padding-left: 3vh;">
-              {% comment %} contract section {% endcomment %}
-              <div class="collapse w-100" id="contractTracker">
-                <div class="track d-flex">
-                    <div class="step"> 
-                      <span class="icon"> <i class="fa fa-file-signature"></i> </span> 
-                      <span class="text">Contract Signed</span> 
-                      <span class="text" style="margin-top: -2px;"> {{selected_flight.contractSigned}}</span> 
-                    </div>
-                    <div class="step"> 
-                      <span class="icon"> <i class="fa fa-helicopter"></i> </span> 
-                      <span class="text"> Drone Capture </span> 
-                      <span class="text" style="margin-top: -2px;"> {{selected_flight.contractFlightDate}}</span> 
-                    </div>
-                    <div class="step"> 
-                      <span class="icon"> <i class="fa fa-image"></i> </span> 
-                      <span class="text"> Image Processing </span> 
-                      <span class="text" style="margin-top: -2px;"> {{selected_flight.contractProcessingDate}}</span> 
-                    </div>
-                    <div class="step"> 
-                      <span class="icon"> <i class="fa fa-tasks"></i> </span> 
-                      <span class="text">Final Preparations</span> 
-                      <span class="text" style="margin-top: -2px;"> {{selected_flight.contractFinalTouches}}</span> 
-                    </div>
-                    <div class="step"> 
-                      <span class="icon"> <i class="fa fa-upload"></i> </span> 
-                      <span class="text">Published</span> 
-                      <span class="text" style="margin-top: -2px;"> {{selected_flight.contractPublishDate}}</span> 
-                    </div>
-                </div>
-              </div>
-              {% comment %} download section {% endcomment %}
-              <div class="collapse w-100" id="downloadSection">
-                <div class="row overflow-scroll" style="max-height:17vh; background-color: lightgray;" id="fileContainer">
-                  {% for file in files %}
-                    <div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 70%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
-                      <img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 12vh; cursor: pointer;" onclick="openPopupFile('{{ file.preview }}')">
-                      <div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
-                        <div class="col" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center;" title="{{ file.name }}">
-                            <div>{{ file.name }}</div>
-                        </div>
-                        <div class="col-auto" style="display: flex; align-items: center; justify-content: flex-end;">
-                            <div>{{ file.size_in_mb }} MB</div>
-                            <a href="{{ file.direct_download_link }}" target="_blank" style="margin-left: 0.5vh;">
-                              <span class="icon">
-                                  <i class="fa-solid fa-download"></i>
-                              </span>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
-                  {% empty %}
-                    <div>No files available.</div>
-                  {% endfor %}
-                </div>
-              </div>     
-              <div id="uniquePopupViewer" onclick="closePopupFileOnClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
-                <div class="popup-container bg-light position-relative" style="width: 70%; min-height: 70vh; max-height: 90vh; border-radius: 8px; padding: 0; display: flex; flex-direction: column;">
-                    <span onclick="closePopupFile()" class="close-btn position-absolute top-0 start-0 m-3 fs-2 text-white" style="font-size: 2rem; cursor: pointer;">&times;</span>
-                    <iframe id="popupContent" src="" allow="autoplay" style="border: none; flex: 1 1 auto;"></iframe>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {% comment %} main section {% endcomment %}
-          {% if notice %}
-            <div class="row justify-content-center text-center align-items-center">
-                <div class="col-2">
-                  <i class="fa-solid fa-triangle-exclamation" style="font-size: 5vh;"></i>
-                </div> 
-                <div class="col-6">
-                  <span style="font-size: clamp(2vh,3vw,4vh);">{{ selected_flight.notice }}</span>
-                </div> 
-                <div class="col-2">
-                  <i class="fa-solid fa-triangle-exclamation" style="font-size: 5vh;"></i>
-                </div> 
-            </div>
-          {% endif %}
-          <div class="row justify-content-center" style="padding-left: 2vw; padding-right: 2vw; padding-top: 4vh; padding-bottom: 2vh;">
-            <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.photo_content_btn_1}}">
-                <button class="btn btn-link p-0" onclick="showContent('photoContent')">
-                    <h2 class="text-decoration-none" style="color: #333;">Photos</h2>
-                </button>
-            </div>
-            <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.video_content_btn_1}}">
-              <button class="btn btn-link p-0" onclick="showContent('videoContent')">
-                  <h2 class="text-decoration-none" style="color: #333;">Videos</h2>
-              </button>
-            </div>
-            <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.ext_content_btn_1}}">
-              <button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
-                  <img src={{selected_flight.exterior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-                  <br><br>
-                  <h2 class="text-decoration-none" style="color: #333;">3D Exterior Model</h2>
-              </button>
-            </div>
-            <div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.int_content_btn_1}}">
-              <button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
-                  <img src={{selected_flight.interior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-                  <br><br>
-                  <h2 class="text-decoration-none" style="color: #333;">3D Interior Model</h2>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {% comment %} content area {% endcomment %}
-        <div id="contentArea" class="container-fluid" style="padding-top: 6vh; padding-bottom: 6vh; background-color: rgba{{owner.palette2}}">
-            <div class="d-flex justify-content-center">
-                <div id="photoContent" class="content-section" style="width: 90%; height: 75vh;">
-                    {% comment %} TODO change this to be a gallery of images {% endcomment %}
-                </div>
-            </div>
-            <div class="d-flex justify-content-center">
-              <div id="videoContent" class="content-section" style="width: 90%; height: 75vh;">
-                {% comment %} TODO change this to be a gallery of images {% endcomment %}
-                <iframe width="100%" height="100%" id="VideoElement" src="https://www.youtube.com/embed/{{selected_flight.overflight_link}}?autoplay=1&rel=0" frameborder="0">
-                </iframe>
-              </div>
-          </div>
-          <div class="justify-content-center">    
-            <div id="exteriorModelContent" class="content-section">
-              <div class="row justify-content-center" style="width: 90%; margin: 0 auto; padding-bottom:1vh;">
-                <div class="col">
-                </div>
-              </div>
-                <div class="progress-bar-container" style="
-                  width: 55%;
-                  position: fixed;
-                  top: 50%;
-                  left: 50%;
-                  transform: translate(-50%, -50%);
-                  display: none;
-                  justify-content: center;
-                  align-items: center;
-                  text-align: center;
-                  z-index: 1500;">
-                  <div class="row">
-                      <label for="progress-bar" style="color: white;font-size: 4vh; margin-bottom: 1vh;">Loading...</label>
-                  </div>
-                  <div class="row">
-                      <progress id="progress-bar" style="height: 5vh;" value="0" max="100"></progress>
-                  </div>
-                </div>
-                <div id="exteriorOuterModelContainer" class="d-flex justify-content-center" style="position: relative;">
-                  <div id="exteriorModelContainer" class="d-flex justify-content-center">
-                  </div>
-                </div>
-            </div>
-          </div>
-          <div class="d-flex justify-content-center">
-              <div id="interiorModelContent" class="content-section">
-                  <div id="interiorModelContainer" class="d-flex justify-content-center">
-                  </div>
-              </div>
-          </div>
-        </div>
-
-        {% comment %} footer {% endcomment %}
-        <footer class="footer text-center" style="margin-top:auto;padding-top: 4vh;">
-            <div class="container px-4 px-lg-5">
-                <p class="text-muted small mb-0">These are not official surveys. No models should be relied upon for safety. All models should be used strictly for planning and estimate purposes.</p>
-                {% comment %} <p class="text-muted small mb-0">Copyright &copy; SunriseDrones 2024</p> {% endcomment %}
-            </div>
-        </footer>
-
-
-      {% comment %} popup file preview script {% endcomment %}
-      <script>
-        document.getElementById('uniquePopupViewer').style.display = 'none'; // Ensure popup is hidden
-        
-        function openPopupFile(previewSrc) {
-            // Close any open popup first
-            closePopupFile();
-            // Set iframe src to the preview source and display the popup
-            document.getElementById('popupContent').src = previewSrc;
-            document.getElementById('uniquePopupViewer').style.display = 'flex';
-        }
-    
-        function closePopupFile() {
-            // Hide the popup and clear the iframe src
-            document.getElementById('uniquePopupViewer').style.display = 'none';
-            document.getElementById('popupContent').src = '';
-        }
-    
-        // Close popup when clicking outside of popup-container
-        function closePopupFileOnClick(event) {
-            const popupContainer = document.querySelector('.popup-container');
-            if (!popupContainer.contains(event.target)) {
-                closePopupFile();
-            }
-        }
-    
-        // Close popup with Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closePopupFile();
-            }
-        });
-    
-      </script>
-
-
-        {% comment %} script for contract tracker and download section {% endcomment %}
-      <script>
-          document.addEventListener('DOMContentLoaded', function () {
-              const today = new Date().toISOString().split('T')[0];
-              const publishDate = '{{selected_flight.contractPublishDate | date:'Y-m-d' }}'; 
-              const contractTracker = document.getElementById('contractTracker');
-              const contractTrackerBtn = document.getElementById('contractTrackerBtn');
-      
-              // Show contract tracker if the publish date is today or in the future IF access
-              {% if access_contract%}
-                if (publishDate >= today) {
-                    contractTracker.classList.add('show');
-                    contractTrackerBtn.classList.replace('btn-light', 'btn-dark');
-                }
-              {% endif %}
-          });
-      
-          function toggleSection(button) {
-              const isDownloadSection = button.id === 'downloadSectionBtn';
-              const targetSection = document.querySelector(button.getAttribute('data-bs-target'));
-              const isAlreadyActive = targetSection.classList.contains('show'); // Check if the section is already active
-      
-              // Check existence before manipulating elements
-              const contractTrackerSection = document.getElementById('contractTracker');
-              const downloadSection = document.getElementById('downloadSection');
-              const contractTrackerBtn = document.getElementById('contractTrackerBtn');
-              const downloadSectionBtn = document.getElementById('downloadSectionBtn');
-
-              // Reset both sections and button states, if they exist
-              if (contractTrackerSection) contractTrackerSection.classList.remove('show');
-              if (downloadSection) downloadSection.classList.remove('show');
-              if (contractTrackerBtn) contractTrackerBtn.classList.replace('btn-dark', 'btn-light');
-              if (downloadSectionBtn) downloadSectionBtn.classList.replace('btn-dark', 'btn-light');
-      
-              // If the section was already active, we don't reactivate it (deselect)
-              if (!isAlreadyActive) {
-                  targetSection.classList.add('show');
-                  button.classList.replace('btn-light', 'btn-dark');
-              }
-      
-              // Show filter icons only for the Download section if it's being activated
-              document.getElementById("filterIcons").style.display = (isDownloadSection && !isAlreadyActive) ? "block" : "none";
-          }
-      </script>
-
-
-        {% comment %} script for filtering files {% endcomment %}
-      <script>
-          let selectedTypes = []; // Track selected file types
-          
-          function filterFiles(type) {
-            const files = document.querySelectorAll('.file');
-            const icons = {
-              'Image': document.getElementById('image-icon'),
-              'Video': document.getElementById('video-icon'),
-              '3D Model': document.getElementById('model-icon')
-            };
-          
-            // Toggle selection of the type
-            const typeIndex = selectedTypes.indexOf(type);
-            if (typeIndex > -1) {
-              // If already selected, remove it
-              selectedTypes.splice(typeIndex, 1);
-              icons[type].classList.remove('fa-regular', 'fa-square-check');
-              icons[type].classList.add('fa-regular', 'fa-square');
-            } else {
-              // If not selected, add it
-              selectedTypes.push(type);
-              icons[type].classList.remove('fa-regular', 'fa-square');
-              icons[type].classList.add('fa-regular', 'fa-square-check');
-            }
-          
-            // Filter files based on selected types
-            files.forEach(file => {
-              if (selectedTypes.length === 0 || selectedTypes.includes(file.getAttribute('data-file-type'))) {
-                file.style.display = 'flex'; // Show file
-              } else {
-                file.style.display = 'none'; // Hide file
-              }
-            });
-          }
-      </script>
-
-
-      {% comment %} script for dropdown flight selection {% endcomment %}
-      <script>
-        const today = new Date().toISOString().split('T')[0];
-
-        const steps = [
-                { element: document.querySelector('.step:nth-child(1)'), date: "{{ selected_flight.contractSigned | date:'Y-m-d' }}" },
-                { element: document.querySelector('.step:nth-child(2)'), date: "{{ selected_flight.contractFlightDate | date:'Y-m-d'  }}" },
-                { element: document.querySelector('.step:nth-child(3)'), date: "{{ selected_flight.contractProcessingDate | date:'Y-m-d'  }}" },
-                { element: document.querySelector('.step:nth-child(4)'), date: "{{ selected_flight.contractFinalTouches | date:'Y-m-d'  }}" },
-                { element: document.querySelector('.step:nth-child(5)'), date: "{{ selected_flight.contractPublishDate | date:'Y-m-d'  }}" }
-            ];
-
-        steps.forEach(step => {
-            if (today >= step.date) {
-                step.element.classList.add('active');
-            }
-        });
-      </script>
-
-      {% comment %} script for content buttons {% endcomment %}
-      <script>
-        function showContent(contentId) {
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('show');
-            });
-      
-            const selectedContent = document.getElementById(contentId);
-            selectedContent.classList.add('show');
-
-            window.location.hash = contentId;
-    
-            // Use setTimeout to add a delay before scrolling
-            setTimeout(() => {
-                selectedContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }, 25); 
-        
-              // Check if the models need to be initialized
-              if (contentId === 'exteriorModelContent' && !exteriorModelLoaded) {
-                  initExteriorModel();  
-                  exteriorModelLoaded = true;  
-              } else if (contentId === 'interiorModelContent' && !interiorModelLoaded) {
-                  initInteriorModel();  
-                  interiorModelLoaded = true;  
-              }
-          }
-    
-        let exteriorModelLoaded = false;
-        let interiorModelLoaded = false;
-
-        window.onload = function() {
-            const hash = window.location.hash.substring(1); // Remove the '#'
-            if (hash) {
-                showContent(hash);
-            }
-        };
-      </script>
-
-      
-
-   
-
-      {% comment %}  models {% endcomment %}
-      <script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        import { TilesRenderer, DebugTilesPlugin, PriorityQueue } from '3d-tiles-renderer';
-        import Stats from 'three/examples/jsm/libs/stats.module';
-        
-
-        let camera, scene, renderer, tilesRenderer, controls, modelGroup;
-        let clock = new THREE.Clock();
-        let lastPoint = null;
-        
-        
-        let spinning = true;
-        let initialDistance = 10;
-        let initialHeight = 10;
-        let currentHeight = initialHeight;
-        let targetDistance = {{selected_flight.script_exterior.max_distance}};
-        let targetHeight = {{selected_flight.script_exterior.max_distance}};
-        let currentDistance = initialDistance;
-        const spinSpeed = 0.00008;
-        const distanceIncrement = {{selected_flight.script_exterior.distance_increment}};
-        const heightIncrement = {{selected_flight.script_exterior.height_increment}};
-        let loadedTilesCount = 0;
-        let totalTiles = {{selected_flight.script_exterior.total_tiles}}; 
-        let cameraReset = false; 
-        let controlsEnabled = false;
-
-
-        // activity monitor stats
-        // const stats = new Stats()
-        
-        window.initExteriorModel = function() {
-            const container = document.getElementById('exteriorModelContainer');
-            const progressBar = document.getElementById('progress-bar');
-            const progressBarContainer = document.querySelector('.progress-bar-container');
-            container.innerHTML = ''; 
-
-            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), .1, {{ selected_flight.script_exterior.camera_far }});
-            camera.position.set({{ selected_flight.script_exterior.camera_position }});
-            camera.up = new THREE.Vector3({{ selected_flight.script_exterior.camera_axis }});
-
-            scene = new THREE.Scene();
-            let light = new THREE.AmbientLight(0x404040, 90);
-            scene.add(light);
-
-
-            renderer = new THREE.WebGLRenderer();
-            renderer.setPixelRatio(window.devicePixelRatio);
-
-            renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
-
-            container.appendChild(renderer.domElement);
-
-            initControls();
-
-            
-            function initControls() {
-                if (controls) controls.dispose();
-        
-                controls = new OrbitControls(camera, renderer.domElement);
-                
-                const distance = camera.position.distanceTo(controls.target);
-                controls.zoomSpeed = 2;
-                controls.minDistance = 0;
-                controls.maxDistance = 1000;
-                controls.minPolarAngle = 0.25;
-                controls.maxPolarAngle = 1.8;
-                controls.zoomToCursor = true;
-                controls.enablePan = true;
-                controls.target = controls.target || new THREE.Vector3(0, 0, 0); 
-                
-                // console.log("OrbitControls initialized");
-            }
-
-            modelGroup = new THREE.Group();
-            scene.add(modelGroup);
-            
-            const debugPlugin = new DebugTilesPlugin();
-
-            tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
-            tilesRenderer.registerPlugin(debugPlugin);
-            // tilesRenderer.errorTarget = 2;
-            // tilesRenderer.errorThreshold = Infinity;
-            // tilesRenderer.maxDepth = Infinity;
-            tilesRenderer.autoDisableRendererCulling = true;
-
-            setTimeout(() => {
-                if (loadedTilesCount < totalTiles) {
-                    progressBarContainer.style.display = 'block';
-                }
-            }, 900);
-
-            tilesRenderer.addEventListener('load-model', (event) => {
-                  loadedTilesCount++;
-                  const loadedTile = event.tile; 
-                  
-                  let progressPercentage = (loadedTilesCount / totalTiles) * 100;
-                  progressBar.value = progressPercentage;
-                  console.log(`Tile: ${loadedTile.content.uri} loaded: ${loadedTilesCount} / ${totalTiles}`);
-
-                  if (loadedTilesCount === totalTiles) {
-                      // Hide the loading bar when loading is complete
-                      progressBarContainer.style.display = 'none';
-                  }
-              });
-
-            // debugPlugin.displayBoxBounds = true;           
-
-            tilesRenderer.addEventListener('load-tile-set', () => {
-              const sphere = new THREE.Sphere();
-              tilesRenderer.getBoundingSphere(sphere);
-              tilesRenderer.group.position.copy(sphere.center).multiplyScalar(-1);
-
-              tilesRenderer.group.frustumCulled = false;
-
-              modelGroup.position.set({{selected_flight.script_exterior.model_position}});
-              modelGroup.rotation.x = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_x}});
-              modelGroup.rotation.z = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_y}});
-              modelGroup.rotation.y = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_z}});
-
-              modelGroup.frustumCulled = false;
-          });
-
-            tilesRenderer.setCamera(camera);
-            tilesRenderer.setResolutionFromRenderer(camera, renderer);
-
-
-            modelGroup.add(tilesRenderer.group);
-
-            // // -- helpful axes X (red), Y (green), Z (blue) 
-            // const axesHelper = new THREE.AxesHelper(100);  
-            // scene.add(axesHelper);
-
-            // window.addEventListener('click', onClick);
-            
-
-            window.addEventListener('resize', () => {
-                camera.aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.8);
-                camera.updateProjectionMatrix();
-                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
-            });
-
-            // activity monitor stats
-            // document.body.appendChild(stats.dom)
-
-            renderLoop();
-        };
-        
-        window.initInteriorModel = function() {
-            const container = document.getElementById('interiorModelContainer');
-            container.innerHTML = '';
-
-            camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, {{ selected_flight.script_interior.camera_far }});
-            camera.position.set({{ selected_flight.script_interior.camera_position }});
-            camera.up = new THREE.Vector3({{ selected_flight.script_interior.camera_axis }});
-
-            scene = new THREE.Scene();
-            let light = new THREE.AmbientLight(0x404040, 80);
-            scene.add(light);
-
-            const loader = new FBXLoader();
-            loader.load('{{ selected_flight.interior_link }}', (object) => {
-                scene.add(object);
-            });
-
-            renderer = new THREE.WebGLRenderer();
-            renderer.setPixelRatio(window.devicePixelRatio);
-
-            if (isTouchDevice) {
-                renderer.setPixelRatio(0.9);  
-                renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.8);  
-            } else {
-                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8)); 
-            }
-
-            container.appendChild(renderer.domElement);
-
-            const controls = new OrbitControls(camera, renderer.domElement);
-            controls.listenToKeyEvents( window );
-            const distance = camera.position.distanceTo(controls.target)
-            controls.keyPanSpeed = Math.max(1000 * (500 / distance));
-            controls.zoomSpeed = 10;
-            controls.zoomToCursor = true;
-            controls.enablePan = true;
-            controls.minDistance = 0;
-            controls.maxDistance = {{selected_flight.script_exterior.max_distance}};
-            controls.minPolarAngle = 0.25;
-            controls.maxPolarAngle = 1.8;
-            controls.autoRotate = false;
-            controls.target = new THREE.Vector3(0, 0, 0);
-            controls.update();
-
-            window.addEventListener('resize', () => {
-                camera.aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.8);
-                camera.updateProjectionMatrix();
-                renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
-            });
-
-            renderLoop();
-        };
-
-        function renderLoop() {
-            let delta = clock.getDelta();
-
-            // Update controls if they are initialized
-            if (controls) {
-                controls.update(delta);
-            }
-            // activity monitor stats
-            // stats.update()
-
-            // Update the camera and tiles renderer
-            camera.updateMatrixWorld();
-            tilesRenderer.update();
-            renderer.render(scene, camera);
-
-
-
-            // Check if all tiles are loaded
-            if (loadedTilesCount >= totalTiles) {
-                if (!cameraReset) {
-                    // Reset camera once all tiles are loaded
-                    camera.position.set({{selected_flight.script_exterior.camera_position}});  // Reset camera position
-                    camera.rotation.set({{selected_flight.script_exterior.camera_rotation}});  // Reset camera rotation
-
-                    // Mark that the camera has been reset
-                    cameraReset = true;
-                    controlsEnabled = true;  // Enable controls after reset
-
-                }
-                // activity monitor stats
-                // stats.update()
-
-                // Allow normal control only if the camera has been reset
-                if (cameraReset && controls) {
-                    controls.update(delta);  // Update controls based on delta
-                    // activity monitor stats
-                    // stats.update()
-                }
-            } else {
-                // Tiles are still loading, apply the spinning behavior
-                camera.position.x = Math.cos(Date.now() * spinSpeed) * currentDistance;
-                camera.position.z = Math.sin(Date.now() * spinSpeed) * currentDistance;
-                camera.position.y = currentHeight;
-                // activity monitor stats
-                // stats.update()
-
-                if (currentDistance < targetDistance) {
-                    currentDistance += distanceIncrement;
-                }
-                if (currentHeight < targetHeight) {
-                    currentHeight += heightIncrement;
-                }
-
-                camera.lookAt(modelGroup.position); // Ensure camera is looking at the model
-            }
-
-            // Continue the render loop
-            requestAnimationFrame(renderLoop);
-        }
-          
-        </script>
-
-      {% endblock %}
+		{% block title %}
+		<link rel="icon" href="https://raw.githubusercontent.com/ec134866/SunriseDrones/refs/heads/master/static/public/favicon.ico" type="image/x-icon">   
+		<title> {{property.name}} Property </title>
+		{% endblock %}
+		
+		{% block search %}
+		{% endblock %}
+		
+		{% block body %}
+		
+		<header class="d-flex align-items-center" style="padding-top: 2vh; padding-bottom: 2vh; background-color: rgba{{owner.palette1}}">
+		<div class="container px-4 px-lg-5 text-center">
+			<h1 class="mb-1" style="font-size: 4vw;">{{owner.name}} Properties</h1>
+			<h2 class="mb-1" style="font-size: 2vw;">{{property.name}}</h2>
+		</div>
+		</header>
+		
+		<div style="padding-top: 2vh; padding-bottom: 2vh">
+		<div class="row align-items-center" style="min-height:17vh;">
+			{% comment %} dropdown section {% endcomment %}
+			<div class="col-auto" style="padding-left: 2vw; padding-right: 1vw;">
+			<div class="dropdown">
+				<button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+				<i class="fa-regular fa-map" style="margin-right: 0.15vw;"></i> 
+				{% if selected_flight %}
+					{{ selected_flight.date}}
+				{% else %}
+					Select a date
+				{% endif %}
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				{% for flight in flights %}
+					<li>
+					<a class="dropdown-item" href="?date={{ flight.date|date:'Y-m-d' }}">
+						{{ flight.date}}
+					</a>
+					</li>
+				{% endfor %}
+				</ul>
+			</div>
+			</div>
+			{% comment %} buttons {% endcomment %}
+			<div class="col-auto">
+			{% if access_contract%}
+				<div class="row">
+				<button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
+				</div>
+			{% endif %}
+			{% if access_files%}
+				<div class="row">
+				<button id="downloadSectionBtn" class="btn btn-light" type="button" data-bs-target="#downloadSection" onclick="toggleSection(this)" style="margin-top: 0.5vh">Download My Files</button>
+				</div>
+			{% endif %}
+			</div>
+			{% comment %} filters {% endcomment %}
+			<div class="col-auto" id="filterIcons" style="display:none;">
+				<!-- Centered Filter Text -->
+				<div class="row text-center" style="padding-top:.5vh;">
+				<div class="col-12">
+					<span style="font-size: 1vh;">Filter:</span>
+				</div>
+				</div>
+			
+				<!-- Image Filter -->
+				<div class="row justify-content-center" style="padding-bottom:.5vh;">
+				<div class="col-auto d-flex justify-content-center align-items-center">
+					<i class="fa-regular fa-image" onclick="filterFiles('Image')" style="height:2vh; cursor: pointer;"></i>
+					<i class="fa-regular fa-square" onclick="filterFiles('Image')" id="image-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
+				</div>
+				</div>
+			
+				<!-- Video Filter -->
+				<div class="row justify-content-center" style="padding-bottom:.5vh;">
+				<div class="col-auto d-flex justify-content-center align-items-center">
+					<i class="fa-solid fa-clapperboard" onclick="filterFiles('Video')" style="height:2vh; cursor: pointer;"></i>
+					<i class="fa-regular fa-square" onclick="filterFiles('Video')" id="video-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
+				</div>
+				</div>
+			
+				<!-- 3D Model Filter -->
+				<div class="row justify-content-center" style="padding-bottom:.5vh;">
+				<div class="col-auto d-flex justify-content-center align-items-center">
+					<i class="fa-solid fa-cube" onclick="filterFiles('3D Model')" style="height:2vh; cursor: pointer;"></i>
+					<i class="fa-regular fa-square" onclick="filterFiles('3D Model')" id="model-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
+				</div>
+				</div>
+			</div>	  
+			{% comment %} tracker or downloads {% endcomment %}
+			<div class="col" style="min-width:70%; max-height:17vh; padding-right: 3vh; padding-left: 3vh;">
+			{% comment %} contract section {% endcomment %}
+			<div class="collapse w-100" id="contractTracker">
+				<div class="track d-flex">
+					<div class="step"> 
+					<span class="icon"> <i class="fa fa-file-signature"></i> </span> 
+					<span class="text">Contract Signed</span> 
+					<span class="text" style="margin-top: -2px;"> {{selected_flight.contractSigned}}</span> 
+					</div>
+					<div class="step"> 
+					<span class="icon"> <i class="fa fa-helicopter"></i> </span> 
+					<span class="text"> Drone Capture </span> 
+					<span class="text" style="margin-top: -2px;"> {{selected_flight.contractFlightDate}}</span> 
+					</div>
+					<div class="step"> 
+					<span class="icon"> <i class="fa fa-image"></i> </span> 
+					<span class="text"> Image Processing </span> 
+					<span class="text" style="margin-top: -2px;"> {{selected_flight.contractProcessingDate}}</span> 
+					</div>
+					<div class="step"> 
+					<span class="icon"> <i class="fa fa-tasks"></i> </span> 
+					<span class="text">Final Preparations</span> 
+					<span class="text" style="margin-top: -2px;"> {{selected_flight.contractFinalTouches}}</span> 
+					</div>
+					<div class="step"> 
+					<span class="icon"> <i class="fa fa-upload"></i> </span> 
+					<span class="text">Published</span> 
+					<span class="text" style="margin-top: -2px;"> {{selected_flight.contractPublishDate}}</span> 
+					</div>
+				</div>
+			</div>
+			{% comment %} download section {% endcomment %}
+			<div class="collapse w-100" id="downloadSection">
+				<div class="row overflow-scroll" style="max-height:17vh; background-color: lightgray;" id="fileContainer">
+				{% for file in files %}
+					<div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 70%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
+					<img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 12vh; cursor: pointer;" onclick="openPopupFile('{{ file.preview }}')">
+					<div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
+						<div class="col" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center;" title="{{ file.name }}">
+							<div>{{ file.name }}</div>
+						</div>
+						<div class="col-auto" style="display: flex; align-items: center; justify-content: flex-end;">
+							<div>{{ file.size_in_mb }} MB</div>
+							<a href="{{ file.direct_download_link }}" target="_blank" style="margin-left: 0.5vh;">
+							<span class="icon">
+								<i class="fa-solid fa-download"></i>
+							</span>
+							</a>
+						</div>
+					</div>
+					</div>
+				{% empty %}
+					<div>No files available.</div>
+				{% endfor %}
+				</div>
+			</div>	 
+			<div id="uniquePopupViewer" onclick="closePopupFileOnClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+				<div class="popup-container bg-light position-relative" style="width: 70%; min-height: 70vh; max-height: 90vh; border-radius: 8px; padding: 0; display: flex; flex-direction: column;">
+					<span onclick="closePopupFile()" class="close-btn position-absolute top-0 start-0 m-3 fs-2 text-white" style="font-size: 2rem; cursor: pointer;">&times;</span>
+					<iframe id="popupContent" src="" allow="autoplay" style="border: none; flex: 1 1 auto;"></iframe>
+				</div>
+			</div>
+			</div>
+		</div>
+		
+		{% comment %} main section {% endcomment %}
+		{% if notice %}
+			<div class="row justify-content-center text-center align-items-center">
+				<div class="col-2">
+				<i class="fa-solid fa-triangle-exclamation" style="font-size: 5vh;"></i>
+				</div> 
+				<div class="col-6">
+				<span style="font-size: clamp(2vh,3vw,4vh);">{{ selected_flight.notice }}</span>
+				</div> 
+				<div class="col-2">
+				<i class="fa-solid fa-triangle-exclamation" style="font-size: 5vh;"></i>
+				</div> 
+			</div>
+		{% endif %}
+		<div class="row justify-content-center" style="padding-left: 2vw; padding-right: 2vw; padding-top: 4vh; padding-bottom: 2vh;">
+			<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.photo_content_btn_1}}">
+				<button class="btn btn-link p-0" onclick="showContent('photoContent')">
+					<img src={{selected_flight.top_image_link_2}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+					<br><br>
+					<h2 class="text-decoration-none" style="color: #333;">Photos</h2>
+				</button>
+			</div>
+			<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.video_content_btn_1}}">
+			<button class="btn btn-link p-0" onclick="showContent('videoContent')">
+					<img src={{selected_flight.overflight_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+				<br><br>
+				<h2 class="text-decoration-none" style="color: #333;">Videos</h2>
+			</button>
+			</div>
+			<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.ext_content_btn_1}}">
+			<button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
+				<img src={{selected_flight.exterior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+				<br><br>
+				<h2 class="text-decoration-none" style="color: #333;">3D Exterior Model</h2>
+			</button>
+			</div>
+			<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.int_content_btn_1}}">
+			<button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
+				<img src={{selected_flight.interior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+				<br><br>
+				<h2 class="text-decoration-none" style="color: #333;">3D Interior Model</h2>
+			</button>
+			</div>
+		</div>
+		</div>
+
+		{% comment %} content area {% endcomment %}
+		<div id="contentArea" class="container-fluid" style="padding-top: 6vh; padding-bottom: 6vh; background-color: rgba{{owner.palette2}}">
+			<div class="d-flex justify-content-center">
+				<div id="photoContent" class="content-section" style="width: 90%; height: 75vh;">
+					{% comment %} TODO change this to be a gallery of images {% endcomment %}
+				</div>
+			</div>
+			<div class="d-flex justify-content-center">
+			<div id="videoContent" class="content-section" style="width: 90%; height: 75vh;">
+				{% comment %} TODO change this to be a gallery of images {% endcomment %}
+				<iframe width="100%" height="100%" id="VideoElement" src="https://www.youtube.com/embed/{{selected_flight.overflight_link}}?autoplay=1&rel=0" frameborder="0">
+				</iframe>
+			</div>
+		</div>
+		<div class="justify-content-center">	
+			<div id="exteriorModelContent" class="content-section">
+			<div class="row justify-content-center" style="width: 90%; margin: 0 auto; padding-bottom:1vh;">
+				<div class="col">
+				</div>
+			</div>
+				<div class="progress-bar-container" style="
+				width: 55%;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				display: none;
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+				z-index: 1500;">
+				<div class="row">
+					<label for="progress-bar" style="color: white;font-size: 4vh; margin-bottom: 1vh;">Loading...</label>
+				</div>
+				<div class="row">
+					<progress id="progress-bar" style="height: 5vh;" value="0" max="100"></progress>
+				</div>
+				</div>
+				<div id="exteriorOuterModelContainer" class="d-flex justify-content-center" style="position: relative;">
+				<div id="exteriorModelContainer" class="d-flex justify-content-center">
+				</div>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex justify-content-center">
+			<div id="interiorModelContent" class="content-section">
+				<div id="interiorModelContainer" class="d-flex justify-content-center">
+				</div>
+			</div>
+		</div>
+		</div>
+
+		{% comment %} footer {% endcomment %}
+		<footer class="footer text-center" style="margin-top:auto;padding-top: 4vh;">
+			<div class="container px-4 px-lg-5">
+				<p class="text-muted small mb-0">These are not official surveys. No models should be relied upon for safety. All models should be used strictly for planning and estimate purposes.</p>
+				{% comment %} <p class="text-muted small mb-0">Copyright &copy; SunriseDrones 2024</p> {% endcomment %}
+			</div>
+		</footer>
+
+
+	{% comment %} popup file preview script {% endcomment %}
+	<script>
+		document.getElementById('uniquePopupViewer').style.display = 'none'; // Ensure popup is hidden
+		
+		function openPopupFile(previewSrc) {
+			// Close any open popup first
+			closePopupFile();
+			// Set iframe src to the preview source and display the popup
+			document.getElementById('popupContent').src = previewSrc;
+			document.getElementById('uniquePopupViewer').style.display = 'flex';
+		}
+		
+		function closePopupFile() {
+			// Hide the popup and clear the iframe src
+			document.getElementById('uniquePopupViewer').style.display = 'none';
+			document.getElementById('popupContent').src = '';
+		}
+		
+		// Close popup when clicking outside of popup-container
+		function closePopupFileOnClick(event) {
+			const popupContainer = document.querySelector('.popup-container');
+			if (!popupContainer.contains(event.target)) {
+				closePopupFile();
+			}
+		}
+		
+		// Close popup with Escape key
+		document.addEventListener('keydown', function(event) {
+			if (event.key === 'Escape') {
+				closePopupFile();
+			}
+		});
+		
+	</script>
+
+
+		{% comment %} script for contract tracker and download section {% endcomment %}
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const today = new Date().toISOString().split('T')[0];
+			const publishDate = '{{selected_flight.contractPublishDate | date:'Y-m-d' }}'; 
+			const contractTracker = document.getElementById('contractTracker');
+			const contractTrackerBtn = document.getElementById('contractTrackerBtn');
+	
+			// Show contract tracker if the publish date is today or in the future IF access
+			{% if access_contract%}
+				if (publishDate >= today) {
+					contractTracker.classList.add('show');
+					contractTrackerBtn.classList.replace('btn-light', 'btn-dark');
+				}
+			{% endif %}
+		});
+	
+		function toggleSection(button) {
+			const isDownloadSection = button.id === 'downloadSectionBtn';
+			const targetSection = document.querySelector(button.getAttribute('data-bs-target'));
+			const isAlreadyActive = targetSection.classList.contains('show'); // Check if the section is already active
+	
+			// Check existence before manipulating elements
+			const contractTrackerSection = document.getElementById('contractTracker');
+			const downloadSection = document.getElementById('downloadSection');
+			const contractTrackerBtn = document.getElementById('contractTrackerBtn');
+			const downloadSectionBtn = document.getElementById('downloadSectionBtn');
+
+			// Reset both sections and button states, if they exist
+			if (contractTrackerSection) contractTrackerSection.classList.remove('show');
+			if (downloadSection) downloadSection.classList.remove('show');
+			if (contractTrackerBtn) contractTrackerBtn.classList.replace('btn-dark', 'btn-light');
+			if (downloadSectionBtn) downloadSectionBtn.classList.replace('btn-dark', 'btn-light');
+	
+			// If the section was already active, we don't reactivate it (deselect)
+			if (!isAlreadyActive) {
+				targetSection.classList.add('show');
+				button.classList.replace('btn-light', 'btn-dark');
+			}
+	
+			// Show filter icons only for the Download section if it's being activated
+			document.getElementById("filterIcons").style.display = (isDownloadSection && !isAlreadyActive) ? "block" : "none";
+		}
+	</script>
+
+
+		{% comment %} script for filtering files {% endcomment %}
+	<script>
+		let selectedTypes = []; // Track selected file types
+		
+		function filterFiles(type) {
+			const files = document.querySelectorAll('.file');
+			const icons = {
+			'Image': document.getElementById('image-icon'),
+			'Video': document.getElementById('video-icon'),
+			'3D Model': document.getElementById('model-icon')
+			};
+		
+			// Toggle selection of the type
+			const typeIndex = selectedTypes.indexOf(type);
+			if (typeIndex > -1) {
+			// If already selected, remove it
+			selectedTypes.splice(typeIndex, 1);
+			icons[type].classList.remove('fa-regular', 'fa-square-check');
+			icons[type].classList.add('fa-regular', 'fa-square');
+			} else {
+			// If not selected, add it
+			selectedTypes.push(type);
+			icons[type].classList.remove('fa-regular', 'fa-square');
+			icons[type].classList.add('fa-regular', 'fa-square-check');
+			}
+		
+			// Filter files based on selected types
+			files.forEach(file => {
+			if (selectedTypes.length === 0 || selectedTypes.includes(file.getAttribute('data-file-type'))) {
+				file.style.display = 'flex'; // Show file
+			} else {
+				file.style.display = 'none'; // Hide file
+			}
+			});
+		}
+	</script>
+
+
+	{% comment %} script for dropdown flight selection {% endcomment %}
+	<script>
+		const today = new Date().toISOString().split('T')[0];
+
+		const steps = [
+				{ element: document.querySelector('.step:nth-child(1)'), date: "{{ selected_flight.contractSigned | date:'Y-m-d' }}" },
+			{ element: document.querySelector('.step:nth-child(2)'), date: "{{ selected_flight.contractFlightDate | date:'Y-m-d'  }}" },
+			{ element: document.querySelector('.step:nth-child(3)'), date: "{{ selected_flight.contractProcessingDate | date:'Y-m-d'  }}" },
+			{ element: document.querySelector('.step:nth-child(4)'), date: "{{ selected_flight.contractFinalTouches | date:'Y-m-d'  }}" },
+			{ element: document.querySelector('.step:nth-child(5)'), date: "{{ selected_flight.contractPublishDate | date:'Y-m-d'  }}" }
+			];
+
+		steps.forEach(step => {
+			if (today >= step.date) {
+				step.element.classList.add('active');
+			}
+		});
+	</script>
+
+	{% comment %} script for content buttons {% endcomment %}
+	<script>
+		function showContent(contentId) {
+			document.querySelectorAll('.content-section').forEach(section => {
+				section.classList.remove('show');
+			});
+	
+			const selectedContent = document.getElementById(contentId);
+			selectedContent.classList.add('show');
+
+			window.location.hash = contentId;
+		
+			// Use setTimeout to add a delay before scrolling
+			setTimeout(() => {
+				selectedContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}, 25); 
+		
+			// Check if the models need to be initialized
+			if (contentId === 'exteriorModelContent' && !exteriorModelLoaded) {
+				initExteriorModel();  
+				exteriorModelLoaded = true;  
+			} else if (contentId === 'interiorModelContent' && !interiorModelLoaded) {
+				initInteriorModel();  
+				interiorModelLoaded = true;  
+			}
+		}
+		
+		let exteriorModelLoaded = false;
+		let interiorModelLoaded = false;
+
+		window.onload = function() {
+			const hash = window.location.hash.substring(1); // Remove the '#'
+			if (hash) {
+				showContent(hash);
+			}
+		};
+	</script>
+
+	
+
+
+
+	{% comment %}  models {% endcomment %}
+	<script type="module">
+		import * as THREE from 'three';
+		import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+		import { TilesRenderer, DebugTilesPlugin, PriorityQueue } from '3d-tiles-renderer';
+		import Stats from 'three/examples/jsm/libs/stats.module';
+		
+
+		let camera, scene, renderer, tilesRenderer, controls, modelGroup;
+		let clock = new THREE.Clock();
+		let lastPoint = null;
+		
+		
+		let spinning = true;
+		let initialDistance = 10;
+		let initialHeight = 10;
+		let currentHeight = initialHeight;
+		let targetDistance = {{selected_flight.script_exterior.max_distance}};
+		let targetHeight = {{selected_flight.script_exterior.max_distance}};
+		let currentDistance = initialDistance;
+		const spinSpeed = 0.00008;
+		const distanceIncrement = {{selected_flight.script_exterior.distance_increment}};
+		const heightIncrement = {{selected_flight.script_exterior.height_increment}};
+		let loadedTilesCount = 0;
+		let totalTiles = {{selected_flight.script_exterior.total_tiles}}; 
+		let cameraReset = false; 
+		let controlsEnabled = false;
+
+
+		// activity monitor stats
+		// const stats = new Stats()
+		
+		window.initExteriorModel = function() {
+			const container = document.getElementById('exteriorModelContainer');
+			const progressBar = document.getElementById('progress-bar');
+			const progressBarContainer = document.querySelector('.progress-bar-container');
+			container.innerHTML = ''; 
+
+			camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), .1, {{ selected_flight.script_exterior.camera_far }});
+			camera.position.set({{ selected_flight.script_exterior.camera_position }});
+			camera.up = new THREE.Vector3({{ selected_flight.script_exterior.camera_axis }});
+
+			scene = new THREE.Scene();
+			let light = new THREE.AmbientLight(0x404040, 90);
+			scene.add(light);
+
+
+			renderer = new THREE.WebGLRenderer();
+			renderer.setPixelRatio(window.devicePixelRatio);
+
+			renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
+
+			container.appendChild(renderer.domElement);
+
+			initControls();
+
+			
+			function initControls() {
+				if (controls) controls.dispose();
+		
+				controls = new OrbitControls(camera, renderer.domElement);
+				
+				const distance = camera.position.distanceTo(controls.target);
+				controls.zoomSpeed = 2;
+				controls.minDistance = 0;
+				controls.maxDistance = 1000;
+				controls.minPolarAngle = 0.25;
+				controls.maxPolarAngle = 1.8;
+				controls.zoomToCursor = true;
+				controls.enablePan = true;
+				controls.target = controls.target || new THREE.Vector3(0, 0, 0); 
+				
+				// console.log("OrbitControls initialized");
+			}
+
+			modelGroup = new THREE.Group();
+			scene.add(modelGroup);
+			
+			const debugPlugin = new DebugTilesPlugin();
+
+			tilesRenderer = new TilesRenderer('{{ selected_flight.exterior_link}}');
+			tilesRenderer.registerPlugin(debugPlugin);
+			// tilesRenderer.errorTarget = 2;
+			// tilesRenderer.errorThreshold = Infinity;
+			// tilesRenderer.maxDepth = Infinity;
+			tilesRenderer.autoDisableRendererCulling = true;
+
+			setTimeout(() => {
+				if (loadedTilesCount < totalTiles) {
+					progressBarContainer.style.display = 'block';
+				}
+			}, 900);
+
+			tilesRenderer.addEventListener('load-model', (event) => {
+				loadedTilesCount++;
+				const loadedTile = event.tile; 
+				
+				let progressPercentage = (loadedTilesCount / totalTiles) * 100;
+				progressBar.value = progressPercentage;
+				console.log(`Tile: ${loadedTile.content.uri} loaded: ${loadedTilesCount} / ${totalTiles}`);
+
+				if (loadedTilesCount === totalTiles) {
+					// Hide the loading bar when loading is complete
+					progressBarContainer.style.display = 'none';
+				}
+			});
+
+		// debugPlugin.displayBoxBounds = true;		   
+
+			tilesRenderer.addEventListener('load-tile-set', () => {
+			const sphere = new THREE.Sphere();
+			tilesRenderer.getBoundingSphere(sphere);
+			tilesRenderer.group.position.copy(sphere.center).multiplyScalar(-1);
+
+			tilesRenderer.group.frustumCulled = false;
+
+			modelGroup.position.set({{selected_flight.script_exterior.model_position}});
+			modelGroup.rotation.x = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_x}});
+			modelGroup.rotation.z = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_y}});
+			modelGroup.rotation.y = THREE.MathUtils.degToRad({{selected_flight.script_exterior.model_rotation_z}});
+
+			modelGroup.frustumCulled = false;
+		});
+
+			tilesRenderer.setCamera(camera);
+			tilesRenderer.setResolutionFromRenderer(camera, renderer);
+
+
+			modelGroup.add(tilesRenderer.group);
+
+			// // -- helpful axes X (red), Y (green), Z (blue) 
+		// const axesHelper = new THREE.AxesHelper(100);  
+			// scene.add(axesHelper);
+
+			// window.addEventListener('click', onClick);
+			
+
+			window.addEventListener('resize', () => {
+				camera.aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.8);
+				camera.updateProjectionMatrix();
+				renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
+			});
+
+			// activity monitor stats
+			// document.body.appendChild(stats.dom)
+
+			renderLoop();
+		};
+		
+		window.initInteriorModel = function() {
+			const container = document.getElementById('interiorModelContainer');
+			container.innerHTML = '';
+
+			camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.9) / (window.innerHeight * 0.8), 1, {{ selected_flight.script_interior.camera_far }});
+			camera.position.set({{ selected_flight.script_interior.camera_position }});
+			camera.up = new THREE.Vector3({{ selected_flight.script_interior.camera_axis }});
+
+			scene = new THREE.Scene();
+			let light = new THREE.AmbientLight(0x404040, 80);
+			scene.add(light);
+
+			const loader = new FBXLoader();
+			loader.load('{{ selected_flight.interior_link }}', (object) => {
+				scene.add(object);
+			});
+
+			renderer = new THREE.WebGLRenderer();
+			renderer.setPixelRatio(window.devicePixelRatio);
+
+			if (isTouchDevice) {
+			renderer.setPixelRatio(0.9);  
+			renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.8);  
+			} else {
+				renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8)); 
+			}
+
+			container.appendChild(renderer.domElement);
+
+			const controls = new OrbitControls(camera, renderer.domElement);
+			controls.listenToKeyEvents( window );
+			const distance = camera.position.distanceTo(controls.target)
+			controls.keyPanSpeed = Math.max(1000 * (500 / distance));
+			controls.zoomSpeed = 10;
+			controls.zoomToCursor = true;
+			controls.enablePan = true;
+			controls.minDistance = 0;
+			controls.maxDistance = {{selected_flight.script_exterior.max_distance}};
+			controls.minPolarAngle = 0.25;
+			controls.maxPolarAngle = 1.8;
+			controls.autoRotate = false;
+			controls.target = new THREE.Vector3(0, 0, 0);
+			controls.update();
+
+			window.addEventListener('resize', () => {
+				camera.aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.8);
+				camera.updateProjectionMatrix();
+				renderer.setSize((window.innerWidth * 0.9), (window.innerHeight * 0.8));
+			});
+
+			renderLoop();
+		};
+
+		function renderLoop() {
+			let delta = clock.getDelta();
+
+			// Update controls if they are initialized
+			if (controls) {
+				controls.update(delta);
+			}
+			// activity monitor stats
+			// stats.update()
+
+			// Update the camera and tiles renderer
+			camera.updateMatrixWorld();
+			tilesRenderer.update();
+			renderer.render(scene, camera);
+
+
+
+			// Check if all tiles are loaded
+			if (loadedTilesCount >= totalTiles) {
+				if (!cameraReset) {
+					// Reset camera once all tiles are loaded
+				camera.position.set({{selected_flight.script_exterior.camera_position}});  // Reset camera position
+				camera.rotation.set({{selected_flight.script_exterior.camera_rotation}});  // Reset camera rotation
+
+					// Mark that the camera has been reset
+					cameraReset = true;
+				controlsEnabled = true;  // Enable controls after reset
+
+				}
+				// activity monitor stats
+				// stats.update()
+
+				// Allow normal control only if the camera has been reset
+				if (cameraReset && controls) {
+				controls.update(delta);  // Update controls based on delta
+					// activity monitor stats
+					// stats.update()
+				}
+			} else {
+				// Tiles are still loading, apply the spinning behavior
+				camera.position.x = Math.cos(Date.now() * spinSpeed) * currentDistance;
+				camera.position.z = Math.sin(Date.now() * spinSpeed) * currentDistance;
+				camera.position.y = currentHeight;
+				// activity monitor stats
+				// stats.update()
+
+				if (currentDistance < targetDistance) {
+					currentDistance += distanceIncrement;
+				}
+				if (currentHeight < targetHeight) {
+					currentHeight += heightIncrement;
+				}
+
+				camera.lookAt(modelGroup.position); // Ensure camera is looking at the model
+			}
+
+			// Continue the render loop
+			requestAnimationFrame(renderLoop);
+		}
+		
+		</script>
+
+	{% endblock %}
