@@ -319,7 +319,7 @@
 	{% comment %} script for photoContent section {% endcomment %}
 	<script>
 		window.onload = function() {
-			const firstImage = document.querySelector('#photoThumbnails img');
+			const firstThumbnail = document.querySelector('#photoThumbnails img');
 			const expandedPhoto = document.getElementById('expandedPhoto');
 			if (firstThumbnail && expandedPhoto) {
 				const firstPreview = firstThumbnail.getAttribute('onclick')
@@ -331,7 +331,7 @@
 		function updateExpandedPhoto(src) {
 			const expandedPhoto = document.getElementById('expandedPhoto');
 			expandedPhoto.src = src;
-			}
+		}
 	</script>
 
 
