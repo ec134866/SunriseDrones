@@ -1,6 +1,6 @@
 {% extends 'base.html'%}
 		{% block title %}
-		<link rel="icon" href="https://raw.githubusercontent.com/ec134866/SunriseDrones/refs/heads/master/static/public/favicon.ico" type="image/x-icon">   
+	<link rel="icon" href="https://raw.githubusercontent.com/ec134866/SunriseDrones/refs/heads/master/static/public/favicon.ico" type="image/x-icon">   
 		<title> {{property.name}} Property </title>
 		{% endblock %}
 		
@@ -10,147 +10,141 @@
 		{% block body %}
 		
 		<header class="d-flex align-items-center" style="padding-top: 2vh; padding-bottom: 2vh; background-color: rgba{{owner.palette1}}">
-		<div class="container px-4 px-lg-5 text-center">
-			<h1 class="mb-1" style="font-size: 4vw;">{{owner.name}} Properties</h1>
-			<h2 class="mb-1" style="font-size: 2vw;">{{property.name}}</h2>
-		</div>
+			<div class="container px-4 px-lg-5 text-center">
+				<h1 class="mb-1" style="font-size: 4vw;">{{owner.name}} Properties</h1>
+				<h2 class="mb-1" style="font-size: 2vw;">{{property.name}}</h2>
+			</div>
 		</header>
 		
 		<div style="padding-top: 2vh; padding-bottom: 2vh">
-		<div class="row align-items-center" style="min-height:17vh;">
-			{% comment %} dropdown section {% endcomment %}
-			<div class="col-auto" style="padding-left: 2vw; padding-right: 1vw;">
-			<div class="dropdown">
-				<button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-				<i class="fa-regular fa-map" style="margin-right: 0.15vw;"></i> 
-				{% if selected_flight %}
-					{{ selected_flight.date}}
-				{% else %}
-					Select a date
-				{% endif %}
-				</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				{% for flight in flights %}
-					<li>
-					<a class="dropdown-item" href="?date={{ flight.date|date:'Y-m-d' }}">
-						{{ flight.date}}
-					</a>
-					</li>
-				{% endfor %}
-				</ul>
-			</div>
-			</div>
-			{% comment %} buttons {% endcomment %}
-			<div class="col-auto">
-			{% if access_contract%}
-				<div class="row">
-				<button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
-				</div>
-			{% endif %}
-			{% if access_files%}
-				<div class="row">
-				<button id="downloadSectionBtn" class="btn btn-light" type="button" data-bs-target="#downloadSection" onclick="toggleSection(this)" style="margin-top: 0.5vh">Download My Files</button>
-				</div>
-			{% endif %}
-			</div>
-			{% comment %} filters {% endcomment %}
-			<div class="col-auto" id="filterIcons" style="display:none;">
-				<!-- Centered Filter Text -->
-				<div class="row text-center" style="padding-top:.5vh;">
-				<div class="col-12">
-					<span style="font-size: 1vh;">Filter:</span>
-				</div>
-				</div>
-			
-				<!-- Image Filter -->
-				<div class="row justify-content-center" style="padding-bottom:.5vh;">
-				<div class="col-auto d-flex justify-content-center align-items-center">
-					<i class="fa-regular fa-image" onclick="filterFiles('Image')" style="height:2vh; cursor: pointer;"></i>
-					<i class="fa-regular fa-square" onclick="filterFiles('Image')" id="image-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
-				</div>
-				</div>
-			
-				<!-- Video Filter -->
-				<div class="row justify-content-center" style="padding-bottom:.5vh;">
-				<div class="col-auto d-flex justify-content-center align-items-center">
-					<i class="fa-solid fa-clapperboard" onclick="filterFiles('Video')" style="height:2vh; cursor: pointer;"></i>
-					<i class="fa-regular fa-square" onclick="filterFiles('Video')" id="video-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
-				</div>
-				</div>
-			
-				<!-- 3D Model Filter -->
-				<div class="row justify-content-center" style="padding-bottom:.5vh;">
-				<div class="col-auto d-flex justify-content-center align-items-center">
-					<i class="fa-solid fa-cube" onclick="filterFiles('3D Model')" style="height:2vh; cursor: pointer;"></i>
-					<i class="fa-regular fa-square" onclick="filterFiles('3D Model')" id="model-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
-				</div>
-				</div>
-			</div>	  
-			{% comment %} tracker or downloads {% endcomment %}
-			<div class="col" style="min-width:70%; max-height:17vh; padding-right: 3vh; padding-left: 3vh;">
-			{% comment %} contract section {% endcomment %}
-			<div class="collapse w-100" id="contractTracker">
-				<div class="track d-flex">
-					<div class="step"> 
-					<span class="icon"> <i class="fa fa-file-signature"></i> </span> 
-					<span class="text">Contract Signed</span> 
-					<span class="text" style="margin-top: -2px;"> {{selected_flight.contractSigned}}</span> 
-					</div>
-					<div class="step"> 
-					<span class="icon"> <i class="fa fa-helicopter"></i> </span> 
-					<span class="text"> Drone Capture </span> 
-					<span class="text" style="margin-top: -2px;"> {{selected_flight.contractFlightDate}}</span> 
-					</div>
-					<div class="step"> 
-					<span class="icon"> <i class="fa fa-image"></i> </span> 
-					<span class="text"> Image Processing </span> 
-					<span class="text" style="margin-top: -2px;"> {{selected_flight.contractProcessingDate}}</span> 
-					</div>
-					<div class="step"> 
-					<span class="icon"> <i class="fa fa-tasks"></i> </span> 
-					<span class="text">Final Preparations</span> 
-					<span class="text" style="margin-top: -2px;"> {{selected_flight.contractFinalTouches}}</span> 
-					</div>
-					<div class="step"> 
-					<span class="icon"> <i class="fa fa-upload"></i> </span> 
-					<span class="text">Published</span> 
-					<span class="text" style="margin-top: -2px;"> {{selected_flight.contractPublishDate}}</span> 
-					</div>
-				</div>
-			</div>
-			{% comment %} download section {% endcomment %}
-			<div class="collapse w-100" id="downloadSection">
-				<div class="row overflow-scroll" style="max-height:17vh; background-color: lightgray;" id="fileContainer">
-				{% for file in files %}
-					<div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 70%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
-					<img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 12vh; cursor: pointer;" onclick="openPopupFile('{{ file.preview }}')">
-					<div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
-						<div class="col" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center;" title="{{ file.name }}">
-							<div>{{ file.name }}</div>
-						</div>
-						<div class="col-auto" style="display: flex; align-items: center; justify-content: flex-end;">
-							<div>{{ file.size_in_mb }} MB</div>
-							<a href="{{ file.direct_download_link }}" target="_blank" style="margin-left: 0.5vh;">
-							<span class="icon">
-								<i class="fa-solid fa-download"></i>
-							</span>
+			<div class="row align-items-center" style="min-height:17vh;">
+				{% comment %} dropdown section {% endcomment %}
+				<div class="col-auto" style="padding-left: 2vw; padding-right: 1vw;">
+					<div class="dropdown">
+						<button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="fa-regular fa-map" style="margin-right: 0.15vw;"></i> 
+						{% if selected_flight %}
+							{{ selected_flight.date}}
+						{% else %}
+							Select a date
+						{% endif %}
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						{% for flight in flights %}
+							<li>
+							<a class="dropdown-item" href="?date={{ flight.date|date:'Y-m-d' }}">
+								{{ flight.date}}
 							</a>
+							</li>
+						{% endfor %}
+						</ul>
+					</div>
+				</div>
+				{% comment %} buttons {% endcomment %}
+				<div class="col-auto">
+					{% if access_contract%}
+					<div class="row">
+						<button id="contractTrackerBtn" class="btn btn-light" type="button" data-bs-target="#contractTracker" onclick="toggleSection(this)" style="margin-bottom: 0.5vh">Contract Tracker</button>
+					</div>
+					{% endif %}
+					{% if access_files%}
+					<div class="row">
+						<button id="downloadSectionBtn" class="btn btn-light" type="button" data-bs-target="#downloadSection" onclick="toggleSection(this)" style="margin-top: 0.5vh">Download My Files</button>
+					</div>
+					{% endif %}
+				</div>
+				{% comment %} filters {% endcomment %}
+				<div class="col-auto" id="filterIcons" style="display:none;">
+					<!-- Centered Filter Text -->
+					<div class="row text-center" style="padding-top:.5vh;">
+						<div class="col-12">
+							<span style="font-size: 1vh;">Filter:</span>
 						</div>
 					</div>
+					<div class="row justify-content-center" style="padding-bottom:.5vh;">
+						<div class="col-auto d-flex justify-content-center align-items-center">
+							<i class="fa-regular fa-image" onclick="filterFiles('Image')" style="height:2vh; cursor: pointer;"></i>
+							<i class="fa-regular fa-square" onclick="filterFiles('Image')" id="image-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
+						</div>
 					</div>
-				{% empty %}
-					<div>No files available.</div>
-				{% endfor %}
-				</div>
-			</div>	 
-			<div id="uniquePopupViewer" onclick="closePopupFileOnClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
-				<div class="popup-container bg-light position-relative" style="width: 70%; min-height: 70vh; max-height: 90vh; border-radius: 8px; padding: 0; display: flex; flex-direction: column;">
-					<span onclick="closePopupFile()" class="close-btn position-absolute top-0 start-0 m-3 fs-2 text-white" style="font-size: 2rem; cursor: pointer;">&times;</span>
-					<iframe id="popupContent" src="" allow="autoplay" style="border: none; flex: 1 1 auto;"></iframe>
+					<div class="row justify-content-center" style="padding-bottom:.5vh;">
+						<div class="col-auto d-flex justify-content-center align-items-center">
+							<i class="fa-solid fa-clapperboard" onclick="filterFiles('Video')" style="height:2vh; cursor: pointer;"></i>
+							<i class="fa-regular fa-square" onclick="filterFiles('Video')" id="video-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
+						</div>
+					</div>
+					<div class="row justify-content-center" style="padding-bottom:.5vh;">
+						<div class="col-auto d-flex justify-content-center align-items-center">
+							<i class="fa-solid fa-cube" onclick="filterFiles('3D Model')" style="height:2vh; cursor: pointer;"></i>
+							<i class="fa-regular fa-square" onclick="filterFiles('3D Model')" id="model-icon" style="height:1.5vh; cursor: pointer; margin-left: 0.5vh;"></i>
+						</div>
+					</div>
+				</div>	  
+				{% comment %} tracker or downloads {% endcomment %}
+				<div class="col" style="min-width:70%; max-height:17vh; padding-right: 3vh; padding-left: 3vh;">
+					{% comment %} contract section {% endcomment %}
+					<div class="collapse w-100" id="contractTracker">
+						<div class="track d-flex">
+							<div class="step"> 
+							<span class="icon"> <i class="fa fa-file-signature"></i> </span> 
+							<span class="text">Contract Signed</span> 
+							<span class="text" style="margin-top: -2px;"> {{selected_flight.contractSigned}}</span> 
+							</div>
+							<div class="step"> 
+							<span class="icon"> <i class="fa fa-helicopter"></i> </span> 
+							<span class="text"> Drone Capture </span> 
+							<span class="text" style="margin-top: -2px;"> {{selected_flight.contractFlightDate}}</span> 
+							</div>
+							<div class="step"> 
+							<span class="icon"> <i class="fa fa-image"></i> </span> 
+							<span class="text"> Image Processing </span> 
+							<span class="text" style="margin-top: -2px;"> {{selected_flight.contractProcessingDate}}</span> 
+							</div>
+							<div class="step"> 
+							<span class="icon"> <i class="fa fa-tasks"></i> </span> 
+							<span class="text">Final Preparations</span> 
+							<span class="text" style="margin-top: -2px;"> {{selected_flight.contractFinalTouches}}</span> 
+							</div>
+							<div class="step"> 
+							<span class="icon"> <i class="fa fa-upload"></i> </span> 
+							<span class="text">Published</span> 
+							<span class="text" style="margin-top: -2px;"> {{selected_flight.contractPublishDate}}</span> 
+							</div>
+						</div>
+					</div>
+					{% comment %} download section {% endcomment %}
+					<div class="collapse w-100" id="downloadSection">
+						<div class="row overflow-scroll" style="max-height:17vh; background-color: lightgray;" id="fileContainer">
+						{% for file in files %}
+							<div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 70%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
+							<img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 12vh; cursor: pointer;" onclick="openPopupFile('{{ file.preview }}')">
+							<div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
+								<div class="col" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center;" title="{{ file.name }}">
+									<div>{{ file.name }}</div>
+								</div>
+								<div class="col-auto" style="display: flex; align-items: center; justify-content: flex-end;">
+									<div>{{ file.size_in_mb }} MB</div>
+									<a href="{{ file.direct_download_link }}" target="_blank" style="margin-left: 0.5vh;">
+									<span class="icon">
+										<i class="fa-solid fa-download"></i>
+									</span>
+									</a>
+								</div>
+							</div>
+							</div>
+						{% empty %}
+							<div>No files available.</div>
+						{% endfor %}
+						</div>
+					</div>	 
+					<div id="uniquePopupViewer" onclick="closePopupFileOnClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+						<div class="popup-container bg-light position-relative" style="width: 70%; min-height: 70vh; max-height: 90vh; border-radius: 8px; padding: 0; display: flex; flex-direction: column;">
+							<span onclick="closePopupFile()" class="close-btn position-absolute top-0 start-0 m-3 fs-2 text-white" style="font-size: 2rem; cursor: pointer;">&times;</span>
+							<iframe id="popupContent" src="" allow="autoplay" style="border: none; flex: 1 1 auto;"></iframe>
+						</div>
+					</div>
 				</div>
 			</div>
-			</div>
-		</div>
 		
 		{% comment %} main section {% endcomment %}
 		{% if notice %}
@@ -166,43 +160,70 @@
 				</div> 
 			</div>
 		{% endif %}
-		<div class="row justify-content-center" style="padding-left: 2vw; padding-right: 2vw; padding-top: 4vh; padding-bottom: 2vh;">
-			<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.photo_content_btn_1}}">
-				<button class="btn btn-link p-0" onclick="showContent('photoContent')">
-					<img src={{selected_flight.top_image_link_2}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+			<div class="row justify-content-center" style="padding-left: 2vw; padding-right: 2vw; padding-top: 4vh; padding-bottom: 2vh;">
+				<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.photo_content_btn_1}}">
+					<button class="btn btn-link p-0" onclick="showContent('photoContent')">
+						<img src={{selected_flight.top_image_link_2}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+						<br><br>
+						<h2 class="text-decoration-none" style="color: #333;">Photos</h2>
+					</button>
+				</div>
+				<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.video_content_btn_1}}">
+				<button class="btn btn-link p-0" onclick="showContent('videoContent')">
+						<img src={{selected_flight.overflight_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
 					<br><br>
-					<h2 class="text-decoration-none" style="color: #333;">Photos</h2>
+					<h2 class="text-decoration-none" style="color: #333;">Videos</h2>
 				</button>
+				</div>
+				<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.ext_content_btn_1}}">
+				<button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
+					<img src={{selected_flight.exterior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+					<br><br>
+					<h2 class="text-decoration-none" style="color: #333;">3D Exterior Model</h2>
+				</button>
+				</div>
+				<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.int_content_btn_1}}">
+				<button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
+					<img src={{selected_flight.interior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+					<br><br>
+					<h2 class="text-decoration-none" style="color: #333;">3D Interior Model</h2>
+				</button>
+				</div>
 			</div>
-			<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.video_content_btn_1}}">
-			<button class="btn btn-link p-0" onclick="showContent('videoContent')">
-					<img src={{selected_flight.overflight_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-				<br><br>
-				<h2 class="text-decoration-none" style="color: #333;">Videos</h2>
-			</button>
-			</div>
-			<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.ext_content_btn_1}}">
-			<button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
-				<img src={{selected_flight.exterior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-				<br><br>
-				<h2 class="text-decoration-none" style="color: #333;">3D Exterior Model</h2>
-			</button>
-			</div>
-			<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.int_content_btn_1}}">
-			<button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
-				<img src={{selected_flight.interior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
-				<br><br>
-				<h2 class="text-decoration-none" style="color: #333;">3D Interior Model</h2>
-			</button>
-			</div>
-		</div>
 		</div>
 
 		{% comment %} content area {% endcomment %}
 		<div id="contentArea" class="container-fluid" style="padding-top: 6vh; padding-bottom: 6vh; background-color: rgba{{owner.palette2}}">
 			<div class="d-flex justify-content-center">
 				<div id="photoContent" class="content-section" style="width: 90%; height: 75vh;">
-					{% comment %} TODO change this to be a gallery of images {% endcomment %}
+					<div class="row" style="position: relative; text-align:center;">
+						<img id="expandedPhoto" style="width:100%; border-radius: 1vh;">
+					</div>
+					<div class="row overflow-scroll" id="photoThumbnails">
+							{% for file in files %}
+								{% if file.file_type == "Image" %}
+									<div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 70%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
+										<img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 12vh; cursor: pointer;" onclick="updateExpandedPhoto('{{ file.preview }}')">
+										<div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
+											<div class="col" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center;" title="{{ file.name }}">
+												<div>{{ file.name }}</div>
+											</div>
+											<div class="col-auto" style="display: flex; align-items: center; justify-content: flex-end;">
+												<div>{{ file.size_in_mb }} MB</div>
+												<a href="{{ file.direct_download_link }}" target="_blank" style="margin-left: 0.5vh;">
+												<span class="icon">
+													<i class="fa-solid fa-download"></i>
+												</span>
+												</a>
+											</div>
+										</div>
+									</div>
+								{% endif %}
+							{% empty %}
+								<div>No files available.</div>
+							{% endfor %}
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="d-flex justify-content-center">
@@ -294,6 +315,23 @@
 		
 	</script>
 
+	{% comment %} script for photoContent section {% endcomment %}
+	<script>
+		window.onload = function() {
+			const firstImage = document.querySelector('#photoThumbnails img');
+			const expandedPhoto = document.getElementById('expandedPhoto');
+			if (firstImage && expandedPhoto) {
+				expandedPhoto.src = firstImage.src;
+			}
+		};
+		
+		function updateExpandedPhoto(src) {
+			const expandedPhoto = document.getElementById('expandedPhoto');
+			expandedPhoto.src = src;
+			}
+	</script>
+
+
 
 		{% comment %} script for contract tracker and download section {% endcomment %}
 	<script>
@@ -384,7 +422,7 @@
 		const today = new Date().toISOString().split('T')[0];
 
 		const steps = [
-				{ element: document.querySelector('.step:nth-child(1)'), date: "{{ selected_flight.contractSigned | date:'Y-m-d' }}" },
+			{ element: document.querySelector('.step:nth-child(1)'), date: "{{ selected_flight.contractSigned | date:'Y-m-d' }}" },
 			{ element: document.querySelector('.step:nth-child(2)'), date: "{{ selected_flight.contractFlightDate | date:'Y-m-d'  }}" },
 			{ element: document.querySelector('.step:nth-child(3)'), date: "{{ selected_flight.contractProcessingDate | date:'Y-m-d'  }}" },
 			{ element: document.querySelector('.step:nth-child(4)'), date: "{{ selected_flight.contractFinalTouches | date:'Y-m-d'  }}" },
@@ -547,7 +585,7 @@
 				}
 			});
 
-		// debugPlugin.displayBoxBounds = true;		   
+			// debugPlugin.displayBoxBounds = true;		   
 
 			tilesRenderer.addEventListener('load-tile-set', () => {
 			const sphere = new THREE.Sphere();
@@ -571,7 +609,7 @@
 			modelGroup.add(tilesRenderer.group);
 
 			// // -- helpful axes X (red), Y (green), Z (blue) 
-		// const axesHelper = new THREE.AxesHelper(100);  
+			// const axesHelper = new THREE.AxesHelper(100);  
 			// scene.add(axesHelper);
 
 			// window.addEventListener('click', onClick);
@@ -668,7 +706,7 @@
 
 					// Mark that the camera has been reset
 					cameraReset = true;
-				controlsEnabled = true;  // Enable controls after reset
+					controlsEnabled = true;  // Enable controls after reset
 
 				}
 				// activity monitor stats
@@ -676,7 +714,7 @@
 
 				// Allow normal control only if the camera has been reset
 				if (cameraReset && controls) {
-				controls.update(delta);  // Update controls based on delta
+					controls.update(delta);  // Update controls based on delta
 					// activity monitor stats
 					// stats.update()
 				}
