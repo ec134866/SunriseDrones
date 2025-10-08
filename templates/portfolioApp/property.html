@@ -322,12 +322,11 @@
 			const firstThumbnail = document.querySelector('#photoThumbnails img');
 			const expandedPhoto = document.getElementById('expandedPhoto');
 			if (firstThumbnail && expandedPhoto) {
-				const firstPreview = firstThumbnail.getAttribute('onclick')
-					?.match(/updateExpandedPhoto\('([^']+)'\)/)?.[1];
+				const firstPreview = firstThumbnail.dataset.preview;
 				if (firstPreview) expandedPhoto.src = firstPreview;
 			}
 		};
-		
+	
 		function updateExpandedPhoto(src) {
 			const expandedPhoto = document.getElementById('expandedPhoto');
 			expandedPhoto.src = src;
