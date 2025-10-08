@@ -197,13 +197,13 @@
 			<div class="d-flex justify-content-center">
 				<div id="photoContent" class="content-section" style="width: 90%; height: 75vh;">
 					<div class="row" style="position: relative; text-align:center;">
-						<img id="expandedPhoto" style="width:100%; border-radius: 1vh;">
+						<iframe id="expandedPhoto" style="width:100%; height:70vh; border:none; border-radius:1vh;"></iframe>
 					</div>
 					<div class="row overflow-scroll" id="photoThumbnails">
 							{% for file in files %}
 								{% if file.file_type == "Image" %}
 									<div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 70%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
-										<img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 12vh; cursor: pointer;" onclick="updateExpandedPhoto('{{ file.preview }}')">
+										<img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; height: 15vh; cursor: pointer;" onclick="updateExpandedPhoto('{{ file.preview }}')">
 										<div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
 											<div class="col" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center;" title="{{ file.name }}">
 												<div>{{ file.name }}</div>
@@ -318,18 +318,27 @@
 	{% comment %} script for photoContent section {% endcomment %}
 	<script>
 		window.onload = function() {
-			const firstImage = document.querySelector('#photoThumbnails img');
-			const expandedPhoto = document.getElementById('expandedPhoto');
-			if (firstImage && expandedPhoto) {
-				expandedPhoto.src = firstImage.src;
-			}
-		};
+			const firstThumb = document.querySelector('#photoThumbnails img');
+			const expandedFrame = document.getElementById('expandedPhoto');
 		
-		function updateExpandedPhoto(src) {
-			const expandedPhoto = document.getElementById('expandedPhoto');
-			expandedPhoto.src = src;
+			// Initialize first image
+			if (firstThumb && expandedFrame) {
+				// Try to find its corresponding preview link
+				const firstPreview = firstThumb.getAttribute('onclick')?.match(/updateExpandedPhoto\('([^']+)'\)/);
+				if (firstPreview && firstPreview[1]) {
+					expandedFrame.src = firstPreview[1];
+				}
 			}
-	</script>
+		
+			// Assign global update function for onclick
+			window.updateExpandedPhoto = function(previewSrc) {
+				const expandedFrame = document.getElementById('expandedPhoto');
+				if (expandedFrame) {
+					expandedFrame.src = previewSrc;
+				}
+			};
+		};
+		</script>
 
 
 
