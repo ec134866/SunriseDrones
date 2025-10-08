@@ -197,7 +197,7 @@
 			<div class="d-flex justify-content-center">
 				<div id="photoContent" class="content-section" style="width: 90%; height: 75vh;">
 					<div class="row" style="position: relative; text-align:center;">
-						<iframe id="expandedPhoto" style="width:100%; height:70vh; border:none; border-radius:1vh;"></iframe>
+						<iframe id="expandedPhoto" src="" allow="autoplay" style="border: none; flex: 1 1 auto;"></iframe>
 					</div>
 					<div class="row overflow-scroll" id="photoThumbnails">
 							{% for file in files %}
@@ -318,27 +318,18 @@
 	{% comment %} script for photoContent section {% endcomment %}
 	<script>
 		window.onload = function() {
-			const firstThumb = document.querySelector('#photoThumbnails img');
-			const expandedFrame = document.getElementById('expandedPhoto');
-		
-			// Initialize first image
-			if (firstThumb && expandedFrame) {
-				// Try to find its corresponding preview link
-				const firstPreview = firstThumb.getAttribute('onclick')?.match(/updateExpandedPhoto\('([^']+)'\)/);
-				if (firstPreview && firstPreview[1]) {
-					expandedFrame.src = firstPreview[1];
-				}
+			const firstImage = document.querySelector('#photoThumbnails img');
+			const expandedPhoto = document.getElementById('expandedPhoto');
+			if (firstImage && expandedPhoto) {
+				expandedPhoto.src = firstImage.src;
 			}
-		
-			// Assign global update function for onclick
-			window.updateExpandedPhoto = function(previewSrc) {
-				const expandedFrame = document.getElementById('expandedPhoto');
-				if (expandedFrame) {
-					expandedFrame.src = previewSrc;
-				}
-			};
 		};
-		</script>
+		
+		function updateExpandedPhoto(src) {
+			const expandedPhoto = document.getElementById('expandedPhoto');
+			expandedPhoto.src = src;
+			}
+	</script>
 
 
 
