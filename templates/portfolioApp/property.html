@@ -195,14 +195,14 @@
 		{% comment %} content area {% endcomment %}
 		<div id="contentArea" class="container-fluid" style="padding-top: 6vh; padding-bottom: 6vh; background-color: rgba{{owner.palette2}}">
 			<div class="d-flex justify-content-center">
-				<div id="photoContent" class="content-section" style="width: 90%; height: 75vh;">
+				<div id="photoContent" class="content-section" style="width: 90%;">
 					<div class="row" style="position: relative; text-align:center;">
 						<iframe id="expandedPhoto" src="" allow="autoplay" style="border: none; width:100%; height:60vh; border-radius: 1vh;"></iframe>
 					</div>
-					<div class="row overflow-scroll" id="photoThumbnails">
+					<div class="row flex-wrap" id="photoThumbnails" style="gap: 0.5vh;">
 							{% for file in files %}
 								{% if file.file_type == "Image" %}
-									<div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 70%; border-radius: 1vh; background-color: #f0f0f0;
+									<div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; border-radius: 1vh; background-color: #f0f0f0;
 												margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
 										<img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; height: 15vh; cursor: pointer;" onclick="updateExpandedPhoto('{{ file.preview }}')">
 										<div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
