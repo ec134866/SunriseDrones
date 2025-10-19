@@ -163,28 +163,42 @@
 			<div class="row justify-content-center" style="padding-left: 2vw; padding-right: 2vw; padding-top: 4vh; padding-bottom: 2vh;">
 				<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.photo_content_btn_1}}">
 					<button class="btn btn-link p-0" onclick="showContent('photoContent')">
-						<img src={{selected_flight.top_image_link_2}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+						<img src={{selected_flight.top_image_link_2}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Photos" class="img-fluid">
 						<br><br>
 						<h2 class="text-decoration-none" style="color: #333;">Photos</h2>
 					</button>
 				</div>
 				<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.video_content_btn_1}}">
 				<button class="btn btn-link p-0" onclick="showContent('videoContent')">
-						<img src={{selected_flight.overflight_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+						<img src={{selected_flight.overflight_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Videos" class="img-fluid">
 					<br><br>
 					<h2 class="text-decoration-none" style="color: #333;">Videos</h2>
 				</button>
 				</div>
+				<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.orthophoto_content_btn_1}}">
+					<button class="btn btn-link p-0" onclick="showContent('orthophotoContent')">
+							<img src={{selected_flight.orthophoto_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Orthomosaic Photo" class="img-fluid">
+						<br><br>
+						<h2 class="text-decoration-none" style="color: #333;">Orthophoto Comparison</h2>
+					</button>
+				</div>
+				<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.mapoverlay_content_btn_1}}">
+					<button class="btn btn-link p-0" onclick="showContent('mapoverlayContent')">
+							<img src={{selected_flight.mapoverlay_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Map Overlay Image" class="img-fluid">
+						<br><br>
+						<h2 class="text-decoration-none" style="color: #333;">Map Overlay</h2>
+					</button>
+				</div>
 				<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.ext_content_btn_1}}">
 				<button class="btn btn-link p-0" onclick="showContent('exteriorModelContent')">
-					<img src={{selected_flight.exterior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+					<img src={{selected_flight.exterior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="3D Exterior Model Image" class="img-fluid">
 					<br><br>
 					<h2 class="text-decoration-none" style="color: #333;">3D Exterior Model</h2>
 				</button>
 				</div>
 				<div class="col-md-4 mb-3 d-flex justify-content-center {{selected_flight.int_content_btn_1}}">
 				<button class="btn btn-link p-0" onclick="showContent('interiorModelContent')">
-					<img src={{selected_flight.interior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="Drone Flyover" class="img-fluid">
+					<img src={{selected_flight.interior_thumbnail_link}} style="width:95%; height:auto; border-radius:2vw;" alt="3D Interior Model Image" class="img-fluid">
 					<br><br>
 					<h2 class="text-decoration-none" style="color: #333;">3D Interior Model</h2>
 				</button>
@@ -228,48 +242,58 @@
 				</div>
 			</div>
 			<div class="d-flex justify-content-center">
-			<div id="videoContent" class="content-section" style="width: 90%; height: 75vh;">
-				{% comment %} TODO change this to be a gallery of images {% endcomment %}
-				<iframe width="100%" height="100%" id="VideoElement" src="https://www.youtube.com/embed/{{selected_flight.overflight_link}}?autoplay=1&rel=0" frameborder="0">
-				</iframe>
-			</div>
-		</div>
-		<div class="justify-content-center">	
-			<div id="exteriorModelContent" class="content-section">
-			<div class="row justify-content-center" style="width: 90%; margin: 0 auto; padding-bottom:1vh;">
-				<div class="col">
+				<div id="videoContent" class="content-section" style="width: 90%; height: 75vh;">
+					{% comment %} TODO change this to be a gallery of videos {% endcomment %}
+					<iframe width="100%" height="100%" id="VideoElement" src="https://www.youtube.com/embed/{{selected_flight.overflight_link}}?autoplay=1&rel=0" frameborder="0">
+					</iframe>
 				</div>
 			</div>
-				<div class="progress-bar-container" style="
-				width: 55%;
-				position: fixed;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				display: none;
-				justify-content: center;
-				align-items: center;
-				text-align: center;
-				z-index: 1500;">
-				<div class="row">
-					<label for="progress-bar" style="color: white;font-size: 4vh; margin-bottom: 1vh;">Loading...</label>
-				</div>
-				<div class="row">
-					<progress id="progress-bar" style="height: 5vh;" value="0" max="100"></progress>
-				</div>
-				</div>
-				<div id="exteriorOuterModelContainer" class="d-flex justify-content-center" style="position: relative;">
-				<div id="exteriorModelContainer" class="d-flex justify-content-center">
-				</div>
+			<div class="d-flex justify-content-center">
+				<div id="orthophotoContent" class="content-section" style="width: 90%; height: 75vh;">
+					{% comment %} TODO add orthophoto comparison ability {% endcomment %}
 				</div>
 			</div>
-		</div>
-		<div class="d-flex justify-content-center">
-			<div id="interiorModelContent" class="content-section">
-				<div id="interiorModelContainer" class="d-flex justify-content-center">
+			<div class="d-flex justify-content-center">
+				<div id="mapoverlayContent" class="content-section" style="width: 90%; height: 75vh;">
+					<div id="map" style="width: 100%;"></div>
 				</div>
 			</div>
-		</div>
+			<div class="justify-content-center">	
+				<div id="exteriorModelContent" class="content-section">
+				<div class="row justify-content-center" style="width: 90%; margin: 0 auto; padding-bottom:1vh;">
+					<div class="col">
+					</div>
+				</div>
+					<div class="progress-bar-container" style="
+					width: 55%;
+					position: fixed;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					display: none;
+					justify-content: center;
+					align-items: center;
+					text-align: center;
+					z-index: 1500;">
+					<div class="row">
+						<label for="progress-bar" style="color: white;font-size: 4vh; margin-bottom: 1vh;">Loading...</label>
+					</div>
+					<div class="row">
+						<progress id="progress-bar" style="height: 5vh;" value="0" max="100"></progress>
+					</div>
+					</div>
+					<div id="exteriorOuterModelContainer" class="d-flex justify-content-center" style="position: relative;">
+					<div id="exteriorModelContainer" class="d-flex justify-content-center">
+					</div>
+					</div>
+				</div>
+			</div>
+			<div class="d-flex justify-content-center">
+				<div id="interiorModelContent" class="content-section">
+					<div id="interiorModelContainer" class="d-flex justify-content-center">
+					</div>
+				</div>
+			</div>
 		</div>
 
 		{% comment %} footer {% endcomment %}
@@ -314,6 +338,78 @@
 			}
 		});
 		
+	</script>
+
+	{% comment %} script for map overlay {% endcomment %}
+	<script>
+		var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+			minZoom: 17, maxZoom: 22
+		});
+		var cartodb = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CartoDB</a>',
+			minZoom: 17, maxZoom: 22
+		});
+		var white = L.tileLayer("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEX///+nxBvIAAAAH0lEQVQYGe3BAQ0AAADCIPunfg43YAAAAAAAAAAA5wIhAAAB9aK9BAAAAABJRU5ErkJggg==", 
+		{minZoom: 17, maxZoom: 22});
+		
+		var lyr = L.tileLayer(
+			'https://raw.githubusercontent.com/ec134866/BalancedRock/main/herndon-community_center/2025_10_09/map/51b62de4-2d9a-4f36-a5e6-f98d12424835/{z}/{x}/{y}.png',
+			{
+				tms: true,
+				opacity: 0.9,
+				attribution: "",
+				minZoom: 17,
+				maxZoom: 22
+			}
+		);
+		var map = L.map('map', {
+			center: [38.97386130742619, -77.39226081137471],
+			zoom: 22,
+			minZoom: 17,
+			maxZoom: 22,
+			layers: [osm, lyr]
+		});
+		var basemaps = {"OpenStreetMap": osm, "Light Map": cartodb, "No background": white};
+		var overlaymaps = {"Orthophoto": lyr};
+		L.control.layers(basemaps, overlaymaps, {collapsed: false}).addTo(map);
+		
+		var src = `GDAL/OGR contributors (2025). GDAL/OGR Geospatial Data Abstraction software Library. Open Source Geospatial Foundation. URL <a href="https://gdal.org">https://gdal.org</a>`;
+		var attribution = L.control({position: 'bottomleft'});
+		attribution.onAdd = function(map) {
+			this._div = L.DomUtil.create('div', 'ctl src');
+			this._div.innerHTML = src;
+			return this._div;
+		};
+		attribution.addTo(map);
+		map.fitBounds([[38.9718124262654, -77.38943153617745], [38.97591018858697, -77.39509008657195]]);
+		function createMeasureControl(units) {
+			return L.control.measure({
+				primaryLengthUnit: units === 'metric' ? 'meters' : 'feet',
+				secondaryLengthUnit: units === 'metric' ? 'kilometers' : 'miles',
+				primaryAreaUnit: units === 'metric' ? 'sqmeters' : 'sqfeet',
+				secondaryAreaUnit: units === 'metric' ? 'hectares' : 'acres',
+				activeColor: '#ABE67E',
+				completedColor: '#C8F2BE'
+			});
+		}
+		var currentUnits = 'imperial';
+		var measureControl = createMeasureControl(currentUnits).addTo(map);
+		var UnitToggle = L.Control.extend({
+			options: { position: 'topright' },
+			onAdd: function(map) {
+				var div = L.DomUtil.create('div', 'unit-toggle');
+				div.innerHTML = 'Switch to Imperial';
+				div.onclick = function() {
+					map.removeControl(measureControl);
+					currentUnits = currentUnits === 'imperial' ? 'metric' : 'imperial';
+					measureControl = createMeasureControl(currentUnits).addTo(map);
+					div.innerHTML = currentUnits === 'imperial' ? 'Switch to Metric' : 'Switch to Imperial';
+				};
+				return div;
+			}
+		});
+		map.addControl(new UnitToggle());
 	</script>
 
 	{% comment %} script for photoContent section {% endcomment %}
