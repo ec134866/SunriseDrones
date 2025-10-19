@@ -344,14 +344,14 @@
 	<script>
 		var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-			minZoom: 17, maxZoom: 22
+			minZoom: 17, maxZoom: 21
 		});
 		var cartodb = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
 			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CartoDB</a>',
-			minZoom: 17, maxZoom: 22
+			minZoom: 17, maxZoom: 21
 		});
 		var white = L.tileLayer("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEX///+nxBvIAAAAH0lEQVQYGe3BAQ0AAADCIPunfg43YAAAAAAAAAAA5wIhAAAB9aK9BAAAAABJRU5ErkJggg==", 
-		{minZoom: 17, maxZoom: 22});
+		{minZoom: 17, maxZoom: 21});
 		
 		var lyr = L.tileLayer(
 			'https://raw.githubusercontent.com/ec134866/BalancedRock/main/herndon-community_center/2025_10_09/map/51b62de4-2d9a-4f36-a5e6-f98d12424835/{z}/{x}/{y}.png',
@@ -360,14 +360,14 @@
 				opacity: 0.9,
 				attribution: "",
 				minZoom: 17,
-				maxZoom: 22
+				maxZoom: 21
 			}
 		);
 		var map = L.map('map', {
 			center: [38.97386130742619, -77.39226081137471],
-			zoom: 22,
+			zoom: 21,
 			minZoom: 17,
-			maxZoom: 22,
+			maxZoom: 21,
 			layers: [osm, lyr]
 		});
 		var basemaps = {"OpenStreetMap": osm, "Light Map": cartodb, "No background": white};
