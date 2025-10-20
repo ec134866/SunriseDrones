@@ -342,10 +342,10 @@
 
 	{% comment %} script for map overlay {% endcomment %}
 	<script>
-		var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		{% comment %} var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 			minZoom: 17, maxZoom: 21
-		});
+		}); {% endcomment %}
 		var cartodb = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
 			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CartoDB</a>',
 			minZoom: 17, maxZoom: 21
@@ -368,9 +368,9 @@
 			zoom: 21,
 			minZoom: 17,
 			maxZoom: 21,
-			layers: [osm, lyr]
+			layers: [cartodb, lyr]
 		});
-		var basemaps = {"OpenStreetMap": osm, "Light Map": cartodb, "No background": white};
+		var basemaps = {"Light Map": cartodb, "No background": white};
 		var overlaymaps = {"Orthophoto": lyr};
 		L.control.layers(basemaps, overlaymaps, {collapsed: false}).addTo(map);
 		
