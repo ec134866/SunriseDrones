@@ -412,10 +412,18 @@
 			});
 			map.addControl(new UnitToggle());
 	
+			map.whenReady(function() {
+				map.invalidateSize();
+			});
+			
 			setTimeout(function() {
 				map.invalidateSize();
 				map.setView([38.97386130742619, -77.39226081137471], 17);
-			}, 1000);
+			}, 250);
+			
+			setTimeout(function() {
+				map.invalidateSize();
+			}, 500);
 		});
 	</script>
 
