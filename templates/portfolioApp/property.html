@@ -352,6 +352,10 @@
 			});
 			var white = L.tileLayer("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEX///+nxBvIAAAAH0lEQVQYGe3BAQ0AAADCIPunfg43YAAAAAAAAAAA5wIhAAAB9aK9BAAAAABJRU5ErkJggg==", 
 			{minZoom: {{selected_flight.script_map_overlay.min_zoom}}, maxZoom: {{selected_flight.script_map_overlay.max_zoom}}});
+			var esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+					attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, and others',
+					minZoom: {{selected_flight.script_map_overlay.min_zoom}}, maxZoom: {{selected_flight.script_map_overlay.max_zoom}}
+			});
 			
 			var lyr = L.tileLayer(
 				'{{selected_flight.mapoverlay_link}}/{z}/{x}/{y}.png',
@@ -370,7 +374,7 @@
 				maxZoom: {{selected_flight.script_map_overlay.max_zoom}},
 				layers: [osm, lyr]
 			});
-			var basemaps = {"OpenStreetMap": osm, "Light Map": cartodb, "No background": white};
+			var basemaps = {"OpenStreetMap": osm, "Satellite": esriSat, "Light Map": cartodb, "No background": white};
 			var overlaymaps = {"Orthophoto": lyr};
 			L.control.layers(basemaps, overlaymaps, {collapsed: false}).addTo(map);
 			
