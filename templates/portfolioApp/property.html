@@ -252,15 +252,15 @@
 					<div style="display: flex; justify-content: space-between; margin-bottom: 1rem; gap: 1rem;">
 						<div style="flex: 1;">
 							<div class="dropdown" style="width: 100%;">
-								<button class="btn btn-secondary dropdown-toggle" type="button" id="rightFlightDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%;">
+								<button class="btn btn-secondary dropdown-toggle" type="button" id="leftFlightDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%;">
 									<i class="fa-regular fa-map" style="margin-right: 0.15vw;"></i>
-									<span id="rightFlightLabel">Select Date</span>
+									<span id="leftFlightLabel">{{ selected_flight.date }}</span>
 								</button>
-								<ul class="dropdown-menu" aria-labelledby="rightFlightDropdown" style="width: 100%;">
+								<ul class="dropdown-menu" aria-labelledby="leftFlightDropdown" style="width: 100%;">
 									{% for flight in flights %}
 										{% if flight.orthophoto_link %}
 										<li>
-											<a class="dropdown-item" href="#" onclick="changeRightImage('{{flight.orthophoto_link}}', '{{flight.date}}'); return false;">
+											<a class="dropdown-item" href="#" onclick="changeLeftImage('{{flight.orthophoto_link}}', '{{flight.date}}'); return false;">
 												{{ flight.date }}
 											</a>
 										</li>
@@ -271,15 +271,15 @@
 						</div>
 						<div style="flex: 1;">
 							<div class="dropdown" style="width: 100%;">
-								<button class="btn btn-secondary dropdown-toggle" type="button" id="leftFlightDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%;">
+								<button class="btn btn-secondary dropdown-toggle" type="button" id="rightFlightDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%;">
 									<i class="fa-regular fa-map" style="margin-right: 0.15vw;"></i>
-									<span id="leftFlightLabel">{{ selected_flight.date }}</span>
+									<span id="rightFlightLabel">Select Date</span>
 								</button>
-								<ul class="dropdown-menu" aria-labelledby="leftFlightDropdown" style="width: 100%;">
+								<ul class="dropdown-menu" aria-labelledby="rightFlightDropdown" style="width: 100%;">
 									{% for flight in flights %}
 										{% if flight.orthophoto_link %}
 										<li>
-											<a class="dropdown-item" href="#" onclick="changeLeftImage('{{flight.orthophoto_link}}', '{{flight.date}}'); return false;">
+											<a class="dropdown-item" href="#" onclick="changeRightImage('{{flight.orthophoto_link}}', '{{flight.date}}'); return false;">
 												{{ flight.date }}
 											</a>
 										</li>
