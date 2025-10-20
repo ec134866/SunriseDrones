@@ -398,21 +398,6 @@
 			}
 			var currentUnits = "{{selected_flight.script_map_overlay.measure_type}}";
 			var measureControl = createMeasureControl(currentUnits).addTo(map);
-			var UnitToggle = L.Control.extend({
-				options: { position: 'topright' },
-				onAdd: function(map) {
-					var div = L.DomUtil.create('div', 'unit-toggle');
-					div.innerHTML = 'Switch to Metric';
-					div.onclick = function() {
-						map.removeControl(measureControl);
-						currentUnits = currentUnits === 'imperial' ? 'metric' : 'imperial';
-						measureControl = createMeasureControl(currentUnits).addTo(map);
-						div.innerHTML = currentUnits === 'imperial' ? 'Switch to Metric' : 'Switch to Imperial';
-					};
-					return div;
-				}
-			});
-			map.addControl(new UnitToggle());
 			
 			setTimeout(function() {
 				map.invalidateSize();
