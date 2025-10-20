@@ -111,6 +111,7 @@ class Flight(models.Model):
     overflight_link = models.CharField(max_length=500, blank=True, null=True)
     overflight_thumbnail_link = models.CharField(max_length=500, blank=True, null=True, default='https://drive.google.com/thumbnail?sz=w1000&id=1DrvmZ7DIML7RloNvJhN3EJXkeUhjBQL4')
     orthophoto_thumbnail_link = models.CharField(max_length=500, blank=True, null=True, default='https://drive.google.com/thumbnail?sz=w1000&id=1GTwESt8Gv4cXAQ_1VlpZOLZ4F9N4I-TR')
+    orthophoto_link = models.CharField(max_length=500, blank=True, null=True)
     mapoverlay_thumbnail_link = models.CharField(max_length=500, blank=True, null=True, default='https://drive.google.com/thumbnail?sz=w1000&id=11aeANpVeqSGwX09q4HHAlQaa1TbdFbwk')
     mapoverlay_link = models.CharField(max_length=500, blank=True, null=True)
     exterior_link = models.CharField(max_length=500, blank=True, null=True)
