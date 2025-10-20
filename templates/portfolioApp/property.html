@@ -289,12 +289,10 @@
 							</div>
 						</div>
 					</div>
-					<div class="img-comp-container" style="position: relative; height: calc(75vh - 80px);">
-						<div class="img-comp-img" style="position: absolute; width: auto; height: auto; overflow: hidden;">
-							<img id="leftImage" src="{{selected_flight.orthophoto_link}}" style="display: block; width: 100%; height: calc(75vh - 80px); object-fit: contain;">
-						</div>
-						<div class="img-comp-img img-comp-overlay" style="position: absolute; width: auto; height: auto; overflow: hidden;">
-							<img id="rightImage" src="{{selected_flight.orthophoto_link}}" style="display: block; width: 100%; height: calc(75vh - 80px); object-fit: contain;">
+					<div style="position: relative; height: calc(75vh - 80px);">
+						<img id="leftImage" src="{{selected_flight.orthophoto_link}}" style="display: block; height: 100%; object-fit: contain;">
+						<div id="overlay" style="position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden;">
+							<img id="rightImage" src="{{selected_flight.orthophoto_link}}" style="display: block; height: 100%; object-fit: contain;">
 						</div>
 					</div>
 				</div>
@@ -398,72 +396,27 @@
 			document.getElementById('rightFlightLabel').textContent = date;
 		}
 		
-		function initComparison() {
-			var overlay = document.querySelector('.img-comp-overlay');
-			var slider, clicked = 0, w, h;
+		window.addEventListener('load', function() {
+			var overlay = document.getElementById('overlay');
+			var container = overlay.parentElement;
+			var clicked = 0, w = container.offsetWidth;
 			
-			w = overlay.offsetWidth;
-			h = overlay.offsetHeight;
-			overlay.style.width = (w / 2) + "px";
+			var slider = document.createElement("div");
+			slider.style = "position: absolute; z-index: 9; cursor: ew-resize; width: 40px; height: 40px; background-color: #2196F3; opacity: 0.7; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%);";
+			container.appendChild(slider);
 			
-			slider = document.createElement("DIV");
-			slider.setAttribute("class", "img-comp-slider");
-			slider.style.position = "absolute";
-			slider.style.zIndex = "9";
-			slider.style.cursor = "ew-resize";
-			slider.style.width = "40px";
-			slider.style.height = "40px";
-			slider.style.backgroundColor = "#2196F3";
-			slider.style.opacity = "0.7";
-			slider.style.borderRadius = "50%";
+			slider.onmousedown = slider.ontouchstart = function(e) { e.preventDefault(); clicked = 1; };
+			window.onmouseup = window.ontouchend = function() { clicked = 0; };
 			
-			overlay.parentElement.insertBefore(slider, overlay);
-			
-			slider.style.top = (h / 2) - (slider.offsetHeight / 2) + "px";
-			slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
-			
-			slider.addEventListener("mousedown", slideReady);
-			window.addEventListener("mouseup", slideFinish);
-			slider.addEventListener("touchstart", slideReady);
-			window.addEventListener("touchend", slideFinish);
-			
-			function slideReady(e) {
-				e.preventDefault();
-				clicked = 1;
-				window.addEventListener("mousemove", slideMove);
-				window.addEventListener("touchmove", slideMove);
-			}
-			
-			function slideFinish() {
-				clicked = 0;
-			}
-			
-			function slideMove(e) {
-				var pos;
-				if (clicked == 0) return false;
-				pos = getCursorPos(e);
-				if (pos < 0) pos = 0;
-				if (pos > w) pos = w;
-				slide(pos);
-			}
-			
-			function getCursorPos(e) {
-				var a, x = 0;
-				e = (e.changedTouches) ? e.changedTouches[0] : e;
-				a = overlay.getBoundingClientRect();
-				x = e.pageX - a.left;
-				x = x - window.pageXOffset;
-				return x;
-			}
-			
-			function slide(x) {
+			window.onmousemove = window.ontouchmove = function(e) {
+				if (!clicked) return;
+				var x = (e.touches ? e.touches[0].pageX : e.pageX) - container.getBoundingClientRect().left - window.pageXOffset;
+				if (x < 0) x = 0;
+				if (x > w) x = w;
 				overlay.style.width = x + "px";
-				slider.style.left = overlay.offsetWidth - (slider.offsetWidth / 2) + "px";
-			}
-		}
-		
-		// Initialize when page loads
-		window.addEventListener('load', initComparison);
+				slider.style.left = x + "px";
+			};
+		});
 	</script>
 
 	{% comment %} script for map overlay {% endcomment %}
