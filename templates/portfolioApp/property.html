@@ -415,6 +415,16 @@
 			setTimeout(function() {
 				map.invalidateSize();
 				map.setView([{{selected_flight.script_map_overlay.center_lat}}, {{selected_flight.script_map_overlay.center_lon}}], {{selected_flight.script_map_overlay.min_zoom}});
+			}, 500);
+
+			setTimeout(function() {
+				map.invalidateSize();
+				map.setView([{{selected_flight.script_map_overlay.center_lat}}, {{selected_flight.script_map_overlay.center_lon}}], {{selected_flight.script_map_overlay.min_zoom}});
+			}, 1500);
+
+			setTimeout(function() {
+				map.invalidateSize();
+				map.setView([{{selected_flight.script_map_overlay.center_lat}}, {{selected_flight.script_map_overlay.center_lon}}], {{selected_flight.script_map_overlay.min_zoom}});
 			}, 1000);
 		});
 	</script>
