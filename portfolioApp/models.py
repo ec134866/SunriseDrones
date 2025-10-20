@@ -51,6 +51,23 @@ class Property(models.Model):
         return self.name
     class Meta:
         db_table = "properties"
+        
+
+# ScriptMapOverlay Model
+class ScriptMapOverlay(models.Model):
+    min_zoom = models.CharField(max_length=20, blank=True, null=True, default="17")
+    max_zoom = models.CharField(max_length=20, blank=True, null=True, default="21")
+    zoom = models.CharField(max_length=20, blank=True, null=True, default="17")
+    measure_type = models.CharField(max_length=20, blank=True, null=True, default="imperial")
+    center_lat = models.FloatField(blank=True, null=True)
+    center_lon = models.FloatField(blank=True, null=True)
+    bounds_sw_lat = models.FloatField(blank=True, null=True)
+    bounds_sw_lon = models.FloatField(blank=True, null=True)
+    bounds_ne_lat = models.FloatField(blank=True, null=True)
+    bounds_ne_lon = models.FloatField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Map Overlay Script {self.id}"
 
 
 # ScriptExterior Model
@@ -107,6 +124,7 @@ class Flight(models.Model):
     contractProcessingDate = models.DateField(default=timezone.now)
     contractFinalTouches = models.DateField(default=timezone.now)
     contractPublishDate = models.DateField(default=timezone.now)
+    script_map_overlay = models.ForeignKey(ScriptMapOverlay, on_delete=models.CASCADE, related_name='flights', blank=True, null=True)
     script_exterior = models.ForeignKey(ScriptExterior, on_delete=models.CASCADE, related_name='flights', blank=True, null=True)
     script_interior = models.ForeignKey(ScriptInterior, on_delete=models.CASCADE, related_name='flights', blank=True, null=True)
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='flights')

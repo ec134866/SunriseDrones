@@ -344,30 +344,30 @@
 		document.addEventListener('DOMContentLoaded', function() {
 			var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-				minZoom: 17, maxZoom: 21
+				minZoom: {{selected_flight.ScriptMapOverlay.min_zoom}}, maxZoom: {{selected_flight.ScriptMapOverlay.max_zoom}}
 			}); 
 			var cartodb = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CartoDB</a>',
-				minZoom: 17, maxZoom: 21
+				minZoom: {{selected_flight.ScriptMapOverlay.min_zoom}}, maxZoom: {{selected_flight.ScriptMapOverlay.max_zoom}}
 			});
 			var white = L.tileLayer("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEX///+nxBvIAAAAH0lEQVQYGe3BAQ0AAADCIPunfg43YAAAAAAAAAAA5wIhAAAB9aK9BAAAAABJRU5ErkJggg==", 
-			{minZoom: 17, maxZoom: 21});
+			{minZoom: {{selected_flight.ScriptMapOverlay.min_zoom}}, maxZoom: {{selected_flight.ScriptMapOverlay.max_zoom}}});
 			
 			var lyr = L.tileLayer(
-				'https://raw.githubusercontent.com/ec134866/BalancedRock/main/herndon-community_center/2025_10_09/map/51b62de4-2d9a-4f36-a5e6-f98d12424835/{z}/{x}/{y}.png',
+				'{{selected_flight.mapoverlay_link}}/{z}/{x}/{y}.png',
 				{
 					tms: true,
 					opacity: 0.9,
 					attribution: "",
-					minZoom: 17,
-					maxZoom: 21
+					minZoom: {{selected_flight.ScriptMapOverlay.min_zoom}},
+					maxZoom: {{selected_flight.ScriptMapOverlay.max_zoom}}
 				}
 			);
 			var map = L.map('map', {
-				center: [38.97386130742619, -77.39226081137471],
-				zoom: 17,
-				minZoom: 17,
-				maxZoom: 21,
+				center: [{{selected_flight.ScriptMapOverlay.center_lat}}, {{selected_flight.ScriptMapOverlay.center_lon}}],
+				zoom: {{selected_flight.ScriptMapOverlay.zoom}},
+				minZoom: {{selected_flight.ScriptMapOverlay.min_zoom}},
+				maxZoom: {{selected_flight.ScriptMapOverlay.max_zoom}},
 				layers: [osm, lyr]
 			});
 			var basemaps = {"OpenStreetMap": osm, "Light Map": cartodb, "No background": white};
@@ -382,7 +382,10 @@
 				return this._div;
 			};
 			attribution.addTo(map);
-			map.fitBounds([[38.9718124262654, -77.38943153617745], [38.97591018858697, -77.39509008657195]]);
+			map.fitBounds([
+				[{{selected_flight.ScriptMapOverlay.bounds_sw_lat}}, {{selected_flight.ScriptMapOverlay.bounds_sw_lon}}],
+				[{{selected_flight.ScriptMapOverlay.bounds_ne_lat}}, {{selected_flight.ScriptMapOverlay.bounds_ne_lon}}]
+			]);
 			function createMeasureControl(units) {
 				return L.control.measure({
 					primaryLengthUnit: units === 'metric' ? 'meters' : 'feet',
@@ -393,7 +396,7 @@
 					completedColor: '#C8F2BE'
 				});
 			}
-			var currentUnits = 'imperial';
+			var currentUnits = {{selected_flight.ScriptMapOverlay.measure_type}};
 			var measureControl = createMeasureControl(currentUnits).addTo(map);
 			var UnitToggle = L.Control.extend({
 				options: { position: 'topright' },
@@ -413,12 +416,12 @@
 			
 			setTimeout(function() {
 				map.invalidateSize();
-				map.setView([38.97386130742619, -77.39226081137471], 17);
+				map.setView([{{selected_flight.ScriptMapOverlay.center_lat}}, {{selected_flight.ScriptMapOverlay.center_lon}}], {{selected_flight.ScriptMapOverlay.min_zoom}});
 			}, 250);
 
 			setTimeout(function() {
 				map.invalidateSize();
-				map.setView([38.97386130742619, -77.39226081137471], 17);
+				map.setView([{{selected_flight.ScriptMapOverlay.center_lat}}, {{selected_flight.ScriptMapOverlay.center_lon}}], {{selected_flight.ScriptMapOverlay.min_zoom}});
 			}, 500);
 		});
 	</script>
