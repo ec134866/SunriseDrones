@@ -396,7 +396,7 @@
 					completedColor: '#C8F2BE'
 				});
 			}
-			var currentUnits = {{selected_flight.ScriptMapOverlay.measure_type}};
+			var currentUnits = "{{selected_flight.ScriptMapOverlay.measure_type}}";
 			var measureControl = createMeasureControl(currentUnits).addTo(map);
 			var UnitToggle = L.Control.extend({
 				options: { position: 'topright' },
