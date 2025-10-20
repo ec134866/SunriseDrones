@@ -259,11 +259,11 @@
 								<ul class="dropdown-menu" aria-labelledby="rightFlightDropdown" style="width: 100%;">
 									{% for flight in flights %}
 										{% if flight.orthophoto_link %}
-											<li>
-												<a class="dropdown-item" href="#" onclick="changeRightImage('{{flight.orthophoto_link}}', '{{flight.date}}'); return false;">
-													{{ flight.date }}
-												</a>
-											</li>
+										<li>
+											<a class="dropdown-item" href="#" onclick="changeRightImage('{{flight.orthophoto_link}}', '{{flight.date}}'); return false;">
+												{{ flight.date }}
+											</a>
+										</li>
 										{% endif %}
 									{% endfor %}
 								</ul>
@@ -278,21 +278,21 @@
 								<ul class="dropdown-menu" aria-labelledby="leftFlightDropdown" style="width: 100%;">
 									{% for flight in flights %}
 										{% if flight.orthophoto_link %}
-											<li>
-												<a class="dropdown-item" href="#" onclick="changeLeftImage('{{flight.orthophoto_link}}', '{{flight.date}}'); return false;">
-													{{ flight.date }}
-												</a>
-											</li>
+										<li>
+											<a class="dropdown-item" href="#" onclick="changeLeftImage('{{flight.orthophoto_link}}', '{{flight.date}}'); return false;">
+												{{ flight.date }}
+											</a>
+										</li>
 										{% endif %}
 									{% endfor %}
 								</ul>
 							</div>
 						</div>
 					</div>
-					<div id="img-comp-container" style="position: relative; width: 100%; height: calc(75vh - 80px); overflow: hidden;">
-						<img id="leftImage" src="{{selected_flight.orthophoto_link}}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+					<div id="compContainer" style="position: relative; height: calc(75vh - 80px);">
+						<img id="leftImage" src="{{selected_flight.orthophoto_link}}" style="display: block; height: 100%; object-fit: contain;">
 						<div id="overlay" style="position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden;">
-							<img id="rightImage" src="{{selected_flight.orthophoto_link}}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+							<img id="rightImage" src="{{selected_flight.orthophoto_link}}" style="display: block; height: 100%; object-fit: contain;">
 						</div>
 					</div>
 				</div>
@@ -384,6 +384,7 @@
 		
 	</script>
 
+	{% comment %} script for orthophoto comparison slider {% endcomment %}
 	<script>
 		function changeLeftImage(url, date) {
 			document.getElementById('leftImage').src = url;
@@ -396,38 +397,49 @@
 		}
 		
 		window.addEventListener('load', function() {
-			const overlay = document.getElementById('overlay');
-			const container = document.getElementById('img-comp-container');
-			const slider = document.createElement("div");
-			slider.style = "position: absolute; z-index: 10; cursor: ew-resize; width: 40px; height: 40px; background-color: #2196F3; opacity: 0.7; border-radius: 50%; top: 50%; transform: translate(-50%, -50%); left: 50%;";
+			var overlay = document.getElementById('overlay');
+			var container = document.getElementById('compContainer');
+			var clicked = 0;
+			var w = container.offsetWidth;
+			var h = container.offsetHeight;
+			
+			var slider = document.createElement("div");
+			slider.style.position = "absolute";
+			slider.style.zIndex = "9";
+			slider.style.cursor = "ew-resize";
+			slider.style.width = "40px";
+			slider.style.height = "40px";
+			slider.style.backgroundColor = "#2196F3";
+			slider.style.opacity = "0.7";
+			slider.style.borderRadius = "50%";
+			slider.style.top = (h / 2 - 20) + "px";
+			slider.style.left = (w / 2 - 20) + "px";
 			container.appendChild(slider);
-		
-			let clicked = false;
-		
-			function slide(x) {
-				const w = container.offsetWidth;
+			
+			slider.onmousedown = function(e) { e.preventDefault(); clicked = 1; };
+			slider.ontouchstart = function(e) { e.preventDefault(); clicked = 1; };
+			window.onmouseup = function() { clicked = 0; };
+			window.ontouchend = function() { clicked = 0; };
+			
+			window.onmousemove = function(e) {
+				if (!clicked) return;
+				var rect = container.getBoundingClientRect();
+				var x = e.pageX - rect.left;
 				if (x < 0) x = 0;
 				if (x > w) x = w;
-				overlay.style.width = x + 'px';
-				slider.style.left = x + 'px';
-			}
-		
-			function getCursorPos(e) {
-				const rect = container.getBoundingClientRect();
-				return (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-			}
-		
-			function slideMove(e) {
+				overlay.style.width = x + "px";
+				slider.style.left = (x - 20) + "px";
+			};
+			
+			window.ontouchmove = function(e) {
 				if (!clicked) return;
-				slide(getCursorPos(e));
-			}
-		
-			slider.addEventListener('mousedown', e => { clicked = true; e.preventDefault(); });
-			slider.addEventListener('touchstart', e => { clicked = true; e.preventDefault(); });
-			window.addEventListener('mouseup', () => { clicked = false; });
-			window.addEventListener('touchend', () => { clicked = false; });
-			window.addEventListener('mousemove', slideMove);
-			window.addEventListener('touchmove', slideMove);
+				var rect = container.getBoundingClientRect();
+				var x = e.touches[0].pageX - rect.left;
+				if (x < 0) x = 0;
+				if (x > w) x = w;
+				overlay.style.width = x + "px";
+				slider.style.left = (x - 20) + "px";
+			};
 		});
 	</script>
 
