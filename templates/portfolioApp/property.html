@@ -249,7 +249,55 @@
 			</div>
 			<div class="d-flex justify-content-center">
 				<div id="orthophotoContent" class="content-section" style="width: 90%; height: 75vh;">
-					{% comment %} TODO add orthophoto comparison ability {% endcomment %}
+					<div style="display: flex; justify-content: space-between; margin-bottom: 1rem; gap: 1rem;">
+						<div style="flex: 1;">
+							<div class="dropdown" style="width: 100%;">
+								<button class="btn btn-secondary dropdown-toggle" type="button" id="leftFlightDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%;">
+									<i class="fa-regular fa-map" style="margin-right: 0.15vw;"></i>
+									<span id="leftFlightLabel">{{ selected_flight.date }}</span>
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="leftFlightDropdown" style="width: 100%;">
+									{% for flight in flights %}
+										{% if flight.orthophoto_thumbnail_link %}
+										<li>
+											<a class="dropdown-item" href="#" onclick="changeLeftImage('{{flight.orthophoto_thumbnail_link}}', '{{flight.date}}'); return false;">
+												{{ flight.date }}
+											</a>
+										</li>
+										{% endif %}
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+						<div style="flex: 1;">
+							<div class="dropdown" style="width: 100%;">
+								<button class="btn btn-secondary dropdown-toggle" type="button" id="rightFlightDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%;">
+									<i class="fa-regular fa-map" style="margin-right: 0.15vw;"></i>
+									<span id="rightFlightLabel">Select Date</span>
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="rightFlightDropdown" style="width: 100%;">
+									{% for flight in flights %}
+										{% if flight.orthophoto_thumbnail_link %}
+										<li>
+											<a class="dropdown-item" href="#" onclick="changeRightImage('{{flight.orthophoto_thumbnail_link}}', '{{flight.date}}'); return false;">
+												{{ flight.date }}
+											</a>
+										</li>
+										{% endif %}
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div style="position: relative; width: 100%; height: 300px;">
+						<div style="position: absolute; width: 100%; height: 100%; overflow: hidden;">
+							<img id="leftImage" src="{{selected_flight.orthophoto_thumbnail_link}}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 2vw;" alt="Left Orthophoto">
+						</div>
+						<div id="overlay" style="position: absolute; width: 50%; height: 100%; overflow: hidden;">
+							<img id="rightImage" src="{{selected_flight.orthophoto_thumbnail_link}}" style="width: 200%; height: 100%; object-fit: cover; border-radius: 2vw;" alt="Right Orthophoto">
+						</div>
+						<div id="slider" style="position: absolute; z-index: 9; cursor: ew-resize; width: 40px; height: 40px; background-color: #2196F3; opacity: 0.7; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+					</div>
 				</div>
 			</div>
 			<div class="d-flex justify-content-center">
@@ -337,6 +385,48 @@
 			}
 		});
 		
+	</script>
+
+	{% comment %} script for orthophoto comparison slider {% endcomment %}
+	<script>
+		function changeLeftImage(url, date) {
+			document.getElementById('leftImage').src = url;
+			document.getElementById('leftFlightLabel').textContent = date;
+		}
+		
+		function changeRightImage(url, date) {
+			var rightImg = document.getElementById('rightImage');
+			rightImg.src = url;
+			document.getElementById('rightFlightLabel').textContent = date;
+			// Maintain the 200% width for the overlay image
+			rightImg.style.width = '200%';
+		}
+		
+		(function() {
+			var overlay = document.getElementById('overlay');
+			var slider = document.getElementById('slider');
+			var container = overlay.parentElement;
+			var clicked = 0;
+			
+			slider.addEventListener('mousedown', function(e) {
+				e.preventDefault();
+				clicked = 1;
+			});
+			
+			window.addEventListener('mouseup', function() {
+				clicked = 0;
+			});
+			
+			window.addEventListener('mousemove', function(e) {
+				if (clicked == 0) return;
+				var rect = container.getBoundingClientRect();
+				var x = e.pageX - rect.left - window.pageXOffset;
+				if (x < 0) x = 0;
+				if (x > rect.width) x = rect.width;
+				overlay.style.width = x + 'px';
+				slider.style.left = x + 'px';
+			});
+		})();
 	</script>
 
 	{% comment %} script for map overlay {% endcomment %}
