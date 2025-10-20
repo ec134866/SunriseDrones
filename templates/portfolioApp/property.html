@@ -396,24 +396,10 @@
 		};
 		
 		(() => {
-		  const container = document.getElementById('compContainer');
-		  const rightImg = document.getElementById('rightImage');
-		  if (!container || !rightImg) return;
+		  const container = document.getElementById('compContainer'),
+				overlay = document.getElementById('overlay');
+		  if (!container || !overlay) return;
 		
-		  // ensure images stack perfectly
-		  Object.assign(container.style, { position: 'relative', overflow: 'hidden' });
-		  Object.assign(rightImg.style, {
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			width: '100%',
-			height: '100%',
-			objectFit: 'contain',
-			clipPath: 'inset(0 50% 0 0)', // start half visible
-			transition: 'clip-path 0s'
-		  });
-		
-		  // make the handle
 		  const handle = document.createElement('div');
 		  Object.assign(handle.style, {
 			position: 'absolute',
@@ -422,19 +408,17 @@
 			borderRadius: '50%',
 			background: '#2196F3',
 			cursor: 'ew-resize',
-			zIndex: 10,
-			boxShadow: '0 0 6px rgba(0,0,0,0.3)'
+			zIndex: 9,
+			boxShadow: '0 0 8px rgba(0,0,0,0.3)'
 		  });
 		  container.appendChild(handle);
 		
 		  let dragging = false;
-		
 		  const setPos = x => {
 			const r = container.getBoundingClientRect();
-			const pos = Math.max(0, Math.min(r.width, x - r.left));
-			const percentRight = 100 - (pos / r.width) * 100;
-			rightImg.style.clipPath = `inset(0 ${percentRight}% 0 0)`;
-			handle.style.left = (pos - handle.offsetWidth / 2) + 'px';
+			x = Math.max(0, Math.min(r.width, x - r.left));
+			overlay.style.width = x + 'px';
+			handle.style.left = (x - handle.offsetWidth / 2) + 'px';
 			handle.style.top = (r.height / 2 - handle.offsetHeight / 2) + 'px';
 		  };
 		
@@ -442,16 +426,16 @@
 			dragging = true;
 			handle.setPointerCapture(e.pointerId);
 		  });
-		  window.addEventListener('pointerup', () => (dragging = false));
-		  window.addEventListener('pointermove', e => {
-			if (dragging) setPos(e.clientX);
-		  });
+		  window.addEventListener('pointerup', () => dragging = false);
+		  window.addEventListener('pointermove', e => { if (dragging) setPos(e.clientX); });
 		
-		  // initialize perfectly centered
-		  window.addEventListener('load', () => {
+		  // Wait until images have loaded, then center the handle
+		  const centerHandle = () => {
 			const r = container.getBoundingClientRect();
 			setPos(r.left + r.width / 2);
-		  });
+		  };
+		  window.addEventListener('load', centerHandle);
+		  new ResizeObserver(centerHandle).observe(container);
 		})();
 	</script>
 
