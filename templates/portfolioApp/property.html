@@ -370,9 +370,6 @@
 			maxZoom: 21,
 			layers: [cartodb, lyr]
 		});
-
-		map.setView([38.97386130742619, -77.39226081137471], 21);
-
 		var basemaps = {"Light Map": cartodb, "No background": white};
 		var overlaymaps = {"Orthophoto": lyr};
 		L.control.layers(basemaps, overlaymaps, {collapsed: false}).addTo(map);
