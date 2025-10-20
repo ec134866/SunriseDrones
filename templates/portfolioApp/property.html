@@ -361,8 +361,7 @@
 					opacity: 0.9,
 					attribution: "",
 					minZoom: 17,
-					maxZoom: 21,
-					preferCanvas: true
+					maxZoom: 21
 				}
 			);
 			var map = L.map('map', {
@@ -416,7 +415,7 @@
 			setTimeout(function() {
 				map.invalidateSize();
 				map.setView([38.97386130742619, -77.39226081137471], 17);
-			}, 100);
+			}, 1000);
 		});
 	</script>
 
