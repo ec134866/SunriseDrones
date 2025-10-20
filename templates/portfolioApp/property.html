@@ -381,10 +381,14 @@
 				this._div.innerHTML = src;
 				return this._div;
 			};
-			map.setMaxBounds([
+			
+			var bounds = L.latLngBounds([
 				[{{selected_flight.script_map_overlay.bounds_sw_lat}}, {{selected_flight.script_map_overlay.bounds_sw_lon}}],
 				[{{selected_flight.script_map_overlay.bounds_ne_lat}}, {{selected_flight.script_map_overlay.bounds_ne_lon}}]
 			]);
+			var paddedBounds = bounds.pad(0.10);
+			map.setMaxBounds(paddedBounds);
+
 			attribution.addTo(map);
 			function createMeasureControl(units) {
 				return L.control.measure({
