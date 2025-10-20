@@ -386,75 +386,36 @@
 
 	{% comment %} script for orthophoto comparison slider {% endcomment %}
 	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-			initComparisonSlider();
-		});
+		window.changeLeftImage = (url, date) => {
+		  document.getElementById('leftImage').src = url;
+		  document.getElementById('leftFlightLabel').textContent = date;
+		};
+		window.changeRightImage = (url, date) => {
+		  document.getElementById('rightImage').src = url;
+		  document.getElementById('rightFlightLabel').textContent = date;
+		};
 		
-		function initComparisonSlider() {
-			const overlay = document.getElementById("overlay");
-			const container = document.getElementById("compContainer");
-			if (!overlay || !container) return;
-		
-			let clicked = false;
-		
-			// Create the draggable slider handle
-			const slider = document.createElement("DIV");
-			slider.setAttribute("id", "img-comp-slider");
-			slider.style.position = "absolute";
-			slider.style.zIndex = 10;
-			slider.style.cursor = "ew-resize";
-			slider.style.width = "30px";
-			slider.style.height = "30px";
-			slider.style.backgroundColor = "#2196F3";
-			slider.style.opacity = "0.8";
-			slider.style.borderRadius = "50%";
-			slider.style.boxShadow = "0 0 8px rgba(0,0,0,0.3)";
-			container.appendChild(slider);
-		
-			// Set default position in the middle
-			const w = container.offsetWidth;
-			const h = container.offsetHeight;
-			let currentX = w / 2;
-			updatePosition(currentX);
-		
-			// Event listeners
-			slider.addEventListener("mousedown", startSlide);
-			window.addEventListener("mouseup", stopSlide);
-			window.addEventListener("mousemove", slideMove);
-		
-			slider.addEventListener("touchstart", startSlide);
-			window.addEventListener("touchend", stopSlide);
-			window.addEventListener("touchmove", slideMove);
-		
-			function startSlide(e) {
-				e.preventDefault();
-				clicked = true;
-			}
-		
-			function stopSlide() {
-				clicked = false;
-			}
-		
-			function slideMove(e) {
-				if (!clicked) return;
-				let pos = getCursorPos(e);
-				if (pos < 0) pos = 0;
-				if (pos > w) pos = w;
-				updatePosition(pos);
-			}
-		
-			function getCursorPos(e) {
-				e = (e.touches ? e.touches[0] : e);
-				const rect = container.getBoundingClientRect();
-				return e.pageX - rect.left - window.pageXOffset;
-			}
-		
-			function updatePosition(x) {
-				overlay.style.width = x + "px";
-				slider.style.left = (x - slider.offsetWidth / 2) + "px";
-				slider.style.top = (h / 2 - slider.offsetHeight / 2) + "px";
-			}
-		}
+		(() => {
+		  const container = document.getElementById('compContainer'),
+				overlay = document.getElementById('overlay');
+		  if (!container || !overlay) return;
+		  const handle = document.createElement('div');
+		  Object.assign(handle.style, {position:'absolute',width:'36px',height:'36px',borderRadius:'50%',background:'#2196F3',cursor:'ew-resize',zIndex:9});
+		  container.appendChild(handle);
+		  let dragging = false;
+		  const setPos = x => {
+			const r = container.getBoundingClientRect();
+			x = Math.max(0, Math.min(r.width, x - r.left));
+			overlay.style.width = x + 'px';
+			handle.style.left = (x - handle.offsetWidth/2) + 'px';
+			handle.style.top = (r.height/2 - handle.offsetHeight/2) + 'px';
+		  };
+		  handle.addEventListener('pointerdown', e => { dragging = true; handle.setPointerCapture(e.pointerId); });
+		  window.addEventListener('pointerup', () => dragging = false);
+		  window.addEventListener('pointermove', e => { if (dragging) setPos(e.clientX); });
+		  // init center
+		  setTimeout(() => { const r = container.getBoundingClientRect(); setPos(r.left + r.width/2); }, 10);
+		})();
 	</script>
 
 	{% comment %} script for map overlay {% endcomment %}
