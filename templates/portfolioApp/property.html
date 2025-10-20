@@ -399,7 +399,7 @@
 			options: { position: 'topright' },
 			onAdd: function(map) {
 				var div = L.DomUtil.create('div', 'unit-toggle');
-				div.innerHTML = 'Switch to Imperial';
+				div.innerHTML = 'Switch to Metric';
 				div.onclick = function() {
 					map.removeControl(measureControl);
 					currentUnits = currentUnits === 'imperial' ? 'metric' : 'imperial';
