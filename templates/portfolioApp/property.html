@@ -404,14 +404,14 @@
 	{% comment %} script for orthophoto comparison slider {% endcomment %}
 	<script>
 		window.changeLeftImage = (url, date) => {
-		  document.getElementById('leftImage').src = url;
-		  document.getElementById('leftFlightLabel').textContent = date;
+			document.getElementById('leftImage').src = url;
+			document.getElementById('leftFlightLabel').textContent = date;
 		};
 		window.changeRightImage = (url, date) => {
-		  document.getElementById('rightImage').src = url;
-		  document.getElementById('rightFlightLabel').textContent = date;
+			document.getElementById('rightImage').src = url;
+			document.getElementById('rightFlightLabel').textContent = date;
 		};
-		
+	
 		const slider = document.querySelector(".image-comparison .slider");
 		const beforeImage = document.querySelector(".image-comparison .before-image");
 		const afterImage = document.querySelector(".image-comparison .after-image");
@@ -419,13 +419,19 @@
 		const sliderIcon = document.querySelector(".image-comparison .slider-icon");
 	
 		slider.addEventListener("input", (e) => {
-			let sliderValue = e.target.value + "%";
+			const value = e.target.value; // number 0–100
+			const percent = value + "%";
+			const inverse = 100 - value + "%";
 	
-			// Move the divider
-			beforeImage.style.width = sliderValue;
-			afterImage.style.clipPath = `inset(0 ${sliderValue} 0 0)`; // 👈 this is the magic line
-			sliderLine.style.left = sliderValue;
-			sliderIcon.style.left = sliderValue;
+			// Left (before) image reveals left → right
+			beforeImage.style.width = percent;
+	
+			// Right (after) image hides left → right (reverse)
+			afterImage.style.clipPath = `inset(0 0 0 ${percent})`;
+	
+			// Keep slider visuals aligned
+			sliderLine.style.left = percent;
+			sliderIcon.style.left = percent;
 		});
 	</script>
 
