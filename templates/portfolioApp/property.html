@@ -414,15 +414,18 @@
 		
 		const slider = document.querySelector(".image-comparison .slider");
 		const beforeImage = document.querySelector(".image-comparison .before-image");
+		const afterImage = document.querySelector(".image-comparison .after-image");
 		const sliderLine = document.querySelector(".image-comparison .slider-line");
 		const sliderIcon = document.querySelector(".image-comparison .slider-icon");
-
+	
 		slider.addEventListener("input", (e) => {
-		let sliderValue = e.target.value + "%";
-
-		beforeImage.style.width = sliderValue;
-		sliderLine.style.left = sliderValue;
-		sliderIcon.style.left = sliderValue;
+			let sliderValue = e.target.value + "%";
+	
+			// Move the divider
+			beforeImage.style.width = sliderValue;
+			afterImage.style.clipPath = `inset(0 ${sliderValue} 0 0)`; // 👈 this is the magic line
+			sliderLine.style.left = sliderValue;
+			sliderIcon.style.left = sliderValue;
 		});
 	</script>
 
