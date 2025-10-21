@@ -289,10 +289,27 @@
 							</div>
 						</div>
 					</div>
-					<div id="compContainer" style="position: relative; height: calc(75vh - 80px);">
-						<img id="leftImage" src="{{selected_flight.orthophoto_link}}" style="display: block; height: 100%; object-fit: contain;">
-						<div id="overlay" style="position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden;">
-							<img id="rightImage" src="{{selected_flight.orthophoto_link}}" style="display: block; height: 100%; object-fit: contain;">
+					<div class="image-comparison" style="max-width:700px;margin:20px auto;border-radius:20px;overflow:hidden;">
+						<div class="images-container" style="position:relative;display:flex;">
+						  <img class="before-image" id="leftImage" src="{{selected_flight.orthophoto_link}}" alt=""
+							style="position:absolute;top:0;width:50%;height:100%;object-fit:cover;object-position:left;" />
+						  <img class="after-image" id="rightImage" src="{{selected_flight.orthophoto_link}}" alt=""
+							style="width:100%;height:100%;object-fit:cover;object-position:left;" />
+					  
+						  <div class="slider-line"
+							style="position:absolute;height:100%;width:4px;background:#fff;left:50%;transform:translateX(-50%);"></div>
+					  
+						  <div class="slider-icon"
+							style="position:absolute;left:50%;top:50%;width:60px;height:60px;color:#fff;transform:translate(-50%,-50%) rotateZ(90deg);">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+							  stroke-width="1.5" stroke="currentColor" class="w-6 h-6" style="width:100%;height:100%;">
+							  <path stroke-linecap="round" stroke-linejoin="round"
+								d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+							</svg>
+						  </div>
+					  
+						  <input type="range" class="slider" min="0" max="100"
+							style="position:absolute;inset:0;opacity:0;cursor:pointer;" />
 						</div>
 					</div>
 				</div>
@@ -395,48 +412,18 @@
 		  document.getElementById('rightFlightLabel').textContent = date;
 		};
 		
-		(() => {
-		  const container = document.getElementById('compContainer'),
-				overlay = document.getElementById('overlay');
-		  if (!container || !overlay) return;
-		
-		  const handle = document.createElement('div');
-		  Object.assign(handle.style, {
-			position: 'absolute',
-			width: '36px',
-			height: '36px',
-			borderRadius: '50%',
-			background: '#2196F3',
-			cursor: 'ew-resize',
-			zIndex: 9,
-			boxShadow: '0 0 8px rgba(0,0,0,0.3)'
-		  });
-		  container.appendChild(handle);
-		
-		  let dragging = false;
-		  const setPos = x => {
-			const r = container.getBoundingClientRect();
-			x = Math.max(0, Math.min(r.width, x - r.left));
-			overlay.style.width = x + 'px';
-			handle.style.left = (x - handle.offsetWidth / 2) + 'px';
-			handle.style.top = (r.height / 2 - handle.offsetHeight / 2) + 'px';
-		  };
-		
-		  handle.addEventListener('pointerdown', e => {
-			dragging = true;
-			handle.setPointerCapture(e.pointerId);
-		  });
-		  window.addEventListener('pointerup', () => dragging = false);
-		  window.addEventListener('pointermove', e => { if (dragging) setPos(e.clientX); });
-		
-		  // Wait until images have loaded, then center the handle
-		  const centerHandle = () => {
-			const r = container.getBoundingClientRect();
-			setPos(r.left + r.width / 2);
-		  };
-		  window.addEventListener('load', centerHandle);
-		  new ResizeObserver(centerHandle).observe(container);
-		})();
+		const slider = document.querySelector(".image-comparison .slider");
+		const beforeImage = document.querySelector(".image-comparison .before-image");
+		const sliderLine = document.querySelector(".image-comparison .slider-line");
+		const sliderIcon = document.querySelector(".image-comparison .slider-icon");
+
+		slider.addEventListener("input", (e) => {
+		let sliderValue = e.target.value + "%";
+
+		beforeImage.style.width = sliderValue;
+		sliderLine.style.left = sliderValue;
+		sliderIcon.style.left = sliderValue;
+		});
 	</script>
 
 	{% comment %} script for map overlay {% endcomment %}
