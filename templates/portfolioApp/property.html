@@ -291,9 +291,9 @@
 					</div>
 					<div class="image-comparison" style="max-width:700px;margin:20px auto;border-radius:20px;overflow:hidden;">
 						<div class="images-container" style="position:relative;display:flex;">
-						  <img class="before-image" id="leftImage" src="{{selected_flight.orthophoto_link}}" alt=""
+						  <img class="left-image" id="leftImage" src="{{selected_flight.orthophoto_link}}" alt=""
 							style="position:absolute;top:0;width:50%;height:100%;object-fit:cover;object-position:left;" />
-						  <img class="after-image" id="rightImage" src="{{selected_flight.orthophoto_link}}" alt=""
+						  <img class="right-image" id="rightImage" src="{{selected_flight.orthophoto_link}}" alt=""
 							style="width:100%;height:100%;object-fit:cover;object-position:left;" />
 					  
 						  <div class="slider-line"
@@ -413,12 +413,12 @@
 		};
 	
 		const slider = document.querySelector(".image-comparison .slider");
-		const beforeImage = document.querySelector(".image-comparison .before-image");
-		const afterImage = document.querySelector(".image-comparison .after-image");
+		const leftImage = document.querySelector(".image-comparison .left-image");
+		const rightImage = document.querySelector(".image-comparison .right-image");
 		const sliderLine = document.querySelector(".image-comparison .slider-line");
 		const sliderIcon = document.querySelector(".image-comparison .slider-icon");
 
-		afterImage.style.clipPath = "inset(0 0 0 50%)";
+		rightImage.style.clipPath = "inset(0 0 0 50%)";
 	
 		slider.addEventListener("input", (e) => {
 			const value = e.target.value; // number 0–100
@@ -426,10 +426,10 @@
 			const inverse = 100 - value + "%";
 	
 			// Left (before) image reveals left → right
-			beforeImage.style.width = percent;
+			leftImage.style.width = percent;
 	
 			// Right (after) image hides left → right (reverse)
-			afterImage.style.clipPath = `inset(0 0 0 ${percent})`;
+			rightImage.style.clipPath = `inset(0 0 0 ${percent})`;
 	
 			// Keep slider visuals aligned
 			sliderLine.style.left = percent;
