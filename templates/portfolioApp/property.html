@@ -289,27 +289,11 @@
 							</div>
 						</div>
 					</div>
-					<div id="compContainer" style="position: relative; height: calc(75vh - 80px); overflow: hidden;">
-						<div id="leftWrapper" style="position:absolute; top:0; left:0; width:50%; height:100%; overflow:hidden;">
-						  <img id="leftImage" src="{{selected_flight.orthophoto_link}}"
-							   style="height:100%; width:100%; object-fit:contain; display:block;">
+					<div id="compContainer" style="position: relative; height: calc(75vh - 80px);">
+						<img id="leftImage" src="{{selected_flight.orthophoto_link}}" style="display: block; height: 100%; object-fit: contain;">
+						<div id="overlay" style="position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden;">
+							<img id="rightImage" src="{{selected_flight.orthophoto_link}}" style="display: block; height: 100%; object-fit: contain;">
 						</div>
-						<div id="rightWrapper" style="position:absolute; top:0; left:0; width:100%; height:100%; overflow:hidden;">
-						  <img id="rightImage" src="{{selected_flight.orthophoto_link}}"
-							   style="height:100%; width:100%; object-fit:contain; display:block;">
-						</div>
-						<div id="sliderHandle" style="
-							position:absolute;
-							width:36px;
-							height:36px;
-							border-radius:50%;
-							background:#2196F3;
-							cursor:ew-resize;
-							z-index:9;
-							top:50%;
-							transform:translateY(-50%);
-							box-shadow: 0 0 8px rgba(0,0,0,0.3);
-						"></div>
 					</div>
 				</div>
 			</div>
@@ -410,38 +394,49 @@
 		  document.getElementById('rightImage').src = url;
 		  document.getElementById('rightFlightLabel').textContent = date;
 		};
-	  
-		const container = document.getElementById('compContainer');
-		const leftWrapper = document.getElementById('leftWrapper');
-		const rightWrapper = document.getElementById('rightWrapper');
-		const handle = document.getElementById('sliderHandle');
-	  
-		let dragging = false;
-	  
-		const setPos = x => {
-		  const r = container.getBoundingClientRect();
-		  x = Math.max(0, Math.min(r.width, x - r.left));
-		  const percent = (x / r.width) * 100;
-	  
-		  // leftWrapper width controls how much of left image is shown
-		  leftWrapper.style.width = percent + '%';
-		  handle.style.left = (x - handle.offsetWidth/2) + 'px';
-		};
-	  
-		handle.addEventListener('pointerdown', e => {
-		  dragging = true;
-		  handle.setPointerCapture(e.pointerId);
-		});
-	  
-		window.addEventListener('pointerup', () => dragging = false);
-		window.addEventListener('pointermove', e => { if(dragging) setPos(e.clientX); });
-	  
-		const centerHandle = () => {
-		  const r = container.getBoundingClientRect();
-		  setPos(r.width/2);
-		};
-		window.addEventListener('load', centerHandle);
-		new ResizeObserver(centerHandle).observe(container);
+		
+		(() => {
+		  const container = document.getElementById('compContainer'),
+				overlay = document.getElementById('overlay');
+		  if (!container || !overlay) return;
+		
+		  const handle = document.createElement('div');
+		  Object.assign(handle.style, {
+			position: 'absolute',
+			width: '36px',
+			height: '36px',
+			borderRadius: '50%',
+			background: '#2196F3',
+			cursor: 'ew-resize',
+			zIndex: 9,
+			boxShadow: '0 0 8px rgba(0,0,0,0.3)'
+		  });
+		  container.appendChild(handle);
+		
+		  let dragging = false;
+		  const setPos = x => {
+			const r = container.getBoundingClientRect();
+			x = Math.max(0, Math.min(r.width, x - r.left));
+			overlay.style.width = x + 'px';
+			handle.style.left = (x - handle.offsetWidth / 2) + 'px';
+			handle.style.top = (r.height / 2 - handle.offsetHeight / 2) + 'px';
+		  };
+		
+		  handle.addEventListener('pointerdown', e => {
+			dragging = true;
+			handle.setPointerCapture(e.pointerId);
+		  });
+		  window.addEventListener('pointerup', () => dragging = false);
+		  window.addEventListener('pointermove', e => { if (dragging) setPos(e.clientX); });
+		
+		  // Wait until images have loaded, then center the handle
+		  const centerHandle = () => {
+			const r = container.getBoundingClientRect();
+			setPos(r.left + r.width / 2);
+		  };
+		  window.addEventListener('load', centerHandle);
+		  new ResizeObserver(centerHandle).observe(container);
+		})();
 	</script>
 
 	{% comment %} script for map overlay {% endcomment %}
