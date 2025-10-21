@@ -289,12 +289,10 @@
 							</div>
 						</div>
 					</div>
-					<div id="compContainer" style="position: relative; height: calc(75vh - 80px); display: flex; justify-content: center; align-items: center; overflow: hidden;">
-						<img id="leftImage" src="{{selected_flight.orthophoto_link}}"
-							 style="max-height: 100%; max-width: 100%; object-fit: contain;">
-						<div id="overlay" style="position: absolute; top: 0; left: 0; height: 100%; overflow: hidden; display: flex; justify-content: center; align-items: center;">
-						  	<img id="rightImage" src="{{selected_flight.orthophoto_link}}"
-								style="max-height: 100%; max-width: 100%; object-fit: contain;">
+					<div id="compContainer" style="position: relative; height: calc(75vh - 80px);">
+						<img id="leftImage" src="{{selected_flight.orthophoto_link}}" style="display: block; height: 100%; object-fit: contain;">
+						<div id="overlay" style="position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden;">
+							<img id="rightImage" src="{{selected_flight.orthophoto_link}}" style="display: block; height: 100%; object-fit: contain;">
 						</div>
 					</div>
 				</div>
