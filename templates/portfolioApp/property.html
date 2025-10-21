@@ -476,7 +476,12 @@
 			var basemaps = {"OpenStreetMap": osm, "Satellite": esriSat, "Light Map": cartodb, "No background": white};
 			var overlaymaps = {"Orthophoto": lyr};
 			var layerControl = L.control.layers(basemaps, overlaymaps, {collapsed: false}).addTo(map);
-			layerControl.getContainer().style.zIndex = "200"; 
+			
+			const topRight = document.querySelector('.leaflet-top.leaflet-right');
+			const bottomRight = document.querySelector('.leaflet-bottom.leaflet-right');
+
+			if (topRight) topRight.style.zIndex = "200";
+			if (bottomRight) bottomRight.style.zIndex = "200";
 			
 			var src = 'GDAL/OGR contributors (2025). GDAL/OGR Geospatial Data Abstraction Software Library. <a href="https://gdal.org">GDAL</a>';
 			var attribution = L.control({position: 'bottomleft'});
