@@ -292,7 +292,7 @@
 					<div class="image-comparison" style="max-width:700px; margin:20px auto; border-radius:20px; overflow:hidden;">
 						<div class="images-container" style="position:relative; height:100%; display:flex;">
 						  <img class="left-image" id="leftImage" src="{{selected_flight.orthophoto_link}}" alt="left orthophoto cannot be displayed"
-							style="position:absolute; top:0; width:50%; height:100%; object-fit:cover; object-position:left;" />
+							style="width:100%; height:100%; object-fit:cover; object-position:left;" />
 						  <img class="right-image" id="rightImage" src="{{selected_flight.orthophoto_link}}" alt="right orthophoto cannot be displayed"
 							style="width:100%; height:100%; object-fit:cover; object-position:left;" />
 					  
@@ -419,6 +419,7 @@
 		const sliderIcon = document.querySelector(".image-comparison .slider-icon");
 
 		rightImage.style.clipPath = "inset(0 0 0 50%)";
+		rightImage.style.clipPath = "inset(0 0 0 50%)";
 	
 		slider.addEventListener("input", (e) => {
 			const value = e.target.value; // number 0–100
@@ -426,10 +427,10 @@
 			const inverse = 100 - value + "%";
 	
 			// Left (before) image reveals left → right
-			leftImage.style.width = percent;
+			leftImage.style.clipPath = `inset(0 ${100 - value}% 0 0)`;
 	
 			// Right (after) image hides left → right (reverse)
-			rightImage.style.clipPath = `inset(0 0 0 ${percent})`;
+			rightImage.style.clipPath = `inset(0 0 0 ${value}%)`;
 	
 			// Keep slider visuals aligned
 			sliderLine.style.left = percent;
