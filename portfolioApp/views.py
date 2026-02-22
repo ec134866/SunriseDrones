@@ -219,9 +219,11 @@ def list_s3_files(prefix):
         return []
 
     files = []
+    cdn_base = "https://cdn.balancedrockimaging.com/"
+    
     for obj in contents:
         key = obj['Key']
-        if key.endswith('/'):  # skip directories
+        if key.endswith('/'):
             continue
         
         file_type = "Unknown"
@@ -234,14 +236,17 @@ def list_s3_files(prefix):
         elif key.endswith('.glb') or key.endswith('.obj') or key.endswith('.gltf'):
             file_type = "3D Model"
         
+        s3_url = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com/{key}"
+        cdn_url = cdn_base + key
+
         files.append({
-            "key": key,
             "name": key.split('/')[-1],
             "size_in_mb": round(obj['Size'] / (1024 * 1024), 2),
             "file_type": file_type,
-            "direct_download_link": f"https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com/{key}",
-            "thumbnail": f"https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com/{key}",  # could point to same file or generate small preview
-            "preview": f"https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com/{key}"
+            "direct_download_link": s3_url,
+            "thumbnail": cdn_url,
+            "preview": cdn_url,
+            "key": key
         })
     
     return files
