@@ -19,3 +19,5 @@ venv/
 portfolioApp/migrations/__pycache__/
 
 static/
+
+secretas.py

@@ -115,26 +115,40 @@
 					{% comment %} download section {% endcomment %}
 					<div class="collapse w-100" id="downloadSection">
 						<div class="row overflow-scroll" style="max-height:17vh; background-color: lightgray;" id="fileContainer">
-						{% for file in files %}
-							<div class="col-auto file" data-file-type="{{ file.file_type }}" style="width: auto; height: 70%; border-radius: 1vh; background-color: #f0f0f0; margin: .25vh; padding: .25vh; display: flex; flex-direction: column; align-items: center;">
-							<img src="{{ file.thumbnail }}" alt="{{ file.name }}" style="border-radius: 1vh; max-height: 12vh; cursor: pointer;" onclick="openPopupFile('{{ file.preview }}')">
-							<div class="row" style="font-size: 1.25vh; width: 100%; justify-content: space-between;">
-								<div class="col" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center;" title="{{ file.name }}">
-									<div>{{ file.name }}</div>
-								</div>
-								<div class="col-auto" style="display: flex; align-items: center; justify-content: flex-end;">
-									<div>{{ file.size_in_mb }} MB</div>
-									<a href="{{ file.direct_download_link }}" target="_blank" style="margin-left: 0.5vh;">
-									<span class="icon">
-										<i class="fa-solid fa-download"></i>
-									</span>
-									</a>
-								</div>
+							<div class="file-gallery row">
+								{% for file in files %}
+									<div class="col-auto file"
+										data-file-type="{{ file.file_type }}"
+										style="position:relative; width:auto; height:70%; border-radius:1vh; background-color:#f0f0f0; margin:.25vh; padding:.25vh; display:flex; flex-direction:column; align-items:center;">
+										<input type="checkbox"
+												class="file-checkbox"
+												value="{{ file.key }}"
+												style="position:absolute; top:5px; left:5px;">
+										<img src="{{ file.thumbnail }}"
+											alt="{{ file.name }}"
+											style="border-radius:1vh; max-height:12vh; cursor:pointer;"
+											onclick="openPopupFile('{{ file.preview }}')">
+										<div class="row" style="font-size:1.25vh; width:100%; justify-content:space-between;">
+											<div class="col"
+												style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"
+												title="{{ file.name }}">
+												{{ file.name }}
+											</div>
+											<div class="col-auto">
+												{{ file.size_in_mb }} MB
+												<a href="{{ file.direct_download_link }}" target="_blank">
+													<i class="fa-solid fa-download"></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								{% endfor %}
 							</div>
-							</div>
-						{% empty %}
-							<div>No files available.</div>
-						{% endfor %}
+						</div>
+						<div class="row mt-2">
+							<button class="btn btn-primary" onclick="downloadSelected()">
+								Download Selected
+							</button>
 						</div>
 					</div>	 
 					<div id="uniquePopupViewer" onclick="closePopupFileOnClick(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">

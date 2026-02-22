@@ -6,6 +6,11 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from .models import Person, Owner, Property, Flight, ScriptExterior, ScriptInterior, File, PersonFlightAccess
 from .forms import PersonForm 
+# aws asset management for property files
+import boto3
+from secretas import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME, AWS_REGION
+from botocore.exceptions import ClientError
+from urllib.parse import urlparse
 
 # Create your views here.
 
@@ -28,10 +33,6 @@ def basePageView(request):
     }
 
     return render(request, 'portfolioApp/index.html', context)
-
-
-
-
 
 def indexPageView(request):
 
@@ -124,7 +125,6 @@ def propertyPageView(request, person_uuid, owner_url_name, property_url_name):
     script_exterior = selected_flight.script_exterior if selected_flight else None
     script_interior = selected_flight.script_interior if selected_flight else None
     notice = selected_flight.notice if selected_flight else None
-    files = selected_flight.files.all() if selected_flight else None
 
     access_contract = None
     access_files = None
@@ -135,6 +135,13 @@ def propertyPageView(request, person_uuid, owner_url_name, property_url_name):
             access_files = person_flight_access.access_files
         except ObjectDoesNotExist:
             pass
+    
+    files = []
+    if selected_flight and selected_flight.s3_prefix and access_files:
+        for subdir in ['photos/', 'videos/', 'models/', 'maps/', 'zips/', 'other/']:
+            files.extend(list_s3_files(f"{selected_flight.s3_prefix}{subdir}"))
+
+
 
     context = {
         'person': person,
@@ -192,3 +199,49 @@ def managementPageView(request, person_uuid=None):
     }
     
     return render(request, 'portfolioApp/management.html', context)
+
+def list_s3_files(prefix):
+    """
+    List all objects under a given S3 prefix.
+    Returns a list of dicts with keys: name, size_in_mb, file_type, direct_download_link, thumbnail, preview
+    """
+    s3 = boto3.client(
+        "s3",
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        region_name=AWS_REGION
+    )
+    
+    try:
+        response = s3.list_objects_v2(Bucket=AWS_STORAGE_BUCKET_NAME, Prefix=prefix)
+        contents = response.get('Contents', [])
+    except ClientError:
+        return []
+
+    files = []
+    for obj in contents:
+        key = obj['Key']
+        if key.endswith('/'):  # skip directories
+            continue
+        
+        file_type = "Unknown"
+        if any(key.endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.gif', '.tif']):
+            file_type = "Image"
+        elif any(key.endswith(ext) for ext in ['.mp4', '.mov', '.avi']):
+            file_type = "Video"
+        elif key.endswith('.zip'):
+            file_type = "Zip"
+        elif key.endswith('.glb') or key.endswith('.obj') or key.endswith('.gltf'):
+            file_type = "3D Model"
+        
+        files.append({
+            "key": key,
+            "name": key.split('/')[-1],
+            "size_in_mb": round(obj['Size'] / (1024 * 1024), 2),
+            "file_type": file_type,
+            "direct_download_link": f"https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com/{key}",
+            "thumbnail": f"https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com/{key}",  # could point to same file or generate small preview
+            "preview": f"https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com/{key}"
+        })
+    
+    return files

@@ -109,6 +109,7 @@ class Flight(models.Model):
     id = models.CharField(primary_key=True, max_length=7)  # format AA0001-ZZ9999
     date = models.DateField()
     overflight_link = models.CharField(max_length=500, blank=True, null=True)
+    s3_prefix = models.CharField(max_length=500, blank=True, null=True, help_text="S3 folder path for flight assets")
     overflight_thumbnail_link = models.CharField(max_length=500, blank=True, null=True, default='https://cdn.balancedrockimaging.com/base/thumbnails/vid.png')
     orthophoto_thumbnail_link = models.CharField(max_length=500, blank=True, null=True, default='https://cdn.balancedrockimaging.com/base/thumbnails/ortho_comp.png')
     orthophoto_link = models.CharField(max_length=500, blank=True, null=True)

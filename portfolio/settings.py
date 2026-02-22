@@ -12,11 +12,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 from django.utils.translation import gettext_lazy as _
 from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(BASE_DIR))
 
 # Path to the environment file
 env_path = os.path.join(BASE_DIR, '..', 'environment')
@@ -167,3 +169,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ROSETTA_WSGI_AUTO_RELOAD = True
 ROSETTA_UWSGI_AUTO_RELOAD = True
+
+# AWS secrets for asset downloads on property page
+try:
+    import secretas 
+    AWS_ACCESS_KEY_ID = secretas.AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY = secretas.AWS_SECRET_ACCESS_KEY
+    AWS_STORAGE_BUCKET_NAME = secretas.AWS_STORAGE_BUCKET_NAME
+    AWS_REGION = secretas.AWS_REGION
+except ImportError:
+    raise Exception("Secrets file missing. Please create secretas.py and add your AWS credentials.")
