@@ -227,14 +227,16 @@ def list_s3_files(prefix):
             continue
         
         file_type = "Unknown"
-        if any(key.endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.gif', '.tif']):
+        if any(key.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.gif', '.tif']):
             file_type = "Image"
-        elif any(key.endswith(ext) for ext in ['.mp4', '.mov', '.avi']):
+        elif any(key.lower().endswith(ext) for ext in ['.mp4', '.mov', '.avi']):
             file_type = "Video"
-        elif key.endswith('.zip'):
+        elif key.lower().endswith('.zip'):
             file_type = "Zip"
-        elif key.endswith('.glb') or key.endswith('.obj') or key.endswith('.gltf'):
+        elif any(key.lower().endswith(ext) for ext in ['.glb', '.obj', '.gltf']):
             file_type = "3D Model"
+        else:
+            file_type = "Unknown"
         
         s3_url = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com/{key}"
         cdn_url = cdn_base + key
