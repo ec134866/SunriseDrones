@@ -415,15 +415,21 @@
 				const videoSrc = img.getAttribute('data-video-src');
 				const video = document.createElement('video');
 				video.src = videoSrc;
-				video.crossOrigin = 'anonymous'; // Make sure your S3 bucket allows CORS
-				video.currentTime = 1; // grab frame at 1 second
+				video.crossOrigin = 'anonymous'; // required for CORS + canvas
 		
+				// Wait for metadata / first frame to load
 				video.addEventListener('loadeddata', () => {
+					// Seek to 1 second to grab a frame
+					video.currentTime = 1;
+				});
+		
+				// Wait for the seek to complete before drawing
+				video.addEventListener('seeked', () => {
 					const canvas = document.createElement('canvas');
 					canvas.width = video.videoWidth;
 					canvas.height = video.videoHeight;
 					canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-					img.src = canvas.toDataURL(); // set the thumbnail
+					img.src = canvas.toDataURL(); // set thumbnail
 				});
 		
 				// fallback if video cannot load
