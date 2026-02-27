@@ -690,6 +690,21 @@
 			document.getElementById("filterIcons").style.display = (isDownloadSection && !isAlreadyActive) ? "block" : "none";
 		}
 
+		function getCookie(name) {
+			let cookieValue = null;
+			if (document.cookie && document.cookie !== '') {
+				const cookies = document.cookie.split(';');
+				for (let cookie of cookies) {
+					cookie = cookie.trim();
+					if (cookie.startsWith(name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+
 		function downloadSelected(flightId) {
 			const checkboxes = document.querySelectorAll('.file-checkbox:checked');
 			const selected = [];
