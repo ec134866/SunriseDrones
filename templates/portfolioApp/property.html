@@ -704,6 +704,8 @@
 			}
 			return cookieValue;
 		}
+
+		const downloadUrl = "{% url 'download_zip' %}";
 	
 		function downloadSelected(flightId) {
 			const checkboxes = document.querySelectorAll('.file-checkbox:checked');
@@ -715,7 +717,7 @@
 				return;
 			}
 	
-			fetch("/download-zip/", {
+			fetch(downloadUrl, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -723,7 +725,10 @@
 				},
 				body: JSON.stringify({ files: selected, flight_id: flightId })
 			})
-			.then(response => response.blob())
+			.then(response => {
+				if (!response.ok) throw new Error("Download failed");
+				return response.blob();
+			})
 			.then(blob => {
 				const url = window.URL.createObjectURL(blob);
 				const a = document.createElement("a");
