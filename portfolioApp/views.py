@@ -259,7 +259,7 @@ def list_s3_files(prefix):
     return files
 
 @require_POST
-def download_zip(request):
+def download_zip(request, person_uuid):
     try:
         data = json.loads(request.body)
         keys = data.get("files", [])
@@ -269,10 +269,6 @@ def download_zip(request):
 
     if not keys or not flight_id:
         return HttpResponseForbidden("Missing data.")
-
-    person_uuid = request.session.get("person_uuid")
-    if not person_uuid:
-        return HttpResponseForbidden("Not authenticated.")
 
     person = get_object_or_404(Person, uuid=person_uuid)
     flight = get_object_or_404(Flight, id=flight_id)

@@ -1,5 +1,4 @@
 {% extends 'base.html'%}
-{% csrf_token %}
 		{% block title %}
 	<link rel="icon" href="https://raw.githubusercontent.com/ec134866/SunriseDrones/refs/heads/master/static/public/favicon.ico" type="image/x-icon">   
 		<title> {{property.name}} Property </title>
@@ -718,7 +717,7 @@
 				return;
 			}
 	
-			fetch(downloadUrl, {
+			fetch(`/en/${person_uuid}/download-zip/`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
