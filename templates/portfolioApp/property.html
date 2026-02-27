@@ -152,15 +152,22 @@
 						style="display: none; position: fixed; inset: 0;
 								background: rgba(0, 0, 0, 0.8); align-items: center; 
 								justify-content: center; z-index: 1000; padding: 2vh;">
-							<div class="popup-container position-relative"
-								style="background: white; border-radius: 12px; padding: 2vh; 
-									width: 70vw; height: 70vh; display: flex; 
-									align-items: center; justify-content: center;">
+						<div class="popup-container position-relative"
+							style="background: white; border-radius: 12px; padding: 2vh; 
+								width: 70vw; height: 70vh; display: flex; 
+								align-items: center; justify-content: center;">
 							<span onclick="closePopupFile()"
 								class="close-btn position-absolute top-0 start-0 m-3 fs-2 text-black"
 								style="font-size: 2rem; cursor: pointer;">&times;</span>
-							<img id="popupContent" src=""
-								style="width: auto; max-height:100%; height: auto;"/>
+							<img id="popupImage"
+								style="display:none; max-width:100%; max-height:100%; object-fit:contain;" />
+							<video id="popupVideo"
+								controls
+								playsinline
+								style="display:none; max-width:100%; max-height:100%; object-fit:contain;">
+								<source id="popupVideoSource" src="" type="video/mp4">
+								Your browser does not support the video tag.
+							</video>
 						</div>
 					</div>
 				</div>
@@ -401,31 +408,49 @@
 
 	{% comment %} popup file preview script {% endcomment %}
 	<script>
-		document.getElementById('uniquePopupViewer').style.display = 'none'; // Ensure popup is hidden
+		document.getElementById('uniquePopupViewer').style.display = 'none';
 		
 		function openPopupFile(previewSrc) {
-			// Close any open popup first
-			closePopupFile();
-			// Set iframe src to the preview source and display the popup
-			document.getElementById('popupContent').src = previewSrc;
-			document.getElementById('uniquePopupViewer').style.display = 'flex';
+			const viewer = document.getElementById("uniquePopupViewer");
+			const image = document.getElementById("popupImage");
+			const video = document.getElementById("popupVideo");
+			const videoSource = document.getElementById("popupVideoSource");
+
+			image.style.display = "none";
+			video.style.display = "none";
+			image.src = "";
+			video.pause();
+			videoSource.src = "";
+
+			if (previewSrc.toLowerCase().endsWith(".mp4")) {
+				videoSource.src = previewSrc;
+				video.load();
+				video.style.display = "block";
+			} else {
+				image.src = previewSrc;
+				image.style.display = "block";
+			}
+		
+			viewer.style.display = "flex";
 		}
 		
 		function closePopupFile() {
-			// Hide the popup and clear the iframe src
-			document.getElementById('uniquePopupViewer').style.display = 'none';
-			document.getElementById('popupContent').src = '';
+			const viewer = document.getElementById("uniquePopupViewer");
+			const image = document.getElementById("popupImage");
+			const video = document.getElementById("popupVideo");
+
+			viewer.style.display = "none";
+			image.src = "";
+			video.pause();
 		}
-		
-		// Close popup when clicking outside of popup-container
+	
 		function closePopupFileOnClick(event) {
 			const popupContainer = document.querySelector('.popup-container');
 			if (!popupContainer.contains(event.target)) {
 				closePopupFile();
 			}
 		}
-		
-		// Close popup with Escape key
+	
 		document.addEventListener('keydown', function(event) {
 			if (event.key === 'Escape') {
 				closePopupFile();
