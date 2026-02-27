@@ -129,12 +129,12 @@
 													 data-video-src="{{ file.preview }}"
 													 alt="{{ file.name }}"
 													 style="border-radius:1vh; max-height:12vh; cursor:pointer;"
-													 onclick="openPopupFile('{{ file.preview }}')">
+													 onclick="openPopupFile('{{ file.preview|escapejs }}')">
 											{% else %}
 												<img src="{{ file.thumbnail }}"
 													 alt="{{ file.name }}"
 													 style="border-radius:1vh; max-height:12vh; cursor:pointer;"
-													 onclick="openPopupFile('{{ file.preview }}')">
+													 onclick="openPopupFile('{{ file.preview|escapejs }}')">
 											{% endif %}
 										<div class="row" style="font-size:1.25vh; width:100%; justify-content:space-between;">
 											<div class="col"
@@ -600,7 +600,7 @@
 					completedColor: '#C8F2BE'
 				});
 			}
-			var currentUnits = "{{selected_flight.script_map_overlay.measure_type}}";
+			var currentUnits = "{{selected_flight.script_map_overlay.measure_type|escapejs}}";
 			var measureControl = createMeasureControl(currentUnits).addTo(map);
 			
 			function properlyCenterMap() {
@@ -650,7 +650,7 @@
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
 			const today = new Date().toISOString().split('T')[0];
-			const publishDate = '{{selected_flight.contractPublishDate | date:'Y-m-d' }}'; 
+			const publishDate = "{{ selected_flight.contractPublishDate|date:'Y-m-d'|default:''|escapejs }}";
 			const contractTracker = document.getElementById('contractTracker');
 			const contractTrackerBtn = document.getElementById('contractTrackerBtn');
 	
@@ -769,11 +769,11 @@
 		const today = new Date().toISOString().split('T')[0];
 
 		const steps = [
-			{ element: document.querySelector('.step:nth-child(1)'), date: "{{ selected_flight.contractSigned | date:'Y-m-d' }}" },
-			{ element: document.querySelector('.step:nth-child(2)'), date: "{{ selected_flight.contractFlightDate | date:'Y-m-d'  }}" },
-			{ element: document.querySelector('.step:nth-child(3)'), date: "{{ selected_flight.contractProcessingDate | date:'Y-m-d'  }}" },
-			{ element: document.querySelector('.step:nth-child(4)'), date: "{{ selected_flight.contractFinalTouches | date:'Y-m-d'  }}" },
-			{ element: document.querySelector('.step:nth-child(5)'), date: "{{ selected_flight.contractPublishDate | date:'Y-m-d'  }}" }
+			{ element: document.querySelector('.step:nth-child(1)'), date: "{{ selected_flight.contractSigned | date:'Y-m-d'| default:''|escapejs }}" },
+			{ element: document.querySelector('.step:nth-child(2)'), date: "{{ selected_flight.contractFlightDate | date:'Y-m-d'| default:''|escapejs }}" },
+			{ element: document.querySelector('.step:nth-child(3)'), date: "{{ selected_flight.contractProcessingDate | date:'Y-m-d' |default:''|escapejs }}" },
+			{ element: document.querySelector('.step:nth-child(4)'), date: "{{ selected_flight.contractFinalTouches | date:'Y-m-d' |default:''|escapejs }}" },
+			{ element: document.querySelector('.step:nth-child(5)'), date: "{{ selected_flight.contractPublishDate | date:'Y-m-d' |default:''|escapejs }}" }
 			];
 
 		steps.forEach(step => {
