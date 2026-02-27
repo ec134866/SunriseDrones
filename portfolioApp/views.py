@@ -11,6 +11,11 @@ import boto3
 from secretas import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME, AWS_REGION
 from botocore.exceptions import ClientError
 from urllib.parse import urlparse
+# zipstream 
+import json
+import zipstream
+from django.http import StreamingHttpResponse, HttpResponseForbidden
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 
@@ -252,3 +257,69 @@ def list_s3_files(prefix):
         })
     
     return files
+
+@require_POST
+def download_zip(request):
+    try:
+        data = json.loads(request.body)
+        keys = data.get("files", [])
+        flight_id = data.get("flight_id")
+    except:
+        return HttpResponseForbidden("Invalid request.")
+
+    if not keys or not flight_id:
+        return HttpResponseForbidden("Missing data.")
+
+    person_uuid = request.session.get("person_uuid")
+    if not person_uuid:
+        return HttpResponseForbidden("Not authenticated.")
+
+    person = get_object_or_404(Person, uuid=person_uuid)
+
+    flight = get_object_or_404(Flight, id=flight_id)
+
+    try:
+        access = PersonFlightAccess.objects.get(person=person, flight=flight)
+        if not access.access_files:
+            return HttpResponseForbidden("No file access.")
+    except PersonFlightAccess.DoesNotExist:
+        return HttpResponseForbidden("No permission.")
+
+    allowed_prefix = flight.s3_prefix
+
+    for key in keys:
+        if not key.startswith(allowed_prefix):
+            return HttpResponseForbidden("Invalid file requested.")
+
+    s3 = boto3.client(
+        "s3",
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        region_name=AWS_REGION
+    )
+
+    z = zipstream.ZipFile(mode="w", compression=zipstream.ZIP_DEFLATED)
+
+    for key in keys:
+        try:
+            s3_object = s3.get_object(
+                Bucket=AWS_STORAGE_BUCKET_NAME,
+                Key=key
+            )
+
+            filename = key.split("/")[-1]
+
+            z.write_iter(
+                filename,
+                s3_object["Body"].iter_chunks(chunk_size=8192)
+            )
+        except Exception as e:
+            print(f"Skipping {key}: {e}")
+            continue
+
+    response = StreamingHttpResponse(z, content_type="application/zip")
+    response["Content-Disposition"] = (
+        f'attachment; filename="flight_{flight.id}_files.zip"'
+    )
+
+    return response

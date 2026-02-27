@@ -151,7 +151,7 @@
 							</div>
 						</div>
 						<div class="row mt-2">
-							<button class="btn btn-primary" onclick="downloadSelected()">
+							<button class="btn btn-primary" onclick="downloadSelected('{{ selected_flight.id }}')">
 								Download Selected
 							</button>
 						</div>
@@ -688,6 +688,40 @@
 	
 			// Show filter icons only for the Download section if it's being activated
 			document.getElementById("filterIcons").style.display = (isDownloadSection && !isAlreadyActive) ? "block" : "none";
+		}
+
+		function downloadSelected(flightId) {
+			const checkboxes = document.querySelectorAll('.file-checkbox:checked');
+			const selected = [];
+		
+			checkboxes.forEach(cb => {
+				selected.push(cb.value);
+			});
+		
+			if (selected.length === 0) {
+				alert("Please select at least one file.");
+				return;
+			}
+		
+			fetch("/download-zip/", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"X-CSRFToken": getCookie("csrftoken")
+				},
+				body: JSON.stringify({ 
+					files: selected,
+					flight_id: flightId
+				})
+			})
+			.then(response => response.blob())
+			.then(blob => {
+				const url = window.URL.createObjectURL(blob);
+				const a = document.createElement("a");
+				a.href = url;
+				a.download = "selected_files.zip";
+				a.click();
+			});
 		}
 	</script>
 
