@@ -704,30 +704,24 @@
 			}
 			return cookieValue;
 		}
-
+	
 		function downloadSelected(flightId) {
 			const checkboxes = document.querySelectorAll('.file-checkbox:checked');
 			const selected = [];
-		
-			checkboxes.forEach(cb => {
-				selected.push(cb.value);
-			});
-		
+			checkboxes.forEach(cb => selected.push(cb.value));
+	
 			if (selected.length === 0) {
 				alert("Please select at least one file.");
 				return;
 			}
-		
+	
 			fetch("/download-zip/", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 					"X-CSRFToken": getCookie("csrftoken")
 				},
-				body: JSON.stringify({ 
-					files: selected,
-					flight_id: flightId
-				})
+				body: JSON.stringify({ files: selected, flight_id: flightId })
 			})
 			.then(response => response.blob())
 			.then(blob => {
