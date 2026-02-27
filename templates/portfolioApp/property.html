@@ -155,6 +155,14 @@
 								Download Selected
 							</button>
 						</div>
+					</div>
+					<div id="downloadModal" 
+						style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); 
+								z-index:1050; display:flex; align-items:center; justify-content:center;">
+						<div style="background:white; padding:2rem; border-radius:1rem; text-align:center; min-width:300px;">
+							<div class="spinner-border" role="status" style="margin-bottom:1rem;"></div>
+							<p style="margin:0;">Preparing your download... this may take a few seconds.</p>
+						</div>
 					</div>	 
 					<div id="uniquePopupViewer" onclick="closePopupFileOnClick(event)"
 						style="display: none; position: fixed; inset: 0;
@@ -707,16 +715,26 @@
 
 		const person_uuid = "{{ person.uuid }}";
 	
+		function showDownloadModal() {
+			document.getElementById('downloadModal').style.display = 'flex';
+		}
+		
+		function hideDownloadModal() {
+			document.getElementById('downloadModal').style.display = 'none';
+		}
+		
 		function downloadSelected(flightId) {
+			showDownloadModal();
+		
 			const checkboxes = document.querySelectorAll('.file-checkbox:checked');
-			const selected = [];
-			checkboxes.forEach(cb => selected.push(cb.value));
-	
-			if (selected.length === 0) {
+			const selected = Array.from(checkboxes).map(cb => cb.value);
+		
+			if (!selected.length) {
 				alert("Please select at least one file.");
+				hideDownloadModal();
 				return;
 			}
-	
+		
 			fetch(`/en/${person_uuid}/download-zip/`, {
 				method: "POST",
 				headers: {
@@ -735,7 +753,9 @@
 				a.href = url;
 				a.download = "selected_files.zip";
 				a.click();
-			});
+			})
+			.catch(err => alert(err))
+			.finally(() => hideDownloadModal());
 		}
 	</script>
 
