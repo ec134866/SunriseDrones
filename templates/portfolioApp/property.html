@@ -114,19 +114,19 @@
 					</div>
 					{% comment %} download section {% endcomment %}
 					<div class="collapse w-100" id="downloadSection">
-						<div class="row overflow-scroll" style="max-height:17vh; background-color: lightgray;" id="fileContainer">
+						<div class="row overflow-scroll" style="height:17vh; background-color: lightgray;" id="fileContainer">
 							<div class="file-gallery row">
 								{% for file in files %}
 									<div class="col-auto file"
 										data-file-type="{{ file.file_type }}"
-										style="position:relative; width:auto; height:12vh; border-radius:1vh; background-color:#f0f0f0; margin:.25vh; padding:.25vh; display:flex; flex-direction:column; align-items:center;">
+										style="position:relative; width:auto; height:14vh; border-radius:1vh; background-color:#f0f0f0; margin:.25vh; padding:.25vh; display:flex; flex-direction:column; align-items:center;">
 										<input type="checkbox"
 												class="file-checkbox"
 												value="{{ file.key }}"
 												style="position:absolute; top:5px; left:5px;">
 										<img src="{{ file.thumbnail }}"
 											alt="{{ file.name }}"
-											style="border-radius:1vh; max-height:8vh; cursor:pointer;"
+											style="border-radius:1vh; max-height:12vh; cursor:pointer;"
 											onclick="openPopupFile('{{ file.preview }}')">
 										<div class="row" style="font-size:1.25vh; width:100%; justify-content:space-between;">
 											<div class="col"
