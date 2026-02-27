@@ -299,9 +299,9 @@ def download_zip(request, person_uuid):
             s3_object = s3.get_object(Bucket=AWS_STORAGE_BUCKET_NAME, Key=key)
             filename = key.split("/")[-1]
 
-            # Correct streaming of file body
-            def file_iter():
-                for chunk in iter(lambda: s3_object['Body'].read(8192), b''):
+            # Bind s3_object inside lambda to preserve reference
+            def file_iter(obj=s3_object):
+                for chunk in iter(lambda: obj['Body'].read(8192), b''):
                     yield chunk
 
             z.write_iter(filename, file_iter())
