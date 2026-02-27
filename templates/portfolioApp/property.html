@@ -124,10 +124,18 @@
 												class="file-checkbox"
 												value="{{ file.key }}"
 												style="position:absolute; top:5px; left:5px;">
-										<img src="{{ file.thumbnail }}"
-											alt="{{ file.name }}"
-											style="border-radius:1vh; max-height:12vh; cursor:pointer;"
-											onclick="openPopupFile('{{ file.preview }}')">
+											{% if file.file_type == "Video" %}
+												<img class="video-thumb"
+													 data-video-src="{{ file.preview }}"
+													 alt="{{ file.name }}"
+													 style="border-radius:1vh; max-height:12vh; cursor:pointer;"
+													 onclick="openPopupFile('{{ file.preview }}')">
+											{% else %}
+												<img src="{{ file.thumbnail }}"
+													 alt="{{ file.name }}"
+													 style="border-radius:1vh; max-height:12vh; cursor:pointer;"
+													 onclick="openPopupFile('{{ file.preview }}')">
+											{% endif %}
 										<div class="row" style="font-size:1.25vh; width:100%; justify-content:space-between;">
 											<div class="col"
 												style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"
@@ -397,6 +405,34 @@
 			</div>
 		</footer>
 
+
+	{% comment %} download file section - video snap for thumbnail {% endcomment %}
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const videoThumbs = document.querySelectorAll('.video-thumb');
+		
+			videoThumbs.forEach(img => {
+				const videoSrc = img.getAttribute('data-video-src');
+				const video = document.createElement('video');
+				video.src = videoSrc;
+				video.crossOrigin = 'anonymous'; // Make sure your S3 bucket allows CORS
+				video.currentTime = 1; // grab frame at 1 second
+		
+				video.addEventListener('loadeddata', () => {
+					const canvas = document.createElement('canvas');
+					canvas.width = video.videoWidth;
+					canvas.height = video.videoHeight;
+					canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+					img.src = canvas.toDataURL(); // set the thumbnail
+				});
+		
+				// fallback if video cannot load
+				video.addEventListener('error', () => {
+					img.src = 'https://via.placeholder.com/150?text=Video';
+				});
+			});
+		});
+		</script>
 
 	{% comment %} popup file preview script {% endcomment %}
 	<script>
