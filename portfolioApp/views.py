@@ -275,7 +275,6 @@ def download_zip(request):
         return HttpResponseForbidden("Not authenticated.")
 
     person = get_object_or_404(Person, uuid=person_uuid)
-
     flight = get_object_or_404(Flight, id=flight_id)
 
     try:
@@ -286,7 +285,6 @@ def download_zip(request):
         return HttpResponseForbidden("No permission.")
 
     allowed_prefix = flight.s3_prefix
-
     for key in keys:
         if not key.startswith(allowed_prefix):
             return HttpResponseForbidden("Invalid file requested.")
@@ -302,24 +300,19 @@ def download_zip(request):
 
     for key in keys:
         try:
-            s3_object = s3.get_object(
-                Bucket=AWS_STORAGE_BUCKET_NAME,
-                Key=key
-            )
-
+            s3_object = s3.get_object(Bucket=AWS_STORAGE_BUCKET_NAME, Key=key)
             filename = key.split("/")[-1]
 
-            z.write_iter(
-                filename,
-                s3_object["Body"].iter_chunks(chunk_size=8192)
-            )
+            # Correct streaming of file body
+            def file_iter():
+                for chunk in iter(lambda: s3_object['Body'].read(8192), b''):
+                    yield chunk
+
+            z.write_iter(filename, file_iter())
         except Exception as e:
             print(f"Skipping {key}: {e}")
             continue
 
     response = StreamingHttpResponse(z, content_type="application/zip")
-    response["Content-Disposition"] = (
-        f'attachment; filename="flight_{flight.id}_files.zip"'
-    )
-
+    response["Content-Disposition"] = f'attachment; filename="flight_{flight.id}_files.zip"'
     return response
